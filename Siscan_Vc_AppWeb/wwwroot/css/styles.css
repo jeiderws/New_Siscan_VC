@@ -134,11 +134,7 @@ titulo {
     display:flex;
     flex-direction:column;
 }
-span{
-    position:relative;
-    top:20px;
-    right:430px;
-}
+
 
 h1, .h1 {
     font-size: calc(1.375rem + 1.5vw);
