@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Siscan_Vc_DAL.DataContext;
 
-public partial class Pai
+public partial class Pais
 {
     public int IdPais { get; set; }
 
