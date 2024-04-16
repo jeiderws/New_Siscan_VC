@@ -54,7 +54,7 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Notificacione> Notificaciones { get; set; }
 
-    public virtual DbSet<Pai> Pais { get; set; }
+    public virtual DbSet<Pais> Pais { get; set; }
 
     public virtual DbSet<Programa> Programas { get; set; }
 
@@ -438,7 +438,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Notificaciones_Estado");
         });
 
-        modelBuilder.Entity<Pai>(entity =>
+        modelBuilder.Entity<Pais>(entity =>
         {
             entity.HasKey(e => e.IdPais);
 
