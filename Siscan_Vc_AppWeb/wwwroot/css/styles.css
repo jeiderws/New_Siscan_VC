@@ -121,8 +121,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 .nombre{
      position:relative;
-     bottom:10px;
-     right:220px;
+     bottom:20px;
+     right:120px;
 }
 titulo {
     position: relative;
@@ -133,6 +133,11 @@ titulo {
     left:250px;
     display:flex;
     flex-direction:column;
+}
+span{
+    position:relative;
+    top:20px;
+    right:430px;
 }
 
 h1, .h1 {
