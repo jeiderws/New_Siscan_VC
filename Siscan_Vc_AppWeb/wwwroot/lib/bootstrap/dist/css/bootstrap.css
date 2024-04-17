@@ -82,13 +82,17 @@ body {
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.text-primary2{
+
+    color:#39a900;
+}
 
 hr {
-  margin: 1rem 0;
-  color: inherit;
-  background-color: currentColor;
-  border: 0;
-  opacity: 0.25;
+    margin: 1rem 0;
+    color: inherit;
+    background-color: currentColor;
+    border: 0;
+    opacity: 0.25;
 }
 
 hr:not([size]) {
@@ -145,10 +149,13 @@ h5, .h5 {
 h6, .h6 {
   font-size: 1rem;
 }
+.mover{
+    text-align:center;
+}
 
 p {
-  margin-top: 0;
-  margin-bottom: 1rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
 }
 
 abbr[title],
@@ -7414,8 +7421,9 @@ textarea.form-control-lg {
 }
 
 .py-3 {
-  padding-top: 1rem !important;
-  padding-bottom: 1rem !important;
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important;
+   
 }
 
 .py-4 {

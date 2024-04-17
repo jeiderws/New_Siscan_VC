@@ -121,8 +121,8 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 }
 .nombre{
      position:relative;
-     bottom:20px;
-     right:120px;
+     bottom:0px;
+     right:220px;
 }
 titulo {
     position: relative;
@@ -728,6 +728,9 @@ progress {
         margin-top: var(--bs-gutter-y);
     }
 
+.marginLeft{
+    margin-left:5px;
+}
 .col {
     flex: 1 0 0%;
 }
@@ -4401,6 +4404,7 @@ textarea.form-control-lg {
             }
 }
 
+
 @media (min-width: 768px) {
     .navbar-expand-md {
         flex-wrap: nowrap;
@@ -7504,6 +7508,10 @@ textarea.form-control-lg {
 .fondo {
     height: 150px;
     background: #39A900;
+}
+.fondomenu {
+    
+    background: #666264;
 }
 
 .text-bg-dark {
@@ -12631,7 +12639,7 @@ body {
             .sb-sidenav .sb-sidenav-menu .nav .nav-link {
                 display: flex;
                 align-items: center;
-                padding-top: 0.75rem;
+                padding-top: 0.75rem;sb-sidenav-dark
                 padding-bottom: 0.75rem;
                 position: relative;
             }
@@ -12670,7 +12678,7 @@ body {
     }
 
     .sb-sidenav-dark .sb-sidenav-menu .nav-link {
-        color: rgba(255, 255, 255, 0.5);
+        color:#fff;
     }
 
         .sb-sidenav-dark .sb-sidenav-menu .nav-link .sb-nav-link-icon {
@@ -12682,15 +12690,15 @@ body {
         }
 
         .sb-sidenav-dark .sb-sidenav-menu .nav-link:hover {
-            color: #fff;
+            color: #39a900;
         }
 
         .sb-sidenav-dark .sb-sidenav-menu .nav-link.active {
-            color: #fff;
+            color: #39a900;
         }
 
             .sb-sidenav-dark .sb-sidenav-menu .nav-link.active .sb-nav-link-icon {
-                color: #fff;
+                color: #39a900;
             }
 
     .sb-sidenav-dark .sb-sidenav-footer {

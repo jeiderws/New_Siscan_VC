@@ -28,16 +28,16 @@
                 <h5 class="nombre">Sistema de Informacion, Seguimiento, Control, Actualizacion, Novedades <span>Validacion y Certificacion</span></h5>
             </div>
         </div>
-        
+
         </div>
         <!-- Navbar Search-->
         <div class="d-none d-md-inline-block  ms-auto me-0 me-md-3 my-2 my-md-0">
             <div class="input-group">
                 <img class="img-fluid" src="img/image-removebg-preview.png" alt="Alternate Text" width=180 />
             </div>
-            
+
         </div>
-      
+
         <!-- Navbar-->
 
     </nav>
@@ -46,55 +46,71 @@
             <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
                 <div class="sb-sidenav-menu">
                     <div class="nav">
-                        <div class="sb-sidenav-menu-heading">Core</div>
+                        <div class="sb-sidenav-menu-heading">Home</div>
                         <a class="nav-link" asp-controller="Home" asp-action="Index">
-                            <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
-                            Dashboard
+                            <div class="sb-nav-link-icon"><img src="~/img/casa.png" alt="Alternate Text" width="26" /></div>
+                            Inicio
                         </a>
-                        <div class="sb-sidenav-menu-heading">Interface</div>
+                        <div class="sb-sidenav-menu-heading">Contenido</div>
+                        <!-- Aprendices-->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
-                            <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
-                            Layouts
+                            <div class="sb-nav-link-icon"><img src="~/img/estudiante.png" alt="Alternate Text" width="30" /></></div>
+                            Aprendices
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
-                                <a class="nav-link" href="layout-static.html">Static Navigation</a>
-                                <a class="nav-link" href="layout-sidenav-light.html">Light Sidenav</a>
+                                <a class="nav-link" href="layout-static.html"> <img class="sb-nav-link-icon" src="~/img/agregar-usuario.png" alt="Alternate Text" width="25" />Registrar</a>
+                                <a class="nav-link" href="layout-sidenav-light.html"><img class="sb-nav-link-icon" src="~/img/consultar.png" alt="Alternate Text" width="25" />Consultar</a>
                             </nav>
                         </div>
+                        <!-- fin Aprendices-->
+
+                        <!-- Instructores -->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts2" aria-expanded="false" aria-controls="collapseLayouts">
+                            <div class="sb-nav-link-icon"><img src="~/img/instructor.png" alt="Alternate Text" width="30" /></></div>
+                            Instructores
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapseLayouts2" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav">
+                                <a class="nav-link" href="layout-static.html"> <img class="sb-nav-link-icon" src="~/img/agregar-usuario.png" alt="Alternate Text" width="25" />Registrar</a>
+                                <a class="nav-link" href="layout-sidenav-light.html"><img class="sb-nav-link-icon" src="~/img/consultar.png" alt="Alternate Text" width="25" />Consultar</a>
+                            </nav>
+                        </div>
+                        <!-- fin Instructores-->
+
+                        <!-- seguimiento -->
                         <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
-                            <div class="sb-nav-link-icon"><i class="fas fa-book-open"></i></div>
-                            Pages
+                            <div class="sb-nav-link-icon"><img class="marginLeft " src="~/img/archivo.png" alt="Alternate Text" width="20" /></div>
+                            Seguimiento
                             <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                         </a>
                         <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseAuth" aria-expanded="false" aria-controls="pagesCollapseAuth">
-                                    Authentication
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseAuth" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="login.html">Login</a>
-                                        <a class="nav-link" href="register.html">Register</a>
-                                        <a class="nav-link" href="password.html">Forgot Password</a>
-                                    </nav>
-                                </div>
-                                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#pagesCollapseError" aria-expanded="false" aria-controls="pagesCollapseError">
-                                    Error
-                                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                                </a>
-                                <div class="collapse" id="pagesCollapseError" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordionPages">
-                                    <nav class="sb-sidenav-menu-nested nav">
-                                        <a class="nav-link" href="401.html">401 Page</a>
-                                        <a class="nav-link" href="404.html">404 Page</a>
-                                        <a class="nav-link" href="500.html">500 Page</a>
-                                    </nav>
-                                </div>
+                                <a class="nav-link" href="layout-static.html"> <img class="sb-nav-link-icon" src="~/img/entrenador.png" alt="Alternate Text" width="25" />Registrar</a>
+                                <a class="nav-link" href="layout-sidenav-light.html"><img class="sb-nav-link-icon" src="~/img/consultar.png" alt="Alternate Text" width="25" />Consultar</a>
+
                             </nav>
                         </div>
-                        <div class="sb-sidenav-menu-heading">Addons</div>
+                        <!-- fin seguimiento-->
+
+                        <!-- Empresa -->
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages2" aria-expanded="false" aria-controls="collapsePages2">
+                            <div class="sb-nav-link-icon"><img class="marginLeft " src="~/img/edificio-de-oficinas.png" alt="Alternate Text" width="25" /></div>
+                            Empresa
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages2" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                                <a class="nav-link" href="layout-static.html"> <img class="sb-nav-link-icon" src="~/img/departamento-de-la-compania.png" alt="Alternate Text" width="30" />Registrar</a>
+                                <a class="nav-link" href="layout-sidenav-light.html"><img class="sb-nav-link-icon" src="~/img/consultar.png" alt="Alternate Text" width="25" />Consultar</a>
+
+                            </nav>
+                        </div>
+                        <!-- fin Empresa -->
+
+                        @* <div class="sb-sidenav-menu-heading">Addons</div>
                         <a class="nav-link" href="charts.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
                             Charts
@@ -102,12 +118,15 @@
                         <a class="nav-link" href="tables.html">
                             <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
                             Tables
-                        </a>
+                        </a> *@
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
-                    <div class="small">Logged in as:</div>
-                    Start Bootstrap
+                    <div class="small">DevTeam:</div>
+                    Guido Banquet <br />
+                    Dillon Duncan <br />
+                    Jeider morelo
+                   
                 </div>
             </nav>
         </div>
@@ -120,7 +139,7 @@
         </div>
 
 
-        @*  <footer class="py-4 bg-light mt-auto">
+       @*    <footer class="py-4 bg-light mt-auto">
         <div class="container-fluid px-4">
         <div class="d-flex align-items-center justify-content-between small">
         <div class="text-muted">Copyright &copy; Your Website 2023</div>
@@ -131,7 +150,7 @@
         </div>
         </div>
         </div>
-        </footer> *@
+        </footer>  *@
 
         <script src="~/lib/jquery/dist/jquery.min.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
