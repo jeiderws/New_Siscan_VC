@@ -19,7 +19,7 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Acudientes> Acudientes { get; set; }
 
-    public virtual DbSet<Aprendiz> Aprendizs { get; set; }
+    public virtual DbSet<Aprendiz> Aprendiz { get; set; }
 
     public virtual DbSet<AreasEmpresa> AreasEmpresas { get; set; }
 
