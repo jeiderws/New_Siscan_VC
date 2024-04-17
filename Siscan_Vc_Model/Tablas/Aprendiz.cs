@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_DAL.DataContext;
+namespace Siscan_Vc_Model;
 
 public partial class Aprendiz
 {
@@ -31,7 +31,7 @@ public partial class Aprendiz
 
     public virtual Ficha? FichaNavigation { get; set; }
 
-    public virtual Acudiente? IdAcudientesNavigation { get; set; }
+    public virtual Acudientes? IdAcudientesNavigation { get; set; }
 
     public virtual Ciudad? IdCiudadNavigation { get; set; }
 

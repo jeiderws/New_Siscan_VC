@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Siscan_Vc_Model;
 
 
 namespace Siscan_Vc_DAL.DataContext;
@@ -16,7 +17,7 @@ public partial class DbSiscanContext : DbContext
     {
     }
 
-    public virtual DbSet<Acudiente> Acudientes { get; set; }
+    public virtual DbSet<Acudientes> Acudientes { get; set; }
 
     public virtual DbSet<Aprendiz> Aprendizs { get; set; }
 
@@ -52,13 +53,13 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<NivelPrograma> NivelProgramas { get; set; }
 
-    public virtual DbSet<Notificacione> Notificaciones { get; set; }
+    public virtual DbSet<Notificaciones> Notificaciones { get; set; }
 
     public virtual DbSet<Pais> Pais { get; set; }
 
     public virtual DbSet<Programa> Programas { get; set; }
 
-    public virtual DbSet<Sede> Sedes { get; set; }
+    public virtual DbSet<Sedes> Sedes { get; set; }
 
     public virtual DbSet<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; }
 
@@ -70,7 +71,7 @@ public partial class DbSiscanContext : DbContext
     }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Acudiente>(entity =>
+        modelBuilder.Entity<Acudientes>(entity =>
         {
             entity.HasKey(e => e.IdAcudiente).HasName("PK_Acudiente");
 
@@ -426,7 +427,7 @@ public partial class DbSiscanContext : DbContext
                 .HasColumnName("NivelPrograma");
         });
 
-        modelBuilder.Entity<Notificacione>(entity =>
+        modelBuilder.Entity<Notificaciones>(entity =>
         {
             entity.HasKey(e => e.IdNotificacion);
 
@@ -472,7 +473,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Programa_TipoPrograma");
         });
 
-        modelBuilder.Entity<Sede>(entity =>
+        modelBuilder.Entity<Sedes>(entity =>
         {
             entity.HasKey(e => e.IdSede);
 

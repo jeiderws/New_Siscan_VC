@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_DAL.DataContext;
+namespace Siscan_Vc_Model;
 
-public partial class Acudiente
+public partial class Acudientes
 {
     public int IdAcudiente { get; set; }
 
