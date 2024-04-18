@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_Model;
+namespace Siscan_Vc_DAL.DataContext;
 
 public partial class SeguimientoInstructorAprendiz
 {
@@ -23,6 +23,8 @@ public partial class SeguimientoInstructorAprendiz
 
     public int? IdAreaEmpresa { get; set; }
 
+    public string? NitEmpresa { get; set; }
+
     public virtual AreasEmpresa? IdAreaEmpresaNavigation { get; set; }
 
     public virtual AsignacionArea? IdAsignacionAreaNavigation { get; set; }
@@ -30,6 +32,8 @@ public partial class SeguimientoInstructorAprendiz
     public virtual Coformador? IdCoformadorNavigation { get; set; }
 
     public virtual Modalidad? IdModalidadNavigation { get; set; }
+
+    public virtual Empresa? NitEmpresaNavigation { get; set; }
 
     public virtual Aprendiz NumeroDocumentoAprendizNavigation { get; set; } = null!;
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace Siscan_Vc_DAL.DataContext;
 
 public partial class DbSiscanContext : DbContext
@@ -15,9 +16,9 @@ public partial class DbSiscanContext : DbContext
     {
     }
 
-    public virtual DbSet<Acudiente> Acudientes { get; set; }
+    public virtual DbSet<Acudientes> Acudientes { get; set; }
 
-    public virtual DbSet<Aprendiz> Aprendizs { get; set; }
+    public virtual DbSet<Aprendiz> Aprendiz { get; set; }
 
     public virtual DbSet<AreasEmpresa> AreasEmpresas { get; set; }
 
@@ -51,25 +52,25 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<NivelPrograma> NivelProgramas { get; set; }
 
-    public virtual DbSet<Notificacione> Notificaciones { get; set; }
+    public virtual DbSet<Notificaciones> Notificaciones { get; set; }
 
-    public virtual DbSet<Pai> Pais { get; set; }
+    public virtual DbSet<Pais> Pais { get; set; }
 
-    public virtual DbSet<Programa> Programas { get; set; }
+    public virtual DbSet<Programas> Programas { get; set; }
 
-    public virtual DbSet<Sede> Sedes { get; set; }
+    public virtual DbSet<Sedes> Sedes { get; set; }
 
     public virtual DbSet<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; }
 
     public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=.\\SQLExpress;Database=DbSiscan;Trusted_Connection=True; TrustServerCertificate=True;");
+    {
 
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-        modelBuilder.Entity<Acudiente>(entity =>
+        modelBuilder.Entity<Acudientes>(entity =>
         {
             entity.HasKey(e => e.IdAcudiente).HasName("PK_Acudiente");
 
@@ -425,7 +426,7 @@ public partial class DbSiscanContext : DbContext
                 .HasColumnName("NivelPrograma");
         });
 
-        modelBuilder.Entity<Notificacione>(entity =>
+        modelBuilder.Entity<Notificaciones>(entity =>
         {
             entity.HasKey(e => e.IdNotificacion);
 
@@ -437,7 +438,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Notificaciones_Estado");
         });
 
-        modelBuilder.Entity<Pai>(entity =>
+        modelBuilder.Entity<Pais>(entity =>
         {
             entity.HasKey(e => e.IdPais);
 
@@ -446,7 +447,7 @@ public partial class DbSiscanContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Programa>(entity =>
+        modelBuilder.Entity<Programas>(entity =>
         {
             entity.HasKey(e => new { e.CodigoPrograma, e.Version });
 
@@ -471,7 +472,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Programa_TipoPrograma");
         });
 
-        modelBuilder.Entity<Sede>(entity =>
+        modelBuilder.Entity<Sedes>(entity =>
         {
             entity.HasKey(e => e.IdSede);
 
@@ -496,9 +497,6 @@ public partial class DbSiscanContext : DbContext
                 .HasNoKey()
                 .ToTable("Seguimiento_Instructor_Aprendiz");
 
-            entity.Property(e => e.NitEmpresa)
-                .HasMaxLength(50)
-                .IsUnicode(false);
             entity.Property(e => e.NumeroDocumentoAprendiz)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -521,10 +519,6 @@ public partial class DbSiscanContext : DbContext
             entity.HasOne(d => d.IdModalidadNavigation).WithMany()
                 .HasForeignKey(d => d.IdModalidad)
                 .HasConstraintName("FK_Seguimiento_Instructor_Aprendiz_Modalidad");
-
-            entity.HasOne(d => d.NitEmpresaNavigation).WithMany()
-                .HasForeignKey(d => d.NitEmpresa)
-                .HasConstraintName("FK_Seguimiento_Instructor_Aprendiz_Empresa");
 
             entity.HasOne(d => d.NumeroDocumentoAprendizNavigation).WithMany()
                 .HasForeignKey(d => d.NumeroDocumentoAprendiz)
