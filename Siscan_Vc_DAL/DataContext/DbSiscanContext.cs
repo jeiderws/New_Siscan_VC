@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Siscan_Vc_Model;
 
 
 namespace Siscan_Vc_DAL.DataContext;
