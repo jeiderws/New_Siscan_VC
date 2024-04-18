@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Siscan_Vc_DAL.DataContext.Repositories
 {
-    internal class AprendizRepository : IGenericRepository<Aprendiz>
+    public class AprendizRepository : IGenericRepository<Aprendiz>
     {
         private readonly DbSiscanContext _dbcontext;
         public AprendizRepository(DbSiscanContext contextdb)
