@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_Model;
+namespace Siscan_Vc_DAL.DataContext;
 
 public partial class Empresa
 {

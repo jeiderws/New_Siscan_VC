@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_Model;
+namespace Siscan_Vc_DAL.DataContext;
 
 public partial class NivelPrograma
 {
@@ -9,5 +9,5 @@ public partial class NivelPrograma
 
     public string? NivelPrograma1 { get; set; }
 
-    public virtual ICollection<Programa> Programas { get; set; } = new List<Programa>();
+    public virtual ICollection<Programas> Programas { get; set; } = new List<Programas>();
 }

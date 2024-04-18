@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Siscan_Vc_Model;
 
 
 namespace Siscan_Vc_DAL.DataContext;
@@ -57,7 +56,7 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Pais> Pais { get; set; }
 
-    public virtual DbSet<Programa> Programas { get; set; }
+    public virtual DbSet<Programas> Programas { get; set; }
 
     public virtual DbSet<Sedes> Sedes { get; set; }
 
@@ -448,7 +447,7 @@ public partial class DbSiscanContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Programa>(entity =>
+        modelBuilder.Entity<Programas>(entity =>
         {
             entity.HasKey(e => new { e.CodigoPrograma, e.Version });
 
