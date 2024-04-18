@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Siscan_Vc_Model;
+using System;
 using System.Collections.Generic;
 
 namespace Siscan_Vc_DAL.DataContext;
@@ -11,7 +12,7 @@ public partial class Departamento
 
     public int? IdPais { get; set; }
 
-    public virtual ICollection<Ciudad> Ciudads { get; set; } = new List<Ciudad>();
+    public virtual ICollection<Ciudad> Ciudad { get; set; } = new List<Ciudad>();
 
     public virtual Pais? IdPaisNavigation { get; set; }
 }

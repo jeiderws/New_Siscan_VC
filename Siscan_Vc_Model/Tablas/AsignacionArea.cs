@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Siscan_Vc_Model;
+using System;
 using System.Collections.Generic;
 
 namespace Siscan_Vc_DAL.DataContext;

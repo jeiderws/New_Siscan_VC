@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Siscan_Vc_Model;
 
 
 namespace Siscan_Vc_DAL.DataContext;
@@ -113,7 +114,7 @@ public partial class DbSiscanContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.FichaNavigation).WithMany(p => p.Aprendizs)
+            entity.HasOne(d => d.FichaNavigation).WithMany(p => p.Aprendiz)
                 .HasForeignKey(d => d.Ficha)
                 .HasConstraintName("FK_Aprendiz_Ficha");
 
@@ -121,19 +122,19 @@ public partial class DbSiscanContext : DbContext
                 .HasForeignKey(d => d.IdAcudientes)
                 .HasConstraintName("FK_Aprendiz_Acudientes");
 
-            entity.HasOne(d => d.IdCiudadNavigation).WithMany(p => p.Aprendizs)
+            entity.HasOne(d => d.IdCiudadNavigation).WithMany(p => p.Aprendiz)
                 .HasForeignKey(d => d.IdCiudad)
                 .HasConstraintName("FK_Aprendiz_Ciudad");
 
-            entity.HasOne(d => d.IdEstadoAprendizNavigation).WithMany(p => p.Aprendizs)
+            entity.HasOne(d => d.IdEstadoAprendizNavigation).WithMany(p => p.Aprendiz)
                 .HasForeignKey(d => d.IdEstadoAprendiz)
                 .HasConstraintName("FK_Aprendiz_Estado");
 
-            entity.HasOne(d => d.IdEstadoTytNavigation).WithMany(p => p.Aprendizs)
+            entity.HasOne(d => d.IdEstadoTytNavigation).WithMany(p => p.Aprendiz)
                 .HasForeignKey(d => d.IdEstadoTyt)
                 .HasConstraintName("FK_Aprendiz_EstadoInscripcionTYT");
 
-            entity.HasOne(d => d.IdTipodocumentoNavigation).WithMany(p => p.Aprendizs)
+            entity.HasOne(d => d.IdTipodocumentoNavigation).WithMany(p => p.Aprendiz)
                 .HasForeignKey(d => d.IdTipodocumento)
                 .HasConstraintName("FK_Aprendiz_TipoDocumento");
         });
@@ -200,7 +201,7 @@ public partial class DbSiscanContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdDepartamentoNavigation).WithMany(p => p.Ciudads)
+            entity.HasOne(d => d.IdDepartamentoNavigation).WithMany(p => p.Ciudad)
                 .HasForeignKey(d => d.IdDepartamento)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_Ciudad_Departamento");

@@ -2918,8 +2918,13 @@ textarea.form-control-lg {
     border-radius:5px;
     color: #f7f7f7;
     border: none;
+    
 }
-
+.boton2 {
+    background: #39a900;
+    border-radius: 5px;
+    color: #f7f7f7;
+}
  .boton:hover {
     border: 0.1px solid ;
 
