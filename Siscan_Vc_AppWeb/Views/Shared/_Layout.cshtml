@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/Siscan_Vc_AppWeb.styles.css" asp-append-version="true" />
+    @await RenderSectionAsync("Estilos", required: false)
     
 </head>
 <body>
@@ -63,7 +64,7 @@
                         <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
                             <nav class="sb-sidenav-menu-nested nav">
                                 <a class="nav-link" href="@Url.Action("Registro","Aprendiz")"> <img class="sb-nav-link-icon" src="~/img/agregar-usuario.png" alt="Alternate Text" width="25" />Registrar</a>
-                                <a class="nav-link" href="layout-sidenav-light.html"><img class="sb-nav-link-icon" src="~/img/consultar.png" alt="Alternate Text" width="25" />Consultar</a>
+                                <a class="nav-link" href="@Url.Action("Consultar", "Aprendiz")"><img class="sb-nav-link-icon" src="~/img/consultar.png" alt="Alternate Text" width="25" />Consultar</a>
                             </nav>
                         </div>
                         <!-- fin Aprendices-->
