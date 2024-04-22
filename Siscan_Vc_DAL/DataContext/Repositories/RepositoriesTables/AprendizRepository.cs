@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Siscan_Vc_DAL.DataContext.Repositories
+namespace Siscan_Vc_DAL.DataContext.Repositories.RepositoriesTables
 {
     public class AprendizRepository : IGenericRepository<Aprendiz>
     {
@@ -18,7 +18,7 @@ namespace Siscan_Vc_DAL.DataContext.Repositories
         {
             try
             {
-                Aprendiz aprendiz = _dbcontext.Aprendiz.FirstOrDefault(a => a.NumeroDocumentoAprendiz == numeroDocumento);
+                Aprendiz? aprendiz = _dbcontext.Aprendiz.FirstOrDefault(a => a.NumeroDocumentoAprendiz == numeroDocumento);
                 _dbcontext.Aprendiz.Remove(aprendiz);
                 await _dbcontext.SaveChangesAsync();
                 return true;
@@ -60,7 +60,7 @@ namespace Siscan_Vc_DAL.DataContext.Repositories
                 await _dbcontext.SaveChangesAsync();
                 return true;
             }
-            catch {return false; }
+            catch { return false; }
         }
     }
 }
