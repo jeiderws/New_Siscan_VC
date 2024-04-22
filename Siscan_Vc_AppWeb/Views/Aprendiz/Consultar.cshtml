@@ -28,9 +28,8 @@
                     </form>
                 </div>
                 <br />
-                <br />
-                <table class="table table-bordered" id="tbdata" cellspacing="1" style="width:100%">
-                    <thead class="boton2">
+                <table class="table table-bordered " id="tbdata" cellspacing="1" style="width:100%">
+                    <thead class="boton2 ms-auto">
                         <tr>
                             <th>Documento</th>
                             <th>Nombres</th>
@@ -56,12 +55,12 @@
                             <td>120</td>
                             <td>Activo</td>
                             <td>
-                                <button class="btn  btn-sm">
+                                <a class="btn  btn-sm">
                                     <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                </button>
-                                <button class="btn btn-sm">
+                                </a>
+                                <a class="btn btn-sm">
                                     <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                </button>
+                                </a>
                             </td>
                         </tr>
                         <tr>
@@ -75,12 +74,12 @@
                             <td>140</td>
                             <td>No Activo</td>
                             <td>
-                                <button class="btn  btn-sm">
+                                <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
                                     <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                </button>
-                                <button class="btn btn-sm">
+                                </a>
+                                <a class="btn btn-sm">
                                     <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                </button>
+                                </a>
                             </td>
                         </tr>
                     </tbody>
