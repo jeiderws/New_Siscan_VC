@@ -24,3 +24,27 @@ window.addEventListener('DOMContentLoaded', event => {
     }
 
 });
+
+
+//cargar formulario pruebas tyt 
+
+let mostrar = document.querySelector('#pruebatyt');
+let estadotyt = document.querySelector('#cboEstadoPruebatyt');
+
+
+estadotyt.addEventListener('change', () => {
+    let ValorOption = estadotyt.value;
+
+    var opciones = estadotyt.options[estadotyt.selectedIndex];
+
+    if (opciones.text == "Inscrito") {
+        mostrar.style.display = "flex";
+    } else {
+        mostrar.style.display = "none";
+    }
+   
+
+})
+
+
+

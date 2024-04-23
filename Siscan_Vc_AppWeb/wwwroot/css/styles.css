@@ -135,6 +135,13 @@ titulo {
     flex-direction:column;
 }
 
+.mover2{
+    position:relative;
+    left:330px;
+    top:20px
+
+}
+
 
 h1, .h1 {
     font-size: calc(1.375rem + 1.5vw);
@@ -7516,6 +7523,10 @@ textarea.form-control-lg {
 }
 .fondomenu {
     
+    background: #666264;
+}
+.fondomenu2 {
+    height:100px;
     background: #666264;
 }
 
