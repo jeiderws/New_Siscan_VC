@@ -9,7 +9,11 @@
     <div class="row justify-content-center">
         <div class="col-lg-7">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
-                <div class="card-header fondomenu"><h3 class="text-center font-dark-light my-4">Registro</h3></div>
+                <div class="card-header fondomenu ">
+                    <img class="img-fluid mover2" src="~/img/agregar-usuario.png" alt="Alternate Text" width="40">
+                    <h3 class="text-center font-dark-light my-4">Registro </h3>
+
+                </div>
                 <div class="card-body">
                     <form>
                         <div class="row mb-3">
@@ -43,7 +47,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -76,6 +80,12 @@
                                         <option value="0">Por certificar</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                    <label for="inputTelefono">Telefono</label>
                                 </div>
                             </div>
 
@@ -131,18 +141,76 @@
                                     <label for="cboEstadoAprendiz">Estado</label>
                                 </div>
                             </div>
-                            <div class="form-floating mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
 
-                                <select class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                    <option value="4">Selecciona una estado...</option>
-                                    <option value="3">Productiva</option>
-                                    <option value="2">Contratado</option>
-                                    <option value="1">certificado</option>
-                                    <option value="0">Por certificar</option>
-                                </select>
-                                <label for="cboEstadoAprendiz">Estado</label>
+                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                        <option value="4">Selecciona una estado...</option>
+                                        <option value="3">Inscrito</option>
+                                        <option value="2">No Inscrito</option>
+                                        <option value="1">Por Inscribirse</option>
+                                        <option value="0">No Aplica</option>
+                                    </select>
+                                    <label for="cboEstadoAprendiz">Estado TyT</label>
+
+                                </div>
                             </div>
-                           
+
+                            <!-- Acudiente -->
+                            <div class="fondomenu py-3 px-5">
+                                <h6 class="m-0 text-center font-dark-light text-white "> Acudiente</h6>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa nombre acudiente" />
+                                    <label for="inputTelefono">Nombre completo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
+                                    <label for="inputTelefono">Telefono</label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3 mb-md-0">
+                            <input class="form-control" id="correoAcudiente" type="email" placeholder="Ingresa correo acudiente" />
+                            <label for="inputTelefono">Correo acudiente</label>
+                        </div>
+                        <!-- fin Acudiente -->
+                        <br />
+
+                 @*        <!-- Pruebas tyt-->
+
+                        <div class="row mb-3" id="pruebatyt" style="display:none">
+                            <div class="fondomenu py-3 px-5">
+                                <h6 class="m-0 text-center font-dark-light text-white "> Pruebas tyt</h6>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
+                                    <label for="inputcodigotyt">Codigo Inscripcion</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
+                                    <label for="inputTelefono">Telefono</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa nombre acudiente" />
+                                    <label for="inputTelefono">Nombre completo</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
+                                    <label for="inputTelefono">Telefono</label>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="mt-4 mb-0">
@@ -157,6 +225,6 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/scripts.js" asp-append-version="true"></script> 
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
 
 }

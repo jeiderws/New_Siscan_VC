@@ -18,72 +18,82 @@
                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices</h6>
 
                 </div>
-                <br />
+
+               @*  <br />
+                <br /> *@
                 <div class="col-md-6 py-3 px-5">
-                    <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+
+                    <form class="d-none d-md-inline-block form-inline mb-4">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150"/>
+                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150" />
                             <button class="boton" id="btnNavbarSearch">Buscar</button>
+
                         </div>
+
                     </form>
+
                 </div>
-                <br />
-                <table class="table table-bordered " id="tbdata" cellspacing="1" style="width:100%">
-                    <thead class="boton2 ms-auto">
-                        <tr>
-                            <th>Documento</th>
-                            <th>Nombres</th>
-                            <th>Apellidos</th>
-                            <th>Telefono</th>
-                            <th>Correo</th>
-                            <th>ficha</th>
-                            <th>Programa</th>
-                            <th>Estado Aprendiz</th>
-                            <th>Estado pruebas tyt</th>
-                            <th>Acciones</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>WDHPQW8</td>
-                            <td>12312312</td>
-                            <td>Marca 1</td>
-                            <td>Descripcion 1</td>
-                            <td>Descripcion 1</td>
-                            <td>Categoria 1</td>
-                            <td>120</td>
-                            <td>Activo</td>
-                            <td>
-                                <a class="btn  btn-sm">
-                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                </a>
-                                <a class="btn btn-sm">
-                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>WIEYEO2I</td>
-                            <td>12312312</td>
-                            <td>Marca 2</td>
-                            <td>Descripcion 2</td>
-                            <td>Categoria 2</td>
-                            <td>Descripcion 1</td>
-                            <td>140</td>
-                            <td>No Activo</td>
-                            <td>
-                                <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
-                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                </a>
-                                <a class="btn btn-sm">
-                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                </a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                @* <br /> *@
+
+                <div class="card-body ">
+                    <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                        <thead class="boton2 ms-auto">
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Telefono</th>
+                                <th>Correo</th>
+                                <th>ficha</th>
+                                <th>Programa</th>
+                                <th>Estado Aprendiz</th>
+                                <th>Estado pruebas tyt</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>WDHPQW8</td>
+                                <td>12312312</td>
+                                <td>Marca 1</td>
+                                <td>Descripcion 1</td>
+                                <td>Descripcion 1</td>
+                                <td>Categoria 1</td>
+                                <td>120</td>
+                                <td>Activo</td>
+                                <td>
+                                    <a class="btn  btn-sm">
+                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                    </a>
+                                    <a class="btn btn-sm">
+                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>WIEYEO2I</td>
+                                <td>12312312</td>
+                                <td>Marca 2</td>
+                                <td>Descripcion 2</td>
+                                <td>Categoria 2</td>
+                                <td>Descripcion 1</td>
+                                <td>140</td>
+                                <td>No Activo</td>
+                                <td>
+                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                    </a>
+                                    <a class="btn btn-sm">
+                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400"  />
+                </div>
             </div>
         </div>
     </div>

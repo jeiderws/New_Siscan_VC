@@ -134,6 +134,18 @@ titulo {
     display:flex;
     flex-direction:column;
 }
+.mover1 {
+    position: relative;
+    left: 25vw;
+    bottom: 295px;
+   
+}
+
+.mover2 {
+    position: relative;
+    left: 330px;
+    top: 20px
+}
 
 
 h1, .h1 {
@@ -144,6 +156,13 @@ h1, .h1 {
     h1, .h1 {
         font-size: 2.5rem;
     }
+
+    /*.mover2 {
+        position: relative;
+        left: 330px;
+        top: 20px
+    }*/
+
 }
 
 h2, .h2 {
@@ -7516,6 +7535,10 @@ textarea.form-control-lg {
 }
 .fondomenu {
     
+    background: #666264;
+}
+.fondomenu2 {
+    height:100px;
     background: #666264;
 }
 
