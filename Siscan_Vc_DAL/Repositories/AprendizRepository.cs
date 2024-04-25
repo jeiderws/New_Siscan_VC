@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Siscan_Vc_DAL.Repositories
 {
-    public class IAprendizRepository : IGenericRepository<Aprendiz>
+    public class AprendizRepository : IGenericRepository<Aprendiz>
     {
         private readonly DbSiscanContext _dbSiscanContext;
-        public IAprendizRepository(DbSiscanContext dbSiscanContext)
+        public AprendizRepository(DbSiscanContext dbSiscanContext)
         {
             _dbSiscanContext = dbSiscanContext;
         }
@@ -26,14 +26,23 @@ namespace Siscan_Vc_DAL.Repositories
             catch { return false; }
         }
 
-        public Task<IQueryable<Aprendiz>> GetAll()
+        public async Task<IQueryable<Aprendiz>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz;
+                return queryAprendiz;
+            }
+            catch { return null; }
         }
 
-        public Task<Aprendiz> GetForDoc(string numeroDoc)
+        public async Task<Aprendiz> GetForDoc(string numeroDoc)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _dbSiscanContext.Aprendiz.FindAsync(numeroDoc);
+            }
+            catch { return null; }
         }
 
         public async Task<bool> Insert(Aprendiz model)
