@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using Siscan_Vc_BLL.Service;
 using Siscan_Vc_DAL.DataContext;
+using Siscan_Vc_DAL.Repositories;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +11,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DbSiscanContext>(opc=>{
     opc.UseSqlServer(builder.Configuration.GetConnectionString("cadenaDB"));
 });
+builder.Services.AddScoped<IGenericRepository<Aprendiz>,AprendizRepository>();
+builder.Services.AddScoped<IAprendizService,AprendizService>();
 
 var app = builder.Build();
 
