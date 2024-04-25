@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Siscan_Vc_Model\Siscan_Vc_Model.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="DataContext\" />
-  </ItemGroup>
-
 </Project>
