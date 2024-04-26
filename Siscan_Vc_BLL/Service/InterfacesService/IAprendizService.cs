@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Siscan_Vc_BLL.Service
+namespace Siscan_Vc_BLL.Service.InterfacesService
 {
     public interface IAprendizService
     {

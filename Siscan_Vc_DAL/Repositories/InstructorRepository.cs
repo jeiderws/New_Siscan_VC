@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Siscan_Vc_DAL.Repositories
 {
-    public class AprendizRepository : IGenericRepository<Aprendiz>
+    public class InstructorRepository : IGenericRepository<Instructor>
     {
         private readonly DbSiscanContext _dbSiscanContext;
-        public AprendizRepository(DbSiscanContext dbSiscanContext)
+        public InstructorRepository(DbSiscanContext dbSiscanContext)
         {
             _dbSiscanContext = dbSiscanContext;
         }
@@ -18,49 +18,49 @@ namespace Siscan_Vc_DAL.Repositories
         {
             try
             {
-                Aprendiz aprendiz = _dbSiscanContext.Aprendiz.First(a => a.NumeroDocumentoAprendiz == numDoc);
-                _dbSiscanContext.Remove(aprendiz);
+                Instructor instructor = _dbSiscanContext.Instructors.First(i => i.NumeroDocumentoInstructor == numDoc);
+                _dbSiscanContext.Remove(instructor);
                 await _dbSiscanContext.SaveChangesAsync();
                 return true;
             }
             catch { return false; }
         }
 
-        public async Task<IQueryable<Aprendiz>> GetAll()
+        public async Task<IQueryable<Instructor>> GetAll()
         {
             try
             {
-                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz;
-                return queryAprendiz;
+                IQueryable<Instructor> queryInstructor = _dbSiscanContext.Instructors;
+                return queryInstructor;
             }
             catch { return null; }
         }
 
-        public async Task<Aprendiz> GetForDoc(string numeroDoc)
+        public async Task<Instructor> GetForDoc(string numeroDoc)
         {
             try
             {
-                return await _dbSiscanContext.Aprendiz.FindAsync(numeroDoc);
+                return await _dbSiscanContext.Instructors.FindAsync(numeroDoc);
             }
             catch { return null; }
         }
 
-        public async Task<bool> Insert(Aprendiz model)
+        public async Task<bool> Insert(Instructor model)
         {
             try
             {
-                _dbSiscanContext.Aprendiz.Add(model);
+                _dbSiscanContext.Instructors.Add(model);
                 await _dbSiscanContext.SaveChangesAsync();
                 return true;
             }
             catch { return false; }
         }
 
-        public async Task<bool> Update(Aprendiz model)
+        public async Task<bool> Update(Instructor model)
         {
             try
             {
-                _dbSiscanContext.Aprendiz.Update(model);
+                _dbSiscanContext.Instructors.Update(model);
                 await _dbSiscanContext.SaveChangesAsync();
                 return true;
             }

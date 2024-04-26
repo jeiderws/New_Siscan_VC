@@ -9,5 +9,5 @@ public partial class EstadoPrograma
 
     public string? DescripcionEstadoPrograma { get; set; }
 
-    public virtual ICollection<Programa> Programas { get; set; } = new List<Programa>();
+    public virtual ICollection<Programas> Programas { get; set; } = new List<Programas>();
 }

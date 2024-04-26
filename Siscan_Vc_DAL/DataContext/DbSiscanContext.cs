@@ -51,11 +51,11 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Notificacione> Notificaciones { get; set; }
 
-    public virtual DbSet<Pai> Pais { get; set; }
+    public virtual DbSet<Pais> Pais { get; set; }
 
-    public virtual DbSet<Programa> Programas { get; set; }
+    public virtual DbSet<Programas> Programas { get; set; }
 
-    public virtual DbSet<Sede> Sedes { get; set; }
+    public virtual DbSet<Sedes> Sedes { get; set; }
 
     public virtual DbSet<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; }
 
@@ -427,7 +427,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Notificaciones_Estado");
         });
 
-        modelBuilder.Entity<Pai>(entity =>
+        modelBuilder.Entity<Pais>(entity =>
         {
             entity.HasKey(e => e.IdPais);
 
@@ -436,7 +436,7 @@ public partial class DbSiscanContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Programa>(entity =>
+        modelBuilder.Entity<Programas>(entity =>
         {
             entity.HasKey(e => new { e.CodigoPrograma, e.Version });
 
@@ -461,7 +461,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Programa_TipoPrograma");
         });
 
-        modelBuilder.Entity<Sede>(entity =>
+        modelBuilder.Entity<Sedes>(entity =>
         {
             entity.HasKey(e => e.IdSede);
 

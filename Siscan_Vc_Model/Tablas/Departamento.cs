@@ -13,5 +13,5 @@ public partial class Departamento
 
     public virtual ICollection<Ciudad> Ciudads { get; set; } = new List<Ciudad>();
 
-    public virtual Pai? IdPaisNavigation { get; set; }
+    public virtual Pais? IdPaisNavigation { get; set; }
 }

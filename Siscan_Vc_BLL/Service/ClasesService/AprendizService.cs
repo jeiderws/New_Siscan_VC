@@ -1,4 +1,5 @@
-﻿using Siscan_Vc_DAL.DataContext;
+﻿using Siscan_Vc_BLL.Service.InterfacesService;
+using Siscan_Vc_DAL.DataContext;
 using Siscan_Vc_DAL.Repositories;
 using System;
 using System.Collections.Generic;

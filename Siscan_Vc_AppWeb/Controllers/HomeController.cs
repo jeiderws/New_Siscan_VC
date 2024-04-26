@@ -1,21 +1,39 @@
 using Microsoft.AspNetCore.Mvc;
 using Siscan_Vc_AppWeb.Models;
+using Siscan_Vc_AppWeb.Models.ViewModels;
+using Siscan_Vc_BLL.Service.InterfacesService;
+using Siscan_Vc_DAL.DataContext;
+using Siscan_Vc_DAL.Repositories;
 using System.Diagnostics;
 
 namespace Siscan_Vc_AppWeb.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly IAprendizService _aprendizService;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(IAprendizService aprendizService)
         {
-            _logger = logger;
+            _aprendizService = aprendizService;
         }
-
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
+            IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
+            List<ViewModelAprendiz> listaAprendiz = queryAprendiz
+                                                  .Select(a => new ViewModelAprendiz(a)
+                                                  {
+                                                     
+                                                      NombreAprendiz = a.NombreAprendiz,
+                                                      ApellidoAprendiz = a.ApellidoAprendiz,
+                                                      NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
+                                                      Ficha = a.Ficha,
+                                                      IdEstadoAprendiz = a.IdEstadoAprendiz
+                                                  }
+                                                  ).ToList();
+
+            //var aprendiz = _dbSiscanContext.Aprendiz;
+            return View(listaAprendiz);
         }
 
         public IActionResult Privacy()

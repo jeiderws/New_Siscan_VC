@@ -2,7 +2,7 @@
     ViewData["Title"] = "Consultar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model List<Siscan_Vc_AppWeb.Models.ViewModels.ViewModelAprendiz>
 
 @section Estilos {
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
@@ -19,7 +19,7 @@
 
                 </div>
 
-               @*  <br />
+                @*  <br />
                 <br /> *@
                 <div class="col-md-6 py-3 px-5">
 
@@ -39,67 +39,102 @@
                     <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
                         <thead class="boton2 ms-auto">
                             <tr>
+                                <th>Tipo Documento</th>
                                 <th>Documento</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
                                 <th>Telefono</th>
                                 <th>Correo</th>
                                 <th>ficha</th>
-                                <th>Programa</th>
                                 <th>Estado Aprendiz</th>
                                 <th>Estado pruebas tyt</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>WDHPQW8</td>
-                                <td>12312312</td>
-                                <td>Marca 1</td>
-                                <td>Descripcion 1</td>
-                                <td>Descripcion 1</td>
-                                <td>Categoria 1</td>
-                                <td>120</td>
-                                <td>Activo</td>
-                                <td>
-                                    <a class="btn  btn-sm">
-                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                    </a>
-                                    <a class="btn btn-sm">
-                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>WIEYEO2I</td>
-                                <td>12312312</td>
-                                <td>Marca 2</td>
-                                <td>Descripcion 2</td>
-                                <td>Categoria 2</td>
-                                <td>Descripcion 1</td>
-                                <td>140</td>
-                                <td>No Activo</td>
-                                <td>
-                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
-                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                    </a>
-                                    <a class="btn btn-sm">
-                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                    </a>
-                                </td>
-                            </tr>
+                            @foreach (var aprendiz in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(a => aprendiz.IdTipodocumento)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.IdEstadoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.IdEstadoTyt)</td>
+                                    <td>
+                                        <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                        </a>
+                                        <a class="btn btn-sm">
+                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+
+
+
                         </tbody>
                     </table>
-                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400"  />
+                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
                 </div>
             </div>
         </div>
     </div>
 </div>
 @section Scripts {
-    <script src="~/js/scripts.js" asp-append-version="true"></script>
+
+    @* <script>
+        $(document).ready(() => {
+            listaAprendiz();
+        })
+        function listaAprendiz() {
+            fetch("Aprendiz/Consultar")
+                .then((response) => {
+                    return response.ok ? response.json() : Promise.reject(response)
+                })
+                .then((dataJson) => {
+                    $("#tbdata tbody").html("");
+                    dataJson.forEach((item) => {
+                        $("#tbdata tbody").append(
+                            $("<tr>").append(
+                                $("<td>").text(item.IdTipodocumento),
+                                $("<td>").text(item.NumeroDocumentoAprendiz),
+                                $("<td>").text(item.NombreAprendiz),
+                                $("<td>").text(item.ApellidoAprendiz),
+                                $("<td>").text(item.CelAprendiz),
+                                $("<td>").text(item.CorreoAprendiz),
+                                $("<td>").text(item.Ficha),
+                                $("<td>").text(item.IdEstadoAprendiz),
+                                $("<td>").text(item.IdEstadoTyt),
+                                $("<td>").append(
+                                    $("<a>").addClass("btn  btn-sm").data("aprendiz",item).append(
+                                        $("<img>").src("~/img/editar.png")
+                                    ),
+                                    $("<a>").addClass("btn  btn-sm").data("aprendiz", item).append(
+                                        $("<img>").src("~/img/borrar (1).png")
+                                    )
+                                )
+                                // $("<td>").text(item.DireccionAprendiz),
+                                // $("<td>").text(item.NombreCompletoAcudiente),
+                                // $("<td>").text(item.CorreoAcuediente),
+                                // $("<td>").text(item.CelularAcudiente),
+
+                                // $("<td>").text(item.IdCiudad),
+
+                                // $("<td>").text(item.IdCiudad),
+                            )
+                        )
+                    })
+
+                })
+        }
+
+    </script> *@
+    <script src="~/js/scripts.js" asp - append - version="true"></script>
 
 }
 

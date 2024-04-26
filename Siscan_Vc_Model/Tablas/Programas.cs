@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Siscan_Vc_DAL.DataContext;
 
-public partial class Programa
+public partial class Programas
 {
     public string CodigoPrograma { get; set; } = null!;
 

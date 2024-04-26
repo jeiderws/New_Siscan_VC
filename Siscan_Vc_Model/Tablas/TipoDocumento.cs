@@ -5,6 +5,10 @@ namespace Siscan_Vc_DAL.DataContext;
 
 public partial class TipoDocumento
 {
+    public TipoDocumento()
+    {
+        this.Aprendizs=new HashSet<Aprendiz>();
+    }
     public int IdTipoDocumento { get; set; }
 
     public string TipoDocumento1 { get; set; } = null!;

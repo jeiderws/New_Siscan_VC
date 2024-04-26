@@ -9,5 +9,5 @@ public partial class NivelPrograma
 
     public string? NivelPrograma1 { get; set; }
 
-    public virtual ICollection<Programa> Programas { get; set; } = new List<Programa>();
+    public virtual ICollection<Programas> Programas { get; set; } = new List<Programas>();
 }

@@ -1,5 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Siscan_Vc_BLL.Service;
+using Siscan_Vc_BLL.Service.ClasesService;
+using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using Siscan_Vc_DAL.Repositories;
 
@@ -12,7 +15,10 @@ builder.Services.AddDbContext<DbSiscanContext>(opc=>{
     opc.UseSqlServer(builder.Configuration.GetConnectionString("cadenaDB"));
 });
 builder.Services.AddScoped<IGenericRepository<Aprendiz>,AprendizRepository>();
+builder.Services.AddScoped<IGenericRepository<Instructor>, InstructorRepository>();
+
 builder.Services.AddScoped<IAprendizService,AprendizService>();
+builder.Services.AddScoped<IInstructorService, InstructorService>();
 
 var app = builder.Build();
 
@@ -29,7 +35,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseAuthorization();
+app.UseAuthorization(); 
 
 app.MapControllerRoute(
     name: "default",
