@@ -1,0 +1,368 @@
+﻿@{
+    ViewData["Title"] = "Registro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Registro</h1>
+<div id="wrapper">
+
+
+
+
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <!-- Content Row -->
+
+                <div class="row">
+
+                    <!-- Area Chart - Ventas de los ultimos 7 días -->
+                    <div class="col-xl-6 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="fondomenu py-3 px-5">
+                                <img src="~/img/estudiante.png" alt="Alternate Text" width="50" />
+                                <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices</h6>
+
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="">
+                                    <form>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                                        <option value="3">Selecciona un tipo de documento...</option>
+                                                        <option value="2">C.C</option>
+                                                        <option value="1">T.I</option>
+                                                        <option value="0">PPT</option>
+                                                    </select>
+                                                    <label for="cboTipoDocumento">Tipo Documento</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                                    <label for="inputName">Numero de documento</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
+                                                    <label for="inputName">Nombres</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
+                                                    <label for="inputLastName">Apellidos</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                                    <label for="inputTelefono">Telefono</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion" />
+                                                    <label for="inputDireccion">Direccion</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                    <label for="inputEmail">Correo</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Productiva</option>
+                                                        <option value="2">Contratado</option>
+                                                        <option value="1">certificado</option>
+                                                        <option value="0">Por certificar</option>
+                                                    </select>
+                                                    <label for="cboEstadoAprendiz">Estado Aprendiz</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                                    <label for="inputTelefono">Telefono</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboDepartamentos">
+                                                        <option value="4">Selecciona una departamento...</option>
+                                                        <option value="3">La Guajira</option>
+                                                        <option value="2">Cesar</option>
+                                                        <option value="1">Bolivar</option>
+                                                        <option value="0">Magdalena</option>
+                                                    </select>
+                                                    <label for="cboDepartamentos">Departamentos</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboMunicipio">
+                                                        <option value="4">Selecciona una municipio...</option>
+                                                        <option value="3">Fonseca</option>
+                                                        <option value="2">Valledupar</option>
+                                                        <option value="1">Cartagena</option>
+                                                        <option value="0">Santa Marta</option>
+                                                    </select>
+                                                    <label for="cboMunicipio">Municipio</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Inscrito</option>
+                                                        <option value="2">No Habilitado</option>
+                                                        <option value="1">Por Inscribirse</option>
+                                                        <option value="0">No Aplica</option>
+                                                    </select>
+                                                    <label for="cboEstadoPruebatyt">Estado tyt</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Productiva</option>
+                                                        <option value="2">Contratado</option>
+                                                        <option value="1">certificado</option>
+                                                        <option value="0">Por certificar</option>
+                                                    </select>
+                                                    <label for="cboEstadoAprendiz">Estado</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Inscrito</option>
+                                                        <option value="2">No Inscrito</option>
+                                                        <option value="1">Por Inscribirse</option>
+                                                        <option value="0">No Aplica</option>
+                                                    </select>
+                                                    <label for="cboEstadoAprendiz">Estado TyT</label>
+
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrarse</button></div>
+                                            </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart - Productos más vendidos-->
+                    <div class="col-xl-6 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="fondomenu2 py-3 px-5 ">
+                                <br />
+                                <h6 class="text-center m-0 font-weight-bold text-white">Aprendices por modalidad</h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="">
+
+                                    <form>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                                        <option value="3">Selecciona un tipo de documento...</option>
+                                                        <option value="2">C.C</option>
+                                                        <option value="1">T.I</option>
+                                                        <option value="0">PPT</option>
+                                                    </select>
+                                                    <label for="cboTipoDocumento">Tipo Documento</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                                    <label for="inputName">Numero de documento</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
+                                                    <label for="inputName">Nombres</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating">
+                                                    <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
+                                                    <label for="inputLastName">Apellidos</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                                    <label for="inputTelefono">Telefono</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion" />
+                                                    <label for="inputDireccion">Direccion</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-3">
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+                                                    <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                    <label for="inputEmail">Correo</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Productiva</option>
+                                                        <option value="2">Contratado</option>
+                                                        <option value="1">certificado</option>
+                                                        <option value="0">Por certificar</option>
+                                                    </select>
+                                                    <label for="cboEstadoAprendiz">Estado Aprendiz</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                                    <label for="inputTelefono">Telefono</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboDepartamentos">
+                                                        <option value="4">Selecciona una departamento...</option>
+                                                        <option value="3">La Guajira</option>
+                                                        <option value="2">Cesar</option>
+                                                        <option value="1">Bolivar</option>
+                                                        <option value="0">Magdalena</option>
+                                                    </select>
+                                                    <label for="cboDepartamentos">Departamentos</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboMunicipio">
+                                                        <option value="4">Selecciona una municipio...</option>
+                                                        <option value="3">Fonseca</option>
+                                                        <option value="2">Valledupar</option>
+                                                        <option value="1">Cartagena</option>
+                                                        <option value="0">Santa Marta</option>
+                                                    </select>
+                                                    <label for="cboMunicipio">Municipio</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Inscrito</option>
+                                                        <option value="2">No Habilitado</option>
+                                                        <option value="1">Por Inscribirse</option>
+                                                        <option value="0">No Aplica</option>
+                                                    </select>
+                                                    <label for="cboEstadoPruebatyt">Estado tyt</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Productiva</option>
+                                                        <option value="2">Contratado</option>
+                                                        <option value="1">certificado</option>
+                                                        <option value="0">Por certificar</option>
+                                                    </select>
+                                                    <label for="cboEstadoAprendiz">Estado</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3">
+
+                                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                                        <option value="4">Selecciona una estado...</option>
+                                                        <option value="3">Inscrito</option>
+                                                        <option value="2">No Inscrito</option>
+                                                        <option value="1">Por Inscribirse</option>
+                                                        <option value="0">No Aplica</option>
+                                                    </select>
+                                                    <label for="cboEstadoAprendiz">Estado TyT</label>
+
+                                                </div>
+                                            </div>
+
+
+                                            <br />
+
+
+
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrarse</button></div>
+                                            </div>
+                                    </form>
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+</div>

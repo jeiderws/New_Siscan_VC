@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Consultar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+@section Estilos {
+    <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
+}
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="fondomenu py-3 px-5">
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Instructores</h6>
+
+                </div>
+
+                <br />
+                <br />
+                <div class="col-md-6 py-3 px-5">
+
+                    <form class="d-none d-md-inline-block form-inline mb-4">
+                        <div class="input-group">
+                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150" />
+                            <button class="boton" id="btnNavbarSearch">Buscar</button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+                @* <br /> *@
+
+                <div class="card-body ">
+                    <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                        <thead class="boton2 ms-auto">
+                            <tr>
+                                <th>Documento</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Telefono</th>
+                                <th>Correo</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>WDHPQW8</td>
+                                <td>12312312</td>
+                                <td>Marca 1</td>
+                                <td>Descripcion 1</td>
+                                <td>
+                                    <a class="btn  btn-sm">
+                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                    </a>
+                                    <a class="btn btn-sm">
+                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                    </a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>WIEYEO2I</td>
+                                <td>12312312</td>
+                                <td>Marca 2</td>
+                                <td>Descripcion 2</td>
+                                <td>
+                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
+                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                    </a>
+                                    <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
+                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
+                                    </a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <img class="img-fluid mover3" src="~/img/instructorsena.png" alt="Alternate Text" width="450" />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de confirmación de Consultar -->
+<div class="modal fade" id="confirmacionEliminacionModal" tabindex="-1" aria-labelledby="confirmacionEliminacionModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header fondo3">
+                <h5 class="modal-title " id="confirmacionEliminacionModallabel">Confirmación de Eliminacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar?
+                se eliminara permanentemente.
+            </div>
+            <div class="modal-footer boton2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <a href="@Url.Action("consultar", "Instructor")" class="btn btn-primary" id="confirmarEliminacionBtn">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $("#confirmarEliminacionBtn").click(function () {
+
+                var eliminadoExitoso = true;
+
+                if (eliminadoExitoso == true) {
+
+                    alert("¡Eliminado exitoso!");
+
+                } else {
+
+                    alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+                }
+
+                $("#confirmacionEliminacionModal").modal('hide');
+            });
+        });
+    </script>
+}
+
+
