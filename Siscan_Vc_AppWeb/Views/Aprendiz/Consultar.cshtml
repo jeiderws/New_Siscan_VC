@@ -69,7 +69,7 @@
                                             <img src="~/img/editar.png" alt="Alternate Text" width="30" />
                                         </a>
                                         <a class="btn btn-sm">
-                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
                                         </a>
                                     </td>
                                 </tr>
@@ -79,61 +79,55 @@
 
                         </tbody>
                     </table>
-                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
+                    @* <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" /> *@
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+<!-- Modal de confirmación de Consultar -->
+<div class="modal fade" id="confirmacionEliminacionModal" tabindex="-1" aria-labelledby="confirmacionEliminacionModal" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header fondo3">
+                <h5 class="modal-title " id="confirmacionEliminacionModallabel">Confirmación de Eliminacion</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea eliminar?
+                se eliminara permanentemente.
+            </div>
+            <div class="modal-footer boton2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <a href="@Url.Action("consultar", "Aprendiz")" class="btn btn-primary" id="confirmarEliminacionBtn">Eliminar</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
 @section Scripts {
 
-    @* <script>
-        $(document).ready(() => {
-            listaAprendiz();
-        })
-        function listaAprendiz() {
-            fetch("Aprendiz/Consultar")
-                .then((response) => {
-                    return response.ok ? response.json() : Promise.reject(response)
-                })
-                .then((dataJson) => {
-                    $("#tbdata tbody").html("");
-                    dataJson.forEach((item) => {
-                        $("#tbdata tbody").append(
-                            $("<tr>").append(
-                                $("<td>").text(item.IdTipodocumento),
-                                $("<td>").text(item.NumeroDocumentoAprendiz),
-                                $("<td>").text(item.NombreAprendiz),
-                                $("<td>").text(item.ApellidoAprendiz),
-                                $("<td>").text(item.CelAprendiz),
-                                $("<td>").text(item.CorreoAprendiz),
-                                $("<td>").text(item.Ficha),
-                                $("<td>").text(item.IdEstadoAprendiz),
-                                $("<td>").text(item.IdEstadoTyt),
-                                $("<td>").append(
-                                    $("<a>").addClass("btn  btn-sm").data("aprendiz",item).append(
-                                        $("<img>").src("~/img/editar.png")
-                                    ),
-                                    $("<a>").addClass("btn  btn-sm").data("aprendiz", item).append(
-                                        $("<img>").src("~/img/borrar (1).png")
-                                    )
-                                )
-                                // $("<td>").text(item.DireccionAprendiz),
-                                // $("<td>").text(item.NombreCompletoAcudiente),
-                                // $("<td>").text(item.CorreoAcuediente),
-                                // $("<td>").text(item.CelularAcudiente),
+    <script>
+        $(document).ready(function () {
+            $("#confirmarEliminacionBtn").click(function () {
 
-                                // $("<td>").text(item.IdCiudad),
+                var eliminadoExitoso = true;
 
-                                // $("<td>").text(item.IdCiudad),
-                            )
-                        )
-                    })
+                if (eliminadoExitoso == true) {
 
-                })
-        }
+                    alert("¡Eliminado exitoso!");
 
-    </script> *@
+                } else {
+
+                    alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+                }
+
+                $("#confirmacionEliminacionModal").modal('hide');
+            });
+        });
+    </script>
     <script src="~/js/scripts.js" asp - append - version="true"></script>
 
 }
