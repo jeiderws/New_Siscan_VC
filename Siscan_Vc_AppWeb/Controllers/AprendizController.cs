@@ -10,7 +10,7 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class AprendizController : Controller
     {
         private readonly IAprendizService _aprendizService;
-      //  private readonly DbSiscanContext _dbSiscanContext;
+        //private readonly DbSiscanContext _dbSiscanContext;
         public AprendizController(IAprendizService aprendizService)
         {
             //_dbSiscanContext = dbSiscanContext;
@@ -39,10 +39,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       CorreoAcuediente = a.CorreoAcuediente,
                                                       CelularAcudiente = a.CelularAcudiente,
                                                       IdEstadoTyt = a.IdEstadoTyt,
-                                                      IdTipodocumento = a.IdTipodocumento,
+                                                      IdTipodocumento = a.IdTipodocumentoNavigation.IdTipoDocumento,
+                                                      nombredoc = a.IdTipodocumentoNavigation.TipoDocumento1,
                                                       Ficha = a.Ficha,
                                                       IdCiudad = a.IdCiudad,
                                                       IdEstadoAprendiz = a.IdEstadoAprendiz
+                                                    
                                                   }
                                                   ).ToList();
 
@@ -55,5 +57,6 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
+    
     }
 }

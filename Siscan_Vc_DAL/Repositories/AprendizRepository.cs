@@ -1,4 +1,5 @@
-﻿using Siscan_Vc_DAL.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Siscan_Vc_DAL.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,7 +31,7 @@ namespace Siscan_Vc_DAL.Repositories
         {
             try
             {
-                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz;
+                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz.Include ( a => a.IdTipodocumentoNavigation);
                 return queryAprendiz;
             }
             catch { return null; }

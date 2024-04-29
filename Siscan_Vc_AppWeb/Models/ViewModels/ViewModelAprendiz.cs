@@ -15,12 +15,17 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             NombreCompletoAcudiente=aprendiz.NombreCompletoAcudiente;
             CorreoAcuediente = aprendiz.CorreoAcuediente;
             CelularAcudiente=aprendiz.CelularAcudiente;
+            IdTipodocumento = aprendiz.IdTipodocumentoNavigation.IdTipoDocumento;
+            nombredoc = aprendiz.IdTipodocumentoNavigation.TipoDocumento1;
+            
+
 
          
         }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
 
         public string? NombreAprendiz { get; set; }
+        public string nombredoc { get; set; }
 
         public string? ApellidoAprendiz { get; set; }
 
@@ -44,7 +49,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public int? IdCiudad { get; set; }
 
         public int? IdEstadoAprendiz { get; set; }
-        public ViewModelTipoDocumento? VmTipoDocumento { get; set; }
+        
     }
     
     
