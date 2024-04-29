@@ -3282,10 +3282,10 @@ textarea.form-control-lg {
 
 .btn-primary {
     --bs-btn-color: #fff;
-    --bs-btn-bg: #0d6efd;
+    --bs-btn-bg: #198754;
     --bs-btn-border-color: #0d6efd;
     --bs-btn-hover-color: #fff;
-    --bs-btn-hover-bg: #0b5ed7;
+    --bs-btn-hover-bg: #39a900;
     --bs-btn-hover-border-color: #0a58ca;
     --bs-btn-focus-shadow-rgb: 49, 132, 253;
     --bs-btn-active-color: #fff;
@@ -7540,6 +7540,10 @@ textarea.form-control-lg {
 .fondomenu2 {
     height:100px;
     background: #666264;
+}
+
+.fondo3 {
+    background: #39A900;
 }
 
 .text-bg-dark {

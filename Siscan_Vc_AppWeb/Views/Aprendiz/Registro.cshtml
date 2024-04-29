@@ -214,7 +214,7 @@
                         </div>
 
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><a class="btn text-center btn-block" style="font-size:20px" href="#">Registrar</a></div>
+                            <div class="d-grid boton2"><a class="btn text-center btn-block" style="font-size:20px" href="#" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrar</a></div>
                         </div>
                     </form>
                 </div>
@@ -223,8 +223,47 @@
         </div>
     </div>
 </div>
+<!-- Modal de confirmación de registro -->
+<div class="modal fade" id="confirmacionRegistroModal" tabindex="-1" aria-labelledby="confirmacionRegistroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header fondo3">
+                <h5 class="modal-title " id="confirmacionRegistroModalLabel">Confirmación de Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea registrar?
+            </div>
+            <div class="modal-footer boton2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <a href="@Url.Action("Registro", "Aprendiz")" class="btn btn-primary" id="confirmarRegistroBtn">Confirmar Registro</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $("#confirmarRegistroBtn").click(function () {
+                // Aquí puedes realizar una llamada Ajax para realizar el registro
+                // Por ahora, simularemos el registro exitoso
+                var registroExitoso = true; // Cambia a false para simular un registro fallido
+
+                if (registroExitoso) {
+                    // Mostrar alerta de registro exitoso
+                    alert("¡Registro exitoso!");
+
+                } else {
+                    // Mostrar alerta de fallo de registro
+                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
+                }
+
+                // Cierra el modal
+                $("#confirmacionRegistroModal").modal('hide');
+            });
+        });
+    </script>
 
 }
