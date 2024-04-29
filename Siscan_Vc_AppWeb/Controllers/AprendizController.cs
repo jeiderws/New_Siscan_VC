@@ -38,12 +38,14 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       NombreCompletoAcudiente = a.NombreCompletoAcudiente,
                                                       CorreoAcuediente = a.CorreoAcuediente,
                                                       CelularAcudiente = a.CelularAcudiente,
-                                                      IdEstadoTyt = a.IdEstadoTyt,
+                                                      IdEstadoTyt = a.IdEstadoTytNavigation.IdEstadotyt,
+                                                      nomEstadoTyt = a.IdEstadoTytNavigation.DescripcionEstadotyt,
                                                       IdTipodocumento = a.IdTipodocumentoNavigation.IdTipoDocumento,
                                                       nombredoc = a.IdTipodocumentoNavigation.TipoDocumento1,
                                                       Ficha = a.Ficha,
                                                       IdCiudad = a.IdCiudad,
-                                                      IdEstadoAprendiz = a.IdEstadoAprendiz
+                                                      IdEstadoAprendiz = a.IdEstadoAprendiz,
+                                                      nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
                                                     
                                                   }
                                                   ).ToList();

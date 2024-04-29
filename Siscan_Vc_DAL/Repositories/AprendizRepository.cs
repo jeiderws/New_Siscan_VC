@@ -31,7 +31,7 @@ namespace Siscan_Vc_DAL.Repositories
         {
             try
             {
-                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz.Include ( a => a.IdTipodocumentoNavigation);
+                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz.Include ( a => a.IdTipodocumentoNavigation).Include(x => x.IdEstadoTytNavigation).Include( z =>z.IdEstadoAprendizNavigation);
                 return queryAprendiz;
             }
             catch { return null; }
