@@ -10,7 +10,7 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class AprendizController : Controller
     {
         private readonly IAprendizService _aprendizService;
-      //  private readonly DbSiscanContext _dbSiscanContext;
+        //private readonly DbSiscanContext _dbSiscanContext;
         public AprendizController(IAprendizService aprendizService)
         {
             //_dbSiscanContext = dbSiscanContext;
@@ -38,11 +38,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       NombreCompletoAcudiente = a.NombreCompletoAcudiente,
                                                       CorreoAcuediente = a.CorreoAcuediente,
                                                       CelularAcudiente = a.CelularAcudiente,
-                                                      IdEstadoTyt = a.IdEstadoTyt,
-                                                      IdTipodocumento = a.IdTipodocumento,
+                                                      IdEstadoTyt = a.IdEstadoTytNavigation.IdEstadotyt,
+                                                      nomEstadoTyt = a.IdEstadoTytNavigation.DescripcionEstadotyt,
+                                                      IdTipodocumento = a.IdTipodocumentoNavigation.IdTipoDocumento,
+                                                      nombredoc = a.IdTipodocumentoNavigation.TipoDocumento1,
                                                       Ficha = a.Ficha,
                                                       IdCiudad = a.IdCiudad,
-                                                      IdEstadoAprendiz = a.IdEstadoAprendiz
+                                                      IdEstadoAprendiz = a.IdEstadoAprendiz,
+                                                      nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
+                                                    
                                                   }
                                                   ).ToList();
 
@@ -55,5 +59,6 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
+    
     }
 }
