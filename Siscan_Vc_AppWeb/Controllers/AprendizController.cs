@@ -10,16 +10,17 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class AprendizController : Controller
     {
         private readonly IAprendizService _aprendizService;
-        //private readonly DbSiscanContext _dbSiscanContext;
-        public AprendizController(IAprendizService aprendizService)
+        private readonly DbSiscanContext _dbSiscanContext;
+        public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext)
         {
-            //_dbSiscanContext = dbSiscanContext;
-
+            _dbSiscanContext = dbSiscanContext;
             _aprendizService = aprendizService;
 
         }
-        public IActionResult Registro()
+        public async Task<IActionResult> Registro()
         {
+            var itemsTipoDoc= await _dbSiscanContext.TipoDocumentos.ToListAsync();
+            ViewBag.ItemsTipoDoc = itemsTipoDoc;
             return View();
         }
         [HttpGet]

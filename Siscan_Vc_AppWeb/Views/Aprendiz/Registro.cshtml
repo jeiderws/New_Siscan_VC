@@ -19,11 +19,9 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option value="3">Selecciona un tipo de documento...</option>
-                                        <option value="2">C.C</option>
-                                        <option value="1">T.I</option>
-                                        <option value="0">PPT</option>
+
                                     </select>
                                     <label for="cboTipoDocumento">Tipo Documento</label>
                                 </div>
