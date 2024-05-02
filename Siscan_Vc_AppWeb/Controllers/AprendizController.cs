@@ -17,11 +17,34 @@ namespace Siscan_Vc_AppWeb.Controllers
             _aprendizService = aprendizService;
 
         }
-        public async Task<IActionResult> Registro()
+        //[HttpPost]
+        public async Task<IActionResult> Registro(Aprendiz ap)
         {
             var itemsTipoDoc= await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
-            return View();
+            //if (ModelState.IsValid)
+            //{
+            //    var kk = new Aprendiz()
+            //    {
+            //        NombreAprendiz = ap.NombreAprendiz,
+            //        ApellidoAprendiz = ap.ApellidoAprendiz,
+            //        NumeroDocumentoAprendiz = ap.NumeroDocumentoAprendiz,
+            //        CorreoAprendiz  = ap.CorreoAprendiz,
+            //        CelAprendiz = ap.CelAprendiz,
+            //        IdTipodocumento = ap.IdTipodocumento,
+            //        NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
+            //        CorreoAcuediente = ap.CorreoAcuediente,
+            //        CelularAcudiente = ap.CelularAcudiente,
+            //        Ficha = ap.Ficha,
+            //        IdCiudad = ap.IdCiudad,
+            //        IdEstadoAprendiz = ap.IdEstadoAprendiz,
+            //        IdEstadoTyt = ap.IdEstadoTyt
+            //    };
+            //    _dbSiscanContext.Aprendiz.Add(ap);
+            //    _dbSiscanContext.SaveChanges();
+            //    return RedirectToAction("Exito");
+            //}
+            return View(/*"Registro", ap*/);
         }
         [HttpGet]
         public async Task<IActionResult> Consultar()
