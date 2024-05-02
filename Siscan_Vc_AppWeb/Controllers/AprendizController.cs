@@ -17,10 +17,12 @@ namespace Siscan_Vc_AppWeb.Controllers
             _aprendizService = aprendizService;
 
         }
-        public async Task<IActionResult> Registro()
+        //[HttpPost]
+        public async Task<IActionResult> Registro(Aprendiz ap)
         {
             var itemsTipoDoc= await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
+            return View(/*"Registro", ap*/);
             var itemsEstAprndz = await _dbSiscanContext.EstadoAprendizs.ToListAsync();
             ViewBag.ItemsEstAprndz = itemsEstAprndz; 
             var itemsDepartamento = await _dbSiscanContext.Departamentos.ToListAsync();
