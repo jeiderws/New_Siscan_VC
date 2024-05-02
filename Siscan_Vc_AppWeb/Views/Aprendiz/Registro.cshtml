@@ -20,8 +20,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
-                                        <option value="3">Selecciona un tipo de documento...</option>
-
+                                        <option value="">Selecciona un tipo de documento...</option>
                                     </select>
                                     <label for="cboTipoDocumento">Tipo Documento</label>
                                 </div>
@@ -68,14 +67,10 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Productiva</option>
-                                        <option value="2">Contratado</option>
-                                        <option value="1">certificado</option>
-                                        <option value="0">Por certificar</option>
+                                <div class="form-floating mb-3">                                   
+                                  
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                        <option value="">Selecciona un estado...</option>                                    
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
                                 </div>
@@ -89,68 +84,42 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboDepartamentos">
-                                        <option value="4">Selecciona una departamento...</option>
-                                        <option value="3">La Guajira</option>
-                                        <option value="2">Cesar</option>
-                                        <option value="1">Bolivar</option>
-                                        <option value="0">Magdalena</option>
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
+                                        <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboMunicipio">
-                                        <option value="4">Selecciona una municipio...</option>
-                                        <option value="3">Fonseca</option>
-                                        <option value="2">Valledupar</option>
-                                        <option value="1">Cartagena</option>
-                                        <option value="0">Santa Marta</option>
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsCiudad,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboMunicipio">
+                                        <option value="4">Selecciona una ciudad...</option>                                       
                                     </select>
-                                    <label for="cboMunicipio">Municipio</label>
+                                    <label for="cboCiudad">Ciudad</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Inscrito</option>
-                                        <option value="2">No Habilitado</option>
-                                        <option value="1">Por Inscribirse</option>
-                                        <option value="0">No Aplica</option>
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsEstaTYT,"IdEstadotyt","DescripcionEstadotyt"))" class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                        <option value="">Selecciona un estado...</option>
                                     </select>
-                                    <label for="cboEstadoPruebatyt">Estado tyt</label>
+                                    <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Productiva</option>
-                                        <option value="2">Contratado</option>
-                                        <option value="1">certificado</option>
-                                        <option value="0">Por certificar</option>
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsPrograma,"CodigoPrograma","NombrePrograma"))" class="form-control form-control-sm" id="cboPrograma">
+                                        <option value="">Selecciona un programa...</option>                                     
                                     </select>
-                                    <label for="cboEstadoAprendiz">Estado</label>
+                                    <label for="cboPrograma">Programa</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Inscrito</option>
-                                        <option value="2">No Inscrito</option>
-                                        <option value="1">Por Inscribirse</option>
-                                        <option value="0">No Aplica</option>
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsFichas,"Ficha1","Ficha1"))" class="form-control form-control-sm" id="cboFicha">
+                                        <option value="">Selecciona una ficha...</option>
                                     </select>
-                                    <label for="cboEstadoAprendiz">Estado TyT</label>
-
+                                    <label for="cboFicha">Fichas</label>
                                 </div>
                             </div>
 
