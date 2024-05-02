@@ -21,6 +21,18 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             var itemsTipoDoc= await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
+            var itemsEstAprndz = await _dbSiscanContext.EstadoAprendizs.ToListAsync();
+            ViewBag.ItemsEstAprndz = itemsEstAprndz; 
+            var itemsDepartamento = await _dbSiscanContext.Departamentos.ToListAsync();
+            ViewBag.ItemsDepartamento = itemsDepartamento;
+            var itemsCiudad = await _dbSiscanContext.Ciudads.ToListAsync();
+            ViewBag.ItemsCiudad = itemsCiudad;
+            var itemsEstaTYT = await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync();
+            ViewBag.ItemsEstaTYT = itemsEstaTYT;
+            var itemsPrograma = await _dbSiscanContext.Programas.ToListAsync();
+            ViewBag.ItemsPrograma = itemsPrograma;
+            var itemsFichas = await _dbSiscanContext.Fichas.ToListAsync();
+            ViewBag.ItemsFichas = itemsFichas;
             return View();
         }
         [HttpGet]
