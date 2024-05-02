@@ -22,29 +22,20 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             var itemsTipoDoc= await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
-            //if (ModelState.IsValid)
-            //{
-            //    var kk = new Aprendiz()
-            //    {
-            //        NombreAprendiz = ap.NombreAprendiz,
-            //        ApellidoAprendiz = ap.ApellidoAprendiz,
-            //        NumeroDocumentoAprendiz = ap.NumeroDocumentoAprendiz,
-            //        CorreoAprendiz  = ap.CorreoAprendiz,
-            //        CelAprendiz = ap.CelAprendiz,
-            //        IdTipodocumento = ap.IdTipodocumento,
-            //        NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
-            //        CorreoAcuediente = ap.CorreoAcuediente,
-            //        CelularAcudiente = ap.CelularAcudiente,
-            //        Ficha = ap.Ficha,
-            //        IdCiudad = ap.IdCiudad,
-            //        IdEstadoAprendiz = ap.IdEstadoAprendiz,
-            //        IdEstadoTyt = ap.IdEstadoTyt
-            //    };
-            //    _dbSiscanContext.Aprendiz.Add(ap);
-            //    _dbSiscanContext.SaveChanges();
-            //    return RedirectToAction("Exito");
-            //}
             return View(/*"Registro", ap*/);
+            var itemsEstAprndz = await _dbSiscanContext.EstadoAprendizs.ToListAsync();
+            ViewBag.ItemsEstAprndz = itemsEstAprndz; 
+            var itemsDepartamento = await _dbSiscanContext.Departamentos.ToListAsync();
+            ViewBag.ItemsDepartamento = itemsDepartamento;
+            var itemsCiudad = await _dbSiscanContext.Ciudads.ToListAsync();
+            ViewBag.ItemsCiudad = itemsCiudad;
+            var itemsEstaTYT = await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync();
+            ViewBag.ItemsEstaTYT = itemsEstaTYT;
+            var itemsPrograma = await _dbSiscanContext.Programas.ToListAsync();
+            ViewBag.ItemsPrograma = itemsPrograma;
+            var itemsFichas = await _dbSiscanContext.Fichas.ToListAsync();
+            ViewBag.ItemsFichas = itemsFichas;
+            return View();
         }
         [HttpGet]
         public async Task<IActionResult> Consultar()
