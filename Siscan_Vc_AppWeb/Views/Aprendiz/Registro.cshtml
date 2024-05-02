@@ -2,6 +2,7 @@
     ViewData["Title"] = "Registro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Siscan_Vc_AppWeb.Models.ViewModels.ViewModelAprendiz
 
 
 
@@ -15,7 +16,7 @@
 
                 </div>
                 <div class="card-body">
-                    <form method="post" action="@Url.Action("Registrar", "Aprendiz")">
+                    <form method="post" action="@Url.Action("Registro", "Aprendiz")">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -181,7 +182,7 @@
                         </div>
 
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><input type="submit" class="btn text-center btn-block" style="font-size:20px" href="#" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal"></input></div>
+                            <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrar</button></div>
                         </div>
                     </form>
                 </div>

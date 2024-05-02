@@ -37,6 +37,36 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewBag.ItemsFichas = itemsFichas;
             return View();
         }
+    
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Registro(Aprendiz ap)
+        {
+            if (ModelState.IsValid)
+            {
+                var aprendiz = new Aprendiz()
+                {
+                    NumeroDocumentoAprendiz = ap.NumeroDocumentoAprendiz,
+                    NombreAprendiz = ap.NombreAprendiz,
+                    ApellidoAprendiz = ap.ApellidoAprendiz,
+                    CelAprendiz = ap.CelAprendiz,
+                    CorreoAprendiz = ap.CorreoAprendiz,
+                    DireccionAprendiz = ap.DireccionAprendiz,
+                    NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
+                    CorreoAcuediente = ap.CorreoAcuediente,
+                    CelularAcudiente = ap.CelularAcudiente,
+                    IdEstadoTyt = ap.IdEstadoTyt,
+                    IdTipodocumento = ap.IdTipodocumento,
+                    IdCiudad = ap.IdCiudad
+                };
+               await _aprendizService.Insert(aprendiz);
+                return RedirectToAction(nameof(Consultar));
+            }
+        
+            
+            return View(ap);
+        }
+
         [HttpGet]
         public async Task<IActionResult> Consultar()
         {
@@ -61,42 +91,16 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       IdCiudad = a.IdCiudad,
                                                       IdEstadoAprendiz = a.IdEstadoAprendiz,
                                                       nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
-                                                    
+
                                                   }
                                                   ).ToList();
 
             //var aprendiz = _dbSiscanContext.Aprendiz;
             return View(listaAprendiz);
         }
-        [HttpPost]
-        public async Task<IActionResult> Registro(Aprendiz ap)
-        {
-            if (ModelState.IsValid)
-            {
-                var aprendiz = new Aprendiz()
-                {
-                    NumeroDocumentoAprendiz = ap.NumeroDocumentoAprendiz,
-                    NombreAprendiz = ap.NombreAprendiz,
-                    ApellidoAprendiz = ap.ApellidoAprendiz,
-                    CelAprendiz = ap.CelAprendiz,
-                    CorreoAprendiz = ap.CorreoAprendiz,
-                    DireccionAprendiz = ap.DireccionAprendiz,
-                    NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
-                    CorreoAcuediente = ap.CorreoAcuediente,
-                    CelularAcudiente = ap.CelularAcudiente,
-                    IdEstadoTyt = ap.IdEstadoTyt,
-                    IdTipodocumento = ap.IdTipodocumento,
-                    IdCiudad = ap.IdCiudad
-                };
-                _aprendizService.Insert(aprendiz);
-                return RedirectToAction("Consultar");
-            }
+
+
         
-            
-            return View("Registro",ap);
-        }
-
-
         public IActionResult Editar()
         {
             return View();
