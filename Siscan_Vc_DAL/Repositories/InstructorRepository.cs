@@ -14,11 +14,11 @@ namespace Siscan_Vc_DAL.Repositories
         {
             _dbSiscanContext = dbSiscanContext;
         }
-        public async Task<bool> Delete(string numDoc)
+        public async Task<bool> Delete(string id)
         {
             try
             {
-                Instructor instructor = _dbSiscanContext.Instructors.First(i => i.NumeroDocumentoInstructor == numDoc);
+                Instructor instructor = _dbSiscanContext.Instructors.First(i => i.NumeroDocumentoInstructor == id);
                 _dbSiscanContext.Remove(instructor);
                 await _dbSiscanContext.SaveChangesAsync();
                 return true;
