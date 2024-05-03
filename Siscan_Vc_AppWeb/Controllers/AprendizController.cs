@@ -46,21 +46,27 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 var aprendiz = new Aprendiz()
                 {
+                    IdTipodocumento = ap.IdTipodocumento,
                     NumeroDocumentoAprendiz = ap.NumeroDocumentoAprendiz,
                     NombreAprendiz = ap.NombreAprendiz,
                     ApellidoAprendiz = ap.ApellidoAprendiz,
                     CelAprendiz = ap.CelAprendiz,
-                    CorreoAprendiz = ap.CorreoAprendiz,
+
                     DireccionAprendiz = ap.DireccionAprendiz,
-                    NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
-                    CorreoAcuediente = ap.CorreoAcuediente,
-                    CelularAcudiente = ap.CelularAcudiente,
+                    CorreoAprendiz = ap.CorreoAprendiz,
+                    IdEstadoAprendiz = ap.IdEstadoAprendiz,
+                    IdCiudad = ap.IdCiudad,
                     IdEstadoTyt = ap.IdEstadoTyt,
-                    IdTipodocumento = ap.IdTipodocumento,
-                    IdCiudad = ap.IdCiudad
+                    Ficha = ap.Ficha,
+
+                    NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
+
+                    CelularAcudiente = ap.CelularAcudiente,
+                    CorreoAcuediente = ap.CorreoAcuediente
                 };
-               await _aprendizService.Insert(aprendiz);
-                return RedirectToAction(nameof(Consultar));
+                _dbSiscanContext.Aprendiz.Add(aprendiz);
+                _dbSiscanContext.SaveChanges();
+                return RedirectToAction(nameof(Registro));
             }
         
             
