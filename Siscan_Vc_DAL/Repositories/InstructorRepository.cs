@@ -36,11 +36,13 @@ namespace Siscan_Vc_DAL.Repositories
             catch { return null; }
         }
 
-        public async Task<Instructor> GetForDoc(string numeroDoc)
+     
+
+        public async Task<Instructor> GetForId(string id)
         {
             try
             {
-                return await _dbSiscanContext.Instructors.FindAsync(numeroDoc);
+                return await _dbSiscanContext.Instructors.FindAsync(id);
             }
             catch { return null; }
         }
