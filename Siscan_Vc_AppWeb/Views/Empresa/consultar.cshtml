@@ -1,0 +1,230 @@
+﻿@{
+    ViewData["Title"] = "consultar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+
+<div id="wrapper">
+
+
+
+
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+
+            <div class="container-fluid">
+
+                <div class="col py-3">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="fondomenu py-3 px-5 ">
+                            <h1>consultar</h1>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div class="list-group">
+                                <label for="exampleDataList" class="form-label">Digite el nombre de la Empresa</label>
+                                <input class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Buscar...">
+                                <datalist id="Empresas">
+                                   @*  @foreach (var nombreEmpresa in ViewBag.nombreEmpresa)
+                                    {
+                                        <option value="@nombreEmpresa"></option>
+
+                                    } *@
+                                </datalist>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Page Heading -->
+                    <!-- Content Row -->
+                    <br />
+                    <br />
+                    <br />
+                    <div class="row">
+
+                        <!-- Area Chart - Ventas de los ultimos 7 días -->
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="fondomenu py-3 px-5">
+                                    <img src="~/img/edificio-de-oficinas.png" alt="Alternate Text" width="50" />
+                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Empresa</h6>
+
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="" style="height: 320px !important ;">
+                                        <div class="list-group">
+                                            <label id="labelEmpresa"></label>
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Pie Chart - Productos más vendidos-->
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div class="fondomenu py-3 px-5 ">
+                                    <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
+                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Coformador Empresa</h6>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="list-group" style="height: 320px !important ;">
+                                        <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                            <thead class="boton2 ms-auto">
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Nombres</th>
+                                                    <th>Apellidos</th>
+                                                    <th>Telefono</th>
+                                                    <th>Correo</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>WDHPQW8</td>
+                                                    <td>12312312</td>
+                                                    <td>Marca 1</td>
+                                                    <td>Descripcion 1</td>
+                                                    <td>
+                                                        <a class="btn  btn-sm">
+                                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                                        </a>
+                                                        <a class="btn btn-sm">
+                                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>WIEYEO2I</td>
+                                                    <td>12312312</td>
+                                                    <td>Marca 2</td>
+                                                    <td>Descripcion 2</td>
+                                                    <td>
+                                                        <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
+                                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                                        </a>
+                                                        <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
+                                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class="col">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="fondomenu py-3 px-5 ">
+                            <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
+                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">Aprendices Vinculados</h6>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div class="list-group">
+                                <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                    <thead class="boton2 ms-auto">
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Telefono</th>
+                                            <th>Correo</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>1</td>
+                                            <td>WDHPQW8</td>
+                                            <td>12312312</td>
+                                            <td>Marca 1</td>
+                                            <td>Descripcion 1</td>
+                                            <td>
+                                                <a class="btn  btn-sm">
+                                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                                </a>
+                                                <a class="btn btn-sm">
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>2</td>
+                                            <td>WIEYEO2I</td>
+                                            <td>12312312</td>
+                                            <td>Marca 2</td>
+                                            <td>Descripcion 2</td>
+                                            <td>
+                                                <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
+                                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                                </a>
+                                                <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @section Scripts {
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script>
+            $(document).ready(function () {
+                $('#inputEmpresa').on('input', function () {
+                    var term = $(this).val();
+                    $.ajax({
+                        url: '@Url.Action("nombreEmpresa", "Empresa")',
+                        type: 'GET',
+                        data: { term: term },
+                        success: function (data) {
+                            $('#Empresas').empty();
+                            $.each(data, function (index, value) {
+                                $('#Empresas').append('<option value="' + value + '"></option>');
+                            });
+                        }
+                    });
+                });
+
+                // Evento change para actualizar el label
+                $('#inputEmpresa').on('change', function () {
+                    var selectedValue = $(this).val();
+                    $('#labelEmpresa').text(selectedValue);
+                });
+            });
+        </script>
+    }
+

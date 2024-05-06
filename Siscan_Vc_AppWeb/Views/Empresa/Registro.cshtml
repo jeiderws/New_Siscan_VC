@@ -45,13 +45,6 @@
                                                     <input class="form-control" id="inputDireccion" type="text" placeholder="Ingresa el NIT de la empresa " />
                                                     <label for="inputDireccion"> NIT Empresa</label>
 
-                                                    @* <select class="form-control form-control-sm" id="cboTipoDocumento">
-                                                        <option value="3">Selecciona un tipo de documento...</option>
-                                                        <option value="2">C.C</option>
-                                                        <option value="1">T.I</option>
-                                                        <option value="0">PPT</option>
-                                                    </select>
-                                                    <label for="cboTipoDocumento">Tipo Documento</label> *@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
@@ -106,7 +99,7 @@
                                         </div>
 
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrarse</button></div>
+                                            <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#RegistroEmpresaModal">Registrarse</button></div>
                                             </div>
                                     </form>
                                 </div>
@@ -170,7 +163,7 @@
                                         </div>
 
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrarse</button></div>
+                                            <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#RegistroCoformadorModal">Registrarse</button></div>
                                             </div>
                                     </form>
 
@@ -187,46 +180,88 @@
 
     </div>
     <!-- End of Main Content -->
+    <!-- Modal de confirmación de registro -->
+    <div class="modal fade" id="RegistroEmpresaModal" tabindex="-1" aria-labelledby="RegistroEmpresaModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header fondo3">
+                    <h5 class="modal-title " id="RegistroEmpresaModalLabel">Confirmación de Registro de Empresa</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    ¿Está seguro de que desea registrar?
+                </div>
+                <div class="modal-footer boton2">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                    <a href="@Url.Action("Registro", "Empresa")" class="btn btn-primary" id="confirmarRegistroBtn">Confirmar Registro</a>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
+<!-- Modal de confirmación de registro -->
+<div class="modal fade" id="RegistroCoformadorModal" tabindex="-1" aria-labelledby="RegistroCoformadorModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header fondo3">
+                <h5 class="modal-title " id="RegistroCoformadorModalLabel">Confirmación de Registro de Coformador</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea registrar?
+            </div>
+            <div class="modal-footer boton2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <a href="@Url.Action("Registro", "Empresa")" class="btn btn-primary" id="confirmarRegistroBtn2">Confirmar Registro</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+   
 @section Scripts {
 
     <script>
         $(document).ready(function () {
-            $("#confirmarEliminacionBtn").click(function () {
+            $("#confirmarRegistroBtn").click(function () {
+                // Aquí puedes realizar una llamada Ajax para realizar el registro
+                // Por ahora, simularemos el registro exitoso
+                var registroExitoso = true; // Cambia a false para simular un registro fallido
 
-                var eliminadoExitoso = true;
-
-                if (eliminadoExitoso == true) {
-
-                    alert("¡Eliminado exitoso!");
+                if (registroExitoso) {
+                    // Mostrar alerta de registro exitoso
+                    alert("¡Registro exitoso!");
 
                 } else {
-
-                    alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+                    // Mostrar alerta de fallo de registro
+                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
                 }
 
-                $("#confirmacionEliminacionModal").modal('hide');
+                // Cierra el modal
+                $("#RegistroCoformadorModal").modal('hide');
             });
         });
     </script>
 
     <script>
         $(document).ready(function () {
-            $("#confirmarEliminacionBtn").click(function () {
+            $("#confirmarRegistroBtn2").click(function () {
+                // Aquí puedes realizar una llamada Ajax para realizar el registro
+                // Por ahora, simularemos el registro exitoso
+                var registroExitoso = true; // Cambia a false para simular un registro fallido
 
-                var eliminadoExitoso = true;
-
-                if (eliminadoExitoso == true) {
-
-                    alert("¡Eliminado exitoso!");
+                if (registroExitoso) {
+                    // Mostrar alerta de registro exitoso
+                    alert("¡Registro exitoso!");
 
                 } else {
-
-                    alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+                    // Mostrar alerta de fallo de registro
+                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
                 }
 
-                $("#confirmacionEliminacionModal").modal('hide');
+                // Cierra el modal
+                $("#RegistroEmpresaModal").modal('hide');
             });
         });
     </script>
