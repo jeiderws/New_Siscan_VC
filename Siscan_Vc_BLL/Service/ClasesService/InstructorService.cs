@@ -28,7 +28,7 @@ namespace Siscan_Vc_BLL.Service.ClasesService
 
         public Task<Instructor> GetForDoc(string numeroDoc)
         {
-            return _instructorrepo.GetForDoc(numeroDoc);
+            return _instructorrepo.GetForId(numeroDoc);
         }
 
         public async Task<Instructor> GetForName(string name)

@@ -10,8 +10,8 @@ namespace Siscan_Vc_DAL.Repositories
     {
         Task<bool> Insert(TEntityModel model);
         Task<bool> Update(TEntityModel model);
-        Task<bool> Delete(string numDoc);
-        Task<TEntityModel> GetForDoc(string numeroDoc);
+        Task<bool> Delete(string id);
+        Task<TEntityModel> GetForId(string id);
         Task<IQueryable<TEntityModel>> GetAll();
 
     }

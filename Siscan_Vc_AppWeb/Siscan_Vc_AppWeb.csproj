@@ -18,6 +18,7 @@
 	
 	<ItemGroup>
 		<ProjectReference Include="..\Siscan_Vc_BLL\Siscan_Vc_BLL.csproj" />
+		<ProjectReference Include="..\Siscan_Vc_DAL\Siscan_Vc_DAL.csproj" />
 		<ProjectReference Include="..\Siscan_Vc_Model\Siscan_Vc_Model.csproj" />
 	</ItemGroup>
 

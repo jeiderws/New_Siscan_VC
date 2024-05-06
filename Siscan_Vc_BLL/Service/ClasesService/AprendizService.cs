@@ -28,7 +28,7 @@ namespace Siscan_Vc_BLL.Service
 
         public async Task<Aprendiz> GetForDoc(string numeroDoc)
         {
-            return await _aprendizrepo.GetForDoc(numeroDoc);
+            return await _aprendizrepo.GetForId(numeroDoc);
         }
 
         public async Task<Aprendiz> GetForName(string name)

@@ -15,11 +15,11 @@ namespace Siscan_Vc_DAL.Repositories
         {
             _dbSiscanContext = dbSiscanContext;
         }
-        public async Task<bool> Delete(string numDoc)
+        public async Task<bool> Delete(string id)
         {
             try
             {
-                Aprendiz aprendiz = _dbSiscanContext.Aprendiz.First(a => a.NumeroDocumentoAprendiz == numDoc);
+                Aprendiz aprendiz = _dbSiscanContext.Aprendiz.First(a => a.NumeroDocumentoAprendiz == id);
                 _dbSiscanContext.Remove(aprendiz);
                 await _dbSiscanContext.SaveChangesAsync();
                 return true;
@@ -37,11 +37,12 @@ namespace Siscan_Vc_DAL.Repositories
             catch { return null; }
         }
 
-        public async Task<Aprendiz> GetForDoc(string numeroDoc)
+       
+        public async Task<Aprendiz> GetForId(string id)
         {
             try
             {
-                return await _dbSiscanContext.Aprendiz.FindAsync(numeroDoc);
+                return await _dbSiscanContext.Aprendiz.FindAsync(id);
             }
             catch { return null; }
         }
