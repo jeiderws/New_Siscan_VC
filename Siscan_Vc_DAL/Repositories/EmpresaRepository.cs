@@ -43,7 +43,7 @@ namespace Siscan_Vc_DAL.Repositories
         {
             try
             {
-                return await _dbcontext.Empresas.FindAsync(id)
+                return await _dbcontext.Empresas.FindAsync(id);
             }
             catch { return null; }
         }

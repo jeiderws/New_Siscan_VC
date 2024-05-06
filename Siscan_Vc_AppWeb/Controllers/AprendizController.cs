@@ -9,9 +9,9 @@ namespace Siscan_Vc_AppWeb.Controllers
 {
     public class AprendizController : Controller
     {
-        private readonly AprendizService _aprendizService;
+        private readonly IAprendizService _aprendizService;
         private readonly DbSiscanContext _dbSiscanContext;
-        public AprendizController(AprendizService aprendizService, DbSiscanContext dbSiscanContext)
+        public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext)
         {
             _dbSiscanContext = dbSiscanContext;
             _aprendizService = aprendizService;
