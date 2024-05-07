@@ -65,7 +65,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CorreoAcuediente = ap.CorreoAcuediente
                 };
                 _dbSiscanContext.Aprendiz.Add(aprendiz);
-                _dbSiscanContext.SaveChanges();
+                await _dbSiscanContext.SaveChangesAsync();
+                //return Json(new { success = true });
                 return RedirectToAction(nameof(Registro));
             }
         
