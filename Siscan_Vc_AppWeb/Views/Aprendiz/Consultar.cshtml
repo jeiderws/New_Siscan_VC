@@ -2,7 +2,8 @@
     ViewData["Title"] = "Consultar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@model List<Siscan_Vc_AppWeb.Models.ViewModels.ViewModelAprendiz>
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelviewAp
+
 
 @section Estilos {
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
@@ -23,18 +24,20 @@
                 <br /> *@
                 <div class="col-md-6 py-3 px-5">
 
-                    <form class="d-none d-md-inline-block form-inline mb-4">
+
+                    <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Aprendiz" asp-action="Consultar">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150" />
-                            <button class="boton" id="btnNavbarSearch">Buscar</button>
+                            <input class="form-control" name="name" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150" />
+                            <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
 
                         </div>
 
                     </form>
+                    
 
                 </div>
                 @* <br /> *@
-
+                <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
                 <div class="card-body table-responsive">
                     <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
                         <thead class="boton2 ms-auto">
@@ -52,36 +55,88 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var aprendiz in Model)
-                            {
-                                <tr>
-                                    <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
-                                    <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
-                                    <td>
-                                        <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
-                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                        </a>
-                                        <a class="btn btn-sm">
-                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
-                                        </a>
-                                    </td>
-                                </tr>
+                            @{
+                                
+                             
+                                            <tr>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.IdTipodocumentoNavigation.TipoDocumento1)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.NumeroDocumentoAprendiz)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.NombreAprendiz)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.ApellidoAprendiz)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
+                                                <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
+                                                <td>
+                                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                                        <img src="~/img/editar.png" alt="Alternate Text" width="28" />
+                                                    </a>
+                                                    <a class="btn btn-sm">
+                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="28" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                
+
                             }
 
 
 
                         </tbody>
                     </table>
-                     
                 </div>
-                <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
+                <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
+                <div class="card-body table-responsive">
+                    <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                        <thead class="boton2 ms-auto">
+                            <tr>
+                                <th>Tipo Documento</th>
+                                <th>Documento</th>
+                                <th>Nombres</th>
+                                <th>Apellidos</th>
+                                <th>Telefono</th>
+                                <th>Correo</th>
+                                <th>ficha</th>
+                                <th>Estado Aprendiz</th>
+                                <th>Estado pruebas tyt</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                  foreach (var aprendiz in Model.ListaAprendices)
+                                    {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
+                                                    <td>
+                                                        <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                                            <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                        </a>
+                                                        <a class="btn btn-sm">
+                                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                    }
+                                
+                             }
+
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+                @*  <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" /> *@
             </div>
         </div>
     </div>
@@ -111,6 +166,13 @@
 @section Scripts {
 
     <script>
+        
+        var tabla1 = document.querySelector('#tbdata');
+        var tabla2 = document.querySelector('#tbdata2');
+
+       
+
+
         $(document).ready(function () {
             $("#confirmarEliminacionBtn").click(function () {
 
