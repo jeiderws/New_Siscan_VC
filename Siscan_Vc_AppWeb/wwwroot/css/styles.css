@@ -119,6 +119,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
     color: #f7f7f7;
     line-height: 1.2;
 }
+
 .nombre{
      position:relative;
      bottom:0px;
@@ -136,8 +137,8 @@ titulo {
 }
 .mover1 {
     position: relative;
-    left: 25vw;
-    bottom: 368px;
+    left: 23vw;
+    bottom: 150hw;
    
 }
 
@@ -383,6 +384,12 @@ th {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
+    font-size : 13px;
+}
+thead{
+    position : sticky;
+    top:-20px;
+    left:0px;
 }
 
 label {

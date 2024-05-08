@@ -27,7 +27,7 @@
 
                     <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Aprendiz" asp-action="Consultar">
                         <div class="input-group">
-                            <input class="form-control" name="name" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150" />
+                            <input class="form-control" name="nmdoc" type="text" placeholder="Numero Documento..." aria-label="Numero Documento..." aria-describedby="btnNavbarSearch" width="150" />
                             <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
 
                         </div>
@@ -87,7 +87,7 @@
                     </table>
                 </div>
                 <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
-                <div class="card-body table-responsive">
+                <div class="card-body table-responsive" style="height:450px; overflow-y:scroll">
                     <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
                         <thead class="boton2 ms-auto">
                             <tr>
@@ -136,7 +136,7 @@
                     </table>
 
                 </div>
-                @*  <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" /> *@
+                 <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
             </div>
         </div>
     </div>

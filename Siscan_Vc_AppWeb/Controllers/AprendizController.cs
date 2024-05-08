@@ -77,7 +77,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Consultar(string name)
+        public async Task<IActionResult> Consultar(string nmdoc)
         {
 
 
@@ -108,7 +108,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             Aprendiz aprendiz = new Aprendiz();
             foreach(var aprendi in queryAprendiz)
             {
-                if (aprendi.NombreAprendiz == name)
+                if (aprendi.NumeroDocumentoAprendiz == nmdoc)
                 {
                     aprendiz = aprendi;
                 }
