@@ -35,7 +35,7 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Total de aprendices registrados
                                         </div>
-                                        <div class=" mb-0 font-weight-bold text-black-800" id="totalaprendiz">3000</div>
+                                        <div class=" mb-0 font-weight-bold text-black-800" id="totalaprendiz">@Model.Count()</div>
                                     </div>
                                     <div class="col-auto">
                                         <img src="~/img/estudiante2.png" alt="Alternate Text" width="60" />
@@ -53,7 +53,23 @@
                                         <div class="text-xs font-weight-bold text-success  text-uppercase mb-1">
                                             Aprendices sin contrato
                                         </div>
-                                        <div class=" mb-0 font-weight-bold text-black-800" id="sincontrato">30</div>
+                                        <div class=" mb-0 font-weight-bold text-black-800" id="sincontrato">
+                                            @{
+                                                int aprendSincotrato = 0;
+
+                                                if (Model != null)
+                                                {
+                                                    foreach (var aprendiz in Model)
+                                                    {
+                                                        if (aprendiz.IdEstadoAprendiz == 1)
+                                                        {
+                                                            aprendSincotrato++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            @aprendSincotrato
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <img src="~/img/plagio.png" alt="Alternate Text" width="60" />
@@ -72,7 +88,25 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Aprendices contratados
                                         </div>
-                                        <div class=" mb-0 font-weight-bold text-black-800" id="contratados">215</div>
+                                        <div class=" mb-0 font-weight-bold text-black-800" id="contratados">
+                                            @{
+                                                int aprenConnContrato = 0;
+
+                                                if (Model != null)
+                                                {
+                                                    foreach (var aprendiz in Model)
+                                                    {
+                                                        if (aprendiz.IdEstadoAprendiz == 2)
+                                                        {
+                                                            aprenConnContrato++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            @aprenConnContrato
+
+
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <img src="~/img/contrato.png" alt="Alternate Text" width="60" />
@@ -91,7 +125,24 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Aprendices por certificar
                                         </div>
-                                        <div class=" mb-0 font-weight-bold text-black-800" id="certificar">50</div>
+                                        <div class=" mb-0 font-weight-bold text-black-800" id="certificar">
+                                            @{
+                                                int aprendzPorCertifi = 0;
+
+                                                if (Model != null)
+                                                {
+                                                    foreach (var aprendiz in Model)
+                                                    {
+                                                        if (aprendiz.IdEstadoAprendiz == 3)
+                                                        {
+                                                            aprendzPorCertifi++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            @aprendzPorCertifi
+
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <img src="~/img/aprender-en-linea.png" alt="Alternate Text" width="60" />
@@ -112,7 +163,24 @@
                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                             Aprendices certificados
                                         </div>
-                                        <div class=" mb-0 font-weight-bold text-black-800" id="certificados">18</div>
+                                        <div class=" mb-0 font-weight-bold text-black-800" id="certificados">
+                                            @{
+                                                int aprendzCertificado = 0;
+
+                                                if (Model != null)
+                                                {
+                                                    foreach (var aprendiz in Model)
+                                                    {
+                                                        if (aprendiz.IdEstadoAprendiz == 4)
+                                                        {
+                                                            aprendzCertificado++;
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            @aprendzCertificado
+
+                                        </div>
                                     </div>
                                     <div class="col-auto">
                                         <img src="~/img/certificado.png" alt="Alternate Text" width="60" />
