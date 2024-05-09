@@ -86,6 +86,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CelularAcudiente = ap.CelularAcudiente,
                     CorreoAcuediente = ap.CorreoAcuediente
                 };
+                TempData["MensajeAlert"] = "Usuario gurdado correctamente";
                 _dbSiscanContext.Aprendiz.Add(aprendiz);
                 _dbSiscanContext.SaveChanges();
                 return RedirectToAction(nameof(Registro));

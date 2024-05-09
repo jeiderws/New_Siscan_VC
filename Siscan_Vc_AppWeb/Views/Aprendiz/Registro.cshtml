@@ -73,7 +73,8 @@ t-5">
                                 <div class="form-floating mb-3">
 
                                     <select asp-for="IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option>Selecciona un estado...</option>
+                                 <option>Selecciona un estado...</option>
+                                        <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
                                 </div>
@@ -93,6 +94,8 @@ t-5">
                                 <div class="form-floating mb-3">
                                     <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
+                                    <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ItemsCiudad,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboMunicipio">
+                                        <option value="4">Selecciona una ciudad...</option>
                                     </select>
                                     <label for="cboCiudad">Ciudad</label>
                                 </div>
@@ -180,8 +183,16 @@ t-5">
                         </div>
 
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrar</button></div>
+                            <div class="d-grid boton2">
+                                @* <button type="submit" class="btn text-center btn-block" style="font-size:20px" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrar</button> *@
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmSave()">Registrar</button>
+
+                            </div>
                         </div>
+                        @if(TempData["MensajeAlert"]!=null){
+                            <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
+                        }
+
                     </form>
                 </div>
 
@@ -198,7 +209,7 @@ t-5">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Está seguro de que desea registrar?
+                ¿Está seguro de que desea registrar? 
             </div>
             <div class="modal-footer boton2">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -211,6 +222,12 @@ t-5">
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script>
+        function confirmSave() {
+            return confirm("¿Estás seguro de que deseas guardar?");
+        }
+    </script>
+
+    @*   <script>
         $(document).ready(function () {
             $("#confirmarRegistroBtn").click(function () {
                 // Aquí puedes realizar una llamada Ajax para realizar el registro
@@ -230,7 +247,7 @@ t-5">
                 $("#confirmacionRegistroModal").modal('hide');
             });
         });
-    </script>
+    </script> *@
 
     <script>
         $(document).ready(function () {
