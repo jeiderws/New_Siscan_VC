@@ -24,28 +24,35 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> CargarCiudades(int departamentoId)
         {
             var ciudades = await _dbSiscanContext.Ciudads.Where(c => c.IdDepartamento == departamentoId).ToListAsync();
+            ViewBag.ciudades = ciudades;
             return Json(ciudades);
-        
-        }
 
+        }
+        [HttpGet]
+        public async Task<IActionResult> Cargarprograma(int programa)
+        {
+            var ficha = await _dbSiscanContext.Fichas.Where(f => f.CodigoPrograma == programa.ToString()).ToListAsync();
+            ViewBag.ficha = ficha;
+            return Json(ficha);
+
+        }
         public async Task<IActionResult> Registro()
         {
             var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
-
+          
             var itemsEstAprndz = await _dbSiscanContext.EstadoAprendizs.ToListAsync();
             ViewBag.ItemsEstAprndz = itemsEstAprndz;
             var itemsDepartamento = await _dbSiscanContext.Departamentos.ToListAsync();
             ViewBag.ItemsDepartamento = itemsDepartamento;
-            var itemsCiudad = await _dbSiscanContext.Ciudads.ToListAsync();
-            ViewBag.ItemsCiudad = itemsCiudad;
+            ViewBag.ciudades = new List<Ciudad>();
+         
             var itemsEstaTYT = await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync();
             ViewBag.ItemsEstaTYT = itemsEstaTYT;
             var itemsPrograma = await _dbSiscanContext.Programas.ToListAsync();
             ViewBag.ItemsPrograma = itemsPrograma;
-            var itemsFichas = await _dbSiscanContext.Fichas.ToListAsync();
-            ViewBag.ItemsFichas = itemsFichas;
-         
+             ViewBag.ficha = new List<Ficha>();
+
 
             return View();
 

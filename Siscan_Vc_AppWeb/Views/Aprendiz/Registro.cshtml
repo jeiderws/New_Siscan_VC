@@ -1,4 +1,4 @@
-﻿ @{
+﻿@{
     ViewData["Title"] = "Registro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,7 +18,7 @@ t-5">
 
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-action="Registro"  >
+                    <form method="post" asp-action="Registro">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -70,20 +70,20 @@ t-5">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">                                   
-                                  
+                                <div class="form-floating mb-3">
+
                                     <select asp-for="IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option>Selecciona un estado...</option>                                    
+                                        <option>Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
                                 </div>
                             </div>
 
-                           
+
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select  asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
@@ -91,8 +91,8 @@ t-5">
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ItemsCiudad,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboMunicipio">
-                                        <option value="4">Selecciona una ciudad...</option>                                       
+                                    <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
+                                        <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label for="cboCiudad">Ciudad</label>
                                 </div>
@@ -108,14 +108,14 @@ t-5">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-items="@(new SelectList(ViewBag.ItemsPrograma,"CodigoPrograma","NombrePrograma"))" class="form-control form-control-sm" id="cboPrograma">
-                                        <option value="">Selecciona un programa...</option>                                     
+                                        <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="Ficha" asp-items="@(new SelectList(ViewBag.ItemsFichas,"Ficha1","Ficha1"))" class="form-control form-control-sm" id="cboFicha">
+                                    <select asp-for="Ficha" asp-items="@(new SelectList(ViewBag.ficha,"Ficha1","Ficha1"))" class="form-control form-control-sm" id="cboFicha">
                                         <option value="">Selecciona una ficha...</option>
                                     </select>
                                     <label for="cboFicha">Fichas</label>
@@ -147,7 +147,7 @@ t-5">
                         <!-- fin Acudiente -->
                         <br />
 
-                         <!-- Pruebas tyt-->
+                        <!-- Pruebas tyt-->
 
                         <div class="row mb-3" id="pruebatyt" style="display:none">
                             <div class="fondomenu py-3 px-5">
@@ -233,11 +233,45 @@ t-5">
     </script>
 
     <script>
+        $(document).ready(function () {
+            $('#cboDepartamentos').change(function () {
+                var departamentoId = $(this).val(); // Obtener el valor seleccionado
 
-        document.getElementById("cboDepartamentos").addEventListener("change", function () {
-            var id = this.value;
-              
-           alert(id)
-        })
+                $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
+                    $('#cboCiudad').empty();
+                    $.each(data, function (index, ciudad) {
+                        $('#cboCiudad').append($('<option>',
+                            {
+                                value: ciudad.idCiudad,
+                                text: ciudad.nombreCiudad
+                            }
+                        )
+                        );
+
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#cboPrograma').change(function () {
+                var programa = $(this).val(); // Obtener el valor seleccionado
+                
+                $.get('@Url.Action("Cargarprograma", "Aprendiz")', { programa: programa }, function (data) {
+                    $('#cboFicha').empty();
+                    $.each(data, function (index, ficha) {
+                        $('#cboFicha').append($('<option>',
+                            {
+                                value: ficha.ficha1,
+                                text: ficha.ficha1
+                            }
+                        )
+                        );
+
+                    });
+                });
+            });
+        });
     </script>
 }
