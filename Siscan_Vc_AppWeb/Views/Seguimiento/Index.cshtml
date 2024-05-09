@@ -3,480 +3,435 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-<!-- Page Wrapper -->
-<div id="wrapper">
+<div id="content-wrapper" class="d-flex flex-column">
 
+    <!-- Main Content -->
+    <div id="content">
 
+        
+        <div class="container-fluid">
 
+            <!-- Page Heading -->
+            <br />
+            <br />
 
+           @*  <!-></!-> *@
 
-    <!-- Content Wrapper -->
-    <div id="content-wrapper" class="d-flex flex-column">
+            <div class="row">
 
-        <!-- Main Content -->
-        <div id="content">
+                <!-- Area Chart - Ventas de los ultimos 7 días -->
+                <div class="col-xl-8 col-lg-7">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="fondomenu py-3 px-5">
+                            <img src="~/img/estudiante.png" alt="Alternate Text" width="50" />
+                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices en Seguimiento</h6>
 
-            <!-- Topbar -->
-            <!-- End of Topbar -->
-            <!-- Begin Page Content -->
-            <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <br />
-                <br />
-
-                <!-- Content Row -->
-                <div class="row">
-                    <!-- Total de aprendiz -->
-                    <!-- Aprendices sin contrato -->
-                    <!-- Aprendices contratados -->
-                    <!-- Aprendices por certificar -->
-                    <!-- Aprendices certificados -->
-                    <!-- Content Row -->
-
-                    <div class="row">
-
-                        <!-- Area Chart - Ventas de los ultimos 7 días -->
-                        <div class="col-xl-8 col-lg-7">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="fondomenu py-3 px-5">
-                                    <img src="~/img/estudiante.png" alt="Alternate Text" width="50" />
-                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices en Seguimiento</h6>
-
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="" style="height: 350px !important;">
-                                        <table id="datatablesSimple">
-                                            <thead>
-                                                <tr>
-                                                    <th>Nombres</th>
-                                                    <th>Apellidos</th>
-                                                    <th>Documento</th>
-                                                    <th>ficha</th>
-                                                    <th>Estado</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th>Name</th>
-                                                    <th>Position</th>
-                                                    <th>Office</th>
-                                                    <th>Age</th>
-                                                    <th>Start date</th>
-
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-
-
-
-                                                <tr>
-                                                    <td>Guidinho</td>
-                                                    <td>System Architect</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>61</td>
-                                                    <td>2011/04/25</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Garrett Winters</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>63</td>
-                                                    <td>2011/07/25</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Ashton Cox</td>
-                                                    <td>Junior Technical Author</td>
-                                                    <td>San Francisco</td>
-                                                    <td>66</td>
-                                                    <td>2009/01/12</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>Cedric Kelly</td>
-                                                    <td>Senior Javascript Developer</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>22</td>
-                                                    <td>2012/03/29</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Airi Satou</td>
-                                                    <td>Accountant</td>
-                                                    <td>Tokyo</td>
-                                                    <td>33</td>
-                                                    <td>2008/11/28</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Brielle Williamson</td>
-                                                    <td>Integration Specialist</td>
-                                                    <td>New York</td>
-                                                    <td>61</td>
-                                                    <td>2012/12/02</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Herrod Chandler</td>
-                                                    <td>Sales Assistant</td>
-                                                    <td>San Francisco</td>
-                                                    <td>59</td>
-                                                    <td>2012/08/06</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Rhona Davidson</td>
-                                                    <td>Integration Specialist</td>
-                                                    <td>Tokyo</td>
-                                                    <td>55</td>
-                                                    <td>2010/10/14</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Colleen Hurst</td>
-                                                    <td>Javascript Developer</td>
-                                                    <td>San Francisco</td>
-                                                    <td>39</td>
-                                                    <td>2009/09/15</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Sonya Frost</td>
-                                                    <td>Software Engineer</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>23</td>
-                                                    <td>2008/12/13</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Jena Gaines</td>
-                                                    <td>Office Manager</td>
-                                                    <td>London</td>
-                                                    <td>30</td>
-                                                    <td>2008/12/19</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Quinn Flynn</td>
-                                                    <td>Support Lead</td>
-                                                    <td>Edinburgh</td>
-                                                    <td>22</td>
-                                                    <td>2013/03/03</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Charde Marshall</td>
-                                                    <td>Regional Director</td>
-                                                    <td>San Francisco</td>
-                                                    <td>36</td>
-                                                    <td>2008/10/16</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Haley Kennedy</td>
-                                                    <td>Senior Marketing Designer</td>
-                                                    <td>London</td>
-                                                    <td>43</td>
-                                                    <td>2012/12/18</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Tatyana Fitzpatrick</td>
-                                                    <td>Regional Director</td>
-                                                    <td>London</td>
-                                                    <td>19</td>
-                                                    <td>2010/03/17</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Michael Silva</td>
-                                                    <td>Marketing Designer</td>
-                                                    <td>London</td>
-                                                    <td>66</td>
-                                                    <td>2012/11/27</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Paul Byrd</td>
-                                                    <td>Chief Financial Officer (CFO)</td>
-                                                    <td>New York</td>
-                                                    <td>64</td>
-                                                    <td>2010/06/09</td>
-
-                                                </tr>
-                                                <tr>
-                                                    <td>Gloria Little</td>
-                                                    <td>Systems Administrator</td>
-                                                    <td>New York</td>
-                                                    <td>59</td>
-                                                    <td>2009/04/10</td>
-
-                                                </tr>
-
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <div class="" style="height: 350px !important;">
+                                <table id="datatablesSimple">
+                                    <thead>
+                                        <tr>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Documento</th>
+                                            <th>ficha</th>
+                                            <th>Estado</th>
 
-                        <!-- Pie Chart - Productos más vendidos-->
-                        <div class=" col-xl-4 col-lg-5">
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div class="fondomenu2 py-3 px-5 ">
-                                    <br />
-                                    <h6 class="text-center m-0 font-weight-bold text-white">Registrar Aprendices</h6>
-                                </div>
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <br />
-                                    <div class="list-group" style="height: 328px !important ;">
-                                       
-                                        <form role="form">
-                                            <div class="form-floating mb-3">
-                                                <select   class="form-control form-control-sm" id="cboTipoDocumento">
-                                                    <option value="">Selecciona un tipo de documento...</option>
-                                                </select>
-                                                <label for="cboTipoDocumento">Tipo Documento</label>
-                                            </div>
-                                            <div class="form-floating mb-3 mb-md-0">
-                                                <input class="form-control" id="inputEmail" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
-                                                <label for="inputDocumento">Numero de documento</label>
-                                            </div>
-                                            <div class="mt-4 mb-0">
-                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#modalForm">Registrarse</button></div>
-                                            </div>
-                                        </form>
-                                        
+                                        </tr>
+                                    </thead>
+                                    <tfoot>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Position</th>
+                                            <th>Office</th>
+                                            <th>Age</th>
+                                            <th>Start date</th>
+
+                                        </tr>
+                                    </tfoot>
+                                    <tbody>
 
 
-                                    </div>
-                                </div>
+
+                                        <tr>
+                                            <td>Guidinho</td>
+                                            <td>System Architect</td>
+                                            <td>Edinburgh</td>
+                                            <td>61</td>
+                                            <td>2011/04/25</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Garrett Winters</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>63</td>
+                                            <td>2011/07/25</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ashton Cox</td>
+                                            <td>Junior Technical Author</td>
+                                            <td>San Francisco</td>
+                                            <td>66</td>
+                                            <td>2009/01/12</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Cedric Kelly</td>
+                                            <td>Senior Javascript Developer</td>
+                                            <td>Edinburgh</td>
+                                            <td>22</td>
+                                            <td>2012/03/29</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Airi Satou</td>
+                                            <td>Accountant</td>
+                                            <td>Tokyo</td>
+                                            <td>33</td>
+                                            <td>2008/11/28</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Brielle Williamson</td>
+                                            <td>Integration Specialist</td>
+                                            <td>New York</td>
+                                            <td>61</td>
+                                            <td>2012/12/02</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Herrod Chandler</td>
+                                            <td>Sales Assistant</td>
+                                            <td>San Francisco</td>
+                                            <td>59</td>
+                                            <td>2012/08/06</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Rhona Davidson</td>
+                                            <td>Integration Specialist</td>
+                                            <td>Tokyo</td>
+                                            <td>55</td>
+                                            <td>2010/10/14</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Colleen Hurst</td>
+                                            <td>Javascript Developer</td>
+                                            <td>San Francisco</td>
+                                            <td>39</td>
+                                            <td>2009/09/15</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Sonya Frost</td>
+                                            <td>Software Engineer</td>
+                                            <td>Edinburgh</td>
+                                            <td>23</td>
+                                            <td>2008/12/13</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Jena Gaines</td>
+                                            <td>Office Manager</td>
+                                            <td>London</td>
+                                            <td>30</td>
+                                            <td>2008/12/19</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Quinn Flynn</td>
+                                            <td>Support Lead</td>
+                                            <td>Edinburgh</td>
+                                            <td>22</td>
+                                            <td>2013/03/03</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Charde Marshall</td>
+                                            <td>Regional Director</td>
+                                            <td>San Francisco</td>
+                                            <td>36</td>
+                                            <td>2008/10/16</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Haley Kennedy</td>
+                                            <td>Senior Marketing Designer</td>
+                                            <td>London</td>
+                                            <td>43</td>
+                                            <td>2012/12/18</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Tatyana Fitzpatrick</td>
+                                            <td>Regional Director</td>
+                                            <td>London</td>
+                                            <td>19</td>
+                                            <td>2010/03/17</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Michael Silva</td>
+                                            <td>Marketing Designer</td>
+                                            <td>London</td>
+                                            <td>66</td>
+                                            <td>2012/11/27</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Paul Byrd</td>
+                                            <td>Chief Financial Officer (CFO)</td>
+                                            <td>New York</td>
+                                            <td>64</td>
+                                            <td>2010/06/09</td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Gloria Little</td>
+                                            <td>Systems Administrator</td>
+                                            <td>New York</td>
+                                            <td>59</td>
+                                            <td>2009/04/10</td>
+
+                                        </tr>
+
+
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>
-
                 </div>
-                <!-- /.container-fluid -->
 
-            </div>
-            <!-- End of Main Content -->
+                <!-- Pie Chart - Productos más vendidos-->
+                <div class=" col-xl-4 col-lg-5">
+                    <div class="card shadow mb-4">
+                        <!-- Card Header - Dropdown -->
+                        <div class="fondomenu2 py-3 px-5 ">
+                            <br />
+                            <h6 class="text-center m-0 font-weight-bold text-white">Registrar Aprendices</h6>
+                        </div>
+                        <!-- Card Body -->
+                        <div class="card-body">
+                            <br />
+                            <div class="list-group" style="height: 328px !important ;">
 
-        </div>
-        <!-- Modal -->
-        <div class="modal fade" id="modalForm" role="dialog">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <!-- Modal Header -->
-                    <div class="modal-header">
-                  
-                        <h4 class="modal-title" id="myModalLabel">REgistro Seguimiento</h4>
-                    </div>
-
-                    <!-- Modal Body -->
-                    <div class="modal-body">
-                        <p class="statusMsg"></p>
-                    
-                        <form method="post" id="registroForm">
-                            <div class="row mb-3">
-                                <div class="col-md-6">
+                                <form role="form">
                                     <div class="form-floating mb-3">
-                                        <select  class="form-control form-control-sm" id="cboTipoDocumento">
+                                        <select class="form-control form-control-sm" id="cboTipoDocumento">
                                             <option value="">Selecciona un tipo de documento...</option>
                                         </select>
                                         <label for="cboTipoDocumento">Tipo Documento</label>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input  class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
-                                        <label for="inputName">Numero de documento</label>
+                                        <input class="form-control" id="inputEmail" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                        <label for="inputDocumento">Numero de documento</label>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
-                                        <label for="inputName">Nombres</label>
+                                    <div class="mt-4 mb-0">
+                                        <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#modalForm">Registrarse</button></div>
                                     </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating">
-                                        <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
-                                        <label for="inputLastName">Apellidos</label>
-                                    </div>
-                                </div>
+                                </form>
+
+
+
                             </div>
-
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
-                                        <label for="inputTelefono">Telefono</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input  class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion" />
-                                        <label for="inputDireccion">Direccion</label>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <input  class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                        <label for="inputEmail">Correo</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-
-                                        <select  class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                            <option value="">Selecciona un estado...</option>
-                                        </select>
-                                        <label for="cboEstadoAprendiz">Estado Aprendiz</label>
-                                    </div>
-                                </div>
-
-
-
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select  class="form-control form-control-sm" id="cboDepartamentos">
-                                            <option value="">Selecciona un departamento...</option>
-                                        </select>
-                                        <label for="cboDepartamentos">Departamentos</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select  class="form-control form-control-sm" id="cboMunicipio">
-                                            <option value="4">Selecciona una ciudad...</option>
-                                        </select>
-                                        <label for="cboCiudad">Ciudad</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select  class="form-control form-control-sm" id="cboEstadoPruebatyt">
-                                            <option value="">Selecciona un estado...</option>
-                                        </select>
-                                        <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select  class="form-control form-control-sm" id="cboPrograma">
-                                            <option value="">Selecciona un programa...</option>
-                                        </select>
-                                        <label for="cboPrograma">Programa</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-floating mb-3">
-                                        <select  class="form-control form-control-sm" id="cboFicha">
-                                            <option value="">Selecciona una ficha...</option>
-                                        </select>
-                                        <label for="cboFicha">Fichas</label>
-                                    </div>
-                                </div>
-
-                                <!-- Acudiente -->
-                                <div class="fondomenu py-3 px-5">
-                                    <h6 class="m-0 text-center font-dark-light text-white "> coformador</h6>
-                                </div>
-                                <div class="col-md-6 py-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input  class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
-                                        <label for="inputTelefono">Nombre completo</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 py-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input  class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
-                                        <label for="inputTelefono">Telefono</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="form-floating mb-3 mb-md-0">
-                                <input  class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                <label for="inputTelefono">Correo acudiente</label>
-                            </div>
-                            <!-- fin Acudiente -->
-                            <br />
-
-                            <!-- Pruebas tyt-->
-
-                            <div class="row mb-3" id="pruebatyt" >
-                                <div class="fondomenu py-3 px-5">
-                                    <h6 class="m-0 text-center font-dark-light text-white ">instructor</h6>
-                                </div>
-                                <div class="col-md-6 py-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
-                                        <label for="inputcodigotyt">Codigo Inscripcion</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 py-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                        <label for="inputTelefono">Telefono</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 py-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa nombre acudiente" />
-                                        <label for="inputTelefono">Nombre completo</label>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 py-3">
-                                    <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                        <label for="inputTelefono">Telefono</label>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="mt-4 mb-0">
-                                <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px" >Registrar</button></div>
-                            </div>
-                        </form>
-
+                        </div>
                     </div>
-
-                    <!-- Modal Footer -->
-                    
                 </div>
             </div>
+
         </div>
-        <!-- Modal -->
-        @section Scripts {
-            <script>
-                $(document).ready(function () {
-                    $("#confirmarRegistroBtn").click(function () {
-                        // Aquí puedes realizar una llamada Ajax para realizar el registro
-                        // Por ahora, simularemos el registro exitoso
-                        var registroExitoso = true; // Cambia a false para simular un registro fallido
+        <!-- /.container-fluid -->
 
-                        if (registroExitoso) {
-                            // Mostrar alerta de registro exitoso
-                            alert("¡Registro exitoso!");
+    </div>
+    <!-- End of Main Content -->
 
-                        } else {
-                            // Mostrar alerta de fallo de registro
-                            alert("No se pudo completar el registro. Inténtalo de nuevo.");
-                        }
+</div>
+<!-- Modal -->
+<div class="modal fade" id="modalForm" role="dialog">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header fondomenu2">
 
-                        // Cierra el modal
-                        $("#modalForm").modal('hide');
-                    });
-                });
-            </script>
-        }
+                <h4 class="modal-title " id="myModalLabel">Registro Seguimiento</h4>
+            </div>
+
+            <!-- Modal Body -->
+            <div class="modal-body">
+                <p class="statusMsg"></p>
+
+                <form method="post" id="registroForm">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                    <option value="">Selecciona un tipo de documento...</option>
+                                </select>
+                                <label for="cboTipoDocumento">Tipo Documento</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                <label for="inputName">Numero de documento</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputNombre" type="text" placeholder="Ingresa tus nombres" />
+                                <label for="inputNombre">Nombres</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating">
+                                <input class="form-control" id="inputApellidos" type="text" placeholder="Ingresa tus apellidos" />
+                                <label for="inputApellidos">Apellidos</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3 mb-md-0">
+                                <input class="form-control" id="inputInicio" type="date" placeholder="Fecha de Inicio" />
+                                <label for="inputInicio">Fecha Inicio</label>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input class="form-control" id="inputFinal" type="date" placeholder="Fecha de Finalizacion" />
+                                <label for="inputFinal">Fecha Finalizacion</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+
+                                <input class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Digite el nombre de la Empresa">
+                                <datalist id="Empresas">
+                                    <option value="San Francisco"></option>
+                                    <option value="New York"></option>
+                                    <option value="Seattle"></option>
+                                    <option value="Los Angeles"></option>
+                                    <option value="Chicago"></option>
+                                </datalist>
+                                <label for="exampleDataList" class="form-label">Digite el nombre de la Empresa</label>
+
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+
+                                <select class="form-control form-control-sm" id="cboModalidad">
+                                    <option value="4">Selecciona una modalidad...</option>
+                                    <option value="3">Contrato</option>
+                                    <option value="2">Pasantia</option>
+                                    <option value="1">Unidad Productiva</option>
+                                    <option value="0">Proyecto</option>
+                                </select>
+                                <label for="cboModalidad">Modalidad Practicas</label>
+                            </div>
+                        </div>
+
+
+
+                        <div class="form-floating mb-3 mb-md-0 py-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control form-control-sm" id="cboAsignacionArea">
+                                    <option value="4">Selecciona una Area...</option>
+                                    <option value="3">Sistemas</option>
+                                    <option value="2">Produccion</option>
+                                    <option value="1">Investigación y desarrollo</option>
+                                    <option value="0">recursos humanos</option>
+                                </select>
+                                <label for="cboAsignacionArea">Area de Practicas</label>
+                            </div>
+                        </div>
+
+
+                        <!-- Acudiente -->
+                        <div class="fondomenu py-3 px-5">
+                            <h6 class="m-0 text-center font-dark-light text-white "> coformador</h6>
+                        </div>
+                        <br />
+                        <div class="form-floating mb-3 mb-md-0 py-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control form-control-sm" id="cbocoformador">
+                                    <option value="4">Selecciona una Instructor...</option>
+                                    <option value="3">Yasser pushaina</option>
+                                    <option value="2">Produccion</option>
+                                    <option value="1">Investigación y desarrollo</option>
+                                    <option value="0">recursos humanos</option>
+                                </select>
+                                <label for="cboFicha">Coformador</label>
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- Pruebas tyt-->
+
+
+                        <div class="fondomenu py-3 px-5">
+                            <h6 class="m-0 text-center font-dark-light text-white "> Instructor</h6>
+                        </div>
+
+                        <br />
+                        <div class="form-floating mb-3 mb-md-0 py-3">
+                            <div class="form-floating mb-3">
+                                <select class="form-control form-control-sm" id="cboInstructor">
+                                    <option value="4">Selecciona una Instructor...</option>
+                                    <option value="3">Yasser pushaina</option>
+                                    <option value="2">Produccion</option>
+                                    <option value="1">Investigación y desarrollo</option>
+                                    <option value="0">recursos humanos</option>
+                                </select>
+                                <label for="cboFicha">Instructor Seguimiento</label>
+                            </div>
+                        </div>
+
+                        <div class="mt-4 mb-0">
+                            <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px">Registrar</button></div>
+                        </div>
+                </form>
+
+            </div>
+
+            <!-- Modal Footer -->
+
+        </div>
+    </div>
+</div>
+<!-- Modal -->
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $("#confirmarRegistroBtn").click(function () {
+                // Aquí puedes realizar una llamada Ajax para realizar el registro
+                // Por ahora, simularemos el registro exitoso
+                var registroExitoso = true; // Cambia a false para simular un registro fallido
+
+                if (registroExitoso) {
+                    // Mostrar alerta de registro exitoso
+                    alert("¡Registro exitoso!");
+
+                } else {
+                    // Mostrar alerta de fallo de registro
+                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
+                }
+
+                // Cierra el modal
+                $("#modalForm").modal('hide');
+            });
+        });
+    </script>
+}

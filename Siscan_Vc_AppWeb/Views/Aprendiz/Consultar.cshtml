@@ -35,8 +35,8 @@
                 </div>
                 @* <br /> *@
 
-                <div class="card-body table-responsive">
-                    <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                <div class="card-body table-responsive" style="overflow-y: auto;height:450px">
+                    <table class="table table-bordered mb-4" id="datatablesSimple" cellspacing="1" style="width:100%" >
                         <thead class="boton2 ms-auto">
                             <tr>
                                 <th>Tipo Documento</th>
@@ -51,7 +51,7 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             @foreach (var aprendiz in Model)
                             {
                                 <tr>
@@ -81,7 +81,7 @@
                     </table>
                      
                 </div>
-                <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
+                 <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" /> 
             </div>
         </div>
     </div>
