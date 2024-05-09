@@ -1,4 +1,4 @@
-﻿ @{
+﻿@{
     ViewData["Title"] = "Registro";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -18,7 +18,7 @@ t-5">
 
                 </div>
                 <div class="card-body">
-                    <form method="post" asp-action="Registro"  >
+                    <form method="post" asp-action="Registro">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -70,20 +70,20 @@ t-5">
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">                                   
-                                  
+                                <div class="form-floating mb-3">
+
                                     <select asp-for="IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="">Selecciona un estado...</option>                                    
+                                        <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
                                 </div>
                             </div>
 
-                           
+
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select  asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
@@ -92,7 +92,7 @@ t-5">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ItemsCiudad,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboMunicipio">
-                                        <option value="4">Selecciona una ciudad...</option>                                       
+                                        <option value="4">Selecciona una ciudad...</option>
                                     </select>
                                     <label for="cboCiudad">Ciudad</label>
                                 </div>
@@ -108,7 +108,7 @@ t-5">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-items="@(new SelectList(ViewBag.ItemsPrograma,"CodigoPrograma","NombrePrograma"))" class="form-control form-control-sm" id="cboPrograma">
-                                        <option value="">Selecciona un programa...</option>                                     
+                                        <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
                                 </div>
@@ -147,7 +147,7 @@ t-5">
                         <!-- fin Acudiente -->
                         <br />
 
-                         <!-- Pruebas tyt-->
+                        <!-- Pruebas tyt-->
 
                         <div class="row mb-3" id="pruebatyt" style="display:none">
                             <div class="fondomenu py-3 px-5">
@@ -180,8 +180,16 @@ t-5">
                         </div>
 
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrar</button></div>
+                            <div class="d-grid boton2">
+                                @* <button type="submit" class="btn text-center btn-block" style="font-size:20px" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrar</button> *@
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmSave()">Registrar</button>
+
+                            </div>
                         </div>
+                        @if(TempData["MensajeAlert"]!=null){
+                            <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
+                        }
+
                     </form>
                 </div>
 
@@ -198,7 +206,7 @@ t-5">
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                ¿Está seguro de que desea registrar?
+                ¿Está seguro de que desea registrar? 
             </div>
             <div class="modal-footer boton2">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
@@ -211,6 +219,12 @@ t-5">
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script>
+        function confirmSave() {
+            return confirm("¿Estás seguro de que deseas guardar?");
+        }
+    </script>
+
+    @*   <script>
         $(document).ready(function () {
             $("#confirmarRegistroBtn").click(function () {
                 // Aquí puedes realizar una llamada Ajax para realizar el registro
@@ -230,6 +244,6 @@ t-5">
                 $("#confirmacionRegistroModal").modal('hide');
             });
         });
-    </script>
+    </script> *@
 
 }
