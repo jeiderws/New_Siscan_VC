@@ -4,27 +4,28 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
     public class ViewModelAprendiz
     {
-        public ViewModelAprendiz(Aprendiz aprendiz){
+        public ViewModelAprendiz(Aprendiz aprendiz)
+        {
 
-            NumeroDocumentoAprendiz=aprendiz.NumeroDocumentoAprendiz;
+            NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz;
             NombreAprendiz = aprendiz.NombreAprendiz;
-            ApellidoAprendiz=aprendiz.ApellidoAprendiz ;
+            ApellidoAprendiz = aprendiz.ApellidoAprendiz;
             CelAprendiz = aprendiz.CelAprendiz;
             CorreoAprendiz = aprendiz.CorreoAprendiz;
             DireccionAprendiz = aprendiz.DireccionAprendiz;
-            NombreCompletoAcudiente=aprendiz.NombreCompletoAcudiente;
+            NombreCompletoAcudiente = aprendiz.NombreCompletoAcudiente;
             CorreoAcuediente = aprendiz.CorreoAcuediente;
-            CelularAcudiente=aprendiz.CelularAcudiente;
+            CelularAcudiente = aprendiz.CelularAcudiente;
             IdTipodocumento = aprendiz.IdTipodocumentoNavigation.IdTipoDocumento;
             nombredoc = aprendiz.IdTipodocumentoNavigation.TipoDocumento1;
             IdEstadoTyt = aprendiz.IdEstadoTytNavigation.IdEstadotyt;
             nomEstadoTyt = aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt;
             IdEstadoAprendiz = aprendiz.IdEstadoAprendiz;
             nomEstadoAprendiz = aprendiz.IdEstadoAprendizNavigation.NombreEstado;
-            
 
 
-         
+
+
         }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
 
@@ -55,13 +56,14 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 
         public int? IdEstadoAprendiz { get; set; }
         public string? nomEstadoAprendiz { get; set; }
+        public virtual EstadoAprendiz? IdEstadoAprendizNavigation { get; set; }
 
     }
-    
-    
+
+
 }
 
 
-    
+
 
 

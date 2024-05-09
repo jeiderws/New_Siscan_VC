@@ -28,7 +28,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       ApellidoAprendiz = a.ApellidoAprendiz,
                                                       NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
                                                       Ficha = a.Ficha,
-                                                      IdEstadoAprendiz = a.IdEstadoAprendiz,
+                                                      nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
                                                   }
                                                   ).ToList();
 
