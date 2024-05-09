@@ -73,7 +73,7 @@ t-5">
                                 <div class="form-floating mb-3">                                   
                                   
                                     <select asp-for="IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="">Selecciona un estado...</option>                                    
+                                        <option>Selecciona un estado...</option>                                    
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
                                 </div>
@@ -232,4 +232,12 @@ t-5">
         });
     </script>
 
+    <script>
+
+        document.getElementById("cboDepartamentos").addEventListener("change", function () {
+            var id = this.value;
+              
+           alert(id)
+        })
+    </script>
 }

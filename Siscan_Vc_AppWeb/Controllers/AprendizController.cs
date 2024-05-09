@@ -20,6 +20,13 @@ namespace Siscan_Vc_AppWeb.Controllers
 
 
         }
+        [HttpGet]
+        public async Task<IActionResult> CargarCiudades(int departamentoId)
+        {
+            var ciudades = await _dbSiscanContext.Ciudads.Where(c => c.IdDepartamento == departamentoId).ToListAsync();
+            return Json(ciudades);
+        
+        }
 
         public async Task<IActionResult> Registro()
         {
@@ -38,7 +45,12 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewBag.ItemsPrograma = itemsPrograma;
             var itemsFichas = await _dbSiscanContext.Fichas.ToListAsync();
             ViewBag.ItemsFichas = itemsFichas;
+         
+
             return View();
+
+
+           
         }
 
         [HttpPost]
