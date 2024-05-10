@@ -14,12 +14,12 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IAprendizService _aprendizService;
         private readonly AprendizService _prendizService;
         private readonly DbSiscanContext _dbSiscanContext;
-        private readonly InscripcionTYTService _inscripcionTYTService;
-        public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext, InscripcionTYTService inscripcionTYTService)
+        private readonly IInscripcionTYTService _inscripcionTYTService;
+        public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext)
         {
             _dbSiscanContext = dbSiscanContext;
             _aprendizService = aprendizService;
-            _inscripcionTYTService = inscripcionTYTService;
+
 
 
         }
@@ -103,7 +103,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 TempData["MensajeAlert"] = "Usuario gurdado correctamente";
                 _aprendizService.Insert(aprendiz);
-                _inscripcionTYTService.Insert(tyt);
+               // _inscripcionTYTService.Insert(tyt);
                 return RedirectToAction(nameof(Registro));
             }
             Modelviewtytap  vmtytap = new Modelviewtytap

@@ -76,7 +76,7 @@
                                 <div class="form-floating mb-3">
 
 
-                                    <select asp-for="IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
+
 
                                     <select asp-for="@Model.Aprendiz.IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                  <option>Selecciona un estado...</option>
@@ -100,8 +100,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
 
-                                    <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ItemsCiudad,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboMunicipio">
-                                        <option value="4">Selecciona una ciudad...</option>
+                                   
 
                                     <select asp-for="@Model.Aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
