@@ -16,9 +16,11 @@ builder.Services.AddDbContext<DbSiscanContext>(opc=>{
 });
 builder.Services.AddScoped<IGenericRepository<Aprendiz>,AprendizRepository>();
 builder.Services.AddScoped<IGenericRepository<Instructor>, InstructorRepository>();
+builder.Services.AddScoped<IGenericRepository<InscripcionTyt>, InscripcionTYTRepository>();
 
 builder.Services.AddScoped<IAprendizService,AprendizService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
+builder.Services.AddScoped<IInscripcionTYTService, InscripcionTYTService>();
 
 var app = builder.Build();
 
