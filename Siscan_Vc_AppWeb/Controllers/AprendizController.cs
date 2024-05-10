@@ -89,6 +89,9 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CelularAcudiente = ap.CelularAcudiente,
                     CorreoAcuediente = ap.CorreoAcuediente
                 };
+                _dbSiscanContext.Aprendiz.Add(aprendiz);
+                await _dbSiscanContext.SaveChangesAsync();
+                //return Json(new { success = true });
                 var tyt = new InscripcionTyt()
                 {
                     CodigoInscripcion = intyt.CodigoInscripcion,

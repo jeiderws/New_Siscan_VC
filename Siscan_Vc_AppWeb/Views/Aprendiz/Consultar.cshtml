@@ -37,9 +37,15 @@
 
                 </div>
                 @* <br /> *@
+
+
+                <div class="card-body table-responsive" style="overflow-y: auto;height:450px">
+                    <table class="table table-bordered mb-4" id="datatablesSimple" cellspacing="1" style="width:100%" >
+
                 <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
                 <div class="card-body table-responsive">
                     <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+
                         <thead class="boton2 ms-auto">
                             <tr>
                                 <th>Tipo Documento</th>
@@ -54,6 +60,30 @@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
+
+                        <tbody >
+                            @foreach (var aprendiz in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
+                                    <td>
+                                        <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                        </a>
+                                        <a class="btn btn-sm">
+                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
+                                        </a>
+                                    </td>
+                                </tr>
+
                         <tbody>
                             @{
                                 bool estado = false;
@@ -141,6 +171,7 @@
                                     </tr>
                                 }
 
+
                             }
 
 
@@ -149,7 +180,7 @@
                     </table>
 
                 </div>
-                <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
+                 <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" /> 
             </div>
         </div>
     </div>

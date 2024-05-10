@@ -8,5 +8,14 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
+        public IActionResult Registro()
+        {
+            return View();
+        }
+
+        public IActionResult Consultar()
+        {
+            return View();
+        }
     }
 }

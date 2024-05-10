@@ -137,6 +137,7 @@ titulo {
 }
 .mover1 {
     position: relative;
+
     left: 23vw;
     bottom: 150hw;
    
@@ -361,6 +362,7 @@ svg {
 table {
     caption-side: bottom;
     border-collapse: collapse;
+    border-spacing: 0;
 }
 
 caption {
@@ -384,12 +386,14 @@ th {
     border-color: inherit;
     border-style: solid;
     border-width: 0;
-    font-size : 13px;
+    font-size:13px;
 }
-thead{
-    position : sticky;
-    top:-20px;
-    left:0px;
+thead {
+    position: -webkit-sticky;
+    position: sticky;
+    top: -18px;
+    left: 0px;
+    font-size : 13px;
 }
 
 label {
@@ -7911,7 +7915,11 @@ textarea.form-control-lg {
 .d-table-cell {
     display: table-cell !important;
 }
-
+table.scroll tbody {
+    height: 300px;
+    overflow-y: auto;
+   
+}
 .d-flex {
     display: flex !important;
 }

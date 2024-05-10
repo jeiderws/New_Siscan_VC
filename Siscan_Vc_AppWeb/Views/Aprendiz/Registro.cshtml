@@ -18,7 +18,10 @@ t-5">
 
                 </div>
                 <div class="card-body">
+
+
                     <form method="post" asp-action="Registro">
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -73,8 +76,12 @@ t-5">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
 
+
+                                    <select asp-for="IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
+
                                     <select asp-for="@Model.Aprendiz.IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                  <option>Selecciona un estado...</option>
+
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
@@ -93,8 +100,13 @@ t-5">
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
+
+                                    <select asp-for="IdCiudad" asp-items="@(new SelectList(ViewBag.ItemsCiudad,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboMunicipio">
+                                        <option value="4">Selecciona una ciudad...</option>
+
                                     <select asp-for="@Model.Aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
+
 
                                     </select>
                                     <label for="cboCiudad">Ciudad</label>
@@ -221,32 +233,64 @@ t-5">
 
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
     <script>
+
+
+
         function confirmSave() {
             return confirm("¿Estás seguro de que deseas guardar?");
         }
     </script>
 
     @*   <script>
+
         $(document).ready(function () {
-            $("#confirmarRegistroBtn").click(function () {
-                // Aquí puedes realizar una llamada Ajax para realizar el registro
-                // Por ahora, simularemos el registro exitoso
-                var registroExitoso = true; // Cambia a false para simular un registro fallido
-
-                if (registroExitoso) {
-                    // Mostrar alerta de registro exitoso
-                    alert("¡Registro exitoso!");
-
-                } else {
-                    // Mostrar alerta de fallo de registro
-                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
-                }
-
-                // Cierra el modal
-                $("#confirmacionRegistroModal").modal('hide');
+            $('#confirmarRegistroBtn').on('click', function () {
+                $('#registroForm').submit();
+                alert("¡Registro exitoso!");
             });
         });
+
+
+        // $(document).ready(function () {
+
+        //     $('#registroFform').submit(function (e) {
+        //         e.preventDefault();
+        //         $("#confirmacionRegistroModal").modal('show');
+
+        //         $("#confirmarRegistroBtn").on('click', function () {
+
+        //             $("#registroForm").attr("asp-action", "/Aprendiz/Registro");
+        //             $("#registroForm").submit();
+
+        //             $.ajax({
+        //                 url: '/Aprendiz/Registro',
+        //                 type: 'POST',
+        //                 datatype: 'Json',
+        //                 data: $('#registroForm').serialize(),
+        //                 success: function (response) {
+        //                     if (response.success) {
+
+        //                         alert("¡Registro exitoso!");
+        //                     } else {
+
+        //                         alert("No se pudo completar el registro. Inténtalo de nuevo.");
+        //                     }
+        //                 },
+        //                 error: function () {
+
+        //                     alert("Se produjo un error al procesar la solicitud. Inténtalo de nuevo.");
+        //                 }
+        //             });
+
+        //             $("#confirmacionRegistroModal").modal('hide');
+        //         });
+        //     });
+        // });
+
+
+
     </script> *@
 
     <script>
@@ -269,6 +313,7 @@ t-5">
                 });
             });
         });
+
     </script>
     <script>
         $(document).ready(function () {
