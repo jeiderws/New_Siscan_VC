@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service;
+using Siscan_Vc_BLL.Service.ClasesService;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -11,12 +12,15 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class AprendizController : Controller
     {
         private readonly IAprendizService _aprendizService;
-        private readonly AprendizService _prendizService;
+
+        private readonly IInscripcionTYTService _inscripcionTYTService;
         private readonly DbSiscanContext _dbSiscanContext;
-        public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext)
+       
+        public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext, IInscripcionTYTService inscripcionTYTService)
         {
             _dbSiscanContext = dbSiscanContext;
             _aprendizService = aprendizService;
+            _inscripcionTYTService = inscripcionTYTService;
 
 
         }
@@ -62,7 +66,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registro(Aprendiz ap)
+        public async Task<IActionResult> Registro(Aprendiz ap, InscripcionTyt intyt)
         {
             if (ModelState.IsValid)
             {
@@ -86,11 +90,28 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CelularAcudiente = ap.CelularAcudiente,
                     CorreoAcuediente = ap.CorreoAcuediente
                 };
-                TempData["MensajeAlert"] = "Usuario gurdado correctamente";
                 _dbSiscanContext.Aprendiz.Add(aprendiz);
-                _dbSiscanContext.SaveChanges();
+                await _dbSiscanContext.SaveChangesAsync();
+                //return Json(new { success = true });
+                var tyt = new InscripcionTyt()
+                {
+                    CodigoInscripcion = intyt.CodigoInscripcion,
+                    NumeroDocumentoAprendiz = intyt.NumeroDocumentoAprendizNavigation.NumeroDocumentoAprendiz,
+                    Idciudad = intyt.Idciudad,
+                    IdConvocatoria = intyt.IdConvocatoria,
+                    IdEstadotyt = intyt.IdEstadotyt,
+               };
+
+                TempData["MensajeAlert"] = "Usuario gurdado correctamente";
+                _aprendizService.Insert(aprendiz);
+                _inscripcionTYTService.Insert(tyt);
                 return RedirectToAction(nameof(Registro));
             }
+            Modelviewtytap  vmtytap = new Modelviewtytap
+            {
+                Aprendiz = ap,
+                inscripcionTyt = intyt
+            };
 
 
             return View(ap);
