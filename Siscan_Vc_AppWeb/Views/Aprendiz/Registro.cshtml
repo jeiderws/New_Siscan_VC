@@ -100,7 +100,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
 
-                                   
+
 
                                     <select asp-for="@Model.Aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
@@ -174,20 +174,29 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <select  class="form-control form-control-sm" id="cboConvocatoria">
+                                        <option value="">Selecciona una ciudad...</option>
+
+
+                                    </select>
+                                    <label for="cboConvocatoria">Convocatoria</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3">
+                                    <select asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos2">
+                                        <option value="">Selecciona un departamento...</option>
+                                    </select>
+                                    <label for="cboDepartamentos2">Departamentos</label>
                                 </div>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa nombre acudiente" />
-                                    <label for="inputTelefono">Nombre completo</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 py-3">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <select asp-for="@Model.Aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad2">
+                                        <option value="">Selecciona una ciudad...</option>
+
+
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -300,6 +309,26 @@
                     $('#cboCiudad').empty();
                     $.each(data, function (index, ciudad) {
                         $('#cboCiudad').append($('<option>',
+                            {
+                                value: ciudad.idCiudad,
+                                text: ciudad.nombreCiudad
+                            }
+                        )
+                        );
+
+                    });
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('#cboDepartamentos2').change(function () {
+                var departamentoId = $(this).val(); // Obtener el valor seleccionado
+
+                $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
+                    $('#cboCiudad2').empty();
+                    $.each(data, function (index, ciudad) {
+                        $('#cboCiudad2').append($('<option>',
                             {
                                 value: ciudad.idCiudad,
                                 text: ciudad.nombreCiudad
