@@ -6,7 +6,6 @@
 @model Siscan_Vc_AppWeb.Models.ViewModels.Modelviewtytap
 
 
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-7">
@@ -14,13 +13,9 @@
                 <div class="card-header fondomenu ">
                     <img class="img-fluid mover2" src="~/img/agregar-usuario.png" alt="Alternate Text" width="40">
                     <h3 class="text-center font-dark-light my-4">Registro </h3>
-
                 </div>
                 <div class="card-body">
-
-
                     <form method="post" asp-action="Registro">
-
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -50,7 +45,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -74,20 +68,12 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-
-
-
                                     <select asp-for="@Model.Aprendiz.IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                 <option>Selecciona un estado...</option>
-
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
                                 </div>
                             </div>
-
-
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -99,13 +85,8 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-
-
                                     <select asp-for="@Model.Aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
-
-
                                     </select>
                                     <label for="cboCiudad">Ciudad</label>
                                 </div>
@@ -194,8 +175,6 @@
                                 <div class="form-floating mb-3 mb-md-0">
                                     <select asp-for="@Model.Aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad2">
                                         <option value="">Selecciona una ciudad...</option>
-
-
                                     </select>
                                     <label for="cboCiudad2">Ciudad</label>
                                 </div>
