@@ -5,7 +5,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     public class Modelviewtytap
     {
      
-        public Aprendiz Aprendiz { get; set; }
+        public Aprendiz aprendiz { get; set; }
         public InscripcionTyt inscripcionTyt { get; set; }
     }
 }

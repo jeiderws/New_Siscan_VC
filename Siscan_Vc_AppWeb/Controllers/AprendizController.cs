@@ -14,8 +14,9 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IAprendizService _aprendizService;
 
         private readonly IInscripcionTYTService _inscripcionTYTService;
+        
         private readonly DbSiscanContext _dbSiscanContext;
-       
+
         public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext, IInscripcionTYTService inscripcionTYTService)
         {
             _dbSiscanContext = dbSiscanContext;
@@ -40,83 +41,96 @@ namespace Siscan_Vc_AppWeb.Controllers
             return Json(ficha);
 
         }
+        //Llenar combos
         public async Task<IActionResult> Registro()
         {
             var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
-          
+
             var itemsEstAprndz = await _dbSiscanContext.EstadoAprendizs.ToListAsync();
             ViewBag.ItemsEstAprndz = itemsEstAprndz;
+
             var itemsDepartamento = await _dbSiscanContext.Departamentos.ToListAsync();
             ViewBag.ItemsDepartamento = itemsDepartamento;
+
             ViewBag.ciudades = new List<Ciudad>();
-         
+
             var itemsEstaTYT = await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync();
             ViewBag.ItemsEstaTYT = itemsEstaTYT;
+
             var itemsPrograma = await _dbSiscanContext.Programas.ToListAsync();
             ViewBag.ItemsPrograma = itemsPrograma;
-             ViewBag.ficha = new List<Ficha>();
+            
+            ViewBag.ficha = new List<Ficha>();
+
+            var itemConvocatoria = await _dbSiscanContext.ConvocatoriaTyts.ToListAsync();
+            ViewBag.ItemsConvocatoria = itemConvocatoria;
 
 
             return View();
 
 
-           
+
         }
 
+        //Registrat aprendiz con un view model
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registro(Aprendiz ap, InscripcionTyt intyt)
+        public async Task<IActionResult> Registro(Modelviewtytap aptyt)
         {
+            Modelviewtytap vmtytap = new Modelviewtytap();
             if (ModelState.IsValid)
             {
                 var aprendiz = new Aprendiz()
                 {
-                    IdTipodocumento = ap.IdTipodocumento,
-                    NumeroDocumentoAprendiz = ap.NumeroDocumentoAprendiz,
-                    NombreAprendiz = ap.NombreAprendiz,
-                    ApellidoAprendiz = ap.ApellidoAprendiz,
-                    CelAprendiz = ap.CelAprendiz,
+                    IdTipodocumento = aptyt.aprendiz.IdTipodocumento,
+                    NumeroDocumentoAprendiz = aptyt.aprendiz.NumeroDocumentoAprendiz,
+                    NombreAprendiz = aptyt.aprendiz.NombreAprendiz,
+                    ApellidoAprendiz = aptyt.aprendiz.ApellidoAprendiz,
+                    CelAprendiz = aptyt.aprendiz.CelAprendiz,
 
-                    DireccionAprendiz = ap.DireccionAprendiz,
-                    CorreoAprendiz = ap.CorreoAprendiz,
-                    IdEstadoAprendiz = ap.IdEstadoAprendiz,
-                    IdCiudad = ap.IdCiudad,
-                    IdEstadoTyt = ap.IdEstadoTyt,
-                    Ficha = ap.Ficha,
+                    DireccionAprendiz = aptyt.aprendiz.DireccionAprendiz,
+                    CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
+                    IdEstadoAprendiz = aptyt.aprendiz.IdEstadoAprendiz,
+                    IdCiudad = aptyt.aprendiz.IdCiudad,
+                    IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt,
+                    Ficha = aptyt.aprendiz.Ficha,
 
-                    NombreCompletoAcudiente = ap.NombreCompletoAcudiente,
+                    NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
 
-                    CelularAcudiente = ap.CelularAcudiente,
-                    CorreoAcuediente = ap.CorreoAcuediente
+                    CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
+                    CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                 };
-                _dbSiscanContext.Aprendiz.Add(aprendiz);
-                await _dbSiscanContext.SaveChangesAsync();
-                //return Json(new { success = true });
-                var tyt = new InscripcionTyt()
+                if (aprendiz.IdEstadoTyt == 1)
                 {
-                    CodigoInscripcion = intyt.CodigoInscripcion,
-                    NumeroDocumentoAprendiz = intyt.NumeroDocumentoAprendizNavigation.NumeroDocumentoAprendiz,
-                    Idciudad = intyt.Idciudad,
-                    IdConvocatoria = intyt.IdConvocatoria,
-                    IdEstadotyt = intyt.IdEstadotyt,
-               };
+                    var tyt = new InscripcionTyt()
+                    {
+                        CodigoInscripcion = aptyt.inscripcionTyt.CodigoInscripcion,
+                        NumeroDocumentoAprendiz = aptyt.inscripcionTyt.NumeroDocumentoAprendiz,
+                        Idciudad = aptyt.inscripcionTyt.Idciudad,
+                        IdConvocatoria = aptyt.inscripcionTyt.IdConvocatoria,
+                        IdEstadotyt = aptyt.inscripcionTyt.IdEstadotyt,
+                    };
+                    await _inscripcionTYTService.Insert(tyt);
+                }
+                //return Json(new { success = true });
 
                 TempData["MensajeAlert"] = "Usuario gurdado correctamente";
-                _aprendizService.Insert(aprendiz);
-                _inscripcionTYTService.Insert(tyt);
+                await _aprendizService.Insert(aprendiz);
+                vmtytap = new Modelviewtytap
+                {
+                    aprendiz = aptyt.aprendiz,
+                    inscripcionTyt = aptyt.inscripcionTyt
+                };
+
                 return RedirectToAction(nameof(Registro));
+
+
             }
-            Modelviewtytap  vmtytap = new Modelviewtytap
-            {
-                Aprendiz = ap,
-                inscripcionTyt = intyt
-            };
-
-
-            return View(ap);
+            return View(vmtytap);
         }
 
+        //consultar aprendiz por numero de documento y obtener la lista de aprendices
         [HttpGet]
         public async Task<IActionResult> Consultar(string nmdoc)
         {
@@ -146,52 +160,26 @@ namespace Siscan_Vc_AppWeb.Controllers
                 IdEstadoAprendiz = a.IdEstadoAprendiz,
                 nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
             }).ToList();
+
             Aprendiz aprendiz = new Aprendiz();
-            foreach(var aprendi in queryAprendiz)
+            foreach (var aprendi in queryAprendiz)
             {
                 if (aprendi.NumeroDocumentoAprendiz == nmdoc)
                 {
                     aprendiz = aprendi;
                 }
             }
-            //ViewModelAprendiz aprendiz = listaAprendiz.Where(a => a.NombreAprendiz == name).FirstOrDefault();
+
 
             ModelviewAp viewModel = new ModelviewAp
             {
-                
+
                 Aprendiz = aprendiz,
                 ListaAprendices = listaAprendiz
             };
 
             return View(viewModel);
-
-            //IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
-            //List<ViewModelAprendiz> listaAprendiz = queryAprendiz
-            //                                      .Select(a => new ViewModelAprendiz(a)
-            //                                      {
-            //                                          NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
-            //                                          NombreAprendiz = a.NombreAprendiz,
-            //                                          ApellidoAprendiz = a.ApellidoAprendiz,
-            //                                          CelAprendiz = a.CelAprendiz,
-            //                                          CorreoAprendiz = a.CorreoAprendiz,
-            //                                          DireccionAprendiz = a.DireccionAprendiz,
-            //                                          NombreCompletoAcudiente = a.NombreCompletoAcudiente,
-            //                                          CorreoAcuediente = a.CorreoAcuediente,
-            //                                          CelularAcudiente = a.CelularAcudiente,
-            //                                          IdEstadoTyt = a.IdEstadoTytNavigation.IdEstadotyt,
-            //                                          nomEstadoTyt = a.IdEstadoTytNavigation.DescripcionEstadotyt,
-            //                                          IdTipodocumento = a.IdTipodocumentoNavigation.IdTipoDocumento,
-            //                                          nombredoc = a.IdTipodocumentoNavigation.TipoDocumento1,
-            //                                          Ficha = a.Ficha,
-            //                                          IdCiudad = a.IdCiudad,
-            //                                          IdEstadoAprendiz = a.IdEstadoAprendiz,
-            //                                          nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
-
-            //                                      }
-            //                                      ).ToList();
-
-            ////var aprendiz = _dbSiscanContext.Aprendiz;
-            //return View(listaAprendiz);
+            //
         }
 
 
