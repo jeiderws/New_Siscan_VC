@@ -17,5 +17,9 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
+        public IActionResult Show()
+        {
+            return View("Consultar");
+        }
     }
 }

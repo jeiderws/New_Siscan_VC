@@ -122,7 +122,7 @@ h6, .h6, h5, .h5, h4, .h4, h3, .h3, h2, .h2, h1, .h1 {
 
 .nombre{
      position:relative;
-     bottom:0px;
+     bottom:15px;
      right:220px;
 }
 titulo {
@@ -2994,10 +2994,9 @@ textarea.form-control-lg {
 
 .boton {
     background: #39a900;
-    border-radius:5px;
+    border-radius: 5px;
     color: #f7f7f7;
-    border: none;
-    
+    border: 1px solid #f7f7f7;
 }
 .boton2 {
     background: #39a900;
@@ -3005,7 +3004,7 @@ textarea.form-control-lg {
     color: #f7f7f7;
 }
  .boton:hover {
-    border: 0.1px solid ;
+    border: 2px solid #0d6efdd9 ;
 
  }
 
