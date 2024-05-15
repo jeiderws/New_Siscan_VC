@@ -24,6 +24,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _inscripcionTYTService = inscripcionTYTService;
 
 
+
         }
         [HttpGet]
         public async Task<IActionResult> CargarCiudades(int departamentoId)
