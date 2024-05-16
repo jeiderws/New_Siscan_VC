@@ -118,7 +118,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
 
 
-                TempData["MensajeAlert"] = "Usuario gurdado correctamente";
+                TempData["MensajeAlert"] = "Usuario guardado correctamente";
                
                 vmtytap = new Modelviewtytap
                 {
@@ -184,7 +184,28 @@ namespace Siscan_Vc_AppWeb.Controllers
             return View(viewModel);
             
         }
+        [HttpDelete]
+        public async Task <IActionResult> Eliminar(string nmdoc)
+        {
+            try
+            {
+                var a = await _dbSiscanContext.Aprendiz.FirstOrDefaultAsync(x=> x.NumeroDocumentoAprendiz ==nmdoc);
+                
+                if (a == null)
+                {
+                    return Json(new { success = false, message = "El aprendiz no fue encontrado." });
+                }
+                TempData["MensajeAlertEliminado"] = "Usuario eliminado correctamente";
+                var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
+                _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
+                await _aprendizService.Delete(nmdoc);
+                return Json(new { success = true, message = "El aprendiz se eliminó correctamente." });
 
+            }
+            catch (Exception e) {
+                return Json(new { success = false, message = "Se produjo un error al intentar eliminar el aprendiz: " + e.Message });
+            }
+        }
 
 
         public IActionResult Editar()
