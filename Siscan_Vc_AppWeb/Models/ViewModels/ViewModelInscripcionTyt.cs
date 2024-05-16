@@ -27,7 +27,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public int? IdConvocatoria { get; set; }
         public int? nomConvocatoria { get; set; }
 
-        public int IdEstadotyt { get; set; }
+        public int? IdEstadotyt { get; set; }
         public string nomEstadotyt { get; set; }
 
     }
