@@ -13,7 +13,7 @@ public partial class InscripcionTyt
 
     public int? IdConvocatoria { get; set; }
 
-    public int IdEstadotyt { get; set; }
+    public int? IdEstadotyt { get; set; }
 
     public virtual ConvocatoriaTyt? IdConvocatoriaNavigation { get; set; }
 

@@ -80,7 +80,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Registro(Modelviewtytap aptyt)
         {
             Modelviewtytap vmtytap = new Modelviewtytap();
-            if (ModelState.IsValid)
+            if (vmtytap != null)
             {
                 var aprendiz = new Aprendiz()
                 {
@@ -102,22 +102,24 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                     CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                 };
-                if (aprendiz.IdEstadoTyt == 1)
+                await _aprendizService.Insert(aprendiz);
+                if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt==1)
                 {
                     var tyt = new InscripcionTyt()
                     {
                         CodigoInscripcion = aptyt.inscripcionTyt.CodigoInscripcion,
-                        NumeroDocumentoAprendiz = aptyt.inscripcionTyt.NumeroDocumentoAprendiz,
+                        NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz,
                         Idciudad = aptyt.inscripcionTyt.Idciudad,
                         IdConvocatoria = aptyt.inscripcionTyt.IdConvocatoria,
-                        IdEstadotyt = aptyt.inscripcionTyt.IdEstadotyt,
+                        IdEstadotyt = aprendiz.IdEstadoTyt
                     };
-                    await _inscripcionTYTService.Insert(tyt);
+                    _dbSiscanContext.InscripcionTyts.Add(tyt);
+                    _dbSiscanContext.SaveChanges();
                 }
-                //return Json(new { success = true });
+
 
                 TempData["MensajeAlert"] = "Usuario gurdado correctamente";
-                await _aprendizService.Insert(aprendiz);
+               
                 vmtytap = new Modelviewtytap
                 {
                     aprendiz = aptyt.aprendiz,
@@ -180,7 +182,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             };
 
             return View(viewModel);
-            //
+            
         }
 
 

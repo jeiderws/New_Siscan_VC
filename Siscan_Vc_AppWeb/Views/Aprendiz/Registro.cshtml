@@ -61,7 +61,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="aprendiz.CorreoAcuediente" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                    <input asp-for="aprendiz.CorreoAprendiz" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
                                     <label for="inputEmail">Correo</label>
                                 </div>
                             </div>
@@ -177,6 +177,13 @@
                                 </div>
                             </div>
                         </div>
+                        @{
+                            if (TempData["aprendzet"] != null)
+                            {
+                                <div class="alert alert-success" role="alert"> @TempData["aprendzet"] </div>
+                            }
+
+                        }
                         <!--Fin registro tyt-->
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
