@@ -177,13 +177,6 @@
                                 </div>
                             </div>
                         </div>
-                        @{
-                            if (TempData["aprendzet"] != null)
-                            {
-                                <div class="alert alert-success" role="alert"> @TempData["aprendzet"] </div>
-                            }
-
-                        }
                         <!--Fin registro tyt-->
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
@@ -192,11 +185,6 @@
 
                             </div>
                         </div>
-                        @if (TempData["MensajeAlert"] != null)
-                        {
-                            <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
-                        }
-
                     </form>
                 </div>
 
