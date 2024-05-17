@@ -2,7 +2,8 @@
     ViewData["Title"] = "Consultar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using Siscan_Vc_DAL.DataContext
+@model List<Siscan_Vc_AppWeb.Models.ViewModels.ViewModelSeguimiento>
 <div id="wrapper">
 
 
@@ -60,20 +61,20 @@
                                 <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="" style="height: 400px !important ;">
-                                        <div class="list-group py-3">
-                                            <div class="list-group" style="overflow-y:auto;">
-                                                <a href="#" class="list-group-item list-group-item-action">Dapibus ac facilisis in</a>
 
+                                        <div class="list-group py-3" id="list-container">
+                                            @foreach (var item in Model)
+                                            {
+                                                <a href="#" class="list-group-item list-group-item-action aprendiz-link" data-aprendiz-id="@item.IdSeguimiento">
+                                                   @item.NombreAprendiz
+                                                </a>
+                                            }
+                                        </div>
 
-                                                <a href="#" class="list-group-item list-group-item-action  ">This is a primary list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a secondary list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a success list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a danger list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a warning list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a info list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a light list group item</a>
-                                                <a href="#" class="list-group-item list-group-item-action ">This is a dark list group item</a>
-                                            </div>
+                                        <div class="pagination justify-content-end" id="pagination">
+                                            <button class="page-link" id="prev" onclick="prevPage()">Anterior</button>
+                                            <span>Página @ViewBag.CurrentPage de @ViewBag.TotalPages</span>
+                                            <button class="page-link" id="next" onclick="nextPage()">Siguiente</button>
                                         </div>
 
                                     </div>
@@ -100,20 +101,20 @@
                                                             <br />
                                                             <center class="m-t-30 pb-3">
 
-                                                                <h4 class="m-0 text-uppercase font-weight-bold text-white">pedro</h4>
-                                                                <h6 class="card-subtitle">pascal</h6>
+                                                                <h4 id="card-title" class="m-0 text-uppercase font-weight-bold text-white">pedro</h4>
+                                                                <h6 id="card-subtitle" class="card-subtitle">pascal</h6>
 
                                                             </center>
                                                         </div>
                                                         <div class="card-body">
                                                             <small class="text-muted">Correo: </small>
-                                                            <p>hannagover@gmail.com</p>
+                                                            <p id="card-email">hannagover@gmail.com</p>
                                                             <small class="text-muted p-t-30 db">Telefono:</small>
-                                                            <p> 654 784 547</p>
+                                                            <p id="card-phone">654 784 547</p>
                                                             <small class="text-muted p-t-30 db">Programa:</small>
-                                                            <h6 class="m-0font-weight-bold text-dark ">267833 Analisis y desarrollo de sotfware</h6>
+                                                            <h6 id="card-program" class="m-0font-weight-bold text-dark">267833 Analisis y desarrollo de software</h6>
                                                             <small class="text-muted p-t-30 db">Modalidad:</small>
-                                                            <h6 class="m-0 text-dark ">Contrato social</h6>
+                                                            <h6 id="card-mode" class="m-0 text-dark">Contrato social</h6>
 
                                                         </div>
                                                     </div>
@@ -127,15 +128,13 @@
                                                             <p>juan mecanico</p>
                                                         </div>
                                                         <small class="text-muted">Coformador: </small>
-                                                        <p>juan mecanico</p>
-                                                        <small class="text-muted p-t-30 db">Telefono:</small>
-                                                        <p> 654 784 547</p>
+                                                        <p id="card-coformador">juan mecanico</p>
                                                         <small class="text-muted p-t-30 db">Instructor:</small>
-                                                        <p class="m-0 text-dark ">yasser pushaina</p>
+                                                        <p id="card-instructor" class="m-0 text-dark">yasser pushaina</p>
                                                         <small class="text-muted p-t-30 db">Inicio Practicas:</small>
-                                                        <p class="m-0 text-dark ">10/04/2024</p>
+                                                        <p id="card-start-date" class="m-0 text-dark">10/04/2024</p>
                                                         <small class="text-muted p-t-30 db">Finaliza Practicas:</small>
-                                                        <p class="m-0 text-dark ">10/09/2024</p>
+                                                        <p id="card-end-date" class="m-0 text-dark">10/09/2024</p>
 
                                                     </div>
                                                     <div class="col pt-4">
@@ -178,9 +177,10 @@
             @section Scripts {
                 <script src="~/js/scripts.js" asp-append-version="true"></script>
                 <script>
+
                     document.getElementById('inputFiltro').addEventListener('input', function () {
                         var filtro = this.value.toLowerCase();
-                        var elementos = document.querySelectorAll('#listaAprendices a');
+                        var elementos = document.querySelectorAll('#list-container a');
 
                         elementos.forEach(function (elemento) {
                             var nombre = elemento.textContent.toLowerCase();
@@ -191,5 +191,31 @@
                             }
                         });
                     });
+
+                   
+
+                </script>
+                <script>
+                    const aprendizLinks = document.querySelectorAll('.aprendiz-link');
+
+                    aprendizLinks.forEach(link => {
+                        link.addEventListener('click', function (event) {
+                            event.preventDefault(); // Evitar el comportamiento predeterminado del enlace (navegación)
+                            const aprendizId = this.dataset.aprendizId;
+
+                            fetch(`/Seguimiento/Show/${aprendizId}`) // Reemplazar con su controlador y acción
+                                .then(response => response.json())
+                                .then(data => {
+                                    // Completar los elementos de la tarjeta con los datos del aprendiz (suponiendo los ID de los elementos de la tarjeta)
+                                    document.getElementById('card-title').textContent = data.NombreAprendiz;
+                                    document.getElementById('card-email').textContent = data.CorreoAprendiz;
+                                    // ... completar otros elementos de la tarjeta
+                                })
+                                .catch(error => {
+                                    console.error("Error al obtener los datos del aprendiz:", error);
+                                });
+                        });
+                    });
+
                 </script>
             }
