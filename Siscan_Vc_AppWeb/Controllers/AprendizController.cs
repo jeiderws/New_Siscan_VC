@@ -94,7 +94,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
                     IdEstadoAprendiz = aptyt.aprendiz.IdEstadoAprendiz,
                     IdCiudad = aptyt.aprendiz.IdCiudad,
-                    IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt,
+
                     Ficha = aptyt.aprendiz.Ficha,
 
                     NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
@@ -102,6 +102,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                     CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                 };
+                if ( aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
+                {
+                    aprendiz.IdEstadoTyt = 6;
+                }
+                else
+                {
+
+                    aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
+                }
                 await _aprendizService.Insert(aprendiz);
                 if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt==1)
                 {
