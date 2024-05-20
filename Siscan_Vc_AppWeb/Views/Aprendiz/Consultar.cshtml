@@ -88,10 +88,10 @@
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
                                             <td>
-                                                <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                                <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-id="@Model.Aprendiz.NumeroDocumentoAprendiz">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="28" />
                                                 </a>
-                                                <a class="btn btn-sm btn-eliminar" data-id="@Model.Aprendiz.NumeroDocumentoAprendiz">
+                                                <a class="btn btn-sm btn-eliminar" data-id="@Model.Aprendiz?.NumeroDocumentoAprendiz">
                                                     <img src="~/img/borrar (1).png" alt="Alternate Text" width="28" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
                                                 </a>
                                             </td>
@@ -140,10 +140,10 @@
                                             <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
                                             <td>
-                                                <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
+                                                <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                 </a>
-                                                <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
+                                                <a class="btn btn-sm btn-eliminar"  data-id="@aprendiz.NumeroDocumentoAprendiz">
                                                     <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
                                                 </a>
                                             </td>
@@ -169,7 +169,12 @@
         </div>
     </div>
 </div>
-
+@{
+    if (TempData["numDoc"] != null)
+    {
+        <p>@TempData["numDoc"]</p>
+    }
+}
 
 @* <!-- Modal de confirmación de Consultar -->
 <div class="modal fade" id="confirmacionEliminacionModal" tabindex="-1" aria-labelledby="confirmacionEliminacionModal" aria-hidden="true">
