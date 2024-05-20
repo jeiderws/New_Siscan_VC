@@ -15,6 +15,10 @@
                     <h3 class="text-center font-dark-light my-4">Registro </h3>
                 </div>
                 <div class="card-body">
+                    @if (TempData["MensajeAlert"] != null)
+                    {
+                        <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
+                    }
                     <form method="post" asp-action="Registro">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -186,6 +190,8 @@
                             </div>
                         </div>
                     </form>
+                    
+
                 </div>
 
             </div>
@@ -223,7 +229,9 @@
     <script>
         function confirmSave() {
             return confirm("¿Estás seguro de que deseas guardar?");
+
         }
+
     </script>
 
     <script>

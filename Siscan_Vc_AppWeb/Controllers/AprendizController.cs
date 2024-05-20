@@ -204,7 +204,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     return Json(new { success = false, message = "El aprendiz no fue encontrado." });
                 }
-                TempData["MensajeAlertEliminado"] = "Usuario eliminado correctamente";
+                 TempData["MensajeAlertEliminado"] = "Usuario eliminado correctamente";
                 var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
                 _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 await _aprendizService.Delete(nmdoc);

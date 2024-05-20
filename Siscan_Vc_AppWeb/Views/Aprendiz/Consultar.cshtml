@@ -107,7 +107,10 @@
                         </table>
                     </div>
                     <hr />
-
+                    @if (TempData["MensajeAlertEliminado"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEliminado"] </div>
+                    }
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
                     <div class="card-body table-responsive" style="height:450px; ">
                         <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
