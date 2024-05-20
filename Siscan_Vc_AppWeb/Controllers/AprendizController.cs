@@ -23,9 +23,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             _dbSiscanContext = dbSiscanContext;
             _aprendizService = aprendizService;
             _inscripcionTYTService = inscripcionTYTService;
-
-
-
         }
         [HttpGet]
         public async Task<IActionResult> CargarCiudades(int departamentoId)
@@ -33,7 +30,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             var ciudades = await _dbSiscanContext.Ciudads.Where(c => c.IdDepartamento == departamentoId).ToListAsync();
             ViewBag.ciudades = ciudades;
             return Json(ciudades);
-
         }
         [HttpGet]
         public async Task<IActionResult> Cargarprograma(int programa)
@@ -41,8 +37,8 @@ namespace Siscan_Vc_AppWeb.Controllers
             var ficha = await _dbSiscanContext.Fichas.Where(f => f.CodigoPrograma == programa.ToString()).ToListAsync();
             ViewBag.ficha = ficha;
             return Json(ficha);
-
         }
+
         public async Task LlenarCombos()
         {
             var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
@@ -71,12 +67,8 @@ namespace Siscan_Vc_AppWeb.Controllers
         //Llenar combos
         public async Task<IActionResult> Registro()
         {
-
             await LlenarCombos();
             return View();
-
-
-
         }
 
         //Registrar aprendiz con un view model
@@ -108,6 +100,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                 };
                 await _aprendizService.Insert(aprendiz);
+
                 if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
                 {
                     var tyt = new InscripcionTyt()
@@ -121,8 +114,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                     _dbSiscanContext.InscripcionTyts.Add(tyt);
                     _dbSiscanContext.SaveChanges();
                 }
-
-
                 TempData["MensajeAlert"] = "Usuario guardado correctamente";
 
                 vmtytap = new Modelviewtytap
@@ -130,10 +121,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     aprendiz = aptyt.aprendiz,
                     inscripcionTyt = aptyt.inscripcionTyt
                 };
-
                 return RedirectToAction(nameof(Registro));
-
-
             }
             return View(vmtytap);
         }
@@ -142,11 +130,8 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Consultar(string nmdoc)
         {
-
-
             List<ViewModelAprendiz> listaAprendiz = new List<ViewModelAprendiz>();
             IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
-
 
             listaAprendiz = queryAprendiz.Select(a => new ViewModelAprendiz(a)
             {
@@ -221,18 +206,9 @@ namespace Siscan_Vc_AppWeb.Controllers
             var viewModel = new Modelviewtytap();
             if (numDoc != null)
             {
-                //TempData["numDoc"] = numDoc;
-              var  aprendi=await _aprendizService.GetForDoc(numDoc);
-
+                var aprendi = await _aprendizService.GetForDoc(numDoc);
                 InscripcionTyt insctyt;
-                //if (aprendi.NumeroDocumentoAprendiz == null)
-                //{
-                //    return NotFound();
-                //}
-                //if (aprendi == null)
-                //{
-                //    return NotFound();
-                //}
+
                 if (aprendi.IdEstadoTyt == 1)
                 {
                     insctyt = _dbSiscanContext.InscripcionTyts.First(i => i.NumeroDocumentoAprendiz == aprendi.NumeroDocumentoAprendiz);
@@ -247,6 +223,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     aprendiz = aprendi,
                     inscripcionTyt = insctyt
                 };
+
                 if (viewModel.aprendiz == null)
                 {
                     return NotFound();
@@ -257,10 +234,11 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
         {
             InscripcionTyt insctyt;
-            if (!ModelState.IsValid)
+            if (aprendiztyt!=null)
             {
                 return View(aprendiztyt);
             }
@@ -269,8 +247,9 @@ namespace Siscan_Vc_AppWeb.Controllers
             //Validar si el aprendiz esta inscrito
             if (aprendiz.IdEstadoTyt == 1)
             {
-                insctyt = _dbSiscanContext.InscripcionTyts.First(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
+                insctyt = await _dbSiscanContext.InscripcionTyts.FirstOrDefaultAsync(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
             }
+
             if (aprendiz == null)
             {
                 return NotFound();
@@ -299,35 +278,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
             }
             return RedirectToAction(nameof(Consultar));
-
-            //if (numDocumento != aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
-            //{
-            //    return NotFound();
-            //}
-            //if (ModelState.IsValid)
-            //{
-            //    try
-            //    {
-            //        await _aprendizService.Update(aprendiztyt.aprendiz);
-            //        if (aprendiztyt.inscripcionTyt.CodigoInscripcion != null)
-            //        {
-            //            await _inscripcionTYTService.Update(aprendiztyt.inscripcionTyt);
-            //        }
-            //    }
-            //    catch (DbUpdateConcurrencyException)
-            //    {
-            //        if (!AprendizExists(aprendiztyt.aprendiz.NumeroDocumentoAprendiz))
-            //        {
-            //            return NotFound();
-            //        }
-            //        else
-            //        {
-            //            throw;
-            //        }
-            //    }
-            //    return RedirectToAction(nameof(Consultar));
-            //}
-            //return View(aprendiztyt);
         }
         private bool AprendizExists(string numeroDocumento)
         {

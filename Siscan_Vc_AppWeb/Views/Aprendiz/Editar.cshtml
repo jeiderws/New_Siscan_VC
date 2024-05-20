@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -22,7 +21,7 @@
                                     <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option value="">Selecciona un tipo de documento...</option>
                                     </select>
-                                    <label asp-for="aprendiz.IdTipodocumento">Tipo Documento</label>
+                                    <label for="cboTipoDocumento">Tipo Documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -183,7 +182,7 @@
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
                                 <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmUpdate()">Actualizar</button>
-                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -194,11 +193,6 @@
 </div>
 
 @section Scripts {
-    <script>
-        $(#cboEstadoPruebatyt)
-
-    </script>
-
     <script>
         function confirmUpdate() {
             return confirm("¿Estás seguro de que deseas actualizar?");
