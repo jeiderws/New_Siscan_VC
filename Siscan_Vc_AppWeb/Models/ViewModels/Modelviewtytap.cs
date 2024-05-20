@@ -6,6 +6,6 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
      
         public Aprendiz aprendiz { get; set; }
-        public InscripcionTyt inscripcionTyt { get; set; }
+        public InscripcionTyt? inscripcionTyt { get; set; }
     }
 }
