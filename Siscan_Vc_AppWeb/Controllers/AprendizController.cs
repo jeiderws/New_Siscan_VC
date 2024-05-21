@@ -181,6 +181,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 ListaAprendices = listaAprendiz
             };
 
+            TempData["aprendizConsultAlert"] = "No hay resultados";
             return View(viewModel);
 
         }
