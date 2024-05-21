@@ -3,50 +3,29 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Siscan_Vc_AppWeb.Models.ViewModels.ModelviewAp
-
-
 @section Estilos {
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 }
-
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="fondomenu py-3 px-5">
                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices</h6>
-
                 </div>
-
-                @*  <br />
-                <br /> *@
                 <div class="col-md-6 py-3 px-5">
-
-
                     <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Aprendiz" asp-action="Consultar">
                         <div class="input-group">
                             <input class="form-control" name="nmdoc" type="text" placeholder="Numero Documento..." aria-label="Numero Documento..." aria-describedby="btnNavbarSearch" width="150" />
                             <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
-
                         </div>
-
                     </form>
-
-
                 </div>
-                @* <br /> *@
-
-
                 <div class="card-body table-responsive">
-
-
-
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
                     <div class="card-body table-responsive-busqueda">
                         <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
-
                             <thead class="boton2 ms-auto">
                                 <tr>
                                     <th>Tipo Documento</th>
@@ -61,8 +40,6 @@
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
-
-
                             <tbody>
                                 @{
                                     bool estado = false;
@@ -74,7 +51,6 @@
                                     {
                                         estado = false;
                                     }
-
                                     if (estado)
                                     {
                                         <tr>
@@ -97,12 +73,14 @@
                                             </td>
                                         </tr>
                                     }
-
-
+                                    else
+                                    {
+                                        @if (TempData["aprendizConsultAlert"] != null)
+                                        {
+                                        <td class="alert alert-danger" role="alert"> @TempData["aprendizConsultAlert"] </td>
+                                        }
+                                    }
                                 }
-
-
-
                             </tbody>
                         </table>
                     </div>
@@ -146,28 +124,19 @@
                                                 <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                 </a>
-                                                <a class="btn btn-sm btn-eliminar"  data-id="@aprendiz.NumeroDocumentoAprendiz">
+                                                <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
                                                     <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
                                                 </a>
                                             </td>
                                         </tr>
                                     }
-
-
                                 }
-
-
-
                             </tbody>
                         </table>
 
                     </div>
                     <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
                 </div>
-
-
-
-
             </div>
         </div>
     </div>
@@ -179,40 +148,10 @@
     }
 }
 
-@* <!-- Modal de confirmación de Consultar -->
-<div class="modal fade" id="confirmacionEliminacionModal" tabindex="-1" aria-labelledby="confirmacionEliminacionModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="confirmacionEliminacionModallabel">Confirmación de Eliminacion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea eliminar?
-                se eliminara permanentemente.
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("consultar", "Aprendiz")" class="btn btn-primary" id="confirmarEliminacionBtn">Eliminar</a>
-            </div>
-        </div>
-    </div>
-</div> *@
-
-
-
-
-
 @section Scripts {
-
     <script>
-
         var tabla1 = document.querySelector('#tbdata');
         var tabla2 = document.querySelector('#tbdata2');
-
-
-
-
         $(document).ready(function () {
             $('.btn-eliminar').on('click', function () {
                 function confirEliminar() {
@@ -245,6 +184,5 @@
     </script>
 
     <script src="~/js/scripts.js" asp - append - version="true"></script>
-
 }
 
