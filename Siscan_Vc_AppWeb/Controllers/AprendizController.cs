@@ -169,6 +169,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (aprendi.NumeroDocumentoAprendiz == nmdoc)
                 {
                     aprendiz = aprendi;
+                    break;
                 }
             }
 
@@ -180,6 +181,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 ListaAprendices = listaAprendiz
             };
 
+            TempData["aprendizConsultAlert"] = "No hay resultados";
             return View(viewModel);
 
         }
