@@ -88,7 +88,7 @@
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
                                             <td>
-                                                <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-id="@Model.Aprendiz.NumeroDocumentoAprendiz">
+                                                <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@Model.Aprendiz.NumeroDocumentoAprendiz">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="28" />
                                                 </a>
                                                 <a class="btn btn-sm btn-eliminar" data-id="@Model.Aprendiz?.NumeroDocumentoAprendiz">

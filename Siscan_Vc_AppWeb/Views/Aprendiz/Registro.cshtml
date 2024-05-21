@@ -23,9 +23,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
                                     <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
-
                                         <option value="">Selecciona un tipo de documento...</option>
                                     </select>
                                     <label for="cboTipoDocumento">Tipo Documento</label>
@@ -145,10 +143,10 @@
                             <label for="inputTelefono">Correo acudiente</label>
                         </div>
                         <!-- fin Acudiente -->
+
                         <br />
 
                         <!--Registro Pruebas tyt-->
-
                         <div class="row mb-3" id="pruebatyt" style="display:none">
                             <div class="fondomenu py-3 px-5">
                                 <h6 class="m-0 text-center font-dark-light text-white "> Pruebas tyt</h6>
@@ -185,17 +183,14 @@
                             </div>
                         </div>
                         <!--Fin registro tyt-->
+
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
                                 <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmSave()">Registrar</button>
-
                             </div>
                         </div>
                     </form>
-                    
-
                 </div>
-
             </div>
         </div>
     </div>
@@ -227,9 +222,7 @@
     <script>
         function confirmSave() {
             return confirm("¿Estás seguro de que deseas guardar?");
-
         }
-
     </script>
 
     <script>
