@@ -99,7 +99,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                     CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                 };
-                if ( aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
+                if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
                 {
                     aprendiz.IdEstadoTyt = 6;
                 }
@@ -195,7 +195,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     return Json(new { success = false, message = "El aprendiz no fue encontrado." });
                 }
-                 TempData["MensajeAlertEliminado"] = "Usuario eliminado correctamente";
+                TempData["MensajeAlertEliminado"] = "Usuario eliminado correctamente";
                 var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
                 _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 await _aprendizService.Delete(nmdoc);
@@ -247,46 +247,65 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
         {
             InscripcionTyt insctyt;
-            if (aprendiztyt!=null)
+            if (aprendiztyt != null)
             {
-                return View(aprendiztyt);
-            }
-            var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
-
-            //Validar si el aprendiz esta inscrito
-            if (aprendiz.IdEstadoTyt == 1)
-            {
-                insctyt = await _dbSiscanContext.InscripcionTyts.FirstOrDefaultAsync(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
-            }
-
-            if (aprendiz == null)
-            {
-                return NotFound();
-            }
-
-            //asignar los datos obtenidos por parametros a los objetos que se guardaran
-            aprendiz = aprendiztyt.aprendiz;
-            insctyt = aprendiztyt.inscripcionTyt;
-
-            try
-            {
-                //actualizacion de registros
-                await _aprendizService.Update(aprendiz);
-                await _inscripcionTYTService.Update(insctyt);
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                //validacion de existencia del aprendiz
-                if (!AprendizExists(aprendiztyt.aprendiz.NumeroDocumentoAprendiz))
+                var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
+                if (aprendiz == null)
                 {
                     return NotFound();
                 }
-                else
+
+                //asignar los datos actualizados a aprendiz
+                aprendiz.IdTipodocumento = aprendiztyt.aprendiz.IdTipodocumento;
+                aprendiz.NombreAprendiz = aprendiztyt.aprendiz.NombreAprendiz;
+                aprendiz.ApellidoAprendiz = aprendiztyt.aprendiz.ApellidoAprendiz;
+                aprendiz.CelAprendiz = aprendiztyt.aprendiz.CelAprendiz;
+                aprendiz.CorreoAprendiz = aprendiztyt.aprendiz.CorreoAprendiz;
+                aprendiz.DireccionAprendiz = aprendiztyt.aprendiz.DireccionAprendiz;
+                aprendiz.NombreCompletoAcudiente = aprendiztyt.aprendiz.NombreCompletoAcudiente;
+                aprendiz.CorreoAcuediente = aprendiztyt.aprendiz.CorreoAcuediente;
+                aprendiz.CorreoAcuediente = aprendiztyt.aprendiz.CorreoAcuediente;
+                aprendiz.CelularAcudiente = aprendiztyt.aprendiz.CelularAcudiente;
+                aprendiz.IdEstadoAprendiz = aprendiztyt.aprendiz.IdEstadoAprendiz;
+                aprendiz.Ficha = aprendiztyt.aprendiz.Ficha;
+                aprendiz.IdCiudad = aprendiztyt.aprendiz.IdCiudad;
+                aprendiz.IdEstadoAprendiz = aprendiztyt.aprendiz.IdEstadoAprendiz;
+
+                try
                 {
-                    throw;
+                    //actualizacion de registros
+                    _dbSiscanContext.Aprendiz.Update(aprendiz);
+                    //asignar los datos a inscripcion tyt validando el estado de inscripcion tyt del aprendiz
+                    if (aprendiz.IdEstadoTyt == 1)
+                    {
+                        //obtener los datos de la inscripcion que se van a actualizar por medio del numero de documento del aprendiz
+                        insctyt = await _dbSiscanContext.InscripcionTyts.FirstOrDefaultAsync(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
+
+                        insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
+                        insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
+                        insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
+                        insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
+                        insctyt.IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt;
+
+                        _dbSiscanContext.InscripcionTyts.Update(insctyt);
+                    }
+                    await _dbSiscanContext.SaveChangesAsync();
                 }
+                catch (DbUpdateConcurrencyException)
+                {
+                    //validacion de existencia del aprendiz
+                    if (!AprendizExists(aprendiztyt.aprendiz.NumeroDocumentoAprendiz))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Consultar));
             }
-            return RedirectToAction(nameof(Consultar));
+            return View(aprendiztyt);
         }
         private bool AprendizExists(string numeroDocumento)
         {
