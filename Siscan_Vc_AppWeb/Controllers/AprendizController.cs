@@ -180,10 +180,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                 Aprendiz = aprendiz,
                 ListaAprendices = listaAprendiz
             };
-            if (viewModel.Aprendiz == null)
-            {
-                TempData["aprendizConsultAlert"] = "No se encontraron resultados";
-            }
+
+            TempData["aprendizConsultAlert"] = "No hay resultados";
             return View(viewModel);
 
         }
