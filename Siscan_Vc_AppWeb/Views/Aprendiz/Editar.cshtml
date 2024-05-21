@@ -1,8 +1,9 @@
-﻿@{
+﻿
+@{
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@using Siscan_Vc_DAL.DataContext
+
 @model Siscan_Vc_AppWeb.Models.ViewModels.Modelviewtytap
 <div class="container">
     <div class="row justify-content-center">
@@ -11,6 +12,7 @@
                 <div class="card-header fondomenu ">
                     <img class="img-fluid mover2" src="~/img/actualizar blanco.png" alt="Alternate Text" width="40">
                     <h3 class="text-center font-dark-light my-4">Actualizar </h3>
+
                 </div>
                 <div class="card-body">
                     <form asp-action="Editar">
@@ -25,7 +27,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" readonly />
+                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
                                     <label asp-for="aprendiz.NumeroDocumentoAprendiz">Numero de documento</label>
                                 </div>
                             </div>
@@ -42,6 +44,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -65,6 +68,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
+
                                     <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
@@ -79,6 +83,7 @@
                                     <label for="cboDepartamentos">Departamentos</label>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-for="aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
@@ -127,6 +132,7 @@
                                     <input asp-for="aprendiz.CelularAcudiente" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
                                     <label asp-for="aprendiz.CelularAcudiente">Telefono</label>
                                 </div>
+
                             </div>
                         </div>
                         <div class="form-floating mb-3 mb-md-0">
@@ -134,10 +140,10 @@
                             <label asp-for="aprendiz.CorreoAcuediente">Correo acudiente</label>
                         </div>
                         <!-- fin Acudiente -->
-
                         <br />
 
                         <!--Pruebas tyt-->
+
                         <div class="row mb-3" id="pruebatyt" style="display:none">
                             <div class="fondomenu py-3 px-5">
                                 <h6 class="m-0 text-center font-dark-light text-white "> Pruebas tyt</h6>
@@ -174,14 +180,14 @@
                             </div>
                         </div>
                         <!--Fin tyt-->
-
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
                                 <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmUpdate()">Actualizar</button>
-                            </div>
+                                </div>
                         </div>
                     </form>
                 </div>
+
             </div>
         </div>
     </div>
@@ -189,16 +195,16 @@
 
 @section Scripts {
     <script>
-        // var inputdoc = document.querySelector("#inputDocumento")
-        // $('#inputDocumento').prop('disabled', true)
-        // console.log(inputdoc.value);
+        $(#cboEstadoPruebatyt)
+
+    </script>
+
+    <script>
         function confirmUpdate() {
             return confirm("¿Estás seguro de que deseas actualizar?");
         }
     </script>
-
     <script src="~/js/scripts.js" asp-append-version="true"></script>
-
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
@@ -218,6 +224,7 @@
                             }
                         )
                         );
+
                     });
                 });
             });
@@ -242,8 +249,8 @@
                 });
             });
         });
-    </script>
 
+    </script>
     <script>
         $(document).ready(function () {
             $('#cboPrograma').change(function () {
@@ -265,4 +272,5 @@
             });
         });
     </script>
+
 }
