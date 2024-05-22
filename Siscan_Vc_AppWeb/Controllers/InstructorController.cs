@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_DAL.DataContext;
 
 namespace Siscan_Vc_AppWeb.Controllers
@@ -11,10 +12,15 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             _dbSiscanContext = dbSiscanContext;
         }
-        public async Task<IActionResult> Registro(Instructor instructor)
+        public async Task<IActionResult> Registro()
         {
             ViewBag.ItemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
-            if (ModelState.IsValid)
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Registro(Instructor instructor)
+        {
+            if (instructor!=null)
             {
                 var instruc = new Instructor()
                 {

@@ -21,44 +21,42 @@
                                     <select asp-for="IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option>Selecciona un tipo de documento...</option>
                                     </select>
-                                    <label for="cboTipoDocumento">Tipo Documento</label>
+                                    <label asp-for="IdTipodocumento">Tipo Documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="NumeroDocumentoInstructor" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
-                                    <label for="inputName">Numero de documento</label>
+                                    <label asp-for="NumeroDocumentoInstructor">Numero de documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="NombreInstructor" class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
-                                    <label for="inputName">Nombres</label>
+                                    <label asp-for="NombreInstructor">Nombres</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input asp-for="ApellidoInstructor" class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
-                                    <label for="inputLastName">Apellidos</label>
+                                    <label asp-for="ApellidoInstructor">Apellidos</label>
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="CelInstructor" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <label asp-for="CelInstructor">Telefono</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <input asp-for="CorreoInstructor" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                    <label for="inputEmail">Correo</label>
+                                    <label asp-for="CorreoInstructor">Correo</label>
                                 </div>
                             </div>
                         </div>
-
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
                                 <button type="submit" class="btn text-center btn-block" data-bs-toggle="modal" onclick="return confirmSave()">Registrar</button>
@@ -72,6 +70,10 @@
 </div>
 
 @section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
 
