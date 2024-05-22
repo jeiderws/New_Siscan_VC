@@ -215,32 +215,12 @@
         </div>
     </div>
 </div>
-<!-- Modal de confirmación de registro -->
-<div class="modal fade" id="confirmacionRegistroModal" tabindex="-1" aria-labelledby="confirmacionRegistroModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="confirmacionRegistroModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea registrar?
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("Registro", "Aprendiz")" class="btn btn-primary" id="confirmarRegistroBtn">Confirmar Registro</a>
-            </div>
-        </div>
-    </div>
-</div>
 
 @section Scripts {
 
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-
-  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>  
 
     <script>
         $(document).ready(function () {
