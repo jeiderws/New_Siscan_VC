@@ -1,4 +1,5 @@
-﻿using Siscan_Vc_DAL.DataContext;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using Siscan_Vc_DAL.DataContext;
 
 namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
@@ -27,5 +28,6 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public int IdTipodocumento { get; set; }
 
         public string Tipodocumento { get; set; }
+
     }
 }
