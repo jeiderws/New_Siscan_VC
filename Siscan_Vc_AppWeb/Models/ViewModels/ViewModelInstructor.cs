@@ -13,7 +13,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             CelInstructor = ins.CelInstructor;
             CorreoInstructor = ins.CorreoInstructor;
             IdTipodocumento = ins.IdTipodocumento;
-            Tipodocumento = ins.IdTipodocumentoNavigation.TipoDocumento1;
+            Tipodocumento = ins.IdTipodocumentoNavigation;
         }
         public string NumeroDocumentoInstructor { get; set; } = null!;
 
@@ -27,7 +27,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 
         public int IdTipodocumento { get; set; }
 
-        public string Tipodocumento { get; set; }
+        public TipoDocumento Tipodocumento { get; set; }
 
     }
 }

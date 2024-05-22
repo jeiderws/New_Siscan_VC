@@ -2,7 +2,7 @@
     ViewData["Title"] = "Consultar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewInstrc
 
 @section Estilos {
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
@@ -18,94 +18,117 @@
                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Instructores</h6>
 
                 </div>
-
-               <br />
-                <br /> 
+                <br />
+                <br />
                 <div class="col-md-6 py-3 px-5">
-
-                    <form class="d-none d-md-inline-block form-inline mb-4">
+                    <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Instructor" asp-action="Consultar">
                         <div class="input-group">
-                            <input class="form-control" type="text" placeholder="Search for..." aria-label="Search for..." aria-describedby="btnNavbarSearch" width="150" />
-                            <button class="boton" id="btnNavbarSearch">Buscar</button>
-
+                            <input class="form-control" name="nmdoc" type="text" placeholder="Numero Documento..." aria-label="Numero Documento..." aria-describedby="btnNavbarSearch" width="150" />
+                            <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
                         </div>
-
                     </form>
-
                 </div>
-                @* <br /> *@
-
-                <div class="card-body ">
+                <div class="card-body table-responsive">
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
+                    <div class="card-body table-responsive-busqueda">
+                        <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Tipo Documento</th>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Celular</th>
+                                    <th>Correo</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    bool estado = false;
+                                    if (Model.Instructor.NumeroDocumentoInstructor != null)
+                                    {
+                                        estado = true;
+                                    }
+                                    else if (Model.Instructor.NumeroDocumentoInstructor == null)
+                                    {
+                                        estado = false;
+                                    }
+                                    if (estado)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(i => Model.Instructor.IdTipodocumentoNavigation.TipoDocumento1)</td>
+                                            <td>@Html.DisplayFor(i => Model.Instructor.NumeroDocumentoInstructor)</td>
+                                            <td>@Html.DisplayFor(i => Model.Instructor.NombreInstructor)</td>
+                                            <td>@Html.DisplayFor(i => Model.Instructor.ApellidoInstructor)</td>
+                                            <td>@Html.DisplayFor(i => Model.Instructor.CelInstructor)</td>
+                                            <td>@Html.DisplayFor(i => Model.Instructor.CorreoInstructor)</td>
+                                            <td>
+                                                <a class="btn  btn-sm" asp-controller="Instructor" asp-action="Editar">
+                                                    <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                </a>
+                                                <a class="btn btn-sm btn-eliminar">
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        @if (TempData["instructorConsultAlert"] != null)
+                                        {
+                                            <div class="alert alert-danger" role="alert"> @TempData["instructorConsultAlert"] </div>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
                     <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
                         <thead class="boton2 ms-auto">
                             <tr>
+                                <th>Tipo Documento</th>
                                 <th>Documento</th>
                                 <th>Nombres</th>
                                 <th>Apellidos</th>
-                                <th>Telefono</th>
+                                <th>Celular</th>
                                 <th>Correo</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>WDHPQW8</td>
-                                <td>12312312</td>
-                                <td>Marca 1</td>
-                                <td>Descripcion 1</td>
-                                <td>
-                                    <a class="btn  btn-sm">
-                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                    </a>
-                                    <a class="btn btn-sm">
-                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>WIEYEO2I</td>
-                                <td>12312312</td>
-                                <td>Marca 2</td>
-                                <td>Descripcion 2</td>
-                                <td>
-                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
-                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                    </a>
-                                    <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
-                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
-                                    </a>
-                                </td>
-                            </tr>
+                            @{
+                                foreach (var instructor in Model.ListaInstructores)
+                                {
+                                    <tr>
+                                        <td>@Html.DisplayFor(i => instructor.Tipodocumento.TipoDocumento1)</td>
+                                        <td>@Html.DisplayFor(i => instructor.NumeroDocumentoInstructor)</td>
+                                        <td>@Html.DisplayFor(i => instructor.NombreInstructor)</td>
+                                        <td>@Html.DisplayFor(i => instructor.ApellidoInstructor)</td>
+                                        <td>@Html.DisplayFor(i => instructor.CelInstructor)</td>
+                                        <td>@Html.DisplayFor(i => instructor.CorreoInstructor)</td>
+                                        <td>
+                                            <a class="btn  btn-sm" asp-controller="Instructor" asp-action="Editar">
+                                                <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                            </a>
+                                            <a class="btn btn-sm btn-eliminar">
+                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
                         </tbody>
-                    </table>
-                    <img class="img-fluid mover3" src="~/img/instructorsena.png" alt="Alternate Text" width="450" />
+                    </table>                   
                 </div>
+                <img class="img-fluid mover1" src="~/img/instructorsena.png" alt="Alternate Text" width="400" />
             </div>
         </div>
     </div>
 </div>
 
-<!-- Modal de confirmación de Consultar -->
-<div class="modal fade" id="confirmacionEliminacionModal" tabindex="-1" aria-labelledby="confirmacionEliminacionModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="confirmacionEliminacionModallabel">Confirmación de Eliminacion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea eliminar?
-                se eliminara permanentemente.
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("consultar", "Instructor")" class="btn btn-primary" id="confirmarEliminacionBtn">Eliminar</a>
-            </div>
-        </div>
-    </div>
-</div>
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
 
