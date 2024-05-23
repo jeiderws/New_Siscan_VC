@@ -123,7 +123,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     _dbSiscanContext.InscripcionTyts.Add(tyt);
                     _dbSiscanContext.SaveChanges();
                 }
-                TempData["MensajeAlert"] = "Usuario guardado correctamente";
+                TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
 
                 vmtytap = new Modelviewtytap
                 {
@@ -181,7 +181,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 ListaAprendices = listaAprendiz
             };
 
-            TempData["aprendizConsultAlert"] = "No hay resultados";
+            TempData["aprendizConsultAlert"] = "No hay Resultados";
             return View(viewModel);
 
         }
@@ -197,7 +197,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     return Json(new { success = false, message = "El aprendiz no fue encontrado." });
                 }
-                TempData["MensajeAlertEliminado"] = "Usuario eliminado correctamente";
+                TempData["MensajeAlertEliminado"] = "Aprendiz eliminado correctamente!!";
                 var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
                 _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 await _aprendizService.Delete(nmdoc);
@@ -264,7 +264,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 aprendiz.CelAprendiz = aprendiztyt.aprendiz.CelAprendiz;
                 aprendiz.CorreoAprendiz = aprendiztyt.aprendiz.CorreoAprendiz;
                 aprendiz.DireccionAprendiz = aprendiztyt.aprendiz.DireccionAprendiz;
-                aprendiz.NombreCompletoAcudiente = aprendiztyt.aprendiz.NombreCompletoAcudiente;
+                aprendiz.NombreCompletoAcudiente = aprendiztyt.aprendiz.NombreCompletoAcudiente;  
                 aprendiz.CorreoAcuediente = aprendiztyt.aprendiz.CorreoAcuediente;
                 aprendiz.CorreoAcuediente = aprendiztyt.aprendiz.CorreoAcuediente;
                 aprendiz.CelularAcudiente = aprendiztyt.aprendiz.CelularAcudiente;
