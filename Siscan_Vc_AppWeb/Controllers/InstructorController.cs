@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_DAL.DataContext;
@@ -14,27 +15,37 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
         public async Task<IActionResult> Registro()
         {
-            ViewBag.ItemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
-            return View();
+            var modelview = new ModelViewInstructor
+            {
+                OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                {
+                    Value = o.IdTipoDocumento.ToString(),
+                    Text = o.TipoDocumento1
+                }).ToList()
+            };
+            return View(modelview);
         }
         [HttpPost]
-        public async Task<IActionResult> Registro(Instructor instructor)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Registro(ModelViewInstructor mvinstructor)
         {
-            if (instructor!=null)
+            Instructor instruc= new Instructor();
+            if (instruc!=null)
             {
-                var instruc = new Instructor()
+                instruc = new Instructor()
                 {
-                    NumeroDocumentoInstructor = instructor.NumeroDocumentoInstructor,
-                    NombreInstructor = instructor.NombreInstructor,
-                    ApellidoInstructor = instructor.ApellidoInstructor,
-                    CorreoInstructor = instructor.CorreoInstructor,
-                    CelInstructor = instructor.CelInstructor,
-                    IdTipodocumento = instructor.IdTipodocumento,
+                    NumeroDocumentoInstructor = mvinstructor.Instructor.NumeroDocumentoInstructor,
+                    NombreInstructor = mvinstructor.Instructor.NombreInstructor,
+                    ApellidoInstructor = mvinstructor.Instructor.ApellidoInstructor,
+                    CorreoInstructor = mvinstructor.Instructor.CorreoInstructor,
+                    CelInstructor = mvinstructor.Instructor.CelInstructor,
+                    IdTipodocumento = mvinstructor.OpcSeleccionada
                 };
                 _dbSiscanContext.Instructors.Add(instruc);
                 await _dbSiscanContext.SaveChangesAsync();
+                RedirectToAction(nameof(Registro));
             }
-            return View(instructor);
+            return View(mvinstructor);
         }
 
         public IActionResult Consultar()
