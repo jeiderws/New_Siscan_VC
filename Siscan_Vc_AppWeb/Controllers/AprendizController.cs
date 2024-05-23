@@ -275,12 +275,10 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 try
                 {
-                    //actualizacion de registros
+
                     _dbSiscanContext.Aprendiz.Update(aprendiz);
-                    //asignar los datos a inscripcion tyt validando el estado de inscripcion tyt del aprendiz
                     if (aprendiz.IdEstadoTyt == 1)
                     {
-                        //obtener los datos de la inscripcion que se van a actualizar por medio del numero de documento del aprendiz
                         insctyt = await _dbSiscanContext.InscripcionTyts.FirstOrDefaultAsync(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
 
                         insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
