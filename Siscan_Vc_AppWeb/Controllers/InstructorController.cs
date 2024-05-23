@@ -48,12 +48,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                 _dbSiscanContext.Instructors.Add(instruc);
                 await _dbSiscanContext.SaveChangesAsync();
                 TempData["AlertInstrcAdd"] = "Instructor guardado correctamente";
-                
+
                 instrucvm = new ModelViewInstructor
                 {
                     Instructor = instruc
                 };
-               return RedirectToAction(nameof(Registro));
+                return RedirectToAction(nameof(Registro));
             }
             return View(mvinstructor);
         }
@@ -62,15 +62,15 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             List<ViewModelInstructor> listaInstructores = new List<ViewModelInstructor>();
             IQueryable<Instructor> queryInstructor = await _instructorService.GetAll();
-            listaInstructores=queryInstructor.Select(i=> new ViewModelInstructor(i)
+            listaInstructores = queryInstructor.Select(i => new ViewModelInstructor(i)
             {
-                NumeroDocumentoInstructor=i.NumeroDocumentoInstructor,
-                NombreInstructor=i.NombreInstructor,
-                ApellidoInstructor=i.ApellidoInstructor,
-                CorreoInstructor=i.CorreoInstructor,
-                CelInstructor=i.CelInstructor,
-                IdTipodocumento=i.IdTipodocumento,
-                Tipodocumento=i.IdTipodocumentoNavigation
+                NumeroDocumentoInstructor = i.NumeroDocumentoInstructor,
+                NombreInstructor = i.NombreInstructor,
+                ApellidoInstructor = i.ApellidoInstructor,
+                CorreoInstructor = i.CorreoInstructor,
+                CelInstructor = i.CelInstructor,
+                IdTipodocumento = i.IdTipodocumento,
+                Tipodocumento = i.IdTipodocumentoNavigation
             }).ToList();
 
             Instructor instructor = new Instructor();
@@ -94,6 +94,43 @@ namespace Siscan_Vc_AppWeb.Controllers
         public IActionResult Editar()
         {
             return View();
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Eliminar(string nmDoc)
+        {
+            try
+            {
+                var instructor = await _dbSiscanContext.Instructors.FirstOrDefaultAsync(i => i.NumeroDocumentoInstructor == nmDoc);
+                if (instructor == null)
+                {
+                    TempData["AlertInstrucNoEncontrado"] = "El Instructor no fue encontrado";
+                }
+                TempData["AlertEliminadoInstruc"] = "Instructor eliminado correctamente!!";
+                var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.Where(s => s.NumeroDocumentoInstructor == nmDoc).ToListAsync();
+                if (seguimiento.Count > 0)
+                {
+                    _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
+                }
+                var ficha = await _dbSiscanContext.Fichas.Where(f => f.NumeroDocumentoInstructor == nmDoc).ToListAsync();
+                if (ficha.Count > 0)
+                {
+                    foreach (var f in ficha)
+                    {
+                        f.NumeroDocumentoInstructor = null;
+                        _dbSiscanContext.Fichas.UpdateRange(f);
+                    }
+                }
+               await _instructorService.Delete(nmDoc);
+                await _dbSiscanContext.SaveChangesAsync();
+                return Json(new { success = true, message = "El instructor se eliminó correctamente." });
+
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = true, message = "Se produjo un error al intentar eliminar el instructor: " + ex.Message });
+
+            }
         }
     }
 }

@@ -67,8 +67,8 @@
                                                 <a class="btn  btn-sm" asp-controller="Instructor" asp-action="Editar">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                 </a>
-                                                <a class="btn btn-sm btn-eliminar">
-                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
+                                                <a class="btn btn-sm btn-eliminar" data-id="@Model.Instructor.NumeroDocumentoInstructor">
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="25"/>
                                                 </a>
                                             </td>
                                         </tr>
@@ -85,6 +85,10 @@
                         </table>
                     </div>
                     <hr />
+                    @if (TempData["AlertEliminadoInstruc"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["AlertEliminadoInstruc"] </div>
+                    }
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
                     <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
                         <thead class="boton2 ms-auto">
@@ -113,8 +117,8 @@
                                             <a class="btn  btn-sm" asp-controller="Instructor" asp-action="Editar">
                                                 <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                             </a>
-                                            <a class="btn btn-sm btn-eliminar">
-                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
+                                            <a class="btn btn-sm btn-eliminar" data-id="@instructor.NumeroDocumentoInstructor">
+                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal"/>
                                             </a>
                                         </td>
                                     </tr>
@@ -134,22 +138,37 @@
 
     <script>
         $(document).ready(function () {
-            $("#confirmarEliminacionBtn").click(function () {
-
-                var eliminadoExitoso = true;
-
-                if (eliminadoExitoso == true) {
-
-                    alert("¡Eliminado exitoso!");
-
-                } else {
-
-                    alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+            $('.btn-eliminar').on('click', function () {
+                function confirEliminar() {
+                    return confirm("¿Estás seguro de que deseas eliminar?");
                 }
-
-                $("#confirmacionEliminacionModal").modal('hide');
+                var idInstructor = $(this).data('id');
+                if (confirEliminar()) {
+                    $.ajax({
+                        url: '@Url.Action("Eliminar", "Instructor")',
+                        type: 'DELETE',
+                        data: { nmDoc: idInstructor },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("¡Eliminado exitoso!");
+                                // Actualizar la página o hacer cualquier otra acción necesaria
+                                location.reload();
+                            }
+                            else {
+                                alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+                            }
+                        },
+                        error: function () {
+                            alert("Se produjo un error al intentar eliminar el aprendiz.");
+                        }
+                    });
+                }
             });
         });
+
+        function confirmDelete() {
+            return confirm("¿Estás seguro de que deseas Actualizar?");
+        }
     </script>
 }
 

@@ -137,7 +137,7 @@
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                 </a>
                                                 <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
-                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" onclick="return confirmSave()" />
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal"/>
                                                 </a>
                                             </td>
                                         </tr>
@@ -153,12 +153,7 @@
         </div>
     </div>
 </div>
-@{
-    if (TempData["numDoc"] != null)
-    {
-        <p>@TempData["numDoc"]</p>
-    }
-}
+
 
 @section Scripts {
     <script>
