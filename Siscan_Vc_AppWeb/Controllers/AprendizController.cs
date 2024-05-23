@@ -123,6 +123,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     _dbSiscanContext.InscripcionTyts.Add(tyt);
                     _dbSiscanContext.SaveChanges();
                 }
+                
                 TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
 
                 vmtytap = new Modelviewtytap
