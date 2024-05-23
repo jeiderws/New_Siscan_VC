@@ -143,26 +143,27 @@ document.addEventListener('DOMContentLoaded', function () {
             isValid = false;
         } 
        
-        //if (codigotyt.value.trim() === '') {
-        //    document.querySelector('#inputcodigotytError').textContent = 'El correo es obligatorio.';
-        //    isValid = false;
-        //}  
-       
-        //if (convocatoria.value.trim() === '') {
-        //    document.querySelector('#cboConvocatoriaError').textContent = 'El campo es obligatorio.';
-        //    isValid = false;
-        //} 
-       
-        //if (depto2.value.trim() === '') {
-        //    document.querySelector('#cboDepartamentos2Error').textContent = 'El campo es obligatorio.';
-        //    isValid = false;
-        //} 
-        //if (ciudad2.value.trim() === '') {
-        //    document.querySelector('#cboCiudad2Error').textContent = 'El campo es obligatorio.';
-        //    isValid = false;
-        //} 
-       
-      
+        if (pruebatyt.value == 1) {
+            if (codigotyt.value.trim() === '') {
+                document.querySelector('#inputcodigotytError').textContent = 'El código es obligatorio.';
+                isValid = false;
+            }
+
+            if (convocatoria.value.trim() === '') {
+                document.querySelector('#cboConvocatoriaError').textContent = 'El campo es obligatorio.';
+                isValid = false;
+            }
+
+            if (depto2.value.trim() === '') {
+                document.querySelector('#cboDepartamentos2Error').textContent = 'El campo es obligatorio.';
+                isValid = false;
+            }
+
+            if (ciudad2.value.trim() === '') {
+                document.querySelector('#cboCiudad2Error').textContent = 'El campo es obligatorio.';
+                isValid = false;
+            }
+        }
         return isValid;
     }
     function confirmSave() {

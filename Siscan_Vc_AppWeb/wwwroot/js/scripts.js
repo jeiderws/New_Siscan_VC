@@ -33,7 +33,7 @@ let estadotyt = document.querySelector('#cboEstadoPruebatyt');
 
 
 estadotyt.addEventListener('change', () => {
-    let ValorOption = estadotyt.value;
+    
 
     var opciones = estadotyt.options[estadotyt.selectedIndex];
 

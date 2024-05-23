@@ -17,13 +17,13 @@
                 <div class="col-md-6 py-3 px-5">
                     <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Aprendiz" asp-action="Consultar">
                         <div class="input-group">
-                            <input class="form-control" name="nmdoc" type="text" placeholder="Numero Documento..." aria-label="Numero Documento..." aria-describedby="btnNavbarSearch" width="150" />
+                            <input class="form-control" name="nmdoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
                             <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
                         </div>
                     </form>
                 </div>
                 <div class="card-body table-responsive">
-                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la búsqueda </h6>
                     <div class="card-body table-responsive-busqueda">
                         <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
                             <thead class="boton2 ms-auto">
@@ -32,11 +32,14 @@
                                     <th>Documento</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>Telefono</th>
+                                    <th>Número Celular</th>
                                     <th>Correo</th>
                                     <th>ficha</th>
+                                    <th>Acudiente</th>
+                                    <th>Telefono acudiente</th>
+                                    <th>Correo Acudiente</th>
                                     <th>Estado Aprendiz</th>
-                                    <th>Estado pruebas tyt</th>
+                                    <th>Estado pruebas TYT</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -61,6 +64,9 @@
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAcuediente)</td>
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
                                             <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
                                             <td>
@@ -98,11 +104,14 @@
                                     <th>Documento</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
-                                    <th>Telefono</th>
+                                    <th>Número Celular</th>
                                     <th>Correo</th>
                                     <th>ficha</th>
+                                    <th>Acudiente</th>
+                                    <th>Telefono acudiente</th>
+                                    <th>Correo Acudiente</th>
                                     <th>Estado Aprendiz</th>
-                                    <th>Estado pruebas tyt</th>
+                                    <th>Estado Pruebas TYT</th>
                                     <th>Acciones</th>
                                 </tr>
                             </thead>
@@ -118,6 +127,9 @@
                                             <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
                                             <td>

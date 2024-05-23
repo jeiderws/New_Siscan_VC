@@ -33,8 +33,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento"  />
-                                    <label for="inputDocumento">Numero de documento</label>
-                                    <span id="numeroDocumentoError" class="text-danger"></span>
+                                    <label for="inputName">Numero de documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -55,23 +54,21 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.CelAprendiz" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono"  />
-                                    <label for="inputTelefono">Telefono</label>
-                                    <span id="telefonoError" class="text-danger"></span>
+                                    <input asp-for="aprendiz.CelAprendiz" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa número de celular" />
+                                    <label for="inputTelefono">Celular</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="aprendiz.DireccionAprendiz" class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion"  />
                                     <label for="inputDireccion">Direccion</label>
-                                    <span id="inputDireccionError" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="aprendiz.CorreoAprendiz" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" >
+                                    <input asp-for="aprendiz.CorreoAprendiz" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
                                     <label for="inputEmail">Correo</label>
                                     <span id="inputEmailError" class="text-danger"></span>
                                 </div>
@@ -111,7 +108,6 @@
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
-                                    <span id="cboEstadoPruebatytError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -146,9 +142,8 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.CelularAcudiente" class="form-control" id="TelAcudiente" type="tel" placeholder="Ingresa tu telefono"  />
-                                    <label for="TelAcudiente">Telefono</label>
-                                    <span id="TelAcudienteError" class="text-danger"></span>
+                                    <input asp-for="aprendiz.CelularAcudiente" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono"  />
+                                    <label for="inputTelefono">Telefono</label>
                                 </div>
 
                             </div>
@@ -169,7 +164,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion"  />
+                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa código de inscripción" />
                                     <label for="inputcodigotyt">Codigo Inscripcion</label>
                                     <span id="inputcodigotytError" class="text-danger"></span>
                                 </div>
