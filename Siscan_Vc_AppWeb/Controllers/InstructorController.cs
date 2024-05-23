@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages.Manage;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
@@ -47,13 +48,14 @@ namespace Siscan_Vc_AppWeb.Controllers
                 _dbSiscanContext.Instructors.Add(instruc);
                 await _dbSiscanContext.SaveChangesAsync();
                 TempData["AlertInstrcAdd"] = "Instructor guardado correctamente";
-                RedirectToAction(nameof(Consultar));
+                
                 instrucvm = new ModelViewInstructor
                 {
                     Instructor = instruc
                 };
+               return RedirectToAction(nameof(Registro));
             }
-            return View(instrucvm);
+            return View(mvinstructor);
         }
         [HttpGet]
         public async Task<IActionResult> Consultar(string nmdoc)
