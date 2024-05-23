@@ -216,7 +216,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(string numDoc)
         {
             await LlenarCombos();
-            var num = numDoc;
+
             var viewModel = new Modelviewtytap();
             if (numDoc != null)
             {

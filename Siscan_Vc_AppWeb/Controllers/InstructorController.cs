@@ -90,10 +90,71 @@ namespace Siscan_Vc_AppWeb.Controllers
             TempData["instructorConsultAlert"] = "No hay resultados";
             return View(viewModel);
         }
-
-        public IActionResult Editar()
+        public async Task llenarcombo()
         {
-            return View();
+            var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
+            ViewBag.ItemsTipoDoc = itemsTipoDoc;
+        }
+        [HttpGet]
+        public async Task<IActionResult> Editar(string nmdoc)
+        {
+            await llenarcombo();
+            var viewModel = new ModelViewInstructor();
+            if (nmdoc != null)
+            {
+                var instruc = await _instructorService.GetForDoc(nmdoc);
+                viewModel = new ModelViewInstructor
+                {
+                    Instructor = instruc
+                };
+                if (viewModel.Instructor == null) 
+                {
+                    return NotFound();
+                }
+            }
+            return View(viewModel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(ModelViewInstructor instru)
+        {
+            if (instru != null)
+            {
+                try
+                {
+                    var instructor = await _instructorService.GetForDoc(instru.Instructor.NumeroDocumentoInstructor);
+                if (instructor == null)
+                {
+                    return NotFound();
+                }
+                instructor.NumeroDocumentoInstructor = instru.Instructor.NumeroDocumentoInstructor;
+                instructor.NombreInstructor = instru.Instructor.NombreInstructor;
+                instructor.ApellidoInstructor = instru.Instructor.ApellidoInstructor;
+                instructor.CelInstructor = instru.Instructor.CelInstructor;
+                instructor.CorreoInstructor = instru.Instructor.CorreoInstructor;
+                instructor.IdTipodocumento = instru.Instructor.IdTipodocumento;
+               
+                    _dbSiscanContext.Instructors.Update(instructor);
+                    await _dbSiscanContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Consultar));
+            }
+            return View(instru);
+        }
+        private bool InstrucExists(string numeroDocumento)
+        {
+            return _dbSiscanContext.Instructors.Any(a => a.NumeroDocumentoInstructor == numeroDocumento);
         }
 
         [HttpDelete]
