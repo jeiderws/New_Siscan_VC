@@ -14,6 +14,10 @@
                     <h3 class="text-center font-dark-light my-4">Registro</h3>
                 </div>
                 <div class="card-body">
+                    @if (TempData["ValIntrcExiste"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["ValIntrcExiste"] </div>
+                    }
                     @if (TempData["AlertInstrcAdd"] != null)
                     {
                         <div class="alert alert-success" role="alert"> @TempData["AlertInstrcAdd"] </div>

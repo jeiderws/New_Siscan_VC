@@ -33,27 +33,43 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registro(ModelViewInstructor mvinstructor)
         {
-            ModelViewInstructor instrucvm = new ModelViewInstructor();
-            if (instrucvm != null)
+            try
             {
-                var instruc = new Instructor()
+                ModelViewInstructor instrucvm = new ModelViewInstructor();
+                if (instrucvm != null)
                 {
-                    NumeroDocumentoInstructor = mvinstructor.Instructor.NumeroDocumentoInstructor,
-                    NombreInstructor = mvinstructor.Instructor.NombreInstructor,
-                    ApellidoInstructor = mvinstructor.Instructor.ApellidoInstructor,
-                    CorreoInstructor = mvinstructor.Instructor.CorreoInstructor,
-                    CelInstructor = mvinstructor.Instructor.CelInstructor,
-                    IdTipodocumento = mvinstructor.OpcSeleccionada
-                };
-                _dbSiscanContext.Instructors.Add(instruc);
-                await _dbSiscanContext.SaveChangesAsync();
-                TempData["AlertInstrcAdd"] = "Instructor guardado correctamente";
+                    Instructor instructor = await _instructorService.GetForDoc(mvinstructor.Instructor.NumeroDocumentoInstructor);
+                    if (instructor !=null)
+                    {
+                        TempData["ValIntrcExiste"] = "Ya existe un intructor con este numero de documento";
+                        return RedirectToAction(nameof(Registro));
+                    }
+                    else
+                    {
+                        var instruc = new Instructor()
+                        {
+                            NumeroDocumentoInstructor = mvinstructor.Instructor.NumeroDocumentoInstructor,
+                            NombreInstructor = mvinstructor.Instructor.NombreInstructor,
+                            ApellidoInstructor = mvinstructor.Instructor.ApellidoInstructor,
+                            CorreoInstructor = mvinstructor.Instructor.CorreoInstructor,
+                            CelInstructor = mvinstructor.Instructor.CelInstructor,
+                            IdTipodocumento = mvinstructor.OpcSeleccionada
+                        };
+                        _dbSiscanContext.Instructors.Add(instruc);
+                        await _dbSiscanContext.SaveChangesAsync();
+                        TempData["AlertInstrcAdd"] = "Instructor guardado correctamente";
 
-                instrucvm = new ModelViewInstructor
-                {
-                    Instructor = instruc
-                };
-                return RedirectToAction(nameof(Registro));
+                        instrucvm = new ModelViewInstructor
+                        {
+                            Instructor = instruc
+                        };
+                        return RedirectToAction(nameof(Registro));
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorGuardarInstrct"] = ex.Message;
             }
             return View(mvinstructor);
         }
@@ -107,7 +123,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     Instructor = instruc
                 };
-                if (viewModel.Instructor == null) 
+                if (viewModel.Instructor == null)
                 {
                     return NotFound();
                 }
@@ -123,17 +139,17 @@ namespace Siscan_Vc_AppWeb.Controllers
                 try
                 {
                     var instructor = await _instructorService.GetForDoc(instru.Instructor.NumeroDocumentoInstructor);
-                if (instructor == null)
-                {
-                    return NotFound();
-                }
-                instructor.NumeroDocumentoInstructor = instru.Instructor.NumeroDocumentoInstructor;
-                instructor.NombreInstructor = instru.Instructor.NombreInstructor;
-                instructor.ApellidoInstructor = instru.Instructor.ApellidoInstructor;
-                instructor.CelInstructor = instru.Instructor.CelInstructor;
-                instructor.CorreoInstructor = instru.Instructor.CorreoInstructor;
-                instructor.IdTipodocumento = instru.Instructor.IdTipodocumento;
-               
+                    if (instructor == null)
+                    {
+                        return NotFound();
+                    }
+                    instructor.NumeroDocumentoInstructor = instru.Instructor.NumeroDocumentoInstructor;
+                    instructor.NombreInstructor = instru.Instructor.NombreInstructor;
+                    instructor.ApellidoInstructor = instru.Instructor.ApellidoInstructor;
+                    instructor.CelInstructor = instru.Instructor.CelInstructor;
+                    instructor.CorreoInstructor = instru.Instructor.CorreoInstructor;
+                    instructor.IdTipodocumento = instru.Instructor.IdTipodocumento;
+
                     _dbSiscanContext.Instructors.Update(instructor);
                     await _dbSiscanContext.SaveChangesAsync();
                 }
@@ -182,7 +198,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         _dbSiscanContext.Fichas.UpdateRange(f);
                     }
                 }
-               await _instructorService.Delete(nmDoc);
+                await _instructorService.Delete(nmDoc);
                 await _dbSiscanContext.SaveChangesAsync();
                 return Json(new { success = true, message = "El instructor se eliminó correctamente." });
 
