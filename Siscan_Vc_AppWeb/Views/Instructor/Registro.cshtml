@@ -67,7 +67,7 @@
                         </div>
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
-                                <button type="submit" class="btn text-center btn-block" data-bs-toggle="modal" onclick="return confirmSave()">Registrar</button>
+                                <button type="submit" id="btnGuardar" class="btn text-center btn-block" onclick="return confirmSave()">Registrar</button>
                             </div>
                         </div>
                     </form>
@@ -78,18 +78,14 @@
 </div>
 
 @section Scripts {
-    @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
-
     <script>
         function confirmSave() {
             return confirm("¿Estás seguro de que deseas guardar?")
         }
-
+    </script>
+    <script>
         $(document).ready(function () {
             $("#confirmarRegistroBtn").click(function () {
                 // Aquí puedes realizar una llamada Ajax para realizar el registro

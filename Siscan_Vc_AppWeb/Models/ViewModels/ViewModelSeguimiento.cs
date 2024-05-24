@@ -14,7 +14,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             ApellidoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.ApellidoAprendiz;
             CorreoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CorreoAprendiz;
             TelefonoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CelAprendiz;
-            ProgramAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.Programa.NombrePrograma;
+            ProgramAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.ProgramaNavigation.NombrePrograma;
             FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha.ToString();
            
             //Instructor

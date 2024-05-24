@@ -45,7 +45,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     ApellidoAprendiz = item.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
                     CorreoAprendiz = item.NumeroDocumentoAprendizNavigation.CorreoAprendiz,
                     TelefonoAprendiz = item.NumeroDocumentoAprendizNavigation.CelAprendiz,
-                    ProgramAprendiz = item.NumeroDocumentoAprendizNavigation.FichaNavigation.Programa.NombrePrograma,
+                    ProgramAprendiz = item.NumeroDocumentoAprendizNavigation.FichaNavigation.ProgramaNavigation.NombrePrograma,
                     FichaAprendiz = item.NumeroDocumentoAprendizNavigation.Ficha.ToString(),
 
                     //Instructor

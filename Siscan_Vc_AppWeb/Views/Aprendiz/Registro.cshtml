@@ -15,6 +15,10 @@
                     <h3 class="text-center font-dark-light my-4">Registro </h3>
                 </div>
                 <div class="card-body">
+                    @if (TempData["ValAprendzExiste"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["ValAprendzExiste"] </div>
+                    }
                     @if (TempData["MensajeAlert"] != null)
                     {
                         <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
@@ -218,6 +222,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>  
 
     <script>
+        function confirmSave() {
+            return confirm("¿Estás seguro de que deseas guardar?")
+        }
+
         $(document).ready(function () {
             $('#cboDepartamentos').change(function () {
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado

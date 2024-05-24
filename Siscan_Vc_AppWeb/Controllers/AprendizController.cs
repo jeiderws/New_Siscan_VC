@@ -77,61 +77,80 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Registro(Modelviewtytap aptyt)
         {
             Modelviewtytap vmtytap = new Modelviewtytap();
-            if (vmtytap != null)
+            try
             {
-                var aprendiz = new Aprendiz()
+                Aprendiz apren = await _aprendizService.GetForDoc(aptyt.aprendiz.NumeroDocumentoAprendiz);
+                if (apren != null)
                 {
-                    IdTipodocumento = aptyt.aprendiz.IdTipodocumento,
-                    NumeroDocumentoAprendiz = aptyt.aprendiz.NumeroDocumentoAprendiz,
-                    NombreAprendiz = aptyt.aprendiz.NombreAprendiz,
-                    ApellidoAprendiz = aptyt.aprendiz.ApellidoAprendiz,
-                    CelAprendiz = aptyt.aprendiz.CelAprendiz,
-
-                    DireccionAprendiz = aptyt.aprendiz.DireccionAprendiz,
-                    CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
-                    IdEstadoAprendiz = aptyt.aprendiz.IdEstadoAprendiz,
-                    IdCiudad = aptyt.aprendiz.IdCiudad,
-
-                    Ficha = aptyt.aprendiz.Ficha,
-
-                    NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
-
-                    CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
-                    CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
-                };
-                if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
-                {
-                    aprendiz.IdEstadoTyt = 6;
+                    TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
+                    RedirectToAction(nameof(Registro));
                 }
                 else
                 {
-
-                    aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
-                }
-                await _aprendizService.Insert(aprendiz);
-
-                if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
-                {
-                    var tyt = new InscripcionTyt()
+                    if (vmtytap != null)
                     {
-                        CodigoInscripcion = aptyt.inscripcionTyt.CodigoInscripcion,
-                        NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz,
-                        Idciudad = aptyt.inscripcionTyt.Idciudad,
-                        IdConvocatoria = aptyt.inscripcionTyt.IdConvocatoria,
-                        IdEstadotyt = aprendiz.IdEstadoTyt
-                    };
-                    _dbSiscanContext.InscripcionTyts.Add(tyt);
-                    _dbSiscanContext.SaveChanges();
-                }
-                
-                TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
+                        if (apren == null)
+                        {
+                            var aprendiz = new Aprendiz()
+                            {
+                                IdTipodocumento = aptyt.aprendiz.IdTipodocumento,
+                                NumeroDocumentoAprendiz = aptyt.aprendiz.NumeroDocumentoAprendiz,
+                                NombreAprendiz = aptyt.aprendiz.NombreAprendiz,
+                                ApellidoAprendiz = aptyt.aprendiz.ApellidoAprendiz,
+                                CelAprendiz = aptyt.aprendiz.CelAprendiz,
 
-                vmtytap = new Modelviewtytap
-                {
-                    aprendiz = aptyt.aprendiz,
-                    inscripcionTyt = aptyt.inscripcionTyt
-                };
-                return RedirectToAction(nameof(Registro));
+                                DireccionAprendiz = aptyt.aprendiz.DireccionAprendiz,
+                                CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
+                                IdEstadoAprendiz = aptyt.aprendiz.IdEstadoAprendiz,
+                                IdCiudad = aptyt.aprendiz.IdCiudad,
+
+                                Ficha = aptyt.aprendiz.Ficha,
+
+                                NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
+
+                                CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
+                                CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
+                            };
+                            if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
+                            {
+                                aprendiz.IdEstadoTyt = 6;
+                            }
+                            else
+                            {
+
+                                aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
+                            }
+                            await _aprendizService.Insert(aprendiz);
+
+                            if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
+                            {
+                                var tyt = new InscripcionTyt()
+                                {
+                                    CodigoInscripcion = aptyt.inscripcionTyt.CodigoInscripcion,
+                                    NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz,
+                                    Idciudad = aptyt.inscripcionTyt.Idciudad,
+                                    IdConvocatoria = aptyt.inscripcionTyt.IdConvocatoria,
+                                    IdEstadotyt = aprendiz.IdEstadoTyt
+                                };
+                                _dbSiscanContext.InscripcionTyts.Add(tyt);
+                                _dbSiscanContext.SaveChanges();
+                            }
+
+                            TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
+
+                            vmtytap = new Modelviewtytap
+                            {
+                                aprendiz = aptyt.aprendiz,
+                                inscripcionTyt = aptyt.inscripcionTyt
+                            };
+                            return RedirectToAction(nameof(Registro));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["registroAprendizExcepcion"] = ex.Message;
             }
             return View(vmtytap);
         }
@@ -267,7 +286,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 aprendiz.CelAprendiz = aprendiztyt.aprendiz.CelAprendiz;
                 aprendiz.CorreoAprendiz = aprendiztyt.aprendiz.CorreoAprendiz;
                 aprendiz.DireccionAprendiz = aprendiztyt.aprendiz.DireccionAprendiz;
-                aprendiz.NombreCompletoAcudiente = aprendiztyt.aprendiz.NombreCompletoAcudiente;  
+                aprendiz.NombreCompletoAcudiente = aprendiztyt.aprendiz.NombreCompletoAcudiente;
                 aprendiz.CorreoAcuediente = aprendiztyt.aprendiz.CorreoAcuediente;
                 aprendiz.CorreoAcuediente = aprendiztyt.aprendiz.CorreoAcuediente;
                 aprendiz.CelularAcudiente = aprendiztyt.aprendiz.CelularAcudiente;
