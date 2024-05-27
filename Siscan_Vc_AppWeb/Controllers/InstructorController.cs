@@ -36,7 +36,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             try
             {
                 ModelViewInstructor instrucvm = new ModelViewInstructor();
-                if (instrucvm != null)
+                if (mvinstructor != null)
                 {
                     Instructor instructor = await _instructorService.GetForDoc(mvinstructor.Instructor.NumeroDocumentoInstructor);
                     if (instructor !=null)
