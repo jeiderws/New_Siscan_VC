@@ -87,7 +87,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
                 else
                 {
-                    if (vmtytap != null)
+                    if (aptyt != null)
                     {
                         if (apren == null)
                         {
@@ -135,14 +135,17 @@ namespace Siscan_Vc_AppWeb.Controllers
                                 _dbSiscanContext.InscripcionTyts.Add(tyt);
                                 _dbSiscanContext.SaveChanges();
                             }
-
-                            TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
-
+                         
                             vmtytap = new Modelviewtytap
                             {
                                 aprendiz = aptyt.aprendiz,
                                 inscripcionTyt = aptyt.inscripcionTyt
                             };
+                            if (vmtytap.aprendiz.NumeroDocumentoAprendiz != null)
+                            {
+                                TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
+
+                            }
                             return RedirectToAction(nameof(Registro));
                         }
                     }
@@ -152,7 +155,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 TempData["registroAprendizExcepcion"] = ex.Message;
             }
-            return View(vmtytap);
+            return View(aptyt);
         }
 
         //consultar aprendiz por numero de documento y obtener la lista de aprendices
