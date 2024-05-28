@@ -77,13 +77,13 @@
 
                                 <form role="form">
                                     <div class="form-floating mb-3">
-                                        <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                        <select asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))"  class="form-control form-control-sm" id="cboTipoDocumento">
                                             <option value="">Selecciona un tipo de documento...</option>
                                         </select>
                                         <label for="cboTipoDocumento">Tipo Documento</label>
                                     </div>
                                     <div class="form-floating mb-3 mb-md-0">
-                                        <input class="form-control" id="inputEmail" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                        <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputEmail" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
                                         <label for="inputDocumento">Numero de documento</label>
                                     </div>
                                     <div class="mt-4 mb-0">
@@ -117,7 +117,7 @@
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-                                <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                <select asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
                                     <option value="">Selecciona un tipo de documento...</option>
                                 </select>
                                 <label for="cboTipoDocumento">Tipo Documento</label>
@@ -148,12 +148,7 @@
                             <div class="form-floating mb-3">
 
                                 <input class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Digite el nombre de la Empresa">
-                                <datalist id="Empresas">
-                                    <option value="San Francisco"></option>
-                                    <option value="New York"></option>
-                                    <option value="Seattle"></option>
-                                    <option value="Los Angeles"></option>
-                                    <option value="Chicago"></option>
+                                <datalist  id="Empresas">
                                 </datalist>
                                 <label for="exampleDataList" class="form-label">Digite el nombre de la Empresa</label>
 
@@ -161,14 +156,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
-
-                                <select class="form-control form-control-sm" id="cboModalidad">
-                                    <option value="4">Selecciona una modalidad...</option>
-                                    <option value="3">Contrato</option>
-                                    <option value="2">Pasantia</option>
-                                    <option value="1">Unidad Productiva</option>
-                                    <option value="0">Proyecto</option>
-                                </select>
+                                <select asp-items="@(new SelectList(ViewBag.ItemsModalidad,"IdModalidad","NombreModalidad"))" class="form-control form-control-sm" id="cboModalidad"></select>
                                 <label for="cboModalidad">Modalidad Practicas</label>
                             </div>
                         </div>
@@ -177,12 +165,7 @@
 
                         <div class="form-floating mb-3 mb-md-0 py-3">
                             <div class="form-floating mb-3">
-                                <select class="form-control form-control-sm" id="cboAsignacionArea">
-                                    <option value="4">Selecciona una Area...</option>
-                                    <option value="3">Sistemas</option>
-                                    <option value="2">Produccion</option>
-                                    <option value="1">Investigación y desarrollo</option>
-                                    <option value="0">recursos humanos</option>
+                                <select asp-items="@(new SelectList(ViewBag.Itemsasigarea,"IdAsignacionArea","IdArea"))" class="form-control form-control-sm" id="cboAsignacionArea">
                                 </select>
                                 <label for="cboAsignacionArea">Area de Practicas</label>
                             </div>
@@ -194,12 +177,7 @@
                         <br />
                         <div class="form-floating mb-3 mb-md-0 py-3">
                             <div class="form-floating mb-3">
-                                <select class="form-control form-control-sm" id="cbocoformador">
-                                    <option value="4">Selecciona una Instructor...</option>
-                                    <option value="3">Yasser pushaina</option>
-                                    <option value="2">Produccion</option>
-                                    <option value="1">Investigación y desarrollo</option>
-                                    <option value="0">recursos humanos</option>
+                                <select asp-items="@(new SelectList(ViewBag.Itemscooformador,"IdCoformador","NombreCoformador"))" class="form-control form-control-sm" id="cbocoformador">
                                 </select>
                                 <label for="cboFicha">Coformador</label>
                             </div>
@@ -214,11 +192,6 @@
                         <div class="form-floating mb-3 mb-md-0 py-3">
                             <div class="form-floating mb-3">
                                 <select class="form-control form-control-sm" id="cboInstructor">
-                                    <option value="4">Selecciona una Instructor...</option>
-                                    <option value="3">Yasser pushaina</option>
-                                    <option value="2">Produccion</option>
-                                    <option value="1">Investigación y desarrollo</option>
-                                    <option value="0">recursos humanos</option>
                                 </select>
                                 <label for="cboFicha">Instructor Seguimiento</label>
                             </div>
