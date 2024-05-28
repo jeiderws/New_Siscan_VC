@@ -7,13 +7,15 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
             IdSeguimiento = seguimiento.IdSeguimiento;
-            
-            //aprendiz
-            NumeroDocumentoAprendiz = seguimiento.NumeroDocumentoAprendiz;
-            NombreAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.NombreAprendiz;
-            ApellidoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.ApellidoAprendiz;
-            CorreoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CorreoAprendiz;
-            TelefonoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CelAprendiz;
+
+            // Aprendiz
+            if (seguimiento.NumeroDocumentoAprendizNavigation != null)
+            {
+                NumeroDocumentoAprendiz = seguimiento.NumeroDocumentoAprendiz;
+                NombreAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.NombreAprendiz;
+                ApellidoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.ApellidoAprendiz;
+                CorreoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CorreoAprendiz;
+                TelefonoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CelAprendiz;
                 if (seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation != null &&
                     seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.ProgramaNavigation != null)
                 {
@@ -21,37 +23,39 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 }
                 FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha?.ToString();
             }
-           
+
             // Instructor
             if (seguimiento.NumeroDocumentoInstructorNavigation != null)
             {
                 NumeroDocumentoInstructor = seguimiento.NumeroDocumentoInstructor;
-            NombreInstructor = seguimiento.NumeroDocumentoInstructorNavigation.NombreInstructor;
-            ApellidoInstructor = seguimiento.NumeroDocumentoInstructorNavigation.ApellidoInstructor;
-            CorreoInstructor = seguimiento.NumeroDocumentoInstructorNavigation.CorreoInstructor;
-            TelefonoInstructor = seguimiento.NumeroDocumentoInstructorNavigation.CelInstructor;
+                NombreInstructor = seguimiento.NumeroDocumentoInstructorNavigation.NombreInstructor;
+                ApellidoInstructor = seguimiento.NumeroDocumentoInstructorNavigation.ApellidoInstructor;
+                CorreoInstructor = seguimiento.NumeroDocumentoInstructorNavigation.CorreoInstructor;
+                TelefonoInstructor = seguimiento.NumeroDocumentoInstructorNavigation.CelInstructor;
+            }
 
             // Coformador
             if (seguimiento.IdCoformadorNavigation != null)
             {
-            NombreCoformador = seguimiento.IdCoformadorNavigation.NombreCoformador;
-            ApellidoCoformador = seguimiento.IdCoformadorNavigation.ApellidoCoformador;
-            CorreoCoformador = seguimiento.IdCoformadorNavigation.CorreoCoformador;
-            TelefonoCoformador = seguimiento.IdCoformadorNavigation.CelCoformador;
+                NombreCoformador = seguimiento.IdCoformadorNavigation.NombreCoformador;
+                ApellidoCoformador = seguimiento.IdCoformadorNavigation.ApellidoCoformador;
+                CorreoCoformador = seguimiento.IdCoformadorNavigation.CorreoCoformador;
+                TelefonoCoformador = seguimiento.IdCoformadorNavigation.CelCoformador;
             }
 
             // Empresa
             if (seguimiento.NitEmpresaNavigation != null)
             {
-            NitEmpresa = seguimiento.NitEmpresa;
-            NombreEmpresa = seguimiento.NitEmpresaNavigation.NombreEmpresa;
-            AreaEmpresa = seguimiento.IdAreaEmpresaNavigation.NombreArea;
+                NitEmpresa = seguimiento.NitEmpresa;
+                NombreEmpresa = seguimiento.NitEmpresaNavigation.NombreEmpresa;
+                AreaEmpresa = seguimiento.IdAreaEmpresaNavigation.NombreArea;
             }
 
             // Practicas
             FechaInicio = seguimiento.FechaInicio;
             FechaFinalizacion = seguimiento.FechaFinalizacion;
             NombreModalidad = seguimiento.IdModalidadNavigation.NombreModalidad;
+            idmodalidad = seguimiento.IdModalidad;
         }
         public long IdSeguimiento { get; set; }
         //aprendiz
@@ -84,6 +88,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public DateOnly? FechaFinalizacion { get; set; }
 
         public string? NombreModalidad { get; set; }
+        public int? idmodalidad { get; set; }
 
         //Empresa
         public int? IdAreaEmpresa { get; set; }

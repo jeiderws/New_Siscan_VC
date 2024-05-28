@@ -12,56 +12,56 @@
             <br />
             <br />
             <div class="row">
-
-                <!-- Area Chart - Ventas de los ultimos 7 días -->
-                <div class="col-xl-8 col-lg-7">
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="fondomenu py-3 px-5">
-                            <img src="~/img/estudiante.png" alt="Alternate Text" width="50" />
-                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices en Seguimiento</h6>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="" style="height: 350px !important;">
-                                <table id="datatablesSimple">
-                                    <thead>
-                                        <tr>
-                                            <th>Nombres</th>
-                                            <th>Apellidos</th>
-                                            <th>Documento</th>
-                                            <th>ficha</th>
+               
+                    <!-- Area Chart - Ventas de los ultimos 7 días -->
+                    <div class="col-xl-8 col-lg-7">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="fondomenu py-3 px-5">
+                                <img src="~/img/estudiante.png" alt="Alternate Text" width="50" />
+                                <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices en Seguimiento</h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="" style="height: 350px !important;">
+                                    <table id="datatablesSimple">
+                                        <thead>
+                                            <tr>
+                                                <th>Nombres</th>
+                                                <th>Apellidos</th>
+                                                <th>Documento</th>
+                                                <th>ficha</th>
                                                 <th>Empresa</th>
 
-                                        </tr>
-                                    </thead>
-                                    <tfoot>
-                                        <tr>
-                                            <th>Name</th>
-                                            <th>Position</th>
-                                            <th>Office</th>
-                                            <th>Age</th>
-                                            <th>Start date</th>
+                                            </tr>
+                                        </thead>
+                                        <tfoot>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Position</th>
+                                                <th>Office</th>
+                                                <th>Age</th>
+                                                <th>Start date</th>
 
-                                        </tr>
-                                    </tfoot>
-                                    <tbody>
+                                            </tr>
+                                        </tfoot>
+                                        <tbody>
                                             @foreach (var segui in Model.listaSeguimiento)
                                             {
-                                        <tr>
+                                                <tr>
                                                     <td>@Html.DisplayFor(a => segui.NombreAprendiz)</td>
                                                     <td>@Html.DisplayFor(a => segui.ApellidoAprendiz)</td>
                                                     <td>@Html.DisplayFor(a => segui.NumeroDocumentoAprendiz)</td>
                                                     <td>@Html.DisplayFor(a => segui.FichaAprendiz)</td>
                                                     <td>@Html.DisplayFor(a => segui.NombreEmpresa)</td>
-                                        </tr>
+                                                </tr>
                                             }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <!-- Pie Chart - Productos más vendidos-->
                 <div class=" col-xl-4 col-lg-5">
                     <div class="card shadow mb-4">
@@ -98,10 +98,8 @@
 
         </div>
         <!-- /.container-fluid -->
-
     </div>
     <!-- End of Main Content -->
-
 </div>
 <!-- Modal -->
 <div class="modal fade" id="modalForm" role="dialog">
@@ -112,11 +110,9 @@
 
                 <h4 class="modal-title " id="myModalLabel">Registro Seguimiento</h4>
             </div>
-
             <!-- Modal Body -->
             <div class="modal-body">
                 <p class="statusMsg"></p>
-
                 <form method="post" id="registroForm">
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -135,8 +131,8 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3 mb-md-0">
-                                <input class="form-control" id="inputInicio" type="date" placeholder="Fecha de Inicio" />
-                                <label for="inputInicio">Fecha Inicio</label>
+                                <input class="form-control" id="inputNombre" type="text" placeholder="Ingresa tus nombres" />
+                                <label for="inputNombre">Nombres</label>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -191,8 +187,6 @@
                                 <label for="cboAsignacionArea">Area de Practicas</label>
                             </div>
                         </div>
-
-
                         <!-- Acudiente -->
                         <div class="fondomenu py-3 px-5">
                             <h6 class="m-0 text-center font-dark-light text-white "> coformador</h6>
@@ -211,12 +205,7 @@
                             </div>
 
                         </div>
-
-
-
                         <!-- Pruebas tyt-->
-
-
                         <div class="fondomenu py-3 px-5">
                             <h6 class="m-0 text-center font-dark-light text-white "> Instructor</h6>
                         </div>
@@ -238,12 +227,11 @@
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px">Registrar</button></div>
                         </div>
+                    </div>
                 </form>
 
             </div>
-
             <!-- Modal Footer -->
-
         </div>
     </div>
 </div>

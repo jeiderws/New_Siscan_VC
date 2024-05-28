@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Siscan_Vc_AppWeb.Models.ViewModels;
+using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 
 namespace Siscan_Vc_AppWeb.Controllers
@@ -8,44 +9,75 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class SeguimientoController : Controller
     {
         private readonly DbSiscanContext _dbSiscanContext;
-        public SeguimientoController(DbSiscanContext dbSiscanContext)
+        private readonly ISeguimientoService _seguimientoService;
+        public SeguimientoController(DbSiscanContext dbSiscanContext, ISeguimientoService seguimientoService)
         {
             _dbSiscanContext = dbSiscanContext;
+            _seguimientoService = seguimientoService;
         }
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            return View();
-        }
-        public IActionResult Registro()
-        {
-            try
-        {
+            IQueryable<SeguimientoInstructorAprendiz> querysegui = await _seguimientoService.GetAll();
+            List<ViewModelSeguimiento> listaseguimiento = querysegui.Select(a => new ViewModelSeguimiento(a)
+            {
+                NombreAprendiz = a.NumeroDocumentoAprendizNavigation.NombreAprendiz,
+                ApellidoAprendiz = a.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
+                NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
+                FichaAprendiz = a.NumeroDocumentoAprendizNavigation.Ficha.ToString(),
+                NombreEmpresa = a.NitEmpresaNavigation.NombreEmpresa
+                
+            }).ToList();
+            var vmSeguimiento = new Viewmodelsegui
+            {
+                listaSeguimiento=listaseguimiento,
 
+            };
+            return View(vmSeguimiento);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public  async Task< IActionResult> Index(ViewModelSeguimiento Vmse)
+        {
+            ViewModelSeguimiento vm = null;
+            try
+            {
+                if (Vmse != null)
+                {
+                    SeguimientoInstructorAprendiz segui = await _seguimientoService.GetForNumDocAprdz(Vmse.NumeroDocumentoAprendiz);
+                    if (segui != null)
+                    {
+                        TempData["ValSeguiExiste"] = "Ya Existe Un Seguimiento Para Este Aprendiz"; 
+                    }
+                    else
+                    {
+                        var seguimiento = new SeguimientoInstructorAprendiz()
+                        {
+                            NumeroDocumentoAprendiz = Vmse.NumeroDocumentoAprendiz,
+                            NumeroDocumentoInstructor = Vmse.NumeroDocumentoInstructor,
+                            IdCoformador = Vmse.IdCoformador,
+                            FechaInicio = Vmse.FechaInicio,
+                            FechaFinalizacion = Vmse.FechaFinalizacion,
+                            IdModalidad = Vmse.idmodalidad,
+                            IdAsignacionArea = Vmse.IdAsignacionArea,   
+                            IdAreaEmpresa = Vmse.IdAreaEmpresa,
+                            NitEmpresa = Vmse.NitEmpresa,
+                        };
+                        await _seguimientoService.Insert(seguimiento);
+                        ViewModelSeguimiento vmSeguimiento = new ViewModelSeguimiento(seguimiento);
+                        vm = vmSeguimiento;
+                        TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
+                    }
+                }
+                return View(vm);
             }
             catch (Exception)
             {
 
-                    NumeroDocumentoAprendiz = item.NumeroDocumentoAprendiz,
-                    NombreAprendiz = item.NumeroDocumentoAprendizNavigation.NombreAprendiz,
-                    ApellidoAprendiz = item.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
-                    CorreoAprendiz = item.NumeroDocumentoAprendizNavigation.CorreoAprendiz,
-                    TelefonoAprendiz = item.NumeroDocumentoAprendizNavigation.CelAprendiz,
-                    ProgramAprendiz = item.NumeroDocumentoAprendizNavigation.FichaNavigation.Programa.NombrePrograma,
-                    FichaAprendiz = item.NumeroDocumentoAprendizNavigation.Ficha.ToString(),
-
-                    //Instructor
-                    NombreInstructor = item.NumeroDocumentoInstructorNavigation.NombreInstructor,
-                    ApellidoInstructor = item.NumeroDocumentoInstructorNavigation.ApellidoInstructor,
-                    CorreoInstructor = item.NumeroDocumentoInstructorNavigation.CorreoInstructor,
-                    TelefonoInstructor = item.NumeroDocumentoInstructorNavigation.CelInstructor,
-
-                    //coformador
-                    NombreCoformador = item.IdCoformadorNavigation.NombreCoformador,
-                    ApellidoCoformador = item.IdCoformadorNavigation.ApellidoCoformador,
-                    CorreoCoformador = item.IdCoformadorNavigation.CorreoCoformador,
-                    TelefonoCoformador = item.IdCoformadorNavigation.CelCoformador,
-
+                throw;
             }
+        }
+     
 
         public async Task<IActionResult> consultar()
         {
@@ -53,7 +85,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
 
-        [HttpGet("Seguimiento/Show/{id}")]
+        [HttpGet]
         public async Task<IActionResult> Show(int id)
         {
 
@@ -65,10 +97,10 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             else
             {
-                return View("Consultar",item);
+                return View("Consultar", item);
             }
 
-           
+
         }
     }
 }

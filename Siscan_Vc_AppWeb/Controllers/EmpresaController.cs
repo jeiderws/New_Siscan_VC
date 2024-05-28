@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 
 namespace Siscan_Vc_AppWeb.Controllers
@@ -8,7 +6,7 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class EmpresaController : Controller
     {
 
-        
+
         private readonly DbSiscanContext _dbSiscanContext;
         public EmpresaController(DbSiscanContext dbSiscanContext)
         {
