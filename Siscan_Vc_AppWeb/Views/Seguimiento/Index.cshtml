@@ -2,21 +2,15 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Siscan_Vc_AppWeb.Models.ViewModels.Viewmodelsegui
 <div id="content-wrapper" class="d-flex flex-column">
-
     <!-- Main Content -->
     <div id="content">
-
-        
         <div class="container-fluid">
 
             <!-- Page Heading -->
             <br />
             <br />
-
-           @*  <!-></!-> *@
-
             <div class="row">
 
                 <!-- Area Chart - Ventas de los ultimos 7 días -->
@@ -26,7 +20,6 @@
                         <div class="fondomenu py-3 px-5">
                             <img src="~/img/estudiante.png" alt="Alternate Text" width="50" />
                             <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices en Seguimiento</h6>
-
                         </div>
                         <!-- Card Body -->
                         <div class="card-body">
@@ -38,7 +31,7 @@
                                             <th>Apellidos</th>
                                             <th>Documento</th>
                                             <th>ficha</th>
-                                            <th>Estado</th>
+                                                <th>Empresa</th>
 
                                         </tr>
                                     </thead>
@@ -53,160 +46,22 @@
                                         </tr>
                                     </tfoot>
                                     <tbody>
-
-
-
+                                            @foreach (var segui in Model.listaSeguimiento)
+                                            {
                                         <tr>
-                                            <td>Guidinho</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-
+                                                    <td>@Html.DisplayFor(a => segui.NombreAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => segui.ApellidoAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => segui.NumeroDocumentoAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => segui.FichaAprendiz)</td>
+                                                    <td>@Html.DisplayFor(a => segui.NombreEmpresa)</td>
                                         </tr>
-                                        <tr>
-                                            <td>Garrett Winters</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>63</td>
-                                            <td>2011/07/25</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ashton Cox</td>
-                                            <td>Junior Technical Author</td>
-                                            <td>San Francisco</td>
-                                            <td>66</td>
-                                            <td>2009/01/12</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Cedric Kelly</td>
-                                            <td>Senior Javascript Developer</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2012/03/29</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Airi Satou</td>
-                                            <td>Accountant</td>
-                                            <td>Tokyo</td>
-                                            <td>33</td>
-                                            <td>2008/11/28</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Brielle Williamson</td>
-                                            <td>Integration Specialist</td>
-                                            <td>New York</td>
-                                            <td>61</td>
-                                            <td>2012/12/02</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Herrod Chandler</td>
-                                            <td>Sales Assistant</td>
-                                            <td>San Francisco</td>
-                                            <td>59</td>
-                                            <td>2012/08/06</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Rhona Davidson</td>
-                                            <td>Integration Specialist</td>
-                                            <td>Tokyo</td>
-                                            <td>55</td>
-                                            <td>2010/10/14</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Colleen Hurst</td>
-                                            <td>Javascript Developer</td>
-                                            <td>San Francisco</td>
-                                            <td>39</td>
-                                            <td>2009/09/15</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Sonya Frost</td>
-                                            <td>Software Engineer</td>
-                                            <td>Edinburgh</td>
-                                            <td>23</td>
-                                            <td>2008/12/13</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Jena Gaines</td>
-                                            <td>Office Manager</td>
-                                            <td>London</td>
-                                            <td>30</td>
-                                            <td>2008/12/19</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Quinn Flynn</td>
-                                            <td>Support Lead</td>
-                                            <td>Edinburgh</td>
-                                            <td>22</td>
-                                            <td>2013/03/03</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Charde Marshall</td>
-                                            <td>Regional Director</td>
-                                            <td>San Francisco</td>
-                                            <td>36</td>
-                                            <td>2008/10/16</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Haley Kennedy</td>
-                                            <td>Senior Marketing Designer</td>
-                                            <td>London</td>
-                                            <td>43</td>
-                                            <td>2012/12/18</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Tatyana Fitzpatrick</td>
-                                            <td>Regional Director</td>
-                                            <td>London</td>
-                                            <td>19</td>
-                                            <td>2010/03/17</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Michael Silva</td>
-                                            <td>Marketing Designer</td>
-                                            <td>London</td>
-                                            <td>66</td>
-                                            <td>2012/11/27</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Paul Byrd</td>
-                                            <td>Chief Financial Officer (CFO)</td>
-                                            <td>New York</td>
-                                            <td>64</td>
-                                            <td>2010/06/09</td>
-
-                                        </tr>
-                                        <tr>
-                                            <td>Gloria Little</td>
-                                            <td>Systems Administrator</td>
-                                            <td>New York</td>
-                                            <td>59</td>
-                                            <td>2009/04/10</td>
-
-                                        </tr>
-
-
+                                            }
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
-
                 <!-- Pie Chart - Productos más vendidos-->
                 <div class=" col-xl-4 col-lg-5">
                     <div class="card shadow mb-4">
@@ -235,9 +90,6 @@
                                         <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#modalForm">Registrarse</button></div>
                                     </div>
                                 </form>
-
-
-
                             </div>
                         </div>
                     </div>
@@ -283,30 +135,14 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating mb-3 mb-md-0">
-                                <input class="form-control" id="inputNombre" type="text" placeholder="Ingresa tus nombres" />
-                                <label for="inputNombre">Nombres</label>
+                                <input class="form-control" id="inputInicio" type="date" placeholder="Fecha de Inicio" />
+                                <label for="inputInicio">Fecha Inicio</label>
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-floating">
                                 <input class="form-control" id="inputApellidos" type="text" placeholder="Ingresa tus apellidos" />
                                 <label for="inputApellidos">Apellidos</label>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row mb-3">
-
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3 mb-md-0">
-                                <input class="form-control" id="inputInicio" type="date" placeholder="Fecha de Inicio" />
-                                <label for="inputInicio">Fecha Inicio</label>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-floating mb-3">
-                                <input class="form-control" id="inputFinal" type="date" placeholder="Fecha de Finalizacion" />
-                                <label for="inputFinal">Fecha Finalizacion</label>
                             </div>
                         </div>
                     </div>

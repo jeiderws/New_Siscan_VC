@@ -18,27 +18,12 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
         public IActionResult Registro()
         {
-            return View();
-        }
-
-        public async Task<IActionResult> Consultar(int page = 1, int pageSize = 5)
+            try
         {
-            ViewModelSeguimiento model = null;
-            var items = await _dbSiscanContext.SeguimientoInstructorAprendizs
-               .Skip((page - 1) * pageSize)
-               .Take(pageSize)
-               .ToListAsync();
-            var totalItems = await _dbSiscanContext.SeguimientoInstructorAprendizs.CountAsync();
-            var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
 
-            ViewBag.TotalPages = totalPages;
-            ViewBag.CurrentPage = page;
-
-            foreach (var item in items)
+            }
+            catch (Exception)
             {
-                model = new ViewModelSeguimiento(item)
-                {
-                    IdSeguimiento = item.IdSeguimiento,
 
                     NumeroDocumentoAprendiz = item.NumeroDocumentoAprendiz,
                     NombreAprendiz = item.NumeroDocumentoAprendizNavigation.NombreAprendiz,
@@ -60,20 +45,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                     CorreoCoformador = item.IdCoformadorNavigation.CorreoCoformador,
                     TelefonoCoformador = item.IdCoformadorNavigation.CelCoformador,
 
-                    //Empresa
-                    NitEmpresa = item.NitEmpresa,
-                    NombreEmpresa = item.NitEmpresaNavigation.NombreEmpresa,
-                    AreaEmpresa = item.IdAreaEmpresaNavigation.NombreArea,
-
-                    //practicas
-                    FechaInicio = item.FechaInicio,
-                    FechaFinalizacion = item.FechaFinalizacion,
-                    NombreModalidad = item.IdModalidadNavigation.NombreModalidad
-
-                };
             }
 
-            return View(model);
+        public async Task<IActionResult> consultar()
+        {
+            return View();
         }
 
 
