@@ -1,0 +1,302 @@
+﻿@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div id="wrapper">
+
+
+
+
+
+    <!-- Content Wrapper -->
+    <div id="content-wrapper" class="d-flex flex-column">
+
+        <!-- Main Content -->
+        <div id="content">
+
+
+
+            <div class="container-fluid">
+
+
+                <!-- Content Row -->
+                <br />
+
+                <div class="row">
+
+                    <!-- Area Chart - Ventas de los ultimos 7 días -->
+                    <div class="col-xl-6 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="fondomenu py-3 px-5">
+                                <img src="~/img/graduacion.png" alt="Alternate Text" width="50" />
+                                <h6 class="m-0 text-uppercase font-weight-bold text-white ">Programa</h6>
+
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="" style="height: 320px !important ;">
+
+
+                                    <div class="card-body">
+
+                                        <form>
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-control form-control-sm" id="cboTipoDocumento">
+                                                            <option value="3">Selecciona un tipo de documento...</option>
+                                                            <option value="2">C.C</option>
+                                                            <option value="1">T.I</option>
+                                                            <option value="0">PPT</option>
+                                                        </select>
+                                                        <label for="cboTipoDocumento">Tipo Documento</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                                        <label for="inputName">Numero de documento</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
+                                                        <label for="inputName">Nombres</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating">
+                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
+                                                        <label for="inputLastName">Apellidos</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                                        <label for="inputTelefono">Telefono</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3">
+                                                        <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                                        <label for="inputEmail">Correo</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4 mb-0">
+                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrarse</button></div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Pie Chart - Productos más vendidos-->
+                    <div class="col-xl-6 col-lg-5">
+                        <div class="card shadow mb-4">
+                            <!-- Card Header - Dropdown -->
+                            <div class="fondomenu py-3 px-5 ">
+                                <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
+                                <h6 class="m-0 text-uppercase font-weight-bold text-white ">Coformador Empresa</h6>
+                            </div>
+                            <!-- Card Body -->
+                            <div class="card-body">
+                                <div class="list-group" style="height: 320px !important ;">
+                                    <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                        <thead class="boton2 ms-auto">
+                                            <tr>
+                                                <th>Documento</th>
+                                                <th>Nombres</th>
+                                                <th>Apellidos</th>
+                                                <th>Telefono</th>
+                                                <th>Correo</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>1</td>
+                                                <td>WDHPQW8</td>
+                                                <td>12312312</td>
+                                                <td>Marca 1</td>
+                                                <td>Descripcion 1</td>
+                                                <td>
+                                                    <a class="btn  btn-sm">
+                                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                                    </a>
+                                                    <a class="btn btn-sm">
+                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>2</td>
+                                                <td>WIEYEO2I</td>
+                                                <td>12312312</td>
+                                                <td>Marca 2</td>
+                                                <td>Descripcion 2</td>
+                                                <td>
+                                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
+                                                        <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                                    </a>
+                                                    <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
+                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+
+            <div class="col">
+                <div class="card shadow mb-4">
+                    <!-- Card Header - Dropdown -->
+                    <div class="fondomenu py-3 px-5 ">
+                        <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
+                        <h6 class="m-0 text-uppercase font-weight-bold text-white ">Aprendices Vinculados</h6>
+                    </div>
+                    <!-- Card Body -->
+                    <div class="card-body">
+                        <div class="list-group">
+                            <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                <thead class="boton2 ms-auto">
+                                    <tr>
+                                        <th>Documento</th>
+                                        <th>Nombres</th>
+                                        <th>Apellidos</th>
+                                        <th>Telefono</th>
+                                        <th>Correo</th>
+                                        <th>Acciones</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>WDHPQW8</td>
+                                        <td>12312312</td>
+                                        <td>Marca 1</td>
+                                        <td>Descripcion 1</td>
+                                        <td>
+                                            <a class="btn  btn-sm">
+                                                <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                            </a>
+                                            <a class="btn btn-sm">
+                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>WIEYEO2I</td>
+                                        <td>12312312</td>
+                                        <td>Marca 2</td>
+                                        <td>Descripcion 2</td>
+                                        <td>
+                                            <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
+                                                <img src="~/img/editar.png" alt="Alternate Text" width="30" />
+                                            </a>
+                                            <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
+                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="list-group">
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        First checkbox
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        Second checkbox
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        Third checkbox
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        Fourth checkbox
+                    </label>
+                    <label class="list-group-item">
+                        <input class="form-check-input me-1" type="checkbox" value="">
+                        Fifth checkbox
+                    </label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--cierre modal-->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#inputEmpresa').on('input', function () {
+                var term = $(this).val();
+                $.ajax({
+                    url: '@Url.Action("nombreEmpresa", "Empresa")',
+                    type: 'GET',
+                    data: { term: term },
+                    success: function (data) {
+                        $('#Empresas').empty();
+                        $.each(data, function (index, value) {
+                            $('#Empresas').append('<option value="' + value + '"></option>');
+                        });
+                    }
+                });
+            });
+
+
+            $('#inputEmpresa').on('change', function () {
+                var selectedValue = $(this).val();
+                $('#labelEmpresa').text(selectedValue);
+
+            });
+        });
+    </script>
+}
+
