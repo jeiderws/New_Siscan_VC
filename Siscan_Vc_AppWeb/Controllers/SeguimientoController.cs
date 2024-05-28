@@ -82,24 +82,5 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
-
-
-        [HttpGet]
-        public async Task<IActionResult> Show(int id)
-        {
-
-            var item = await _dbSiscanContext.SeguimientoInstructorAprendizs.FindAsync(id);
-
-            if (item == null)
-            {
-                return NotFound();
-            }
-            else
-            {
-                return View("Consultar", item);
-            }
-
-
-        }
     }
 }
