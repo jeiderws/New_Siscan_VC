@@ -15,6 +15,27 @@ namespace Siscan_Vc_AppWeb.Controllers
             _dbSiscanContext = dbSiscanContext;
             _seguimientoService = seguimientoService;
         }
+        public async Task LlenarCombos()
+        {
+            var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
+            ViewBag.ItemsTipoDoc = itemsTipoDoc;
+
+            var itemsmodalidad = await _dbSiscanContext.Modalidads.ToListAsync();
+            ViewBag.ItemsModalidad = itemsmodalidad;
+
+            var itemsAsigarea = await _dbSiscanContext.AsignacionAreas.ToListAsync();
+            ViewBag.Itemsasigarea = itemsAsigarea;
+
+            var itemsAreaempresa = await _dbSiscanContext.AreasEmpresas.ToListAsync();
+            ViewBag.Itemsareaempresa = itemsAreaempresa;
+
+            var itemsEmpresa = await _dbSiscanContext.Empresas.ToListAsync();
+            ViewBag.Itemsempresa = itemsEmpresa;
+
+            var itemsCooformador = await _dbSiscanContext.Coformadors.ToListAsync();
+            ViewBag.Itemscooformador = itemsCooformador;
+
+        }
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -26,15 +47,32 @@ namespace Siscan_Vc_AppWeb.Controllers
                 NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
                 FichaAprendiz = a.NumeroDocumentoAprendizNavigation.Ficha.ToString(),
                 NombreEmpresa = a.NitEmpresaNavigation.NombreEmpresa
-                
+
             }).ToList();
             var vmSeguimiento = new Viewmodelsegui
             {
-                listaSeguimiento=listaseguimiento,
+                listaSeguimiento = listaseguimiento,
 
             };
             return View(vmSeguimiento);
         }
+        //[HttpGet]
+        //public async Task<IActionResult> Index(string numdoc)
+        //{
+        //    await LlenarCombos();
+        //    var viewmodel = new Viewmodelsegui();
+        //    if (numdoc != null)
+        //    {
+        //        var aprendi = await _seguimientoService.GetForNumDocAprdz(numdoc);
+        //        viewmodel = new Viewmodelsegui { seguimientoinstructorAprendiz = aprendi };
+        //        if (viewmodel.seguimientoinstructorAprendiz == null)
+        //        {
+        //            return NotFound();
+        //        }
+        //    }
+        //    return View(viewmodel);
+
+        //}
         [HttpPost]
         [ValidateAntiForgeryToken]
         public  async Task< IActionResult> Index(ViewModelSeguimiento Vmse)
