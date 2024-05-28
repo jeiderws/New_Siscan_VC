@@ -27,7 +27,7 @@ namespace Siscan_Vc_BLL.Service.ClasesService
             return _seguimientorepo.GetAll();
         }
 
-        public async Task<SeguimientoInstructorAprendiz> GetForId(int id)
+        public async Task<SeguimientoInstructorAprendiz> GetForId(long id)
         {
             return await _seguimientorepo.GetForId(id.ToString());
         }
