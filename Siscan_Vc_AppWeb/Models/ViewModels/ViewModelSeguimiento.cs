@@ -6,8 +6,6 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
-            IdSeguimiento = seguimiento.IdSeguimiento;
-
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {

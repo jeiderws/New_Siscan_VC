@@ -15,6 +15,10 @@
                     <h3 class="text-center font-dark-light my-4">Registro </h3>
                 </div>
                 <div class="card-body">
+                    @if (TempData["ValAprendzExiste"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["ValAprendzExiste"] </div>
+                    }
                     @if (TempData["MensajeAlert"] != null)
                     {
                         <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
@@ -24,7 +28,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
-                                        <option value="">Selecciona un tipo de documento...</option>
+                                        <option>Selecciona un tipo de documento...</option>
                                     </select>
                                     <label for="cboTipoDocumento">Tipo Documento</label>
                                     <span id="tipoDocumentoError" class="text-danger"></span>
@@ -218,6 +222,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>  
 
     <script>
+        function confirmSave() {
+            return confirm("¿Estás seguro de que deseas guardar?")
+        }
+
         $(document).ready(function () {
             $('#cboDepartamentos').change(function () {
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado

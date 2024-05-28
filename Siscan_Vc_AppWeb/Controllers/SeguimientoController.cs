@@ -73,7 +73,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             catch (Exception)
             {
-
                 throw;
             }
         }
