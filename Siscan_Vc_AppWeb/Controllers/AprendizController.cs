@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service.InterfacesService;
@@ -64,8 +65,28 @@ namespace Siscan_Vc_AppWeb.Controllers
         //Llenar combos
         public async Task<IActionResult> Registro()
         {
+            var modelview = new Modelviewtytap
+            {
+                listaOpcTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                {
+                    Value = o.IdTipoDocumento.ToString(),
+                    Text = o.TipoDocumento1
+                }).ToList(),
+                listaOpcEstado = _dbSiscanContext.EstadoAprendizs.Select(e => new SelectListItem
+                {
+                    Value = e.IdEstado.ToString(),
+                    Text = e.NombreEstado
+                }).ToList(),
+                listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                {
+                    Value = d.IdDepartamento.ToString(),
+                    Text = d.NombreDepartamento
+                }).ToList(),
+
+
+            };
             await LlenarCombos();
-            return View();
+            return View(modelview);
         }
 
         //Registrar aprendiz con un view model
@@ -88,15 +109,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         var aprendiz = new Aprendiz()
                         {
-                            IdTipodocumento = aptyt.aprendiz.IdTipodocumento,
+                            IdTipodocumento = aptyt.OpcSeleccionadoTpDoc,
                             NumeroDocumentoAprendiz = aptyt.aprendiz.NumeroDocumentoAprendiz,
                             NombreAprendiz = aptyt.aprendiz.NombreAprendiz,
                             ApellidoAprendiz = aptyt.aprendiz.ApellidoAprendiz,
                             CelAprendiz = aptyt.aprendiz.CelAprendiz,
                             DireccionAprendiz = aptyt.aprendiz.DireccionAprendiz,
                             CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
-                            IdEstadoAprendiz = aptyt.aprendiz.IdEstadoAprendiz,
-                            IdCiudad = aptyt.aprendiz.IdCiudad,
+                            IdEstadoAprendiz = aptyt.OpcSeleccionadoEstado,
+                            IdCiudad = aptyt.OpcSeleccionadoCiudad,
                             Ficha = aptyt.aprendiz.Ficha,
                             NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
                             CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
