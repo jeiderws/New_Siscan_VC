@@ -67,22 +67,54 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             var modelview = new Modelviewtytap
             {
+                //lista para el combo tipo de documento
                 listaOpcTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
                 {
                     Value = o.IdTipoDocumento.ToString(),
                     Text = o.TipoDocumento1
                 }).ToList(),
+                //lista para el combo estado aprendiz
                 listaOpcEstado = _dbSiscanContext.EstadoAprendizs.Select(e => new SelectListItem
                 {
                     Value = e.IdEstado.ToString(),
                     Text = e.NombreEstado
-                }).ToList(),
+                }).ToList(),                
+                //lista para el combo departamentos
                 listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
                 {
                     Value = d.IdDepartamento.ToString(),
                     Text = d.NombreDepartamento
+                }).ToList(),               
+                //lista para el combo ciudad
+                listaOpcCiudad = _dbSiscanContext.Ciudads.Select(c => new SelectListItem
+                {
+                    Value= c.IdCiudad.ToString(),
+                    Text= c.NombreCiudad
                 }).ToList(),
-
+                //lista para el combo estado tyt
+                listaOpcEstadoTyt = _dbSiscanContext.EstadoInscripcionTyts.Select(e =>new SelectListItem
+                {
+                    Value=e.IdEstadotyt.ToString(),
+                    Text=e.DescripcionEstadotyt
+                }).ToList(),
+                //lista para el combo programas
+                listaOpcPrograma = _dbSiscanContext.Programas.Select(p=>new SelectListItem
+                {
+                    Value=p.CodigoPrograma.ToString(),
+                    Text=p.NombrePrograma
+                }).ToList(),
+                //lista para el combo ficha
+                listaOpcFicha = _dbSiscanContext.Fichas.Select(f=> new SelectListItem
+                {
+                    Value=f.Ficha1.ToString(),
+                    Text=f.Ficha1.ToString()
+                }).ToList(),
+                //lista para el combo convocatoria tyt
+                listaOpcConvocatoria = _dbSiscanContext.ConvocatoriaTyts.Select(c=>new SelectListItem
+                {
+                    Value=c.IdConvocatoria.ToString(),
+                    Text=c.SemestreConvocatoria
+                }).ToList()
 
             };
             await LlenarCombos();
@@ -103,7 +135,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     if (apren != null)
                     {
                         TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
-                        RedirectToAction(nameof(Registro));
+                       return RedirectToAction(nameof(Registro));
                     }
                     else if (apren == null)
                     {
@@ -118,7 +150,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
                             IdEstadoAprendiz = aptyt.OpcSeleccionadoEstado,
                             IdCiudad = aptyt.OpcSeleccionadoCiudad,
-                            Ficha = aptyt.aprendiz.Ficha,
+                            Ficha = aptyt.OpcSeleccionadoFicha,
                             NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
                             CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                             CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
@@ -140,8 +172,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                             {
                                 CodigoInscripcion = aptyt.inscripcionTyt.CodigoInscripcion,
                                 NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz,
-                                Idciudad = aptyt.inscripcionTyt.Idciudad,
-                                IdConvocatoria = aptyt.inscripcionTyt.IdConvocatoria,
+                                Idciudad = aptyt.OpcSeleccionadoCiudadTyt,
+                                IdConvocatoria = aptyt.OpcSeleccionadoConvocatoria,
                                 IdEstadotyt = aprendiz.IdEstadoTyt
                             };
                             _dbSiscanContext.InscripcionTyts.Add(tyt);
@@ -207,7 +239,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
             }
 
-
             ModelviewAp viewModel = new ModelviewAp
             {
 
@@ -249,7 +280,6 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(string numDoc)
         {
             await LlenarCombos();
-
             var viewModel = new Modelviewtytap();
             if (numDoc != null)
             {
