@@ -7,6 +7,9 @@ namespace Siscan_Vc_AppWeb.Controllers
         public IActionResult Index()
         {
             return View();
+        }    public IActionResult CrearFicha()
+        {
+            return View();
         }
     }
 }

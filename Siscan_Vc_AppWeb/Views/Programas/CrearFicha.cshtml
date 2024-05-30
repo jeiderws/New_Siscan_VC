@@ -1,0 +1,107 @@
+﻿
+@{
+    ViewData["Title"] = "CrearFicha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header fondomenu ">
+                    <img class="img-fluid mover2" src="~/img/agregar-usuario.png" alt="Alternate Text" width="40">
+                    <h3 class="text-center font-dark-light my-4">Crear Ficha </h3>
+
+                </div>
+                <div class="card-body">
+
+
+                    <form method="post" asp-action="CrearFicha">
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputFicha" type="text" placeholder="Ingresa tu numero de ficha" />
+                                    <label for="inputName">Numero de ficha</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input  class="form-control" id="inputprograma" type="text" placeholder="Ingresa tus nombres" />
+                                    <label for="inputprograma">Programa</label>
+                                </div>
+                            </div>
+                          
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="inputVersion" type="tel" placeholder="Ingresa tu telefono" />
+                                    <label for="inputVersion">Version</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="DocInstructor" type="text" placeholder="Ingresa tu direccion" />
+                                    <label for="DocInstructor">Instructor</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" id="FechaInicio" type="date" placeholder="name@example.com" />
+                                    <label for="FechaInicio">Inicio</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <input class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
+                                    <label for="FechaFinal">Finaliza</label>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select class="form-control form-control-sm" id="cboDepartamentos">
+                                        <option value="">Selecciona un departamento...</option>
+                                    </select>
+                                    <label for="cboDepartamentos">Departamentos</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+
+                                    <select class="form-control form-control-sm" id="cboSedes">
+                                        <option value="">Selecciona una Sede...</option>
+                                    </select>
+                                    <label for="cboSedes">Sedes</label>
+                                </div>
+                            </div>
+                    
+
+                        <div class="mt-4 mb-0">
+                            <div class="d-grid boton2">
+                              
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px">Registrar</button>
+
+                            </div>
+                        </div>
+                      
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+
+}
