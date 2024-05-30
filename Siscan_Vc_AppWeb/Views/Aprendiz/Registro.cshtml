@@ -23,7 +23,7 @@
                         <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
                     }
                     <form id="registroForm" method="post" asp-action="Registro">
-                        <div class="row mb-3">          
+                        <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-for="OpcSeleccionadoTpDoc" asp-items="@Model.listaOpcTpDoc" class="form-control form-control-sm" id="cboTipoDocumento">
@@ -35,20 +35,21 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento"  />
-                                    <label for="inputName">Numero de documento</label>
+                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
+                                    <label for="inputDocumento">Numero de documento</label>
+                                    <span id="numeroDocumentoError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.NombreAprendiz" class="form-control" id="Name" type="text" placeholder="Ingresa tus nombres"  />
+                                    <input asp-for="aprendiz.NombreAprendiz" class="form-control" id="Name" type="text" placeholder="Ingresa tus nombres" />
                                     <label for="Name">Nombres</label>
                                     <span id="NameError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input asp-for="aprendiz.ApellidoAprendiz" class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos"  />
+                                    <input asp-for="aprendiz.ApellidoAprendiz" class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
                                     <label for="inputLastName">Apellidos</label>
                                     <span id="inputLastNameError" class="text-danger"></span>
                                 </div>
@@ -57,21 +58,23 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.CelAprendiz" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa número de celular" />
-                                    <label for="inputTelefono">Celular</label>
+                                    <input asp-for="aprendiz.CelAprendiz" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                    <label for="inputTelefono">Telefono</label>
+                                    <span id="telefonoError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.DireccionAprendiz" class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion"  />
+                                    <input asp-for="aprendiz.DireccionAprendiz" class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion" />
                                     <label for="inputDireccion">Direccion</label>
+                                    <span id="inputDireccionError" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="aprendiz.CorreoAprendiz" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                    <input asp-for="aprendiz.CorreoAprendiz" class="form-control" id="inputEmail" type="email" placeholder="name@example.com">
                                     <label for="inputEmail">Correo</label>
                                     <span id="inputEmailError" class="text-danger"></span>
                                 </div>
@@ -110,6 +113,7 @@
                                         <option>Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
+                                    <span id="cboEstadoPruebatytError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -137,21 +141,22 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.NombreCompletoAcudiente" class="form-control" id="NameAcudient" type="text" placeholder="Ingresa tus nombres"  />
+                                    <input asp-for="aprendiz.NombreCompletoAcudiente" class="form-control" id="NameAcudient" type="text" placeholder="Ingresa tus nombres" />
                                     <label for="NameAcudient">Nombre completo</label>
                                     <span id="NameAcudientError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.CelularAcudiente" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono"  />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <input asp-for="aprendiz.CelularAcudiente" class="form-control" id="TelAcudiente" type="tel" placeholder="Ingresa tu telefono" />
+                                    <label for="TelAcudiente">Telefono</label>
+                                    <span id="TelAcudienteError" class="text-danger"></span>
                                 </div>
 
                             </div>
                         </div>
                         <div class="form-floating mb-3 mb-md-0">
-                            <input asp-for="aprendiz.CorreoAcuediente" class="form-control" id="EmailAcud" type="email" placeholder="name@example.com"  />
+                            <input asp-for="aprendiz.CorreoAcuediente" class="form-control" id="EmailAcud" type="email" placeholder="name@example.com" />
                             <label for="EmailAcud">Correo acudiente</label>
                             <span id="EmailAcudError" class="text-danger"></span>
                         </div>
@@ -166,7 +171,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa código de inscripción" />
+                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
                                     <label for="inputcodigotyt">Codigo Inscripcion</label>
                                     <span id="inputcodigotytError" class="text-danger"></span>
                                 </div>
@@ -212,18 +217,33 @@
         </div>
     </div>
 </div>
+<!-- Modal de confirmación de registro -->
+<div class="modal fade" id="confirmacionRegistroModal" tabindex="-1" aria-labelledby="confirmacionRegistroModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header fondo3">
+                <h5 class="modal-title " id="confirmacionRegistroModalLabel">Confirmación de Registro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro de que desea registrar?
+            </div>
+            <div class="modal-footer boton2">
+                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
+                <a href="@Url.Action("Registro", "Aprendiz")" class="btn btn-primary" id="confirmarRegistroBtn">Confirmar Registro</a>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section Scripts {
 
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>  
+
+
 
     <script>
-        function confirmSave() {
-            return confirm("¿Estás seguro de que deseas guardar?")
-        }
-
         $(document).ready(function () {
             $('#cboDepartamentos').change(function () {
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado
@@ -263,7 +283,7 @@
                 });
             });
         });
-       
+
     </script>
     <script>
         $(document).ready(function () {
