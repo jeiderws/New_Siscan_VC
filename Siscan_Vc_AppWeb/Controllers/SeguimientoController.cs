@@ -69,6 +69,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado,
                 SeguimientoInstructorAprendices=a.SeguimientoInstructorAprendizs
             }).ToList();
+            var aprendi =await _aprendizService.GetForDoc(numdoc);
 
             foreach (var ap in listaAprendices)
             {
@@ -87,7 +88,8 @@ namespace Siscan_Vc_AppWeb.Controllers
             var vmSeguimiento = new Viewmodelsegui
             {
                 listaEmpresa = listaempresa,
-                listaAprendizSinSegui = listaAprendizSinSegui
+                listaAprendizSinSegui = listaAprendizSinSegui,
+                aprendiz = aprendi
             };
             return View(vmSeguimiento);
         }
@@ -137,15 +139,9 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
 
-        //public async Task<IActionResult> consultar(string nmdoc)
-        //{
-        //    List<Viewmodelsegui> listasegui = new List<Viewmodelsegui>();
-        //    IQueryable<SeguimientoInstructorAprendiz> querysegui = await _seguimientoService.GetAll();
-        //    listasegui = querysegui.Select(a => new Viewmodelsegui()
-        //    {
-        //        seguimientoinstructorAprendiz = a.NumeroDocumentoAprendiz,
-        //        nume
-        //    }).ToList();
-        //}
+        public async Task<IActionResult> consultar(string nmdoc)
+        {
+            return View();
+        }
     }
 }

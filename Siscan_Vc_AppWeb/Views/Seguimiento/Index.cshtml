@@ -8,66 +8,118 @@
         <div class="col-lg-12">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="fondomenu py-3 px-5">
-                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices</h6>
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Seguimiento</h6>
                 </div>
                 <div class="col-md-6 py-3 px-5">
-                    <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Seguimiento" asp-action="Consultar">
+                    <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Seguimiento" asp-action="Index">
                         <div class="input-group">
-                            <input class="form-control" name="nmdoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
+                            <input class="form-control" name="numdoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
                             <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
                         </div>
                     </form>
                 </div>
                 <div class="card-body table-responsive">
-                    <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
-                        <thead class="boton2 ms-auto">
-                            <tr>
-                                <th>Tipo Documento</th>
-                                <th>Documento</th>
-                                <th>Nombres</th>
-                                <th>Apellidos</th>
-                                <th>Número Celular</th>
-                                <th>Correo</th>
-                                <th>ficha</th>
-                                <th>Acudiente</th>
-                                <th>Telefono acudiente</th>
-                                <th>Correo Acudiente</th>
-                                <th>Estado Aprendiz</th>
-                                <th>Estado Pruebas TYT</th>
-                                <th>Acciones</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @{
-                                foreach (var aprendiz in Model.listaAprendizSinSegui)
-                                {
-                                    <tr>
-                                        <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
-                                        <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
-                                        @*<td>@Html.DisplayFor(a => aprendiz.SeguimientoInstructorAprendices.Count())</td>*@
-                                        <td>
-                                            <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
-                                                <img src="~/img/editar.png" alt="Alternate Text" width="25" />
-                                            </a>
-                                            <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
-                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
-                                            </a>
-                                        </td>
-                                    </tr>
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la búsqueda </h6>
+                    <div class="card-body table-responsive-busqueda">
+                        <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Tipo Documento</th>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Número Celular</th>
+                                    <th>Correo</th>
+                                    <th>ficha</th>
+                                    <th>Acudiente</th>
+                                    <th>Telefono acudiente</th>
+                                    <th>Correo Acudiente</th>
+                                    <th>Estado Aprendiz</th>
+                                    <th>Estado pruebas TYT</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (Model.aprendiz != null && Model.aprendiz.NumeroDocumentoAprendiz != null)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.IdTipodocumentoNavigation.TipoDocumento1)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.NumeroDocumentoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.NombreAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.ApellidoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.CelAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.CorreoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.CorreoAcuediente)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
+
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        // Manejar el caso en el que Model.aprendiz es nulo o su propiedad es nula
+                                    }
+
+                                } 
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    @if (TempData["MensajeAlertEliminado"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEliminado"] </div>
+                    }
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
+                    <div class="card-body table-responsive" style="height:450px; ">
+                        <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Tipo Documento</th>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Número Celular</th>
+                                    <th>Correo</th>
+                                    <th>ficha</th>
+                                    <th>Acudiente</th>
+                                    <th>Telefono acudiente</th>
+                                    <th>Correo Acudiente</th>
+                                    <th>Estado Aprendiz</th>
+                                    <th>Estado Pruebas TYT</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var aprendiz in Model.listaAprendizSinSegui)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
+                                            @*<td>@Html.DisplayFor(a => aprendiz.SeguimientoInstructorAprendices.Count())</td>*@
+                                            
+                                        </tr>
+                                    }
                                 }
-                            }
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
                 </div>
             </div>
         </div>

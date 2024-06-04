@@ -181,7 +181,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 if (aprendi.NumeroDocumentoAprendiz == nmdoc)
                 {
-                    aprendiz = aprendi;
+                    aprendiz = aprendi;   
                     break;
                 }
             }
