@@ -3,6 +3,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+@using Siscan_Vc_AppWeb.Models.ViewModels
+@model ModelViewInstructor
 
 
 <div class="container pt-6">
@@ -15,35 +17,32 @@
 
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form asp-action="Editar">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control form-control-sm" id="cboTipoDocumento">
-                                        <option value="3">Selecciona un tipo de documento...</option>
-                                        <option value="2">C.C</option>
-                                        <option value="1">T.I</option>
-                                        <option value="0">PPT</option>
+                                     <select asp-for="Instructor.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))"  class="form-control form-control-sm" id="cboTipoDocumento">
+                                        <option>Selecciona un tipo de documento...</option>
                                     </select>
-                                    <label for="cboTipoDocumento">Tipo Documento</label>
+                                    <label asp-for="Instructor.IdTipodocumento">Tipo Documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
-                                    <label for="inputName">Numero de documento</label>
+                                    <input asp-for="Instructor.NumeroDocumentoInstructor" class="form-control" id="inputDocumento" type="text" readonly placeholder="Ingresa tu numero de documento" />
+                                    <label asp-for="Instructor.NumeroDocumentoInstructor" for="inputName">Numero de documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
-                                    <label for="inputName">Nombres</label>
+                                    <input asp-for="Instructor.NombreInstructor" class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
+                                    <label asp-for="Instructor.NombreInstructor" for="inputName">Nombres</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
-                                    <label for="inputLastName">Apellidos</label>
+                                    <input asp-for="Instructor.ApellidoInstructor" class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
+                                    <label asp-for="Instructor.ApellidoInstructor" for="inputLastName">Apellidos</label>
                                 </div>
                             </div>
                         </div>
@@ -51,20 +50,22 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <input asp-for="Instructor.CelInstructor" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
+                                    <label asp-for="Instructor.CelInstructor" for="inputTelefono">Telefono</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                    <label for="inputEmail">Correo</label>
+                                    <input asp-for="Instructor.CorreoInstructor" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                    <label asp-for="Instructor.CorreoInstructor" for="inputEmail">Correo</label>
                                 </div>
                             </div>
                         </div>
 
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionActualizarModal">Actualizar</button</div>
+                            <div class="d-grid boton2"> 
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmUpdate()">Actualizar</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -72,49 +73,16 @@
             </div>
         </div>
     </div>
-</div><!-- Modal de confirmación de Actualizar -->
-<div class="modal fade" id="confirmacionActualizarModal" tabindex="-1" aria-labelledby="confirmacionActualizarModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="confirmacionActualizarModallabel">Confirmación de Actualizacion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Los Datos se Modificaran.
-                <br />
-                ¿Decea Actualizar Los Datos del Instructor?
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("consultar", "Instructor")" class="btn btn-primary" id="Actualizarbtn">Actualizar</a>
-            </div>
-        </div>
-    </div>
 </div>
+
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
 
 
     <script>
-        $(document).ready(function () {
-            $("#Actualizarbtn").click(function () {
-
-                var eliminadoExitoso = true;
-
-                if (eliminadoExitoso == true) {
-
-                    alert("¡Actualizacion exitosa!");
-
-                } else {
-
-                    alert("No se pudo completar la actualizacion. Inténtalo de nuevo.");
-                }
-
-
-                $("#confirmacionActualizarModal").modal('hide');
-            });
-        });
+            function confirmUpdate() {
+                return confirm("¿Estás seguro de que deseas Actualizar?");
+            }
     </script>
 
 }

@@ -25,5 +25,5 @@ public partial class Ficha
 
     public virtual Instructor? NumeroDocumentoInstructorNavigation { get; set; }
 
-    public virtual Programas? Programa { get; set; }
+    public virtual Programas? ProgramaNavigation { get; set; }
 }

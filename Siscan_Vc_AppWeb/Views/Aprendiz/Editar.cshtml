@@ -4,8 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
+@model Siscan_Vc_AppWeb.Models.ViewModels.Modelviewtytap
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-7">
@@ -16,35 +15,36 @@
 
                 </div>
                 <div class="card-body">
-                    <form>
+                    <form asp-action="Editar" id="EditarForm">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select class="form-control form-control-sm" id="cboTipoDocumento">
-                                        <option value="3">Selecciona un tipo de documento...</option>
-                                        <option value="2">C.C</option>
-                                        <option value="1">T.I</option>
-                                        <option value="0">PPT</option>
+                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
+                                        <option value="">Selecciona un tipo de documento...</option>
                                     </select>
-                                    <label for="cboTipoDocumento">Tipo Documento</label>
+                                    <label asp-for="aprendiz.IdTipodocumento">Tipo Documento</label>
+                                    <span id="tipoDocumentoError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
-                                    <label for="inputName">Numero de documento</label>
+                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" readonly/>
+                                    <label asp-for="aprendiz.NumeroDocumentoAprendiz">Numero de documento</label>
+                                    <span id="numeroDocumentoError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
-                                    <label for="inputName">Nombres</label>
+                                    <input asp-for="aprendiz.NombreAprendiz" class="form-control" id="Name" type="text" placeholder="Ingresa tus nombres" />
+                                    <label asp-for="aprendiz.NombreAprendiz">Nombres</label>
+                                    <span id="NameError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
-                                    <label for="inputLastName">Apellidos</label>
+                                    <input asp-for="aprendiz.ApellidoAprendiz" class="form-control" id="inputLastName" type="text" placeholder="Ingresa tus apellidos" />
+                                    <label asp-for="aprendiz.ApellidoAprendiz">Apellidos</label>
+                                    <span id="inputLastNameError" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
@@ -52,108 +52,81 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <input asp-for="aprendiz.CelAprendiz" class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa número de celular" />
+                                    <label asp-for="aprendiz.CelAprendiz">Celular</label>
+                                    <span id="telefonoError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion" />
-                                    <label for="inputDireccion">Direccion</label>
+                                    <input asp-for="aprendiz.DireccionAprendiz" class="form-control" id="inputDireccion" type="text" placeholder="Ingresa tu direccion" />
+                                    <label asp-for="aprendiz.DireccionAprendiz">Direccion</label>
+                                    <span id="inputDireccionError" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
-                                    <label for="inputEmail">Correo</label>
+                                    <input asp-for="aprendiz.CorreoAprendiz" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                                    <label asp-for="aprendiz.CorreoAprendiz">Correo</label>
+                                    <span id="inputEmailError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
 
-                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Productiva</option>
-                                        <option value="2">Contratado</option>
-                                        <option value="1">certificado</option>
-                                        <option value="0">Por certificar</option>
+                                    <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                        <option value="">Selecciona un estado...</option>
                                     </select>
-                                    <label for="cboEstadoAprendiz">Estado Aprendiz</label>
+                                    <label asp-for="aprendiz.IdEstadoAprendiz">Estado Aprendiz</label>
+                                    <span id="cboEstadoAprendizError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa tu telefono" />
-                                    <label for="inputTelefono">Telefono</label>
-                                </div>
-                            </div>
-
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboDepartamentos">
-                                        <option value="4">Selecciona una departamento...</option>
-                                        <option value="3">La Guajira</option>
-                                        <option value="2">Cesar</option>
-                                        <option value="1">Bolivar</option>
-                                        <option value="0">Magdalena</option>
+                                    <select asp-for="aprendiz.IdCiudadNavigation.IdDepartamento" asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
+                                        <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
+                                    <span id="cboDepartamentosError" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
+                                        <option value="">Selecciona una ciudad...</option>
+                                    </select>
+                                    <label asp-for="aprendiz.IdCiudad">Ciudad</label>
+                                    <span id="cboCiudadError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboMunicipio">
-                                        <option value="4">Selecciona una municipio...</option>
-                                        <option value="3">Fonseca</option>
-                                        <option value="2">Valledupar</option>
-                                        <option value="1">Cartagena</option>
-                                        <option value="0">Santa Marta</option>
+                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@(new SelectList(ViewBag.ItemsEstaTYT,"IdEstadotyt","DescripcionEstadotyt"))" class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                        <option value="">Selecciona un estado...</option>
                                     </select>
-                                    <label for="cboMunicipio">Municipio</label>
+                                    <label asp-for="aprendiz.IdEstadoTyt">Estado de inscripcion tyt</label>
+                                    <span id="cboEstadoPruebatytError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Productiva</option>
-                                        <option value="2">Contratado</option>
-                                        <option value="1">certificado</option>
-                                        <option value="0">Por certificar</option>
+                                    <select asp-for="aprendiz.FichaNavigation.ProgramaNavigation.CodigoPrograma" asp-items="@(new SelectList(ViewBag.ItemsPrograma,"CodigoPrograma","NombrePrograma"))" class="form-control form-control-sm" id="cboPrograma">
+                                        <option value="">Selecciona un programa...</option>
                                     </select>
-                                    <label for="cboEstadoAprendiz">Estado</label>
+                                    <label for="cboPrograma">Programa</label>
+                                    <span id="cboProgramaError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoAprendiz">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Productiva</option>
-                                        <option value="2">Contratado</option>
-                                        <option value="1">certificado</option>
-                                        <option value="0">Por certificar</option>
+                                    <select asp-for="aprendiz.Ficha" asp-items="@(new SelectList(ViewBag.ficha,"Ficha1","Ficha1"))" class="form-control form-control-sm" id="cboFicha">
+                                        <option value="">Selecciona una ficha...</option>
                                     </select>
-                                    <label for="cboEstadoAprendiz">Estado</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-
-                                    <select class="form-control form-control-sm" id="cboEstadoPruebatyt">
-                                        <option value="4">Selecciona una estado...</option>
-                                        <option value="3">Inscrito</option>
-                                        <option value="2">No Inscrito</option>
-                                        <option value="1">Por Inscribirse</option>
-                                        <option value="0">No Aplica</option>
-                                    </select>
-                                    <label for="cboEstadoAprendiz">Estado TyT</label>
-
+                                    <label asp-for="aprendiz.Ficha">Fichas</label>
+                                    <span id="cboFichaError" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -163,26 +136,29 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa nombre acudiente" />
-                                    <label for="inputTelefono">Nombre completo</label>
+                                    <input asp-for="aprendiz.NombreCompletoAcudiente" class="form-control" id="NameAcudient" type="text" placeholder="Ingresa tus nombres" />
+                                    <label asp-for="aprendiz.NombreCompletoAcudiente">Nombre completo</label>
+                                    <span id="NameAcudientError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <input asp-for="aprendiz.CelularAcudiente" class="form-control" id="TelAcudiente" type="tel" placeholder="Ingresa tu telefono" />
+                                    <label asp-for="aprendiz.CelularAcudiente">Telefono</label>
+                                    <span id="TelAcudienteError" class="text-danger"></span>
                                 </div>
 
                             </div>
                         </div>
                         <div class="form-floating mb-3 mb-md-0">
-                            <input class="form-control" id="correoAcudiente" type="email" placeholder="Ingresa correo acudiente" />
-                            <label for="inputTelefono">Correo acudiente</label>
+                            <input asp-for="aprendiz.CorreoAcuediente" class="form-control" id="inputEmail" type="email" placeholder="name@example.com" />
+                            <label asp-for="aprendiz.CorreoAcuediente">Correo acudiente</label>
+                            <span id="EmailAcudError" class="text-danger"></span>
                         </div>
                         <!-- fin Acudiente -->
                         <br />
 
-                        <!-- Pruebas tyt-->
+                        <!--Pruebas tyt-->
 
                         <div class="row mb-3" id="pruebatyt" style="display:none">
                             <div class="fondomenu py-3 px-5">
@@ -190,33 +166,44 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
+                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
                                     <label for="inputcodigotyt">Codigo Inscripcion</label>
+                                    <span id="inputcodigotytError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <select asp-for="inscripcionTyt.IdConvocatoria" class="form-control form-control-sm" asp-items="@(new SelectList(ViewBag.ItemsConvocatoria, "IdConvocatoria", "SemestreConvocatoria"))" id="cboConvocatoria">
+                                        <option value="">Selecciona una Convocatoria...</option>
+                                    </select>
+                                    <label for="cboConvocatoria">Convocatoria</label>
+                                    <span id="cboConvocatoriaError" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="col-md-6 py-3">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="inscripcionTyt.IdciudadNavigation.IdDepartamento" asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos2">
+                                        <option value="">Selecciona un departamento...</option>
+                                    </select>
+                                    <label for="cboDepartamentos2">Departamentos</label>
+                                    <span id="cboDepartamentos2Error" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputTelefono" type="tel" placeholder="Ingresa nombre acudiente" />
-                                    <label for="inputTelefono">Nombre completo</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6 py-3">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="correoAcudiente" type="tel" placeholder="Ingresa telefono acudiente" />
-                                    <label for="inputTelefono">Telefono</label>
+                                    <select asp-for="inscripcionTyt.Idciudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad2">
+                                        <option value="">Selecciona una ciudad...</option>
+                                    </select>
+                                    <label asp-for="inscripcionTyt.Idciudad">Ciudad</label>
+                                    <span id="cboCiudad2Error" class="text-danger"></span>
                                 </div>
                             </div>
                         </div>
-                        <!--fin Pruebas tyt-->
-
+                        <!--Fin tyt-->
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><a class="btn text-center btn-block" style="font-size:20px" href="#">Registrar</a></div>
+                            <div class="d-grid boton2">
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmUpdate()">Actualizar</button>
+                                </div>
                         </div>
                     </form>
                 </div>
@@ -228,5 +215,76 @@
 
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script src="~/js/validacioneditar.js" asp-append-version="true"></script>
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+            $('#cboDepartamentos').change(function () {
+                var departamentoId = $(this).val(); // Obtener el valor seleccionado
+
+                $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
+                    $('#cboCiudad').empty();
+                    $.each(data, function (index, ciudad) {
+                        $('#cboCiudad').append($('<option>',
+                            {
+                                value: ciudad.idCiudad,
+                                text: ciudad.nombreCiudad
+                            }
+                        )
+                        );
+
+                    });
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('#cboDepartamentos2').change(function () {
+                var departamentoId = $(this).val(); // Obtener el valor seleccionado
+
+                $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
+                    $('#cboCiudad2').empty();
+                    $.each(data, function (index, ciudad) {
+                        $('#cboCiudad2').append($('<option>',
+                            {
+                                value: ciudad.idCiudad,
+                                text: ciudad.nombreCiudad
+                            }
+                        )
+                        );
+
+                    });
+                });
+            });
+        });
+
+
+        $(document).ready(function () {
+            $('#cboPrograma').change(function () {
+                var programa = $(this).val();
+
+                $.get('@Url.Action("Cargarprograma", "Aprendiz")', { programa: programa }, function (data) {
+                    $('#cboFicha').empty();
+                    $.each(data, function (index, ficha) {
+                        $('#cboFicha').append($('<option>',
+                            {
+                                value: ficha.ficha1,
+                                text: ficha.ficha1
+                            }
+                        )
+                        );
+
+                    });
+                });
+            });
+        });
+        function confirmUpdate() {
+            return confirm("¿Estás seguro de que deseas Actualizar?");
+        }
+    </script>
+
 
 }

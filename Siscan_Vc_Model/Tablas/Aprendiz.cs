@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Siscan_Vc_DAL.DataContext;
 
 public partial class Aprendiz
 {
-    public string NumeroDocumentoAprendiz { get; set; } = null!;
 
+    public string NumeroDocumentoAprendiz { get; set; } = null!;
+  
     public string? NombreAprendiz { get; set; }
 
     public string? ApellidoAprendiz { get; set; }

@@ -3,224 +3,194 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Siscan_Vc_AppWeb.Models.ViewModels.ModelviewAp
-
-
 @section Estilos {
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
     <link href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css" rel="stylesheet" />
 }
-
-
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-lg-12">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="fondomenu py-3 px-5">
                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices</h6>
-
                 </div>
-
                 <br />
                 <div class="col-md-6 py-3 px-5">
-
-
                     <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Aprendiz" asp-action="Consultar">
                         <div class="input-group">
-                            <input class="form-control" name="nmdoc" type="text" placeholder="Numero Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
+                            <input class="form-control" name="nmdoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
                             <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
-
                         </div>
-
                     </form>
-
-
                 </div>
-
-                <div class="card-body table-responsive">  
-
-
-
-                        <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
-                        <div class="card-body table-responsive-busqueda" >
-                            <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%" >
-
-                                <thead class="boton2 ms-auto">
-                                    <tr>
-                                        <th>Tipo Documento</th>
-                                        <th>Documento</th>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>Telefono</th>
-                                        <th>Correo</th>
-                                        <th>ficha</th>
-                                        <th>Estado Aprendiz</th>
-                                        <th>Estado pruebas tyt</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-
-                               
-
-                                <tbody>
-                                    @{
-                                        bool estado = false;
-                                        if (Model.Aprendiz.NumeroDocumentoAprendiz != null)
-                                        {
-                                            estado = true;
-                                        }
-                                        else if (Model.Aprendiz.NumeroDocumentoAprendiz == null)
-                                        {
-                                            estado = false;
-                                        }
-
-                                        if (estado)
-                                        {
-                                            <tr>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.IdTipodocumentoNavigation.TipoDocumento1)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.NumeroDocumentoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.NombreAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.ApellidoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
-                                                <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
-                                                <td>
-                                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
-                                                        <img src="~/img/editar.png" alt="Alternate Text" width="28" />
-                                                    </a>
-                                                    <a class="btn btn-sm">
-                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="28" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
-
-
+                <div class="card-body table-responsive">
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la búsqueda </h6>
+                    <div class="card-body table-responsive-busqueda">
+                        <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Tipo Documento</th>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Número Celular</th>
+                                    <th>Correo</th>
+                                    <th>ficha</th>
+                                    <th>Acudiente</th>
+                                    <th>Telefono acudiente</th>
+                                    <th>Correo Acudiente</th>
+                                    <th>Estado Aprendiz</th>
+                                    <th>Estado pruebas TYT</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    bool estado = false;
+                                    if (Model.Aprendiz.NumeroDocumentoAprendiz != null)
+                                    {
+                                        estado = true;
                                     }
-
-
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr />
-
-                        <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
-                        <div class="card-body table-responsive" style="height:450px; ">
-                            <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
-                                <thead class="boton2 ms-auto">
-                                    <tr>
-                                        <th>Tipo Documento</th>
-                                        <th>Documento</th>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>Telefono</th>
-                                        <th>Correo</th>
-                                        <th>ficha</th>
-                                        <th>Estado Aprendiz</th>
-                                        <th>Estado pruebas tyt</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @{
-                                        foreach (var aprendiz in Model.ListaAprendices)
-                                        {
-                                            <tr>
-                                                <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
-                                                <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
-                                                <td>
-                                                    <a class="btn  btn-sm" href="@Url.Action("Editar","Aprendiz")">
-                                                        <img src="~/img/editar.png" alt="Alternate Text" width="25" />
-                                                    </a>
-                                                    <a class="btn btn-sm">
-                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
-                                                    </a>
-                                                </td>
-                                            </tr>
-                                        }
-
-
+                                    else if (Model.Aprendiz.NumeroDocumentoAprendiz == null)
+                                    {
+                                        estado = false;
                                     }
+                                    if (estado)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.IdTipodocumentoNavigation.TipoDocumento1)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.NumeroDocumentoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.NombreAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.ApellidoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAcuediente)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
+                                            <td>
+                                                <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@Model.Aprendiz.NumeroDocumentoAprendiz">
+                                                    <img src="~/img/editar.png" alt="Alternate Text" width="28" />
+                                                </a>
+                                                <a class="btn btn-sm btn-eliminar" data-id="@Model.Aprendiz?.NumeroDocumentoAprendiz">
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="28" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                    else
+                                    {
+                                        @if (TempData["aprendizConsultAlert"] != null)
+                                        {
+                                        <div class="alert alert-danger" role="alert"> @TempData["aprendizConsultAlert"] </div>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    @if (TempData["MensajeAlertEliminado"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEliminado"] </div>
+                    }
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
+                    <div class="card-body table-responsive" style="height:450px; ">
+                        <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Tipo Documento</th>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Número Celular</th>
+                                    <th>Correo</th>
+                                    <th>ficha</th>
+                                    <th>Acudiente</th>
+                                    <th>Telefono acudiente</th>
+                                    <th>Correo Acudiente</th>
+                                    <th>Estado Aprendiz</th>
+                                    <th>Estado Pruebas TYT</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    foreach (var aprendiz in Model.ListaAprendices)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
+                                            <td>
+                                                <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
+                                                    <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                </a>
+                                                <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
+                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal"/>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    }
+                                }
+                            </tbody>
+                        </table>
 
-
-
-                                </tbody>
-                            </table>
-
-                        </div>
-                        <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
+                    </div>
+                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
                 </div>
-               
-
-               
-               
             </div>
         </div>
     </div>
-</div>
-
-
-<!-- Modal de confirmación de Consultar -->
-<div class="modal fade" id="confirmacionEliminacionModal" tabindex="-1" aria-labelledby="confirmacionEliminacionModal" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="confirmacionEliminacionModallabel">Confirmación de Eliminacion</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea eliminar?
-                se eliminara permanentemente.
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("consultar", "Aprendiz")" class="btn btn-primary" id="confirmarEliminacionBtn">Eliminar</a>
-            </div>
-        </div>
-    </div>
-</div>
 </div>
 
 
 @section Scripts {
-
     <script>
-
         var tabla1 = document.querySelector('#tbdata');
         var tabla2 = document.querySelector('#tbdata2');
-
-
-
-
         $(document).ready(function () {
-            $("#confirmarEliminacionBtn").click(function () {
-
-                var eliminadoExitoso = true;
-
-                if (eliminadoExitoso == true) {
-
-                    alert("¡Eliminado exitoso!");
-
-                } else {
-
-                    alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+            $('.btn-eliminar').on('click', function () {
+                function confirEliminar() {
+                    return confirm("¿Estás seguro de que deseas eliminar?");
                 }
-
-                $("#confirmacionEliminacionModal").modal('hide');
+                var idAprendiz = $(this).data('id');
+                // alert(idAprendiz);
+                if (confirEliminar()) {
+                    $.ajax({
+                        url: '@Url.Action("Eliminar", "Aprendiz")',
+                        type: 'DELETE',
+                        data: { nmdoc: idAprendiz },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("¡Eliminado exitoso!");
+                                // Actualizar la página o hacer cualquier otra acción necesaria
+                                location.reload();
+                            }
+                            else {
+                                alert("No se pudo completar el eliminado. Inténtalo de nuevo.");
+                            }
+                        },
+                        error: function () {
+                            alert("Se produjo un error al intentar eliminar el aprendiz.");
+                        }
+                    });
+                }
             });
         });
     </script>
-    <script src="~/js/scripts.js" asp - append - version="true"></script>
 
+    <script src="~/js/scripts.js" asp - append - version="true"></script>
 }
 
-                                    

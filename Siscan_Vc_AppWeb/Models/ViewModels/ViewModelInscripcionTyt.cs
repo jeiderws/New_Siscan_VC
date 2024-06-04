@@ -25,9 +25,9 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? NumeroDocumentoAprendi { get; set; }
 
         public int? IdConvocatoria { get; set; }
-        public int? nomConvocatoria { get; set; }
+        public string? nomConvocatoria { get; set; }
 
-        public int IdEstadotyt { get; set; }
+        public int? IdEstadotyt { get; set; }
         public string nomEstadotyt { get; set; }
 
     }

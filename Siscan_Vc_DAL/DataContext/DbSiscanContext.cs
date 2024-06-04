@@ -327,7 +327,7 @@ public partial class DbSiscanContext : DbContext
                 .HasForeignKey(d => d.NumeroDocumentoInstructor)
                 .HasConstraintName("FK_Ficha_Instructor");
 
-            entity.HasOne(d => d.Programa).WithMany(p => p.Fichas)
+            entity.HasOne(d => d.ProgramaNavigation).WithMany(p => p.Fichas)
                 .HasForeignKey(d => new { d.CodigoPrograma, d.Version })
                 .HasConstraintName("FK_Ficha_Programa");
         });
