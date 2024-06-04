@@ -11,6 +11,7 @@
     <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
     <title>@ViewData["Title"] - Siscan_Vc</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/img/LOGO-removebg-preview (1).png">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/styles.css" asp-append-version="true" />
@@ -109,8 +110,18 @@
 
                             </nav>
                         </div>
-                        <!-- fin Empresa -->
-                     
+                        <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages3" aria-expanded="false" aria-controls="collapsePages3">
+                            <div class="sb-nav-link-icon"><img class="marginLeft " src="~/img/graduacion.png" alt="Alternate Text" width="25" /></div>
+                            Programas
+                            <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                        </a>
+                        <div class="collapse" id="collapsePages3" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                            <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+
+                                <a class="nav-link" href="@Url.Action("Index","Programas")"> <img class="sb-nav-link-icon" src="~/img/departamento-de-la-compania.png" alt="Alternate Text" width="30" />Index</a>
+
+                            </nav>
+                        </div>
                     </div>
                 </div>
                 <div class="sb-sidenav-footer">
