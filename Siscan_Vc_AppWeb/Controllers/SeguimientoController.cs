@@ -94,15 +94,14 @@ namespace Siscan_Vc_AppWeb.Controllers
             return View(vmSeguimiento);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(Viewmodelsegui Vmse)
+
+        public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
         {
             await LlenarCombos();
             Viewmodelsegui viewmodelsegui = new Viewmodelsegui();
             try
             {
-                if (Vmse != null)
+                if (Vmse != null && Vmse.seguimientoinstructorAprendiz != null)
                 {
                     var seguimiento = new SeguimientoInstructorAprendiz()
                     {
@@ -112,23 +111,29 @@ namespace Siscan_Vc_AppWeb.Controllers
                         FechaInicio = Vmse.seguimientoinstructorAprendiz.FechaInicio,
                         FechaFinalizacion = Vmse.seguimientoinstructorAprendiz.FechaFinalizacion,
                         IdModalidad = Vmse.seguimientoinstructorAprendiz.IdModalidad,
-                        IdAsignacionArea = Vmse.seguimientoinstructorAprendiz.IdModalidad,
-                        IdAreaEmpresa = Vmse.seguimientoinstructorAprendiz.IdModalidad,
+                        // Asegúrate de que estas propiedades no sean null antes de acceder a ellas
+                        IdAsignacionArea = Vmse.seguimientoinstructorAprendiz.IdAsignacionArea,
+                        IdAreaEmpresa = Vmse.seguimientoinstructorAprendiz.IdAreaEmpresa,
                         NitEmpresa = Vmse.opcseleccionadaEmpre
                     };
-                    await _seguimientoService.Insert(seguimiento);
-                    var asignacion = new AsignacionArea()
+
+                    // Verifica que las propiedades de seguimiento no sean nulas antes de asignarlas
+                    if (seguimiento.IdAsignacionArea != null && seguimiento.IdAreaEmpresa != null && seguimiento.NitEmpresa != null)
                     {
-                        IdArea = Vmse.seguimientoinstructorAprendiz.IdAreaEmpresa,
-                        NitEmpresa = Vmse.seguimientoinstructorAprendiz.NitEmpresa
-                    };
-                    viewmodelsegui = new Viewmodelsegui()
-                    {
-                        seguimientoinstructorAprendiz = seguimiento,
-                        asignacionArea = asignacion
-                    };
-                    TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
-                    return RedirectToAction(nameof(Index));
+                        await _seguimientoService.Insert(seguimiento);
+                        var asignacion = new AsignacionArea()
+                        {
+                            IdArea = seguimiento.IdAreaEmpresa.Value,
+                            NitEmpresa = seguimiento.NitEmpresa
+                        };
+                        viewmodelsegui = new Viewmodelsegui()
+                        {
+                            seguimientoinstructorAprendiz = seguimiento,
+                            asignacionArea = asignacion
+                        };
+                        TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
+                        return RedirectToAction(nameof(Index));
+                    }
                 }
                 return View(viewmodelsegui);
             }
