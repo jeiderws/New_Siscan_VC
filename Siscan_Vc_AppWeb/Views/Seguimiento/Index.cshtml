@@ -171,38 +171,6 @@
     </div>
     </div>
     </div>
-    <div class="row mb-3">
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <input asp-for="opcseleccionadaEmpre" class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Digite el nombre de la Empresa">
-    <datalist id="Empresas">
-    @if (Model.listaEmpresa != null)
-    {
-    foreach (var empresa in Model.listaEmpresa)
-    {
-    <option value="@empresa.NombreEmpresa">@empresa.NombreEmpresa</option>
-    }
-    }
-    </datalist>
-    <label for="exampleDataList" class="form-label">Digite el nombre de la Empresa</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@(new SelectList(ViewBag.ItemsModalidad,"IdModalidad","NombreModalidad"))" class="form-control form-control-sm" id="cboModalidad">
-    <option value="">Selecciona una Modalidad...</option>
-    </select>
-    <label for="cboModalidad">Modalidad Practicas</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <input asp-for="seguimientoinstructorAprendiz.FechaInicio" class="form-control" id="FechaInicio" type="date" placeholder="name@example.com" />
-    <label for="FechaInicio">Inicio</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
 
     <input asp-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
     <label for="FechaFinal">Finaliza</label>
@@ -248,15 +216,6 @@
     </div>
     </div>
     </div>
-    </form>
-    </div>
-    <!-- Modal Footer -->
-    </div>
-    </div>
-    </div>
-    <!-- Modal -->
-    }
-    *@
 @section Scripts {
     <script>
         $(document).ready(function () {
