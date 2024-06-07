@@ -21,11 +21,15 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             nomEstadoTyt = aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt;
             IdEstadoAprendiz = aprendiz.IdEstadoAprendiz;
             nomEstadoAprendiz = aprendiz.IdEstadoAprendizNavigation.NombreEstado;
-            SeguimientoInstructorAprendices=aprendiz.SeguimientoInstructorAprendizs;
+            SeguimientoInstructorAprendices = aprendiz.SeguimientoInstructorAprendizs;
+            NombreApellidoDoc = aprendiz.NombreAprendiz +" "+ aprendiz.ApellidoAprendiz+" "+aprendiz.NumeroDocumentoAprendiz;
+            //Programa = aprendiz.FichaNavigation.CodigoPrograma;
         }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
 
         public string? NombreAprendiz { get; set; }
+
+        public string? NombreApellidoDoc {  get; set; }
 
         public string nombredoc { get; set; }
 
@@ -50,6 +54,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public int? IdTipodocumento { get; set; }
 
         public int? Ficha { get; set; }
+
+        public string? Programa {  get; set; }
 
         public int? IdCiudad { get; set; }
 

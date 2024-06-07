@@ -34,8 +34,6 @@
                                 <th>Correo Acudiente</th>
                                 <th>Estado Aprendiz</th>
                                 <th>Estado Pruebas TYT</th>
-                                @*                     <th>Seguimiento</th>
-                                *@
                                 <th>Acciones</th>
                             </tr>
                         </thead>
@@ -56,7 +54,6 @@
                                         <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
                                         <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
                                         <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
-                                        @*<td>@Html.DisplayFor(a => aprendiz.SeguimientoInstructorAprendices.Count())</td>*@
                                         <td>
                                             <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
                                                 <img src="~/img/editar.png" alt="Alternate Text" width="25" />

@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
+using System.Security.Policy;
 
 namespace Siscan_Vc_AppWeb.Controllers
 {
@@ -67,12 +68,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                 IdCiudad = a.IdCiudad,
                 IdEstadoAprendiz = a.IdEstadoAprendiz,
                 nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado,
-                SeguimientoInstructorAprendices=a.SeguimientoInstructorAprendizs
+                SeguimientoInstructorAprendices = a.SeguimientoInstructorAprendizs,
+                NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz
             }).ToList();
 
             foreach (var ap in listaAprendices)
             {
-                if (ap.SeguimientoInstructorAprendices.Count()==0)
+                if (ap.SeguimientoInstructorAprendices.Count() == 0)
                 {
                     listaAprendizSinSegui.Add(ap);
                 }
@@ -136,16 +138,68 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
         }
 
-
-        //public async Task<IActionResult> consultar(string nmdoc)
+        //[HttpPost]
+        //public async Task<IActionResult> Consultar(Viewmodelsegui vmSegui)
         //{
-        //    List<Viewmodelsegui> listasegui = new List<Viewmodelsegui>();
-        //    IQueryable<SeguimientoInstructorAprendiz> querysegui = await _seguimientoService.GetAll();
-        //    listasegui = querysegui.Select(a => new Viewmodelsegui()
-        //    {
-        //        seguimientoinstructorAprendiz = a.NumeroDocumentoAprendiz,
-        //        nume
-        //    }).ToList();
+        //    string itemSeleccionado= vmSegui.opcSeleccionadaAprendizSeguimiento;
+        //    return View(vmSegui);
         //}
+
+        [HttpGet]
+        public async Task<IActionResult> Consultar(string numDoc)
+        {
+            //obtener todos los aprendices de la bd
+            IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
+            List<ViewModelAprendiz> listaAprendices = new List<ViewModelAprendiz>();
+            List<ViewModelAprendiz> listaAprendizSegui = new List<ViewModelAprendiz>();
+            ViewModelAprendiz aprendiz = null;
+
+            //obtener lista de aprendices
+            listaAprendices = queryAprendiz.Select(a => new ViewModelAprendiz(a)
+            {
+                nombredoc = a.IdTipodocumentoNavigation.TipoDocumento1,
+                NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
+                NombreAprendiz = a.NombreAprendiz,
+                ApellidoAprendiz = a.ApellidoAprendiz,
+                CelAprendiz = a.CelAprendiz,
+                CorreoAprendiz = a.CorreoAprendiz,
+                DireccionAprendiz = a.DireccionAprendiz,
+                NombreCompletoAcudiente = a.NombreCompletoAcudiente,
+                CorreoAcuediente = a.CorreoAcuediente,
+                CelularAcudiente = a.CelularAcudiente,
+                IdEstadoTyt = a.IdEstadoTytNavigation.IdEstadotyt,
+                nomEstadoTyt = a.IdEstadoTytNavigation.DescripcionEstadotyt,
+                IdTipodocumento = a.IdTipodocumentoNavigation.IdTipoDocumento,
+                Ficha = a.Ficha,
+                IdCiudad = a.IdCiudad,
+                IdEstadoAprendiz = a.IdEstadoAprendiz,
+                nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado,
+                SeguimientoInstructorAprendices = a.SeguimientoInstructorAprendizs,
+                NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz,
+                //Programa=a.FichaNavigation.ProgramaNavigation.NombrePrograma
+            }).ToList();
+            var seguimiento =await _seguimientoService.GetForNumDocAprdz(numDoc);
+            foreach (var ap in listaAprendices)
+            {
+                if (ap.SeguimientoInstructorAprendices.Count() != 0)
+                {
+                    listaAprendizSegui.Add(ap);
+                }
+            }
+            foreach(var apren in listaAprendizSegui)
+            {
+                if (apren.NumeroDocumentoAprendiz == numDoc)
+                {
+                    aprendiz = apren;
+                }
+            }
+            var vmSeguimiento = new Viewmodelsegui
+            {
+                listaAprendizSegui = listaAprendizSegui,
+                aprendiz=aprendiz,
+                seguimientoinstructorAprendiz=seguimiento
+            };
+            return View(vmSeguimiento);
+        }
     }
 }

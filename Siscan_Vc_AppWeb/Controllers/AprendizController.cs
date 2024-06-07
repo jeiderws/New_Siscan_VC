@@ -299,7 +299,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     aprendiz = aprendi,
                     inscripcionTyt = insctyt
-                };
+                }; 
 
                 if (viewModel.aprendiz == null)
                 {
