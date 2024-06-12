@@ -138,13 +138,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
         }
 
-        //[HttpPost]
-        //public async Task<IActionResult> Consultar(Viewmodelsegui vmSegui)
-        //{
-        //    string itemSeleccionado= vmSegui.opcSeleccionadaAprendizSeguimiento;
-        //    return View(vmSegui);
-        //}
-
         [HttpGet]
         public async Task<IActionResult> Consultar(string numDoc)
         {
@@ -178,7 +171,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz,
                 //Programa=a.FichaNavigation.ProgramaNavigation.NombrePrograma
             }).ToList();
-            var seguimiento =await _seguimientoService.GetForNumDocAprdz(numDoc);
+            var seguimiento = await _seguimientoService.GetForNumDocAprdz(numDoc);
             foreach (var ap in listaAprendices)
             {
                 if (ap.SeguimientoInstructorAprendices.Count() != 0)
@@ -186,18 +179,24 @@ namespace Siscan_Vc_AppWeb.Controllers
                     listaAprendizSegui.Add(ap);
                 }
             }
-            foreach(var apren in listaAprendizSegui)
+            foreach (var apren in listaAprendizSegui)
             {
                 if (apren.NumeroDocumentoAprendiz == numDoc)
                 {
                     aprendiz = apren;
                 }
             }
+            Empresa empresa=new Empresa();
+            if (seguimiento != null)
+            {
+                empresa = await _dbSiscanContext.Empresas.FindAsync(seguimiento.NitEmpresa);
+            }
             var vmSeguimiento = new Viewmodelsegui
             {
                 listaAprendizSegui = listaAprendizSegui,
-                aprendiz=aprendiz,
-                seguimientoinstructorAprendiz=seguimiento
+                aprendiz = aprendiz,
+                seguimientoinstructorAprendiz = seguimiento,
+                Empresa = empresa
             };
             return View(vmSeguimiento);
         }
