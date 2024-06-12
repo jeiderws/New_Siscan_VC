@@ -64,7 +64,7 @@
                                             <td>@Html.DisplayFor(i => Model.Instructor.CelInstructor)</td>
                                             <td>@Html.DisplayFor(i => Model.Instructor.CorreoInstructor)</td>
                                             <td>
-                                                <a class="btn  btn-sm" asp-controller="Instructor" asp-action="Editar" >
+                                                <a class="btn  btn-sm" asp-controller="Instructor" asp-action="Editar" asp-route-nmdoc="@Model.Instructor.NumeroDocumentoInstructor">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                 </a>
                                                 <a class="btn btn-sm btn-eliminar" data-id="@Model.Instructor.NumeroDocumentoInstructor">

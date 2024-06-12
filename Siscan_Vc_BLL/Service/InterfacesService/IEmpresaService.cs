@@ -12,7 +12,7 @@ namespace Siscan_Vc_BLL.Service.InterfacesService
         Task<bool> Insert(Empresa model);
         Task<bool> Update(Empresa model);
         Task<bool> Delete(string nit);
-        Task<Empresa> GetForDoc(string nit);
+        Task<Empresa> GetForId(string nit);
         Task<IQueryable<Empresa>> GetAll();
         Task<Empresa> GetForName(string name);
     }

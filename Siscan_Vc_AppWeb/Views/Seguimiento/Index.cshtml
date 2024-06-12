@@ -56,7 +56,9 @@
                                             <td>@Html.DisplayFor(a => Model.aprendiz.CorreoAcuediente)</td>
                                             <td>@Html.DisplayFor(a => Model.aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
                                             <td>@Html.DisplayFor(a => Model.aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
-
+                                            <td>
+                                                <a class="btn btn-success" asp-action="Crear" asp-controller="Seguimiento" asp-route-nmDoc="@Model.aprendiz.NumeroDocumentoAprendiz">Seguimiento</a>
+                                            </td>
                                         </tr>
                                     }
                                     else
@@ -110,7 +112,9 @@
                                             <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
-                                            @*<td>@Html.DisplayFor(a => aprendiz.SeguimientoInstructorAprendices.Count())</td>*@
+                                            <td>
+                                                <a class="btn btn-success" asp-action="Crear" asp-controller="Seguimiento" asp-route-nmDoc="@aprendiz.NumeroDocumentoAprendiz">Seguimiento</a>
+                                            </td>
                                             
                                         </tr>
                                     }
@@ -125,158 +129,3 @@
         </div>
     </div>
 </div>
-@* @if (TempData["Alertnumdoc"] == null && TempData["ValSeguiExiste"] == null)
-    {
-    <!-- Modal -->
-    <div class="modal fade" id="modalForm" role="dialog">
-    <div class="modal-dialog modal-lg">
-    <div class="modal-content">
-    <!-- Modal Header -->
-    <div class="modal-header fondomenu2">
-    <h4 class="modal-title " id="myModalLabel">Registro Seguimiento</h4>
-    </div>
-    <!-- Modal Body -->
-    <div class="modal-body">
-    <p class="statusMsg"></p>
-    @if (TempData["MensajeAlertSegui"] != null)
-    {
-    <div class="alert alert-success" role="alert"> @TempData["MensajeAlertSegui"] </div>
-    }
-    <form method="post" id="registroForm">
-    <div class="row mb-3">
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <select asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
-    <option value="">Selecciona un tipo de documento...</option>
-    </select>
-    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.IdTipodocumento">Tipo Documento</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3 mb-md-0">
-    <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" />
-    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendiz">Numero de documento</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3 mb-md-0">
-    <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.NombreAprendiz" class="form-control" id="inputNombre" type="text" placeholder="Ingresa tus nombres" />
-    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.NombreAprendiz">Nombres</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating">
-    <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.ApellidoAprendiz" class="form-control" id="inputApellidos" type="text" placeholder="Ingresa tus apellidos" />
-    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.ApellidoAprendiz">Apellidos</label>
-    </div>
-    </div>
-    </div>
-    <div class="row mb-3">
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <input asp-for="opcseleccionadaEmpre" class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Digite el nombre de la Empresa">
-    <datalist id="Empresas">
-    @if (Model.listaEmpresa != null)
-    {
-    foreach (var empresa in Model.listaEmpresa)
-    {
-    <option value="@empresa.NombreEmpresa">@empresa.NombreEmpresa</option>
-    }
-    }
-    </datalist>
-    <label for="exampleDataList" class="form-label">Digite el nombre de la Empresa</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@(new SelectList(ViewBag.ItemsModalidad,"IdModalidad","NombreModalidad"))" class="form-control form-control-sm" id="cboModalidad">
-    <option value="">Selecciona una Modalidad...</option>
-    </select>
-    <label for="cboModalidad">Modalidad Practicas</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-    <input asp-for="seguimientoinstructorAprendiz.FechaInicio" class="form-control" id="FechaInicio" type="date" placeholder="name@example.com" />
-    <label for="FechaInicio">Inicio</label>
-    </div>
-    </div>
-    <div class="col-md-6">
-    <div class="form-floating mb-3">
-
-    <input asp-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
-    <label for="FechaFinal">Finaliza</label>
-    </div>
-    </div>
-    <div class="row mb-3">
-    <div class="form-floating mb-3 mb-md-0 py-3">
-    <div class="form-floating mb-3">
-    <select asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa" asp-items="@(new SelectList(ViewBag.Itemsareaempresa,"IdArea","NombreArea"))" class="form-control form-control-sm" id="cboAsignacionArea">
-    <option value="">Selecciona un Area...</option>
-    </select>
-    <label for="cboAsignacionArea">Area de Practicas</label>
-    </div>
-    </div>
-    <!-- Coformador -->
-    <div class="fondomenu py-3 px-5">
-    <h6 class="m-0 text-center font-dark-light text-white "> coformador</h6>
-    </div>
-    <br />
-    <div class="form-floating mb-3 mb-md-0 py-3">
-    <div class="form-floating mb-3">
-    <select asp-for="seguimientoinstructorAprendiz.IdCoformador" asp-items="@(new SelectList(ViewBag.Itemscooformador,"IdCoformador","NombreCoformador"))" class="form-control form-control-sm" id="cbocoformador">
-    <option value="">Selecciona un Coformador...</option>
-    </select>
-    <label for="cbocoformador">Coformador</label>
-    </div>
-    </div>
-    <!-- Instructor-->
-    <div class="fondomenu py-3 px-5">
-    <h6 class="m-0 text-center font-dark-light text-white "> Instructor</h6>
-    </div>
-    <br />
-    <div class="form-floating mb-3 mb-md-0 py-3">
-    <div class="col-md-6">
-    <div class="form-floating">
-    <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="form-control" id="inputInstructor" type="text" placeholder="Numero Documento Instructor" />
-    <label for="inputInstructor">Instructor</label>
-    </div>
-    </div>
-    </div>
-    <div class="mt-4 mb-0">
-    <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px">Registrar</button></div>
-    </div>
-    </div>
-    </div>
-    </form>
-    </div>
-    <!-- Modal Footer -->
-    </div>
-    </div>
-    </div>
-    <!-- Modal -->
-    }
-    *@
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            $("#confirmarRegistroBtn").click(function () {
-                // Aquí puedes realizar una llamada Ajax para realizar el registro
-                // Por ahora, simularemos el registro exitoso
-                var registroExitoso = true; // Cambia a false para simular un registro fallido
-
-                if (registroExitoso) {
-                    // Mostrar alerta de registro exitoso
-                    alert("¡Registro exitoso!");
-
-                } else {
-                    // Mostrar alerta de fallo de registro
-                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
-                }
-
-                // Cierra el modal
-                $("#modalForm").modal('hide');
-            });
-        });
-    </script>
-}
