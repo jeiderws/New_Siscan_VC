@@ -8,12 +8,12 @@
         <div class="col-lg-12">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="fondomenu py-3 px-5">
-                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Aprendices</h6>
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">  Seguimiento</h6>
                 </div>
                 <div class="col-md-6 py-3 px-5">
-                    <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Seguimiento" asp-action="Consultar">
+                    <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Seguimiento" asp-action="Index">
                         <div class="input-group">
-                            <input class="form-control" name="nmdoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
+                            <input class="form-control" name="numdoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
                             <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
                         </div>
                     </form>
@@ -67,13 +67,12 @@
                             }
                         </tbody>
                     </table>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-
 @* @if (TempData["Alertnumdoc"] == null && TempData["ValSeguiExiste"] == null)
     {
     <!-- Modal -->

@@ -79,6 +79,17 @@ namespace Siscan_Vc_AppWeb.Controllers
                     listaAprendizSinSegui.Add(ap);
                 }
             }
+                SeguimientoInstructorAprendices=a.SeguimientoInstructorAprendizs
+            }).ToList();
+            var aprendi =await _aprendizService.GetForDoc(numdoc);
+
+            foreach (var ap in listaAprendices)
+            {
+                if (ap.SeguimientoInstructorAprendices.Count()==0)
+                {
+                    listaAprendizSinSegui.Add(ap);
+                }
+            }
 
             IQueryable<Empresa> queryem = await _empresaService.GetAll();
             List<Empresa> listaempresa = queryem.Select(x => new Empresa()
@@ -90,6 +101,8 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 listaEmpresa = listaempresa,
                 listaAprendizSinSegui = listaAprendizSinSegui
+                listaAprendizSinSegui = listaAprendizSinSegui,
+                aprendiz = aprendi
             };
             return View(vmSeguimiento);
         }
@@ -123,6 +136,24 @@ namespace Siscan_Vc_AppWeb.Controllers
                         NitEmpresa = Vmse.seguimientoinstructorAprendiz.NitEmpresa
                     };
                     viewmodelsegui = new Viewmodelsegui()
+                    {                
+                        NumeroDocumentoAprendiz = Vmse.seguimientoinstructorAprendiz.NumeroDocumentoAprendiz,
+                        NumeroDocumentoInstructor = Vmse.seguimientoinstructorAprendiz.NumeroDocumentoInstructor,
+                        IdCoformador = Vmse.seguimientoinstructorAprendiz.IdCoformador,
+                        FechaInicio = Vmse.seguimientoinstructorAprendiz.FechaInicio,
+                        FechaFinalizacion = Vmse.seguimientoinstructorAprendiz.FechaFinalizacion,
+                        IdModalidad = Vmse.seguimientoinstructorAprendiz.IdModalidad,
+                        IdAsignacionArea = Vmse.seguimientoinstructorAprendiz.IdModalidad,
+                        IdAreaEmpresa = Vmse.seguimientoinstructorAprendiz.IdModalidad,
+                        NitEmpresa = Vmse.opcseleccionadaEmpre
+                    };
+                    await _seguimientoService.Insert(seguimiento);
+                    var asignacion = new AsignacionArea()
+                    {
+                        IdArea = Vmse.seguimientoinstructorAprendiz.IdAreaEmpresa,
+                        NitEmpresa = Vmse.seguimientoinstructorAprendiz.NitEmpresa
+                    };
+                    viewmodelsegui = new Viewmodelsegui()
                     {
                         seguimientoinstructorAprendiz = seguimiento,
                         asignacionArea = asignacion
@@ -139,7 +170,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Consultar(string numDoc)
+        public async Task<IActionResult> consultar(string nmdoc)
         {
             var num = numDoc;
             //obtener todos los aprendices de la bd

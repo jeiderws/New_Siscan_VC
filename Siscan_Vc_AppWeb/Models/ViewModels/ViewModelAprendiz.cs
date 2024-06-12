@@ -24,6 +24,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             SeguimientoInstructorAprendices = aprendiz.SeguimientoInstructorAprendizs;
             NombreApellidoDoc = aprendiz.NombreAprendiz +" "+ aprendiz.ApellidoAprendiz+" "+aprendiz.NumeroDocumentoAprendiz;
             Ficha=aprendiz.Ficha;
+            SeguimientoInstructorAprendices=aprendiz.SeguimientoInstructorAprendizs;
         }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
 
