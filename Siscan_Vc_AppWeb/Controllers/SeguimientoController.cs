@@ -141,6 +141,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Consultar(string numDoc)
         {
+            var num = numDoc;
             //obtener todos los aprendices de la bd
             IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
             List<ViewModelAprendiz> listaAprendices = new List<ViewModelAprendiz>();
