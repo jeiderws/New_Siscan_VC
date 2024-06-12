@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Siscan_Vc_AppWeb.Models.ViewModels;
+using Siscan_Vc_BLL.Service;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using System.Security.Policy;
@@ -82,8 +85,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                     listaAprendizSinSegui.Add(ap);
                 }
             }
-                SeguimientoInstructorAprendices=a.SeguimientoInstructorAprendizs
-            }).ToList();
             var aprendi = await _aprendizService.GetForDoc(numdoc);
 
             foreach (var ap in listaAprendices)
@@ -96,7 +97,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             var vmSeguimiento = new Viewmodelsegui
             {
-                listaEmpresa = listaempresa,
                 listaAprendizSinSegui = listaAprendizSinSegui,
                 aprendiz = aprendi
             };
@@ -121,7 +121,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewmodel);
         }
-        [HttpPost   ]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
         {
@@ -147,27 +147,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         IdArea = seguimiento.IdAreaEmpresa,
                         NitEmpresa = seguimiento.NitEmpresa
                     };
-                    var empre = await _empresaService.GetForId(seguimiento.NitEmpresa);
+                    var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
                     if (empre == null)
-                    viewmodelsegui = new Viewmodelsegui()
-                    {                
-                        NumeroDocumentoAprendiz = Vmse.seguimientoinstructorAprendiz.NumeroDocumentoAprendiz,
-                        NumeroDocumentoInstructor = Vmse.seguimientoinstructorAprendiz.NumeroDocumentoInstructor,
-                        IdCoformador = Vmse.seguimientoinstructorAprendiz.IdCoformador,
-                        FechaInicio = Vmse.seguimientoinstructorAprendiz.FechaInicio,
-                        FechaFinalizacion = Vmse.seguimientoinstructorAprendiz.FechaFinalizacion,
-                        IdModalidad = Vmse.seguimientoinstructorAprendiz.IdModalidad,
-                        IdAsignacionArea = Vmse.seguimientoinstructorAprendiz.IdModalidad,
-                        IdAreaEmpresa = Vmse.seguimientoinstructorAprendiz.IdModalidad,
-                        NitEmpresa = Vmse.opcseleccionadaEmpre
-                    };
-                    await _seguimientoService.Insert(seguimiento);
-                    var asignacion = new AsignacionArea()
-                    {
-                        IdArea = Vmse.seguimientoinstructorAprendiz.IdAreaEmpresa,
-                        NitEmpresa = Vmse.seguimientoinstructorAprendiz.NitEmpresa
-                    };
-                    viewmodelsegui = new Viewmodelsegui()
                     {
                         TempData["MensajeAlertEmpre"] = " Nit de Empresa no encontrado";
                     }
@@ -183,11 +164,9 @@ namespace Siscan_Vc_AppWeb.Controllers
                         };
                         TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
                         return View(viewmodelsegui);
-
-
                     }
-
                 }
+              
                 return View(viewmodelsegui);
             }
             catch (Exception)
@@ -197,14 +176,13 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> consultar(string nmdoc)
+        public async Task<IActionResult> Consultar(string numDoc)
         {
-            var num = numDoc;
             //obtener todos los aprendices de la bd
             IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
             List<ViewModelAprendiz> listaAprendices = new List<ViewModelAprendiz>();
             List<ViewModelAprendiz> listaAprendizSegui = new List<ViewModelAprendiz>();
-            ViewModelAprendiz aprendiz = null;
+            Aprendiz aprendiz = null;
 
             //obtener lista de aprendices
             listaAprendices = queryAprendiz.Select(a => new ViewModelAprendiz(a)
@@ -238,14 +216,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                     listaAprendizSegui.Add(ap);
                 }
             }
-            foreach (var apren in listaAprendizSegui)
-            {
-                if (apren.NumeroDocumentoAprendiz == numDoc)
-                {
-                    aprendiz = apren;
-                }
-            }
-            Empresa empresa=new Empresa();
+            aprendiz = await _aprendizService.GetForDoc(numDoc);
+            Empresa empresa = new Empresa();
             if (seguimiento != null)
             {
                 empresa = await _dbSiscanContext.Empresas.FindAsync(seguimiento.NitEmpresa);
