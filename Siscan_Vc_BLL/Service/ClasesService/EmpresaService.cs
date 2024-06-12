@@ -26,7 +26,7 @@ namespace Siscan_Vc_BLL.Service.ClasesService
             return _repositoryempresa.GetAll();
         }
 
-        public async Task<Empresa> GetForDoc(string nit)
+        public async Task<Empresa> GetForNit(string nit)
         {
             return await _repositoryempresa.GetForId(nit);
         }

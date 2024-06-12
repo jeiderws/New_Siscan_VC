@@ -5,6 +5,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
     public class Viewmodelsegui
     {
+        public string opcSeleccionadaAprendizSeguimiento { get; set; }
         public string opcseleccionadaEmpre {  get; set; }
         public string opcseleccionadaAreaEmpre {  get; set; }
         public int opcseleccionadaCoform {  get; set; }
@@ -19,6 +20,12 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public SeguimientoInstructorAprendiz seguimientoinstructorAprendiz {  get; set; }
         public List<ViewModelSeguimiento> listaSeguimiento { get; set; }
         public List<Empresa> listaEmpresa { get; set; }
+        public Empresa Empresa { get; set; }
+        public List<ViewModelAprendiz> listaAprendizSinSegui { get; set; }
+        public List<ViewModelAprendiz> listaAprendizSegui { get; set; }
+        public AsignacionArea asignacionArea { get; set; }
+        public ViewModelAprendiz aprendiz { get; set; }
+        
         public List<ViewModelAprendiz> listaAprendizSinSegui { get; set; }
         public AsignacionArea asignacionArea { get; set; }
         public Aprendiz? aprendiz { get; set; }

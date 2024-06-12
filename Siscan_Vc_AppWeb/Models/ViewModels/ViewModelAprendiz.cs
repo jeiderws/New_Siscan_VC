@@ -5,7 +5,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     public class ViewModelAprendiz
     {
         public ViewModelAprendiz(Aprendiz aprendiz)
-        {
+        {        
             NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz;
             NombreAprendiz = aprendiz.NombreAprendiz;
             ApellidoAprendiz = aprendiz.ApellidoAprendiz;
@@ -21,11 +21,16 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             nomEstadoTyt = aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt;
             IdEstadoAprendiz = aprendiz.IdEstadoAprendiz;
             nomEstadoAprendiz = aprendiz.IdEstadoAprendizNavigation.NombreEstado;
+            SeguimientoInstructorAprendices = aprendiz.SeguimientoInstructorAprendizs;
+            NombreApellidoDoc = aprendiz.NombreAprendiz +" "+ aprendiz.ApellidoAprendiz+" "+aprendiz.NumeroDocumentoAprendiz;
+            Ficha=aprendiz.Ficha;
             SeguimientoInstructorAprendices=aprendiz.SeguimientoInstructorAprendizs;
         }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
 
         public string? NombreAprendiz { get; set; }
+
+        public string? NombreApellidoDoc {  get; set; }
 
         public string nombredoc { get; set; }
 
@@ -51,6 +56,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 
         public int? Ficha { get; set; }
 
+        public string? Programa {  get; set; }
+
         public int? IdCiudad { get; set; }
 
         public int? IdEstadoAprendiz { get; set; }
@@ -60,14 +67,5 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public virtual EstadoAprendiz? IdEstadoAprendizNavigation { get; set; }
 
         public virtual ICollection<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendices { get; set; } = new List<SeguimientoInstructorAprendiz>();
-
-
     }
-
-
 }
-
-
-
-
-

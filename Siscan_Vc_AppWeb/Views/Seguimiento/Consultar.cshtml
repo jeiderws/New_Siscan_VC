@@ -3,219 +3,223 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @using Siscan_Vc_DAL.DataContext
-@model List<Siscan_Vc_AppWeb.Models.ViewModels.ViewModelSeguimiento>
+@model Siscan_Vc_AppWeb.Models.ViewModels.Viewmodelsegui
+
 <div id="wrapper">
-
-
-
-
-
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
         <div id="content">
-
-
-
             <div class="container-fluid">
                 <br />
                 <div class="col py-3">
                     <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="fondomenu py-3 px-5 ">
+                        <div class="fondomenu py-3 px-5">
                             <h1>Consultar</h1>
                         </div>
-                        <!-- Card Body -->
                         <div class="card-body">
-                            <div class="list-group">
-                                <label for="inputFiltro" class="form-label">Digite el nombre del Aprendiz</label>
-                                <input class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Buscar...">
-                                <datalist id="Empresas">
-                                    @*  @foreach (var nombreEmpresa in ViewBag.nombreEmpresa)
-                                    {
-                                    <option value="@nombreEmpresa"></option>
-
-                                    } *@
-                                </datalist>
-
-
-                            </div>
+                            <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Seguimiento" asp-action="Consultar">
+                                <div class="input-group">
+                                    <input class="form-control" name="numDoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
+                                    <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <!-- Page Heading -->
-                    <!-- Content Row -->
-                    <br />
-
                     <div class="row">
-
-                        <!-- Area Chart - Ventas de los ultimos 7 días -->
                         <div class="col-xl-6 col-lg-5" style="width:522px">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
                                 <div class="fondomenu py-3 px-5">
                                     <img src="~/img/lista-de-verificacion.png" alt="Alternate Text" width="50" />
-                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Aprendiz</h6>
-
+                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Aprendices</h6>
                                 </div>
-                                <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="" style="height: 400px !important ;">
-
                                         <div class="list-group py-3" id="list-container">
-                                           @*  @foreach (var item in Model)
-                                            {
-                                                <a href="#" class="list-group-item list-group-item-action aprendiz-link" data-aprendiz-id="@item.IdSeguimiento">
-                                                   @item.NombreAprendiz
-                                                </a>
-                                            } *@
+                                            <div class="card-body table-responsive" style="height:450px; ">
+                                                <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                                                    <thead class="boton2 ms-auto">
+                                                        <tr>
+                                                            <th>Documento</th>
+                                                            <th>Nombres</th>
+                                                            <th>Apellidos</th>
+                                                            <th>Acciones</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{
+                                                            foreach (var aprendiz in Model.listaAprendizSegui)
+                                                            {
+                                                                <tr>
+                                                                    <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                                                    <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                                                    <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                                                    <td style="justify-content:center">
+                                                                        <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz" class="btn btn-sm">
+                                                                            <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
+                                                                        </a>
+                                                                    </td>
+                                                                </tr>
+                                                            }
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-
-                                        <div class="pagination justify-content-end" id="pagination">
-                                            <button class="page-link" id="prev" onclick="prevPage()">Anterior</button>
-                                            <span>Página @ViewBag.CurrentPage de @ViewBag.TotalPages</span>
-                                            <button class="page-link" id="next" onclick="nextPage()">Siguiente</button>
-                                        </div>
-
                                     </div>
                                 </div>
                             </div>
                         </div>
-
-                        <!-- Pie Chart - Productos más vendidos-->
                         <div class="col-xl-6 col-lg-5" style="width:770px">
                             <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
                                 <div class="fondomenu py-3 px-5 ">
                                     <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
                                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Seguimiento Aprendiz</h6>
                                 </div>
-                                <!-- Card Body -->
                                 <div class="card-body">
                                     <div class="list-group" style="height: 100% !important ;">
                                         <div class="card">
                                             <div class="row row-cols-1 row-cols-md-3 g-4">
-                                                <div class="col">
-                                                    <div class="card">
-                                                        <div class="card-body fondomenu">
-                                                            <br />
-                                                            <center class="m-t-30 pb-3">
-
-                                                                <h4 id="card-title" class="m-0 text-uppercase font-weight-bold text-white">pedro</h4>
-                                                                <h6 id="card-subtitle" class="card-subtitle">pascal</h6>
-
-                                                            </center>
-                                                        </div>
-                                                        <div class="card-body">
-                                                            <small class="text-muted">Correo: </small>
-                                                            <p id="card-email">hannagover@gmail.com</p>
-                                                            <small class="text-muted p-t-30 db">Telefono:</small>
-                                                            <p id="card-phone">654 784 547</p>
-                                                            <small class="text-muted p-t-30 db">Programa:</small>
-                                                            <h6 id="card-program" class="m-0font-weight-bold text-dark">267833 Analisis y desarrollo de software</h6>
-                                                            <small class="text-muted p-t-30 db">Modalidad:</small>
-                                                            <h6 id="card-mode" class="m-0 text-dark">Contrato social</h6>
+                                                @if (Model.aprendiz != null)
+                                                {
+                                                    <div class="col">
+                                                        <div class="card">
+                                                            <div class="card-body fondomenu">
+                                                                <br />
+                                                                <center class="m-t-30 pb-3">
+                                                                    <h4 id="card-title" class="m-0 text-uppercase font-weight-bold text-white">@Model.aprendiz.ApellidoAprendiz</h4>
+                                                                    <h6 id="card-subtitle" class="card-subtitle">@Model.aprendiz.NombreAprendiz</h6>
+                                                                </center>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <small class="text-muted">Correo: </small>
+                                                                <p id="card-email">@Model.aprendiz.CorreoAprendiz</p>
+                                                                <small class="text-muted p-t-30 db">Celular:</small>
+                                                                <p id="card-phone">@Model.aprendiz.CelAprendiz</p>
+                                                                <small class="text-muted p-t-30 db">Celular Acudiente:</small>
+                                                                <p>@Model.aprendiz.CelularAcudiente</p>
+                                                                <small class="text-muted p-t-30 db">Ficha:</small>
+                                                                <h6 id="card-program" class="m-0font-weight-bold text-dark">@Model.aprendiz.Ficha</h6>
+                                                            </div>
 
                                                         </div>
                                                     </div>
-                                                </div>
-                                                <div class="card-body row">
-
-                                                    <div class="col pt-4">
-
-                                                        <div>
+                                                    <div class="card-body row">
+                                                        <div class="col pt-4">
                                                             <small class="text-muted">Coformador: </small>
-                                                            <p>juan mecanico</p>
+                                                            <p>@Model.seguimientoinstructorAprendiz.IdCoformadorNavigation.NombreCoformador @Model.seguimientoinstructorAprendiz.IdCoformadorNavigation.ApellidoCoformador</p>
+                                                            <p>@Model.seguimientoinstructorAprendiz.IdCoformadorNavigation.NumeroDocumentoCoformador</p>
+                                                            <small class="text-muted">Inicio Seguimiento: </small>
+                                                            <p id="card-coformador">@Model.seguimientoinstructorAprendiz.FechaInicio</p>
+                                                            <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.seguimientoinstructorAprendiz.FechaFinalizacion</p>
                                                         </div>
-                                                        <small class="text-muted">Coformador: </small>
-                                                        <p id="card-coformador">juan mecanico</p>
-                                                        <small class="text-muted p-t-30 db">Instructor:</small>
-                                                        <p id="card-instructor" class="m-0 text-dark">yasser pushaina</p>
-                                                        <small class="text-muted p-t-30 db">Inicio Practicas:</small>
-                                                        <p id="card-start-date" class="m-0 text-dark">10/04/2024</p>
-                                                        <small class="text-muted p-t-30 db">Finaliza Practicas:</small>
-                                                        <p id="card-end-date" class="m-0 text-dark">10/09/2024</p>
-
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted">Instructor: </small>
+                                                            <p>@Model.seguimientoinstructorAprendiz.NumeroDocumentoInstructorNavigation.NombreInstructor @Model.seguimientoinstructorAprendiz.NumeroDocumentoInstructorNavigation.ApellidoInstructor</p>
+                                                            <p>@Model.seguimientoinstructorAprendiz.NumeroDocumentoInstructor</p>
+                                                            <small class="text-muted">Area: </small>
+                                                            <p>@Model.seguimientoinstructorAprendiz.IdAreaEmpresaNavigation.NombreArea</p>
+                                                            <small class="text-muted">Modalidad: </small>
+                                                            <p>@Model.seguimientoinstructorAprendiz.IdModalidadNavigation.NombreModalidad</p>
+                                                            <small class="text-muted p-t-30 db">Empresa:</small>
+                                                            <p class="m-0 text-dark ">@Model.seguimientoinstructorAprendiz.NitEmpresa @Model.Empresa.NombreEmpresa</p>
+                                                        </div>
                                                     </div>
-                                                    <div class="col pt-4">
+                                                }
+                                                else
+                                                {
+                                                    <div class="col">
+                                                        <div class="card">
+                                                            <div class="card-body fondomenu">
+                                                                <br />
+                                                                <center class="m-t-30 pb-3">
+                                                                    <h4 id="card-title" class="m-0 text-uppercase font-weight-bold text-white">Apellido</h4>
+                                                                    <h6 id="card-subtitle" class="card-subtitle">Nombre</h6>
+                                                                </center>
+                                                            </div>
+                                                            <div class="card-body">
+                                                                <small class="text-muted">Correo: </small>
+                                                                <p id="card-email">Correo</p>
+                                                                <small class="text-muted p-t-30 db">Celular:</small>
+                                                                <p id="card-phone">Celular</p>
+                                                                <small class="text-muted p-t-30 db">Celular Acudiente:</small>
+                                                                <p>Celular Acudiente</p>
+                                                                <small class="text-muted p-t-30 db">Ficha:</small>
+                                                                <h6 id="card-program" class="m-0font-weight-bold text-dark">Ficha</h6>
+                                                            </div>
 
-                                                        <div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card-body row">
+                                                        <div class="col pt-4">
                                                             <small class="text-muted">Coformador: </small>
-                                                            <p>juan mecanico</p>
+                                                            <p>Coformador</p>
+                                                            <small class="text-muted">Inicio Seguimiento: </small>
+                                                            <p id="card-coformador">fecha inicio</p>
+                                                            <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">fecha finalizacion</p>
                                                         </div>
-                                                        <small class="text-muted">Coformador: </small>
-                                                        <p>juan mecanico</p>
-                                                        <small class="text-muted p-t-30 db">Telefono:</small>
-                                                        <p> 654 784 547</p>
-                                                        <small class="text-muted p-t-30 db">Instructor:</small>
-                                                        <p class="m-0 text-dark ">yasser pushaina</p>
-                                                        <small class="text-muted p-t-30 db">Inicio Practicas:</small>
-                                                        <p class="m-0 text-dark ">10/04/2024</p>
-                                                        <small class="text-muted p-t-30 db">Finaliza Practicas:</small>
-                                                        <p class="m-0 text-dark ">10/09/2024</p>
-
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted">Instructor: </small>
+                                                            <p>Instructor</p>
+                                                            <small class="text-muted">Area: </small>
+                                                            <p>Area</p>
+                                                            <small class="text-muted">Modalidad: </small>
+                                                            <p>Modalidad</p>
+                                                            <small class="text-muted p-t-30 db">Empresa:</small>
+                                                            <p class="m-0 text-dark ">Empresa</p>
+                                                        </div>
                                                     </div>
-                                                </div>
-
+                                                }
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
                             </div>
-
-
                         </div>
-
-
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
 
+@section Scripts {
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script>
+        document.getElementById('inputFiltro').addEventListener('input', function () {
+            var filtro = this.value.toLowerCase();
+            var elementos = document.querySelectorAll('#list-container a');
 
+            elementos.forEach(function (elemento) {
+                var nombre = elemento.textContent.toLowerCase();
+                if (nombre.includes(filtro)) {
+                    elemento.style.display = '';
+                } else {
+                    elemento.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    <script>
+        const aprendizLinks = document.querySelectorAll('.aprendiz-link');
 
-            @section Scripts {
-                <script src="~/js/scripts.js" asp-append-version="true"></script>
-                <script>
+        aprendizLinks.forEach(link => {
+            link.addEventListener('click', function (event) {
+                event.preventDefault(); // Evitar el comportamiento predeterminado del enlace (navegación)
+                const aprendizId = this.dataset.aprendizId;
 
-                    document.getElementById('inputFiltro').addEventListener('input', function () {
-                        var filtro = this.value.toLowerCase();
-                        var elementos = document.querySelectorAll('#list-container a');
-
-                        elementos.forEach(function (elemento) {
-                            var nombre = elemento.textContent.toLowerCase();
-                            if (nombre.includes(filtro)) {
-                                elemento.style.display = '';
-                            } else {
-                                elemento.style.display = 'none';
-                            }
-                        });
+                fetch(`/Seguimiento/Show/${aprendizId}`) // Reemplazar con su controlador y acción
+                    .then(response => response.json())
+                    .then(data => {
+                        // Completar los elementos de la tarjeta con los datos del aprendiz (suponiendo los ID de los elementos de la tarjeta)
+                        document.getElementById('card-title').textContent = data.NombreAprendiz;
+                        document.getElementById('card-email').textContent = data.CorreoAprendiz;
+                        // ... completar otros elementos de la tarjeta
+                    })
+                    .catch(error => {
+                        console.error("Error al obtener los datos del aprendiz:", error);
                     });
-
-                   
-
-                </script>
-                <script>
-                    const aprendizLinks = document.querySelectorAll('.aprendiz-link');
-
-                    aprendizLinks.forEach(link => {
-                        link.addEventListener('click', function (event) {
-                            event.preventDefault(); // Evitar el comportamiento predeterminado del enlace (navegación)
-                            const aprendizId = this.dataset.aprendizId;
-
-                            fetch(`/Seguimiento/Show/${aprendizId}`) // Reemplazar con su controlador y acción
-                                .then(response => response.json())
-                                .then(data => {
-                                    // Completar los elementos de la tarjeta con los datos del aprendiz (suponiendo los ID de los elementos de la tarjeta)
-                                    document.getElementById('card-title').textContent = data.NombreAprendiz;
-                                    document.getElementById('card-email').textContent = data.CorreoAprendiz;
-                                    // ... completar otros elementos de la tarjeta
-                                })
-                                .catch(error => {
-                                    console.error("Error al obtener los datos del aprendiz:", error);
-                                });
-                        });
-                    });
-
-                </script>
-            }
+            });
+        });
+    </script>
+}
