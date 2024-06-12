@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Siscan_Vc_BLL.Service.ClasesService
 {
-    public class AsignacionEmpresaService : IAsignacionService
+    public class AsignacionAreaService : IAsignacionService
     {
         private readonly IGenericRepository<AsignacionArea> _areAsigRepository;
-        public AsignacionEmpresaService(IGenericRepository<AsignacionArea> areAsigRepo)
+        public AsignacionAreaService(IGenericRepository<AsignacionArea> areAsigRepo)
         {
             _areAsigRepository = areAsigRepo;
         }

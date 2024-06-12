@@ -40,7 +40,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="Instructor.NombreInstructor" class="form-control" id="inputName" type="text" placeholder="Ingresa tus nombres" />
+                                    <input asp-for="Instructor.NombreInstructor" class="form-control" id="Name" type="text" placeholder="Ingresa tus nombres" />
                                     <label asp-for="Instructor.NombreInstructor">Nombres</label>
                                 </div>
                             </div>
@@ -85,26 +85,4 @@
             return confirm("¿Estás seguro de que deseas guardar?")
         }
     </script>
-    <script>
-        $(document).ready(function () {
-            $("#confirmarRegistroBtn").click(function () {
-                // Aquí puedes realizar una llamada Ajax para realizar el registro
-                // Por ahora, simularemos el registro exitoso
-                var registroExitoso = true; // Cambia a false para simular un registro fallido
-
-                if (registroExitoso) {
-                    // Mostrar alerta de registro exitoso
-                    alert("¡Registro exitoso!");
-
-                } else {
-                    // Mostrar alerta de fallo de registro
-                    alert("No se pudo completar el registro. Inténtalo de nuevo.");
-                }
-
-                // Cierra el modal
-                $("#confirmacionRegistroModal").modal('hide');
-            });
-        });
-    </script>
-
 }
