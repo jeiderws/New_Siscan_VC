@@ -3004,17 +3004,17 @@ textarea.form-control-lg {
 }
 
 .botonEliminar:hover {
-    border: 2px solid #fff;
-}
+     border: 2px solid #0d6efdd9;
+ }
+
 .botonEditar {
     background: #39A900;
     border-radius: 5px;
     color: #f7f7f7;
     border: 1px solid #f7f7f7;
 }
-
 .botonEditar:hover {
-    border: 2px solid #fff;
+    border: 2px solid #0d6efdd9;
 }
 
 .boton {

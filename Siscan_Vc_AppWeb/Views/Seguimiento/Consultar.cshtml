@@ -99,7 +99,6 @@
                                                                 <small class="text-muted p-t-30 db">Ficha:</small>
                                                                 <h6 id="card-program" class="m-0font-weight-bold text-dark">@Model.aprendiz.Ficha</h6>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                     <div class="card-body row">
@@ -112,12 +111,8 @@
                                                             <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
                                                             <p id="card-instructor" class="m-0 text-dark">@Model.seguimientoinstructorAprendiz.FechaFinalizacion</p>
                                                             <br />
-                                                            <a class="btn  btn-sm">
-                                                                <img src="~/img/editar.png" alt="Alternate Text" width="28" />Editar
-                                                            </a>
-                                                            <a class="btn btn-sm btn-eliminar">
-                                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="28" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />Eliminar
-                                                            </a>
+                                                            <button class="botonEliminar">Eliminar</button>
+                                                            <button class="botonEditar">Editar</button>
                                                         </div>
                                                         <div class="col pt-4">
                                                             <small class="text-muted">Instructor: </small>
@@ -153,7 +148,6 @@
                                                                 <small class="text-muted p-t-30 db">Ficha:</small>
                                                                 <h6 id="card-program" class="m-0font-weight-bold text-dark">Ficha</h6>
                                                             </div>
-
                                                         </div>
                                                     </div>
                                                     <div class="card-body row">
