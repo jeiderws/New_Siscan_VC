@@ -283,7 +283,20 @@
         function confirmUpdate() {
             return confirm("¿Estás seguro de que deseas Actualizar?");
         }
-    </script>
 
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#cboEstadoAprendiz').change(function () {
+                var estadoAprendiz = $(this).val();
+                if (estadoAprendiz === "4") {
+                    $('#cboEstadoPruebatyt').prop('disabled', true);
+                    $('#cboEstadoPruebatyt').val("6");
+                } else {
+                    $('#cboEstadoPruebatyt').prop('disabled', false);
+                }
+            });
+        });
+    </script>
 
 }
