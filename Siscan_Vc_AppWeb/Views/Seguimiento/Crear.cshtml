@@ -1,7 +1,7 @@
 ﻿@{
     ViewData["Title"] = "Crear";
     Layout = "~/Views/Shared/_Layout.cshtml";
- }
+}
 @model Siscan_Vc_AppWeb.Models.ViewModels.Viewmodelsegui
 
 <div class="container">
@@ -26,6 +26,7 @@
                         {
                             <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEmpre"] </div>
                         }
+                        @*datos del aprendiz*@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -55,6 +56,7 @@
                             </div>
                         </div>
                     </div>
+                    <!--datos de empresa-->
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -79,7 +81,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
                                     <input asp-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
                                     <label asp-for="seguimientoinstructorAprendiz.FechaFinalizacion">Finaliza</label>
                                 </div>

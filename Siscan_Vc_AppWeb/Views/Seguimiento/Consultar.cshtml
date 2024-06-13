@@ -54,7 +54,7 @@
                                                                     <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
                                                                     <td style="justify-content:center">
                                                                         <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz" class="btn btn-sm">
-                                                                            <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
+                                                                            <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento"/>
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -111,6 +111,13 @@
                                                             <p id="card-coformador">@Model.seguimientoinstructorAprendiz.FechaInicio</p>
                                                             <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
                                                             <p id="card-instructor" class="m-0 text-dark">@Model.seguimientoinstructorAprendiz.FechaFinalizacion</p>
+                                                            <br />
+                                                            <a class="btn  btn-sm">
+                                                                <img src="~/img/editar.png" alt="Alternate Text" width="28" />Editar
+                                                            </a>
+                                                            <a class="btn btn-sm btn-eliminar">
+                                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="28" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal" />Eliminar
+                                                            </a>
                                                         </div>
                                                         <div class="col pt-4">
                                                             <small class="text-muted">Instructor: </small>

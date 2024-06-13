@@ -102,6 +102,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             };
             return View(vmSeguimiento);
         }
+
         [HttpGet]
         public async Task<IActionResult> Crear(string nmDoc)
         {
@@ -121,6 +122,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewmodel);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
@@ -206,7 +208,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                 nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado,
                 SeguimientoInstructorAprendices = a.SeguimientoInstructorAprendizs,
                 NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz,
-                //Programa=a.FichaNavigation.ProgramaNavigation.NombrePrograma
             }).ToList();
             var seguimiento = await _seguimientoService.GetForNumDocAprdz(numDoc);
             foreach (var ap in listaAprendices)

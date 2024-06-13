@@ -276,6 +276,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar el aprendiz: " + e.Message });
             }
         }
+
         [HttpGet]
         public async Task<IActionResult> Editar(string numDoc)
         {
