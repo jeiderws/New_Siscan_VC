@@ -109,7 +109,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt" >
+                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt" disabled >
                                         <option>Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-items="@Model.listaOpcPrograma"  class="form-control form-control-sm" id="cboPrograma">
+                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma" onchange="obtenerNivelPrograma()">
                                         <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
@@ -281,7 +281,7 @@
             });
         });
     </script>
- @*    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
         function obtenerNivelPrograma() {
             var programaId = $("#cboPrograma").val();
@@ -291,11 +291,11 @@
                 type: 'GET',
                 data: { programaId: programaId },
                 success: function (data) {
-                    if (data.nivelPrograma === "2") {
-                        $("#cboEstadoPruebatyt").prop('disabled', false);
-                    } else {
+                    if (data.nivelPrograma != "2") {
                         $("#cboEstadoPruebatyt").prop('disabled', true);
                         $("#cboEstadoPruebatyt").val("5");
+                    } else {
+                        $("#cboEstadoPruebatyt").prop('disabled', false);
                     }
                 },
                 error: function (error) {
@@ -303,7 +303,7 @@
                 }
             });
         }
-    </script> *@
+    </script>
     <script>
         $(document).ready(function () {
             $('#cboEstadoAprendiz').change(function () {

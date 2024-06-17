@@ -23,20 +23,20 @@ namespace Siscan_Vc_AppWeb.Controllers
             _inscripcionTYTService = inscripcionTYTService;
         }
 
-        //[HttpGet]
-        //public IActionResult ObtenerNivelPrograma(string programaId)
-        //{
-        //    var programa =_dbSiscanContext.Programas.FirstOrDefault(p => p.CodigoPrograma == programaId);
-        //    if (programa != null)
-        //    {
-        //        var nivelPrograma = programa.IdNivelPrograma; 
-        //        return Json(new { nivelPrograma });
-        //    }
-        //    else
-        //    {     
-        //        return Json(new { nivelPrograma = "" }); 
-        //    }
-        //}
+        [HttpGet]
+        public IActionResult ObtenerNivelPrograma(string programaId)
+        {
+            var programa = _dbSiscanContext.Programas.FirstOrDefault(p => p.CodigoPrograma == programaId);
+            if (programa != null)
+            {
+                var nivelPrograma = programa.IdNivelPrograma;
+                return Json(new { nivelPrograma });
+            }
+            else
+            {
+                return Json(new { nivelPrograma = "" });
+            }
+        }
         [HttpGet]
         public async Task<IActionResult> CargarCiudades(int departamentoId)
         {
@@ -334,7 +334,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             if (aprendiztyt != null)
             {
                 var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
-                if (aprendiz == null)
+                if (aprendiz == null)    
                 {
                     return NotFound();
                 }
