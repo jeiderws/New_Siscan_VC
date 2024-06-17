@@ -11,7 +11,7 @@ namespace Siscan_Vc_BLL.Service.InterfacesService
     {
         Task<bool> Insert(SeguimientoInstructorAprendiz model);
         Task<bool> Update(SeguimientoInstructorAprendiz model);
-        Task<bool> Delete(int id);
+        Task<bool> Delete(long id);
         Task<SeguimientoInstructorAprendiz> GetForId(long id);
         Task<IQueryable<SeguimientoInstructorAprendiz>> GetAll();
         Task<SeguimientoInstructorAprendiz> GetForNumDocAprdz(string numDoc);

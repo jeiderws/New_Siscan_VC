@@ -248,7 +248,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             TempData["aprendizConsultAlert"] = "No hay Resultados";
             return View(viewModel);
-
         }
 
         [HttpDelete]
@@ -256,9 +255,9 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             try
             {
-                var a = await _dbSiscanContext.Aprendiz.FirstOrDefaultAsync(x => x.NumeroDocumentoAprendiz == nmdoc);
+                var aprendiz = await _dbSiscanContext.Aprendiz.FirstOrDefaultAsync(x => x.NumeroDocumentoAprendiz == nmdoc);
 
-                if (a == null)
+                if (aprendiz == null)
                 {
                     return Json(new { success = false, message = "El aprendiz no fue encontrado." });
                 }
@@ -269,7 +268,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                 _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
                 await _aprendizService.Delete(nmdoc);
                 return Json(new { success = true, message = "El aprendiz se eliminó correctamente." });
-
             }
             catch (Exception e)
             {

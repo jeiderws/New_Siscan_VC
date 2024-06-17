@@ -168,7 +168,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         return View(viewmodelsegui);
                     }
                 }
-              
+
                 return View(viewmodelsegui);
             }
             catch (Exception)
@@ -231,6 +231,29 @@ namespace Siscan_Vc_AppWeb.Controllers
                 Empresa = empresa
             };
             return View(vmSeguimiento);
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> Eliminar(long idSeguimiento)
+        {
+            try
+            {
+                var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.FirstOrDefaultAsync(s=>s.IdSeguimiento==idSeguimiento);
+                if (seguimiento == null)
+                {
+                    return Json(new { success = false, message = "El seguimiento no fue encontrado." });
+                } 
+
+                await _seguimientoService.Delete(idSeguimiento);
+                TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!";
+                
+                return Json(new { success = true, message = "El seguimiento se elimino correctamente." });
+            }
+
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Se produjo un error al intentas eliminar el seguimiento: " + ex.Message });
+            }
         }
     }
 }

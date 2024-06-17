@@ -54,7 +54,7 @@
                                                                     <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
                                                                     <td style="justify-content:center">
                                                                         <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz" class="btn btn-sm">
-                                                                            <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento"/>
+                                                                            <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
                                                                         </a>
                                                                     </td>
                                                                 </tr>
@@ -78,7 +78,7 @@
                                     <div class="list-group" style="height: 100% !important ;">
                                         <div class="card">
                                             <div class="row row-cols-1 row-cols-md-3 g-4">
-                                                @if (Model.aprendiz != null)
+                                                @if (Model.aprendiz != null && Model.seguimientoinstructorAprendiz != null)
                                                 {
                                                     <div class="col">
                                                         <div class="card">
@@ -111,7 +111,8 @@
                                                             <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
                                                             <p id="card-instructor" class="m-0 text-dark">@Model.seguimientoinstructorAprendiz.FechaFinalizacion</p>
                                                             <br />
-                                                            <button class="botonEliminar">Eliminar</button>
+                                                            <br />
+                                                            <button id="btn-eliminar" data-id="@Model.seguimientoinstructorAprendiz.IdSeguimiento" class="botonEliminar">Eliminar</button>
                                                             <button class="botonEditar">Editar</button>
                                                         </div>
                                                         <div class="col pt-4">
@@ -186,6 +187,37 @@
 
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('.botonEliminar').on('click', function () {
+                function confirmEliminar() {
+                    return confirm("¿Estas seguro que deseas eliminar?");
+                }
+                var idSegui = $(this).data('id')
+                if (confirmEliminar()) {
+                    $.ajax({
+                        url: '@Url.Action("Eliminar", "Seguimiento")',
+                        type: 'DELETE',
+                        data: { idSeguimiento: idSegui },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("¡Eliminado exitoso!");
+                                location.reload();
+                            }
+                            else {
+                                alert("No se pudo completar el eliminado. Intentelo de nuevo.")
+                            }
+                        },
+                        error: function () {
+                            alert("Se produjo un error al intentar eliminar el seguimiento.")
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+
     <script>
         document.getElementById('inputFiltro').addEventListener('input', function () {
             var filtro = this.value.toLowerCase();

@@ -17,7 +17,7 @@ namespace Siscan_Vc_BLL.Service.ClasesService
             _seguimientorepo = seguimientorepo;
         }
 
-        public Task<bool> Delete(int id)
+        public Task<bool> Delete(long id)
         {
             return _seguimientorepo.Delete(id.ToString());
         }
