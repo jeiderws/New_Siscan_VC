@@ -109,7 +109,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt" >
+                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt" disabled >
                                         <option>Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma" >
+                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma" onchange="obtenerNivelPrograma()">
                                         <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
@@ -240,9 +240,6 @@
 
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
-     
-
-
     <script>
         $(document).ready(function () {
             $('#cboDepartamentos').change(function () {
@@ -283,12 +280,35 @@
                 });
             });
         });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        function obtenerNivelPrograma() {
+            var programaId = $("#cboPrograma").val();
 
+            $.ajax({
+                url: '/Aprendiz/ObtenerNivelPrograma', 
+                type: 'GET',
+                data: { programaId: programaId },
+                success: function (data) {
+                    if (data.nivelPrograma != "2") {
+                        $("#cboEstadoPruebatyt").prop('disabled', true);
+                        $("#cboEstadoPruebatyt").val("5");
+                    } else {
+                        $("#cboEstadoPruebatyt").prop('disabled', false);
+                    }
+                },
+                error: function (error) {
+                    console.error('Error al obtener el nivel del programa:', error);
+                }
+            });
+        }
     </script>
     <script>
         $(document).ready(function () {
             $('#cboEstadoAprendiz').change(function () {
                 var estadoAprendiz = $(this).val();
+                fetch('/Aprendiz/programa')
                 if (estadoAprendiz === "4") {
                     $('#cboEstadoPruebatyt').prop('disabled', true);
                     $('#cboEstadoPruebatyt').val("6");
@@ -298,7 +318,6 @@
             });
         });
     </script>
-
     <script>
         $(document).ready(function () {
             $('#cboPrograma').change(function () {
