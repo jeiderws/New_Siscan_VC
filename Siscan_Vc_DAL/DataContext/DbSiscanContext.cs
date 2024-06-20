@@ -431,7 +431,7 @@ public partial class DbSiscanContext : DbContext
 
         modelBuilder.Entity<Programas>(entity =>
         {
-            entity.HasKey(e => new { e.CodigoPrograma, e.Version });
+            entity.HasKey(e => new { e.CodigoPrograma});
 
             entity.ToTable("Programa");
 

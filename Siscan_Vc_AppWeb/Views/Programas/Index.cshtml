@@ -2,7 +2,8 @@
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@using Siscan_Vc_DAL.DataContext
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewProgra
 <div id="wrapper">
     <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
@@ -14,40 +15,50 @@
                         <div class="card shadow mb-4">
                             <div class="fondomenu py-3 px-5">
                                 <img src="~/img/graduacion.png" alt="Alternate Text" width="50" />
-                                <h6 class="m-0 text-uppercase font-weight-bold text-white ">Programa</h6>
+                                <h6 class="m-0 text-uppercase font-weight-bold text-white ">Registrar Programa</h6>
                             </div>
                             <div class="card-body">
+                                @if (TempData["AlertProAdd"] != null)
+                                {
+                                    <div class="alert alert-success" role="alert"> @TempData["AlertProAdd"] </div>
+                                }
                                 <div class="" style="height: 320px !important ;">
                                     <div class="card-body">
-                                        <form>
+                                        <form asp-action="Index" method="post">
                                             <div class="row mb-3">
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3">
-                                                        <select class="form-control form-control-sm" id="cboTipoDocumento">
-                                                            <option value="3">Selecciona Nivel...</option>
-                                                            <option value="2">Tecnologo</option>
-                                                            <option value="1">Tecnico</option>
-                                                            <option value="0">Operario</option>
+                                                        <select asp-for="opcseleccionadaNivel" asp-items="@Model.listaopcNivel" class="form-control form-control-sm" id="cboNivel">
+                                                            <option>Selecciona el Nivel del Programa...</option>
                                                         </select>
-                                                        <label for="cboTipoDocumento">Nivel Programa</label>
+                                                        <label for="cboNivel">Nivel Programa</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <div class="form-floating mb-3 mb-md-0">
-                                                        <input class="form-control" id="inputName" type="text" placeholder="Nombre Del Programa" />
+                                                        <input asp-for="programas.CodigoPrograma" class="form-control" id="inputCod" type="text" placeholder="Codigo Del Programa" />
+                                                        <label for="inputCod">Codigo Del Programa</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="form-floating mb-3 mb-md-0">
+                                                        <input asp-for="programas.NombrePrograma" class="form-control" id="inputName" type="text" placeholder="Nombre Del Programa" />
                                                         <label for="inputName">Nombre Del Programa</label>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-6">
-                                                    <div class="form-floating">
-                                                        <input class="form-control" id="inputLastName" type="text" placeholder="Ingresa Codigo Del Programa" />
-                                                        <label for="inputLastName">Codigo Programa</label>
+                                                    <div class="form-floating mb-3">
+                                                        <select asp-for="opcseleccionadaEstado" asp-items="@Model.listaopcEstado" class="form-control form-control-sm" id="cboEstado">
+                                                            <option>Selecciona el Nivel del Programa...</option>
+                                                        </select>
+                                                        <label for="cboEstado">Estado Programa</label>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="mt-4 mb-0">
-                                                <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#confirmacionRegistroModal">Registrarse</button></div>
+                                                <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" onclick="return confirmCrear()">Registrarse</button></div>
                                             </div>
+
                                         </form>
                                     </div>
                                 </div>
@@ -65,35 +76,17 @@
                                     <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
                                         <thead class="boton2 ms-auto">
                                             <tr>
-                                                <th>Documento</th>
-                                                <th>Nombres</th>
-                                                <th>Apellidos</th>
-                                                <th>Telefono</th>
-                                                <th>Correo</th>
+                                                <th>Codigo</th>
+                                                <th>Intructor</th>
+                                                <th>Sede</th>
+                                                <th>Programa</th>
+                                                <th>Fecha-Inicio</th>
+                                                <th>Fecha-Final</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>WDHPQW8</td>
-                                                <td>12312312</td>
-                                                <td>Marca 1</td>
-                                                <td>Descripcion 1</td>
-                                                <td>
-                                                    <a class="btn btn-success" href="@Url.Action("CrearFicha","Programas")">crear ficha </a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td>2</td>
-                                                <td>WIEYEO2I</td>
-                                                <td>12312312</td>
-                                                <td>Marca 2</td>
-                                                <td>Descripcion 2</td>
-                                                <td>
-                                                    <a class="btn btn-success" href="@Url.Action("CrearFicha","Programas")">crear ficha </a>
-                                                </td>
-                                            </tr>
+                                            
                                         </tbody>
                                     </table>
                                 </div>
@@ -106,111 +99,54 @@
                 <div class="card shadow mb-4">
                     <div class="fondomenu py-3 px-5 ">
                         <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
-                        <h6 class="m-0 text-uppercase font-weight-bold text-white ">Aprendices Vinculados</h6>
+                        <h6 class="m-0 text-uppercase font-weight-bold text-white ">Programas</h6>
                     </div>
                     <div class="card-body">
-                        <div class="list-group">
-                            <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
-                                <thead class="boton2 ms-auto">
-                                    <tr>
-                                        <th>Documento</th>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>Telefono</th>
-                                        <th>Acciones</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>WDHPQW8</td>
-                                        <td>12312312</td>
-                                        <td>Marca 1</td>
-                                        <td>Descripcion 1</td>
-                                        <td>
-                                            <a class="btn  btn-sm">
-                                                <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                            </a>
-                                            <a class="btn btn-sm">
-                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                            </a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>WIEYEO2I</td>
-                                        <td>12312312</td>
-                                        <td>Marca 2</td>
-                                        <td>Descripcion 2</td>
-                                        <td>
-                                            <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
-                                                <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                            </a>
-                                            <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
-                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
-                                            </a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <form asp-action="Index" method="get">
+                            <div class="list-group">
+                                <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                    <thead class="boton2 ms-auto">
+                                        <tr>
+                                            <th>Codigo</th>
+                                            <th>Nombres</th>
+                                            <th>Estado</th>
+                                            <th>Nivel</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            foreach (var i in Model.listaprogramas)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(a => i.CodigoPrograma)</td>
+                                                    <td>@Html.DisplayFor(a => i.NombrePrograma)</td>
+                                                    <td>@Html.DisplayFor(a => i.EstadoPrograma)</td>
+                                                    <td>@Html.DisplayFor(a => i.NivePrograma)</td>
+                                                    <td>
+                                                        <a class="btn btn-success" href="@Url.Action("CrearFicha","Programas")">crear ficha </a>
+
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div class="list-group">
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        First checkbox
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        Second checkbox
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        Third checkbox
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        Fourth checkbox
-                    </label>
-                    <label class="list-group-item">
-                        <input class="form-check-input me-1" type="checkbox" value="">
-                        Fifth checkbox
-                    </label>
-                </div>
-            </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 @section Scripts {
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script>
-        $(document).ready(function () {
-            $('#inputEmpresa').on('input', function () {
-                var term = $(this).val();
-                $.ajax({
-                    url: '@Url.Action("nombreEmpresa", "Empresa")',
-                    type: 'GET',
-                    data: { term: term },
-                    success: function (data) {
-                        $('#Empresas').empty();
-                        $.each(data, function (index, value) {
-                            $('#Empresas').append('<option value="' + value + '"></option>');
-                        });
-                    }
+        function confirmCrear() {
+            return confirm("¿Estás seguro de que deseas Guardar?");
+        }
     </script>
 }
 

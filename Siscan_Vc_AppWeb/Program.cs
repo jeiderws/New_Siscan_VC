@@ -20,6 +20,7 @@ builder.Services.AddScoped<IGenericRepository<InscripcionTyt>, InscripcionTYTRep
 builder.Services.AddScoped<IGenericRepository<SeguimientoInstructorAprendiz>, SeguimientoInsApreRepository>();
 builder.Services.AddScoped<IGenericRepository<Empresa>, EmpresaRepository>();
 builder.Services.AddScoped<IGenericRepository<AsignacionArea>, AsignacionAreaRepository>();
+builder.Services.AddScoped<IGenericRepository<Programas>, ProgramasRepository>();
 
 builder.Services.AddScoped<IAprendizService,AprendizService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
@@ -27,6 +28,7 @@ builder.Services.AddScoped<IInscripcionTYTService, InscripcionTYTService>();
 builder.Services.AddScoped<ISeguimientoService, SeguimientoService>();
 builder.Services.AddScoped<IEmpresaService, EmpresaService>();
 builder.Services.AddScoped<IAsignacionService, AsignacionAreaService>();
+builder.Services.AddScoped<IProgramasService, ProgramasService>();
 
 var app = builder.Build();
 
