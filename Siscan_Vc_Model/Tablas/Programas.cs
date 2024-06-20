@@ -7,8 +7,6 @@ public partial class Programas
 {
     public string CodigoPrograma { get; set; } = null!;
 
-    public string Version { get; set; } = null!;
-
     public string? NombrePrograma { get; set; }
 
     public int? IdNivelPrograma { get; set; }

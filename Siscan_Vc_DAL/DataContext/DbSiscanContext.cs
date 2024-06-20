@@ -315,9 +315,6 @@ public partial class DbSiscanContext : DbContext
             entity.Property(e => e.NumeroDocumentoInstructor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.Version)
-                .HasMaxLength(50)
-                .IsUnicode(false);
 
             entity.HasOne(d => d.IdSedeNavigation).WithMany(p => p.Fichas)
                 .HasForeignKey(d => d.IdSede)
@@ -326,10 +323,6 @@ public partial class DbSiscanContext : DbContext
             entity.HasOne(d => d.NumeroDocumentoInstructorNavigation).WithMany(p => p.Fichas)
                 .HasForeignKey(d => d.NumeroDocumentoInstructor)
                 .HasConstraintName("FK_Ficha_Instructor");
-
-            entity.HasOne(d => d.ProgramaNavigation).WithMany(p => p.Fichas)
-                .HasForeignKey(d => new { d.CodigoPrograma, d.Version })
-                .HasConstraintName("FK_Ficha_Programa");
         });
 
         modelBuilder.Entity<InscripcionTyt>(entity =>
@@ -443,9 +436,6 @@ public partial class DbSiscanContext : DbContext
             entity.ToTable("Programa");
 
             entity.Property(e => e.CodigoPrograma)
-                .HasMaxLength(50)
-                .IsUnicode(false);
-            entity.Property(e => e.Version)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.NombrePrograma)

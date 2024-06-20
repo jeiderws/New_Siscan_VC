@@ -13,8 +13,6 @@ public partial class Ficha
 
     public string? CodigoPrograma { get; set; }
 
-    public string Version { get; set; } = null!;
-
     public string? NumeroDocumentoInstructor { get; set; }
 
     public int? IdSede { get; set; }
