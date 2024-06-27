@@ -69,7 +69,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewBag.ItemsEstaTYT = itemsEstaTYT;
 
             var itemsPrograma = await _dbSiscanContext.Programas.ToListAsync();
-            ViewBag.ItemsPrograma = itemsPrograma;
+            ViewBag.ItemsPrograma = itemsPrograma;      
 
             ViewBag.ficha = new List<Ficha>();
 

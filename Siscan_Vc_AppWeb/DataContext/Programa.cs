@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_DAL.DataContext;
+namespace Siscan_Vc_AppWeb.DataContext;
 
-public partial class Programas
+public partial class Programa
 {
     public string CodigoPrograma { get; set; } = null!;
 

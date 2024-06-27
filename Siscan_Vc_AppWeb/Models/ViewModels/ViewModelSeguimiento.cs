@@ -55,7 +55,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             NombreModalidad = seguimiento.IdModalidadNavigation.NombreModalidad;
             idmodalidad = seguimiento.IdModalidad;
         }
-        public long IdSeguimiento { get; set; }
+        public int IdSeguimiento { get; set; }
         //aprendiz
         public string NumeroDocumentoAprendiz { get; set; } = null!;
         public string? NombreAprendiz { get; set; }

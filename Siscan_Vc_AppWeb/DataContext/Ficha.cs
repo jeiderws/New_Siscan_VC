@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_DAL.DataContext;
+namespace Siscan_Vc_AppWeb.DataContext;
 
 public partial class Ficha
 {
@@ -19,9 +19,9 @@ public partial class Ficha
 
     public virtual ICollection<Aprendiz> Aprendizs { get; set; } = new List<Aprendiz>();
 
-    public virtual Sedes? IdSedeNavigation { get; set; }
+    public virtual Programa? CodigoProgramaNavigation { get; set; }
+
+    public virtual Sede? IdSedeNavigation { get; set; }
 
     public virtual Instructor? NumeroDocumentoInstructorNavigation { get; set; }
-
-    public virtual Programas? ProgramaNavigation { get; set; }
 }

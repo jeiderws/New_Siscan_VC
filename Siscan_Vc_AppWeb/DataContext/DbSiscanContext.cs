@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
-namespace Siscan_Vc_DAL.DataContext;
+namespace Siscan_Vc_AppWeb.DataContext;
 
 public partial class DbSiscanContext : DbContext
 {
@@ -15,7 +15,7 @@ public partial class DbSiscanContext : DbContext
     {
     }
 
-    public virtual DbSet<Aprendiz> Aprendiz { get; set; }
+    public virtual DbSet<Aprendiz> Aprendizs { get; set; }
 
     public virtual DbSet<AreasEmpresa> AreasEmpresas { get; set; }
 
@@ -51,17 +51,21 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Notificacione> Notificaciones { get; set; }
 
-    public virtual DbSet<Pais> Pais { get; set; }
+    public virtual DbSet<Observacion> Observacions { get; set; }
 
-    public virtual DbSet<Programas> Programas { get; set; }
+    public virtual DbSet<Pai> Pais { get; set; }
 
-    public virtual DbSet<Sedes> Sedes { get; set; }
+    public virtual DbSet<Programa> Programas { get; set; }
+
+    public virtual DbSet<Sede> Sedes { get; set; }
 
     public virtual DbSet<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; }
 
     public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=DbSiscan; Trusted_Connection=True; TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -223,6 +227,10 @@ public partial class DbSiscanContext : DbContext
             entity.HasKey(e => e.IdConvocatoria);
 
             entity.ToTable("ConvocatoriaTYT");
+
+            entity.Property(e => e.SemestreConvocatoria)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Departamento>(entity =>
@@ -315,6 +323,10 @@ public partial class DbSiscanContext : DbContext
             entity.Property(e => e.NumeroDocumentoInstructor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.CodigoProgramaNavigation).WithMany(p => p.Fichas)
+                .HasForeignKey(d => d.CodigoPrograma)
+                .HasConstraintName("FK_Ficha_Programa");
 
             entity.HasOne(d => d.IdSedeNavigation).WithMany(p => p.Fichas)
                 .HasForeignKey(d => d.IdSede)
@@ -420,7 +432,21 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Notificaciones_Estado");
         });
 
-        modelBuilder.Entity<Pais>(entity =>
+        modelBuilder.Entity<Observacion>(entity =>
+        {
+            entity.HasKey(e => e.IdObservacion);
+
+            entity.ToTable("Observacion");
+
+            entity.Property(e => e.IdObservacion).ValueGeneratedNever();
+            entity.Property(e => e.Observaciones).IsUnicode(false);
+
+            entity.HasOne(d => d.IdSeguimientoNavigation).WithMany(p => p.Observacions)
+                .HasForeignKey(d => d.IdSeguimiento)
+                .HasConstraintName("FK_Observacion_Seguimiento_Instructor_Aprendiz");
+        });
+
+        modelBuilder.Entity<Pai>(entity =>
         {
             entity.HasKey(e => e.IdPais);
 
@@ -429,9 +455,9 @@ public partial class DbSiscanContext : DbContext
                 .IsUnicode(false);
         });
 
-        modelBuilder.Entity<Programas>(entity =>
+        modelBuilder.Entity<Programa>(entity =>
         {
-            entity.HasKey(e => new { e.CodigoPrograma});
+            entity.HasKey(e => e.CodigoPrograma).HasName("PK_Programa_1");
 
             entity.ToTable("Programa");
 
@@ -451,7 +477,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Programa_TipoPrograma");
         });
 
-        modelBuilder.Entity<Sedes>(entity =>
+        modelBuilder.Entity<Sede>(entity =>
         {
             entity.HasKey(e => e.IdSede);
 
@@ -476,6 +502,7 @@ public partial class DbSiscanContext : DbContext
 
             entity.ToTable("Seguimiento_Instructor_Aprendiz");
 
+            entity.Property(e => e.Actividades).IsUnicode(false);
             entity.Property(e => e.NitEmpresa)
                 .HasMaxLength(50)
                 .IsUnicode(false);
