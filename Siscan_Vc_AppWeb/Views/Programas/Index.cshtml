@@ -79,14 +79,30 @@
                                                 <th>Codigo</th>
                                                 <th>Intructor</th>
                                                 <th>Sede</th>
-                                                <th>Programa</th>
+                                                <th>Programas</th>
                                                 <th>Fecha-Inicio</th>
                                                 <th>Fecha-Final</th>
                                                 <th>Acciones</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            
+                                            @* @{
+                                                foreach (var k in Model.listaFicha)
+                                                {
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(a => k.Ficha1)</td>
+                                                        <td>@Html.DisplayFor(a => k.NumeroDocumentoInstructor)</td>
+                                                        <td>@Html.DisplayFor(a => k.Sede)</td>
+                                                        <td>@Html.DisplayFor(a => k.Programas)</td>
+                                                        <td>@Html.DisplayFor(a => k.FechaInicio)</td>
+                                                        <td>@Html.DisplayFor(a => k.FechaFinalizacion)</td>
+                                                        <td>
+                                                            <a class="btn btn-success" href="@Url.Action("CrearFicha","Programas")">crear ficha </a>
+
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            } *@
                                         </tbody>
                                     </table>
                                 </div>

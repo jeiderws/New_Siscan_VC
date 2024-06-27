@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Siscan_Vc_DAL.DataContext;
+namespace Siscan_Vc_AppWeb.DataContext;
 
 public partial class SeguimientoInstructorAprendiz
 {
@@ -16,6 +16,8 @@ public partial class SeguimientoInstructorAprendiz
     public DateOnly? FechaInicio { get; set; }
 
     public DateOnly? FechaFinalizacion { get; set; }
+
+    public string? Actividades { get; set; }
 
     public int? IdModalidad { get; set; }
 
@@ -38,4 +40,6 @@ public partial class SeguimientoInstructorAprendiz
     public virtual Aprendiz NumeroDocumentoAprendizNavigation { get; set; } = null!;
 
     public virtual Instructor NumeroDocumentoInstructorNavigation { get; set; } = null!;
+
+    public virtual ICollection<Observacion> Observacions { get; set; } = new List<Observacion>();
 }

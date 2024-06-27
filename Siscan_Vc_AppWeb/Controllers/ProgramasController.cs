@@ -15,11 +15,13 @@ namespace Siscan_Vc_AppWeb.Controllers
     {
         private readonly DbSiscanContext _dbSiscanContext;
         private readonly IProgramasService _programasService;
+        private readonly IFichaService _fichaService;
 
-        public ProgramasController(DbSiscanContext dbSiscanContext, IProgramasService programasService)
+        public ProgramasController(DbSiscanContext dbSiscanContext, IProgramasService programasService,IFichaService ficha)
         {
             _dbSiscanContext = dbSiscanContext;
             _programasService = programasService;
+            _fichaService = ficha;
         }
 
         [HttpGet]
@@ -29,7 +31,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             var modelview = new ModelViewProgra
             {
                 listaopcNivel = _dbSiscanContext.NivelProgramas.Select(o => new SelectListItem
-                {
+                {                                                     
                     Value = o.IdNivelPrograma.ToString(),
                     Text = o.NivelPrograma1
                 }).ToList(),
@@ -63,7 +65,28 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 modelview.listaprogramas = listaprograma;
                 modelview.programas = programa;
-            
+            //List<ViewModelFicha> listaficha = new List<ViewModelFicha>();
+            //IQueryable<Ficha> queryficha = await _fichaService.GetAll();
+            //listaficha = queryficha.Select(x => new ViewModelFicha(x)
+            //{
+            //    Ficha1 = x.Ficha1,
+            //    Programas = x.ProgramaNavigation.NombrePrograma,
+            //    NumeroDocumentoInstructor = x.NumeroDocumentoInstructor,
+            //    FechaFinalizacion = x.FechaFinalizacion,
+            //    FechaInicio = x.FechaInicio,
+            //    Sede = x.IdSedeNavigation.NombreSede
+            //}).ToList();
+            //Ficha fi = new Ficha();
+            //foreach (var i in queryficha)
+            //{
+            //    if (i.Ficha1 == null)
+            //    {
+            //        fi = i;
+            //        break;
+            //    }
+            //}
+            //modelview.listaFicha = listaficha;
+            //modelview.ficha = fi;
 
             return View(modelview);
         }
