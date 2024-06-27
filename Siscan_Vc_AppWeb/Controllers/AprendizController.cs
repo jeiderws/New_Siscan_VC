@@ -135,6 +135,10 @@ namespace Siscan_Vc_AppWeb.Controllers
             await LlenarCombos();
             return View(modelview);
         }
+        public async Task<IActionResult> RegistrarLotes()
+        {
+            return View();
+        }
 
         //Registrar aprendiz con un view model
         [HttpPost]

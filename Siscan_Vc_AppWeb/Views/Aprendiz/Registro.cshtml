@@ -28,7 +28,7 @@
                                 <div class="form-floating mb-3">
                                     <select asp-for="OpcSeleccionadoTpDoc" asp-items="@Model.listaOpcTpDoc" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option>Selecciona un tipo de documento...</option>
-                                    </select>   
+                                    </select>
                                     <label for="cboTipoDocumento">Tipo Documento</label>
                                     <span id="tipoDocumentoError" class="text-danger"></span>
                                 </div>
@@ -80,8 +80,8 @@
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">                                   
-                                    <select asp-for="OpcSeleccionadoEstado" asp-items="@Model.listaOpcEstado" class="form-control form-control-sm" id="cboEstadoAprendiz" >
+                                <div class="form-floating mb-3">
+                                    <select asp-for="OpcSeleccionadoEstado" asp-items="@Model.listaOpcEstado" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoAprendiz">Estado Aprendiz</label>
@@ -91,7 +91,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-items="@Model.listaOpcDepartamento" class="form-control form-control-sm" id="cboDepartamentos" >
+                                    <select asp-items="@Model.listaOpcDepartamento" class="form-control form-control-sm" id="cboDepartamentos">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
@@ -100,7 +100,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="OpcSeleccionadoCiudad" asp-items="@Model.listaOpcCiudad" class="form-control form-control-sm" id="cboCiudad" >
+                                    <select asp-for="OpcSeleccionadoCiudad" asp-items="@Model.listaOpcCiudad" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label for="cboCiudad">Ciudad</label>
@@ -109,7 +109,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt" disabled >
+                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt" disabled>
                                         <option>Selecciona un estado...</option>
                                     </select>
                                     <label for="cboEstadoPruebatyt">Estado de inscripcion tyt</label>
@@ -127,13 +127,14 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="OpcSeleccionadoFicha" asp-items="@Model.listaOpcFicha" class="form-control form-control-sm" id="cboFicha" >
+                                    <select asp-for="OpcSeleccionadoFicha" asp-items="@Model.listaOpcFicha" class="form-control form-control-sm" id="cboFicha">
                                         <option value="">Selecciona una ficha...</option>
                                     </select>
                                     <label for="cboFicha">Fichas</label>
                                     <span id="cboFichaError" class="text-danger"></span>
                                 </div>
                             </div>
+                         
 
                             <!-- Acudiente -->
                             <div class="fondomenu py-3 px-5">
@@ -178,7 +179,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="OpcSeleccionadoConvocatoria" class="form-control form-control-sm" asp-items="@Model.listaOpcConvocatoria" id="cboConvocatoria" >
+                                    <select asp-for="OpcSeleccionadoConvocatoria" class="form-control form-control-sm" asp-items="@Model.listaOpcConvocatoria" id="cboConvocatoria">
                                         <option value="">Selecciona una Convocatoria...</option>
                                     </select>
                                     <label for="cboConvocatoria">Convocatoria</label>
@@ -187,7 +188,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3">
-                                    <select asp-items="@Model.listaOpcDepartamento" class="form-control form-control-sm" id="cboDepartamentos2" >
+                                    <select asp-items="@Model.listaOpcDepartamento" class="form-control form-control-sm" id="cboDepartamentos2">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos2">Departamentos</label>
@@ -196,7 +197,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="OpcSeleccionadoCiudadTyt" asp-items="@Model.listaOpcCiudad" class="form-control form-control-sm" id="cboCiudad2" >
+                                    <select asp-for="OpcSeleccionadoCiudadTyt" asp-items="@Model.listaOpcCiudad" class="form-control form-control-sm" id="cboCiudad2">
                                         <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label for="cboCiudad2">Ciudad</label>
@@ -212,25 +213,12 @@
                             </div>
                         </div>
                     </form>
+                    <div class="mt-4 mb-0">
+                        <div class="form-floating mb-3">
+                            <a class="btn-guardar-lotes text-center" style="font-size:15px" href="@Url.Action("RegistrarLotes", "Aprendiz")">Registrar por lotes</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!-- Modal de confirmación de registro -->
-<div class="modal fade" id="confirmacionRegistroModal" tabindex="-1" aria-labelledby="confirmacionRegistroModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="confirmacionRegistroModalLabel">Confirmación de Registro</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea registrar?
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("Registro", "Aprendiz")" class="btn btn-primary" id="confirmarRegistroBtn">Confirmar Registro</a>
             </div>
         </div>
     </div>
@@ -287,7 +275,7 @@
             var programaId = $("#cboPrograma").val();
 
             $.ajax({
-                url: '/Aprendiz/ObtenerNivelPrograma', 
+                url: '/Aprendiz/ObtenerNivelPrograma',
                 type: 'GET',
                 data: { programaId: programaId },
                 success: function (data) {
