@@ -5,6 +5,8 @@ namespace Siscan_Vc_DAL.DataContext;
 
 public partial class AsignacionFicha
 {
+    public int AsignacionFichaId { get; set; }
+
     public string? NumeroDocumentoInstructor { get; set; }
 
     public string? Ficha { get; set; }

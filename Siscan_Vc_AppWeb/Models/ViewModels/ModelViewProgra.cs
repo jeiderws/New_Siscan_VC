@@ -7,8 +7,12 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public int opcseleccionadaNivel { get; set; }
         public List<SelectListItem> listaopcNivel { get; set; }
+
         public int opcseleccionadaEstado { get; set; }
         public List<SelectListItem> listaopcEstado { get; set; }
+
+        public int opcseleccionadaSede { get; set; }
+        public List<SelectListItem> listaopcSede { get; set; }
 
         public Programas programas { get; set; }
         public List<ViewModelPrograma> listaprogramas { get; set; }

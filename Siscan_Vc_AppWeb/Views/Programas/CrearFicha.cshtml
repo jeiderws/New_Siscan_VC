@@ -1,7 +1,8 @@
-@{
+﻿@{
     ViewData["Title"] = "CrearFicha";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewProgra
 
 <div class="container">
     <div class="row justify-content-center">
@@ -12,17 +13,35 @@
                     <h3 class="text-center font-dark-light my-4">Crear Ficha </h3>
                 </div>
                 <div class="card-body">
+                    @if (TempData["MensajeAlertIns"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertIns"] </div>
+                    }
+                    @if (TempData["MensajeAlertFichaexiste"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertFichaexiste"] </div>
+                    }
+                    @if (TempData["MensajeAlertFi"] != null)
+                    {
+                        <div class="alert alert-success" role="alert"> @TempData["MensajeAlertFi"] </div>
+                        <script>
+                            setTimeout(function () {
+                                window.location.href = '@Url.Action("Index", "Programas")';
+                            }, 3000);
+                        </script>
+                    }
+                    <form asp-action="CrearFicha">
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputFicha" type="text" placeholder="Ingresa tu numero de ficha" />
+                                    <input asp-for="ficha.Ficha1" class="form-control" id="inputFicha" type="text" placeholder="Ingresa Codigo de ficha" />
                                     <label for="inputName">Numero de ficha</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input  class="form-control" id="inputprograma" type="text" placeholder="Ingresa tus nombres" />
+                                    <input asp-for="programas.CodigoPrograma" class="form-control" id="inputprograma" type="text" readonly />
                                     <label for="inputprograma">Programa</label>
                                 </div>
                             </div>
@@ -31,34 +50,37 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="inputVersion" type="tel" placeholder="Ingresa tu telefono" />
-                                    <label for="inputVersion">Version</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="DocInstructor" type="text" placeholder="Ingresa tu direccion" />
+                                    <input asp-for="ficha.NumeroDocumentoInstructor" class="form-control" id="DocInstructor" type="text" placeholder="Ingresa Numero documento instructor" />
                                     <label for="DocInstructor">Instructor</label>
                                 </div>
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="opcseleccionadaSede" asp-items="Model.listaopcSede" class="form-control form-control-sm" id="cboSedes">
+                                        <option value="">Selecciona una Sede...</option>
+                                    </select>
+                                    <label for="cboSedes">Sedes</label>
+                                </div>
+                            </div>
                         </div>
+
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input class="form-control" id="FechaInicio" type="date" placeholder="name@example.com" />
+                                    <input asp-for="ficha.FechaInicio" class="form-control" id="FechaInicio" type="date" placeholder="name@example.com" />
                                     <label for="FechaInicio">Inicio</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
-                                    <input class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
+                                    <input asp-for="ficha.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
                                     <label for="FechaFinal">Finaliza</label>
                                 </div>
                             </div>
+                        </div>
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
-                                <button type="submit" class="btn text-center btn-block" style="font-size:20px">Registrar</button>
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Registrar</button>
                             </div>
                         </div>
                     </form>
@@ -70,5 +92,9 @@
 
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
-
+    <script>
+        function confirmCrear() {
+            return confirm("¿Estás seguro de que deseas Guardar?");
+        }
+    </script>
 }

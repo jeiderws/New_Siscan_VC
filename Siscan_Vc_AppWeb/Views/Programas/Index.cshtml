@@ -21,6 +21,22 @@
                                 {
                                     <div class="alert alert-success" role="alert"> @TempData["AlertProAdd"] </div>
                                 }
+
+                                @if (TempData["ValProgramExiste"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert"> @TempData["ValProgramExiste"] </div>
+                                }
+
+                                @if (TempData["ErrorGuardarInstrct"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert"> @TempData["ErrorGuardarInstrct"] </div>
+                                }
+
+                                @if (TempData["NoProgramsFound"] != null)
+                                {
+                                    <div class="alert alert-warning" role="alert"> @TempData["NoProgramsFound"] </div>
+                                }
+
                                 <div class="" style="height: 320px !important;">
                                     <div class="card-body">
                                         <form asp-action="Index" method="post">
@@ -70,37 +86,40 @@
                                 <h6 class="m-0 text-uppercase font-weight-bold text-white ">Programas</h6>
                             </div>
                             <div class="card-body" style="overflow: auto; max-height: 350px;">
-                            <div class="list-group">
+                                <div class="list-group">
                                     <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width: 100%;">
-                                    <thead class="boton2 ms-auto">
-                                        <tr>
-                                            <th>Codigo</th>
-                                            <th>Nombres</th>
-                                            <th>Estado</th>
-                                            <th>Nivel</th>
-                                            <th>Acciones</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @{
-                                            foreach (var i in Model.listaprogramas)
-                                            {
-                                                <tr>
-                                                    <td>@Html.DisplayFor(a => i.CodigoPrograma)</td>
-                                                    <td>@Html.DisplayFor(a => i.NombrePrograma)</td>
-                                                    <td>@Html.DisplayFor(a => i.EstadoPrograma)</td>
-                                                    <td>@Html.DisplayFor(a => i.NivePrograma)</td>
-                                                    <td>
-                                                        <a class="btn btn-success" href="@Url.Action("CrearFicha","Programas")">crear ficha </a>
-
-                                                    </td>
-                                                </tr>
+                                        <thead class="boton2 ms-auto">
+                                            <tr>
+                                                <th>Codigo</th>
+                                                <th>Nombres</th>
+                                                <th>Estado</th>
+                                                <th>Nivel</th>
+                                                <th>Acciones</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @{
+                                                if (Model.listaprogramas != null)
+                                                {
+                                                    foreach (var i in Model.listaprogramas)
+                                                    {
+                                                        <tr>
+                                                            <td>@Html.DisplayFor(a => i.CodigoPrograma)</td>
+                                                            <td>@Html.DisplayFor(a => i.NombrePrograma)</td>
+                                                            <td>@Html.DisplayFor(a => i.EstadoPrograma)</td>
+                                                            <td>@Html.DisplayFor(a => i.NivePrograma)</td>
+                                                            <td>
+                                                                <a class="btn btn-success" asp-action="CrearFicha" asp-controller="Programas" asp-route-codigo="@i.CodigoPrograma">Crear Ficha</a>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                }
                                             }
-                                        }
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </form>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -116,4 +135,3 @@
         }
     </script>
 }
-

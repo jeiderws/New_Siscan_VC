@@ -17,6 +17,8 @@ public partial class Instructor
 
     public int IdTipodocumento { get; set; }
 
+    public virtual ICollection<AsignacionFicha> AsignacionFichas { get; set; } = new List<AsignacionFicha>();
+
     public virtual ICollection<Ficha> Fichas { get; set; } = new List<Ficha>();
 
     public virtual TipoDocumento IdTipodocumentoNavigation { get; set; } = null!;

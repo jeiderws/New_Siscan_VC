@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
 
 namespace Siscan_Vc_DAL.DataContext;
 
 public partial class Aprendiz
 {
     public string NumeroDocumentoAprendiz { get; set; } = null!;
-  
+
     public string? NombreAprendiz { get; set; }
 
     public string? ApellidoAprendiz { get; set; }
@@ -47,5 +46,4 @@ public partial class Aprendiz
     public virtual ICollection<InscripcionTyt> InscripcionTyts { get; set; } = new List<InscripcionTyt>();
 
     public virtual ICollection<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; } = new List<SeguimientoInstructorAprendiz>();
-
 }

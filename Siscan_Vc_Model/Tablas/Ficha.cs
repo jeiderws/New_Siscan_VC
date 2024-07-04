@@ -19,9 +19,11 @@ public partial class Ficha
 
     public virtual ICollection<Aprendiz> Aprendizs { get; set; } = new List<Aprendiz>();
 
-    public virtual Sedes? IdSedeNavigation { get; set; }
-
-    public virtual Instructor? NumeroDocumentoInstructorNavigation { get; set; }
+    public virtual ICollection<AsignacionFicha> AsignacionFichas { get; set; } = new List<AsignacionFicha>();
 
     public virtual Programas? ProgramaNavigation { get; set; }
+
+    public virtual Sede? IdSedeNavigation { get; set; }
+
+    public virtual Instructor? NumeroDocumentoInstructorNavigation { get; set; }
 }

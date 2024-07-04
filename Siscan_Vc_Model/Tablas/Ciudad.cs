@@ -19,5 +19,5 @@ public partial class Ciudad
 
     public virtual ICollection<InscripcionTyt> InscripcionTyts { get; set; } = new List<InscripcionTyt>();
 
-    public virtual ICollection<Sedes> Sedes { get; set; } = new List<Sedes>();
+    public virtual ICollection<Sede> Sedes { get; set; } = new List<Sede>();
 }

@@ -9,18 +9,20 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             Ficha1 = fi.Ficha1.ToString();
             FechaFinalizacion = fi.FechaFinalizacion;
             FechaInicio = fi.FechaInicio;
-            CodigoPrograma = fi.CodigoPrograma;
+            CodigoPrograma = fi.ProgramaNavigation.CodigoPrograma;
             NumeroDocumentoInstructor = fi.NumeroDocumentoInstructor;
             instructor = fi.NumeroDocumentoInstructorNavigation.NombreInstructor;
             Programas = fi.ProgramaNavigation.NombrePrograma;
-            IdSede = fi.IdSede;
+            IdSede = fi.IdSedeNavigation.IdSede;
             Sede = fi.IdSedeNavigation.NombreSede;
 
         }
         public int Ficha1 { get; set; }
 
         public DateOnly? FechaInicio { get; set; }
+
         public DateOnly? FechaFinalizacion { get; set; }
+
         public string? CodigoPrograma { get; set; }
         public string? Programas { get; set; }
 
@@ -30,5 +32,6 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public int? IdSede { get; set; }
         public string? Sede { get; set; }
 
+        public AsignacionFicha asignacionFicha { get; set; }
     }
 }

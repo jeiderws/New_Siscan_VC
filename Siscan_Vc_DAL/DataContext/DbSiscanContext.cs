@@ -51,17 +51,21 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Notificacione> Notificaciones { get; set; }
 
+    public virtual DbSet<Observacion> Observacions { get; set; }
+
     public virtual DbSet<Pais> Pais { get; set; }
 
     public virtual DbSet<Programas> Programas { get; set; }
 
-    public virtual DbSet<Sedes> Sedes { get; set; }
+    public virtual DbSet<Sede> Sedes { get; set; }
 
     public virtual DbSet<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; }
 
     public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
 
-    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) { }
+    protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS; Database=DbSiscan; Trusted_Connection=True; TrustServerCertificate=true;");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -155,19 +159,17 @@ public partial class DbSiscanContext : DbContext
 
         modelBuilder.Entity<AsignacionFicha>(entity =>
         {
-            entity
-                .HasNoKey()
-                .ToTable("AsignacionFicha");
+            entity.ToTable("AsignacionFicha");
 
             entity.Property(e => e.NumeroDocumentoInstructor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.FichaNavigation).WithMany()
+            entity.HasOne(d => d.FichaNavigation).WithMany(p => p.AsignacionFichas)
                 .HasForeignKey(d => d.Ficha)
                 .HasConstraintName("FK_AsignacionFicha_Ficha");
 
-            entity.HasOne(d => d.NumeroDocumentoInstructorNavigation).WithMany()
+            entity.HasOne(d => d.NumeroDocumentoInstructorNavigation).WithMany(p => p.AsignacionFichas)
                 .HasForeignKey(d => d.NumeroDocumentoInstructor)
                 .HasConstraintName("FK_AsignacionFicha_Instructor");
         });
@@ -223,6 +225,10 @@ public partial class DbSiscanContext : DbContext
             entity.HasKey(e => e.IdConvocatoria);
 
             entity.ToTable("ConvocatoriaTYT");
+
+            entity.Property(e => e.SemestreConvocatoria)
+                .HasMaxLength(50)
+                .IsUnicode(false);
         });
 
         modelBuilder.Entity<Departamento>(entity =>
@@ -315,6 +321,10 @@ public partial class DbSiscanContext : DbContext
             entity.Property(e => e.NumeroDocumentoInstructor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
+
+            entity.HasOne(d => d.ProgramaNavigation).WithMany(p => p.Fichas)
+                .HasForeignKey(d => d.CodigoPrograma)
+                .HasConstraintName("FK_Ficha_Programa");
 
             entity.HasOne(d => d.IdSedeNavigation).WithMany(p => p.Fichas)
                 .HasForeignKey(d => d.IdSede)
@@ -420,6 +430,20 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Notificaciones_Estado");
         });
 
+        modelBuilder.Entity<Observacion>(entity =>
+        {
+            entity.HasKey(e => e.IdObservacion);
+
+            entity.ToTable("Observacion");
+
+            entity.Property(e => e.IdObservacion).ValueGeneratedNever();
+            entity.Property(e => e.Observaciones).IsUnicode(false);
+
+            entity.HasOne(d => d.IdSeguimientoNavigation).WithMany(p => p.Observacions)
+                .HasForeignKey(d => d.IdSeguimiento)
+                .HasConstraintName("FK_Observacion_Seguimiento_Instructor_Aprendiz");
+        });
+
         modelBuilder.Entity<Pais>(entity =>
         {
             entity.HasKey(e => e.IdPais);
@@ -431,7 +455,7 @@ public partial class DbSiscanContext : DbContext
 
         modelBuilder.Entity<Programas>(entity =>
         {
-            entity.HasKey(e => new { e.CodigoPrograma});
+            entity.HasKey(e => e.CodigoPrograma).HasName("PK_Programa_1");
 
             entity.ToTable("Programa");
 
@@ -451,7 +475,7 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Programa_TipoPrograma");
         });
 
-        modelBuilder.Entity<Sedes>(entity =>
+        modelBuilder.Entity<Sede>(entity =>
         {
             entity.HasKey(e => e.IdSede);
 
@@ -476,6 +500,7 @@ public partial class DbSiscanContext : DbContext
 
             entity.ToTable("Seguimiento_Instructor_Aprendiz");
 
+            entity.Property(e => e.Actividades).IsUnicode(false);
             entity.Property(e => e.NitEmpresa)
                 .HasMaxLength(50)
                 .IsUnicode(false);

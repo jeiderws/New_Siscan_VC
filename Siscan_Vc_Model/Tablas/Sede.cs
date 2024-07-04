@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Siscan_Vc_DAL.DataContext;
 
-public partial class Sedes
+public partial class Sede
 {
     public int IdSede { get; set; }
 
