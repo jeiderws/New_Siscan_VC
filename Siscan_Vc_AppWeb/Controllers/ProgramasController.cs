@@ -65,28 +65,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 modelview.listaprogramas = listaprograma;
                 modelview.programas = programa;
-            //List<ViewModelFicha> listaficha = new List<ViewModelFicha>();
-            //IQueryable<Ficha> queryficha = await _fichaService.GetAll();
-            //listaficha = queryficha.Select(x => new ViewModelFicha(x)
-            //{
-            //    Ficha1 = x.Ficha1,
-            //    Programas = x.ProgramaNavigation.NombrePrograma,
-            //    NumeroDocumentoInstructor = x.NumeroDocumentoInstructor,
-            //    FechaFinalizacion = x.FechaFinalizacion,
-            //    FechaInicio = x.FechaInicio,
-            //    Sede = x.IdSedeNavigation.NombreSede
-            //}).ToList();
-            //Ficha fi = new Ficha();
-            //foreach (var i in queryficha)
-            //{
-            //    if (i.Ficha1 == null)
-            //    {
-            //        fi = i;
-            //        break;
-            //    }
-            //}
-            //modelview.listaFicha = listaficha;
-            //modelview.ficha = fi;
 
             return View(modelview);
         }
