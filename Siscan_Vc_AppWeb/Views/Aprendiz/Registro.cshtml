@@ -317,10 +317,8 @@
         }
     </script>
     <script>
-        $(document).ready(function () {
             $('#cboEstadoAprendiz').change(function () { 
                 var estadoAprendiz = $(this).val();
-                fetch('/Aprendiz/programa')
                 if (estadoAprendiz === "4") {
                     $('#cboEstadoPruebatyt').prop('disabled', true);
                     $('#cboEstadoPruebatyt').val("6");
@@ -328,7 +326,6 @@
                     $('#cboEstadoPruebatyt').prop('disabled', false);
                 }
             });
-        });
     </script>
     <script>
         $(document).ready(function () {
