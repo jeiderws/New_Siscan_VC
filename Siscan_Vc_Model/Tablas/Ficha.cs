@@ -5,7 +5,7 @@ namespace Siscan_Vc_DAL.DataContext;
 
 public partial class Ficha
 {
-    public int Ficha1 { get; set; }
+    public string Ficha1 { get; set; }
 
     public DateOnly? FechaInicio { get; set; }
 

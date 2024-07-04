@@ -1,6 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NPOI.HSSF.UserModel;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
+using OfficeOpenXml;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
@@ -15,7 +19,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IInscripcionTYTService _inscripcionTYTService;
 
         private readonly DbSiscanContext _dbSiscanContext;
-              
+
         public AprendizController(IAprendizService aprendizService, DbSiscanContext dbSiscanContext, IInscripcionTYTService inscripcionTYTService)
         {
             _dbSiscanContext = dbSiscanContext;
@@ -45,37 +49,18 @@ namespace Siscan_Vc_AppWeb.Controllers
             return Json(ciudades);
         }
         [HttpGet]
-        public async Task<IActionResult> Cargarprograma(int programa)
+        public async Task<IActionResult> CargarFichas(int programa)
         {
             var ficha = await _dbSiscanContext.Fichas.Where(f => f.CodigoPrograma == programa.ToString()).ToListAsync();
             ViewBag.ficha = ficha;
             return Json(ficha);
         }
-
-        public async Task LlenarCombos()
+        [HttpGet]
+        public async Task<IActionResult> Cargarprograma(int programa)
         {
-            var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
-            ViewBag.ItemsTipoDoc = itemsTipoDoc;
-
-            var itemsEstAprndz = await _dbSiscanContext.EstadoAprendizs.ToListAsync();
-            ViewBag.ItemsEstAprndz = itemsEstAprndz;
-
-            var itemsDepartamento = await _dbSiscanContext.Departamentos.ToListAsync();
-            ViewBag.ItemsDepartamento = itemsDepartamento;
-
-            ViewBag.ciudades = new List<Ciudad>();
-
-            var itemsEstaTYT = await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync();
-            ViewBag.ItemsEstaTYT = itemsEstaTYT;
-
-            var itemsPrograma = await _dbSiscanContext.Programas.ToListAsync();
-            ViewBag.ItemsPrograma = itemsPrograma;      
-
-            ViewBag.ficha = new List<Ficha>();
-
-            var itemConvocatoria = await _dbSiscanContext.ConvocatoriaTyts.ToListAsync();
-            ViewBag.ItemsConvocatoria = itemConvocatoria;
-
+            var ficha = await _dbSiscanContext.Fichas.Where(f => f.CodigoPrograma == programa.ToString()).ToListAsync();
+            ViewBag.ficha = ficha;
+            return Json(ficha);
         }
         //Llenar combos
         public async Task<IActionResult> Registro()
@@ -93,50 +78,217 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     Value = e.IdEstado.ToString(),
                     Text = e.NombreEstado
-                }).ToList(),                
+                }).ToList(),
                 //lista para el combo departamentos
                 listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
                 {
                     Value = d.IdDepartamento.ToString(),
                     Text = d.NombreDepartamento
-                }).ToList(),               
+                }).ToList(),
                 //lista para el combo ciudad
                 listaOpcCiudad = _dbSiscanContext.Ciudads.Select(c => new SelectListItem
                 {
-                    Value= c.IdCiudad.ToString(),
-                    Text= c.NombreCiudad
+                    Value = c.IdCiudad.ToString(),
+                    Text = c.NombreCiudad
                 }).ToList(),
                 //lista para el combo estado tyt
-                listaOpcEstadoTyt = _dbSiscanContext.EstadoInscripcionTyts.Select(e =>new SelectListItem
+                listaOpcEstadoTyt = _dbSiscanContext.EstadoInscripcionTyts.Select(e => new SelectListItem
                 {
-                    Value=e.IdEstadotyt.ToString(),
-                    Text=e.DescripcionEstadotyt
+                    Value = e.IdEstadotyt.ToString(),
+                    Text = e.DescripcionEstadotyt
                 }).ToList(),
                 //lista para el combo programas
-                listaOpcPrograma = _dbSiscanContext.Programas.Select(p=>new SelectListItem
+                listaOpcPrograma = _dbSiscanContext.Programas.Select(p => new SelectListItem
                 {
-                    Value=p.CodigoPrograma.ToString(),
-                    Text=p.NombrePrograma
+                    Value = p.CodigoPrograma.ToString(),
+                    Text = p.NombrePrograma
                 }).ToList(),
                 //lista para el combo ficha
-                listaOpcFicha = _dbSiscanContext.Fichas.Select(f=> new SelectListItem
+                listaOpcFicha = _dbSiscanContext.Fichas.Select(f => new SelectListItem
                 {
-                    Value=f.Ficha1.ToString(),
-                    Text=f.Ficha1.ToString()
+                    Value = f.Ficha1.ToString(),
+                    Text = f.Ficha1.ToString()
                 }).ToList(),
                 //lista para el combo convocatoria tyt
-                listaOpcConvocatoria = _dbSiscanContext.ConvocatoriaTyts.Select(c=>new SelectListItem
+                listaOpcConvocatoria = _dbSiscanContext.ConvocatoriaTyts.Select(c => new SelectListItem
                 {
-                    Value=c.IdConvocatoria.ToString(),
-                    Text=c.SemestreConvocatoria
+                    Value = c.IdConvocatoria.ToString(),
+                    Text = c.SemestreConvocatoria
                 }).ToList()
 
             };
-            await LlenarCombos();
             return View(modelview);
         }
+        [HttpGet]
         public async Task<IActionResult> RegistrarLotes()
         {
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult MostrarDatos([FromForm] IFormFile ArchExcel)
+        {
+            if (ArchExcel == null || ArchExcel.Length == 0)
+            {
+                return BadRequest("Archivo no válido");
+            }
+
+            try
+            {
+                using (var stream = ArchExcel.OpenReadStream())
+                {
+                    IWorkbook MiExcel = null;
+                    if (Path.GetExtension(ArchExcel.FileName) == ".xlsx")
+                    {
+                        MiExcel = new XSSFWorkbook(stream);
+                    }
+                    else
+                    {
+                        return BadRequest("Seleccione un archivo excel válido");
+                    }
+
+                    ISheet HojaExcel = MiExcel.GetSheetAt(0);
+                    int cantFilas = HojaExcel.LastRowNum;
+
+                    List<VMAprendiz> listaExcel = new List<VMAprendiz>();
+
+                    for (int i = 1; i <= cantFilas; i++)
+                    {
+                        IRow fila = HojaExcel.GetRow(i);
+                        if (fila != null)
+                        {
+                            listaExcel.Add(new VMAprendiz
+                            {
+                                numeroDocumentoAprendiz = fila.GetCell(0)?.ToString() ?? "",
+                                nombreAprendiz = fila.GetCell(1)?.ToString() ?? "",
+                                apellidoAprendiz = fila.GetCell(2)?.ToString() ?? "",
+                                celAprendiz = fila.GetCell(3)?.ToString() ?? "",
+                                correoAprendiz = fila.GetCell(4)?.ToString() ?? "",
+                                direccionAprendiz = fila.GetCell(5)?.ToString() ?? "",
+                                nombreCompletoAcudiente = fila.GetCell(6)?.ToString() ?? "",
+                                correoAcudiente = fila.GetCell(7)?.ToString() ?? "",
+                                celularAcudiente = fila.GetCell(8)?.ToString() ?? "",
+                                nomEstadoTyt = fila.GetCell(9)?.ToString() ?? "",
+                                nombredoc = fila.GetCell(10)?.ToString() ?? "",
+                                ficha = fila.GetCell(11)?.ToString() ?? "",
+                                nomCiudad = fila.GetCell(12)?.ToString() ?? "",
+                                nomEstadoAprendiz = fila.GetCell(13)?.ToString() ?? ""
+                            });
+                        }
+                    }
+
+                    return Ok(listaExcel);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error al procesar el archivo: {ex.Message}");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarLotes(IFormFile file)
+        {
+            // Configurar el contexto de la licencia
+            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
+            var aprendices = new List<Aprendiz>();
+            var aprendicesExist = new List<Aprendiz>();
+            if (file == null || file.Length == 0)
+            {
+                ViewBag.MensajeExcelNoSelec = "Por favor seleccione un archivo";
+            }
+            else
+            {
+                using (var stream = new MemoryStream())
+                {
+                    await file.CopyToAsync(stream);
+                    using (var package = new ExcelPackage(stream))
+                    {
+                        var hoja = package.Workbook.Worksheets[0];
+                        var cantfilas = hoja.Dimension.Rows;
+                        List<EstadoInscripcionTyt> estadoTytList = _dbSiscanContext.EstadoInscripcionTyts.ToList();
+                        List<TipoDocumento> tipoDocList = _dbSiscanContext.TipoDocumentos.ToList();
+                        List<Ciudad> ciudadList = _dbSiscanContext.Ciudads.ToList();
+                        List<EstadoAprendiz> estadoAprendizList = _dbSiscanContext.EstadoAprendizs.ToList();
+
+                        for (int fila = 2; fila <= cantfilas; fila++)
+                        {
+                            var aprendiz = new Aprendiz
+                            {
+                                NumeroDocumentoAprendiz = hoja.Cells[fila, 1].Value.ToString().Trim(),
+                                NombreAprendiz = hoja.Cells[fila, 2].Value.ToString(),
+                                ApellidoAprendiz = hoja.Cells[fila, 3].Value.ToString(),
+                                CelAprendiz = hoja.Cells[fila, 4].Value.ToString().Trim(),
+                                CorreoAprendiz = hoja.Cells[fila, 5].Value.ToString().Trim(),
+                                DireccionAprendiz = hoja.Cells[fila, 6].Value.ToString(),
+                                NombreCompletoAcudiente = hoja.Cells[fila, 7].Value.ToString(),
+                                CorreoAcuediente = hoja.Cells[fila, 8].Value.ToString(),
+                                CelularAcudiente = hoja.Cells[fila, 9].Value.ToString(),
+                                Ficha = hoja.Cells[fila, 12].Value.ToString().Trim()
+                            };
+
+                            var estadotyt = hoja.Cells[fila, 10].Value.ToString().ToLower().Trim();
+                            var tipodoc = hoja.Cells[fila, 11].Value.ToString().ToLower().Trim();
+                            var ciudad = hoja.Cells[fila, 13].Value.ToString().ToLower().Trim();
+                            var estado = hoja.Cells[fila, 14].Value.ToString().ToLower().Trim();
+                            foreach (var estyt in estadoTytList)
+                            {
+                                if (estyt.DescripcionEstadotyt.Trim().ToLower() == estadotyt)
+                                {
+                                    aprendiz.IdEstadoTyt = Int32.Parse(estyt.IdEstadotyt.ToString());
+                                }
+                            }
+                            foreach (var tpdoc in tipoDocList)
+                            {
+                                if (tpdoc.TipoDocumento1.Trim().ToLower() == tipodoc)
+                                {
+                                    aprendiz.IdTipodocumento = tpdoc.IdTipoDocumento;
+                                }
+                            }
+                            foreach (var ciud in ciudadList)
+                            {
+                                if (ciud.NombreCiudad.Trim().ToLower() == ciudad)
+                                {
+                                    aprendiz.IdCiudad = ciud.IdCiudad;
+                                }
+                            }
+                            foreach (var std in estadoAprendizList)
+                            {
+                                if (std.NombreEstado.Trim().ToLower() == estado)
+                                {
+                                    aprendiz.IdEstadoAprendiz = std.IdEstado;
+                                }
+                            }
+                            aprendices.Add(aprendiz);
+                        }
+                    }
+                }
+            }
+
+            foreach (var aprendiz in aprendices)
+            {
+                var apren = await _aprendizService.GetForDoc(aprendiz.NumeroDocumentoAprendiz);
+                if (apren != null)
+                {
+                    aprendicesExist.Add(apren);
+                }
+            }
+            var numsDocs = "";
+            foreach (var aprendiz in aprendicesExist)
+            {
+                numsDocs += " " + aprendiz.NumeroDocumentoAprendiz;
+            }
+            if (aprendicesExist.Count > 0)
+            {
+                ViewBag.AprendizExistExcel = "Los aprendices identificados con: " + numsDocs + " ya se encuentran registrados";
+            }
+            else if(aprendicesExist.Count==0 && file != null)
+            {
+                _dbSiscanContext.Aprendiz.AddRange(aprendices);
+                await _dbSiscanContext.SaveChangesAsync();
+                ViewBag.mensajeAprendices = "Aprendices registrados exitosamente";
+            }
             return View();
         }
 
@@ -154,7 +306,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     if (apren != null)
                     {
                         TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
-                       return RedirectToAction(nameof(Registro));
+                        return RedirectToAction(nameof(Registro));
                     }
                     else if (apren == null)
                     {
@@ -169,7 +321,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
                             IdEstadoAprendiz = aptyt.OpcSeleccionadoEstado,
                             IdCiudad = aptyt.OpcSeleccionadoCiudad,
-                            Ficha = aptyt.OpcSeleccionadoFicha,
+                            Ficha = aptyt.OpcSeleccionadoFicha.ToString(),
                             NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
                             CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                             CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
@@ -180,7 +332,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }
                         else
                         {
-
                             aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
                         }
                         await _aprendizService.Insert(aprendiz);
@@ -209,7 +360,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                             TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
                         }
                         return RedirectToAction(nameof(Registro));
-
                     }
                 }
             }
@@ -253,7 +403,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 if (aprendi.NumeroDocumentoAprendiz == nmdoc)
                 {
-                    aprendiz = aprendi;   
+                    aprendiz = aprendi;
                     break;
                 }
             }
@@ -297,7 +447,6 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(string numDoc)
         {
-            await LlenarCombos();
             var viewModel = new Modelviewtytap();
             if (numDoc != null)
             {
@@ -317,7 +466,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     aprendiz = aprendi,
                     inscripcionTyt = insctyt
-                }; 
+                };
 
                 if (viewModel.aprendiz == null)
                 {
@@ -336,7 +485,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             if (aprendiztyt != null)
             {
                 var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
-                if (aprendiz == null)    
+                if (aprendiz == null)
                 {
                     return NotFound();
                 }

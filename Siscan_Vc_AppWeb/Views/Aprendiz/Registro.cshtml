@@ -30,7 +30,7 @@
                                         <option>Selecciona un tipo de documento...</option>
                                     </select>
                                     <label for="cboTipoDocumento">Tipo Documento</label>
-                                    <span id="tipoDocumentoError" class="text-danger"></span>   
+                                    <span id="tipoDocumentoError" class="text-danger"></span>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma" onchange="obtenerNivelPrograma()">
+                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma" >
                                         <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
@@ -134,7 +134,7 @@
                                     <span id="cboFichaError" class="text-danger"></span>
                                 </div>
                             </div>
-                         
+
 
                             <!-- Acudiente -->
                             <div class="fondomenu py-3 px-5">
@@ -230,6 +230,30 @@
     <script src="~/js/validations.js" asp-append-version="true"></script>
     <script>
         $(document).ready(function () {
+            $('#cboPrograma').change(function () {
+                var programa = $(this).val();
+                if (programa) { 
+                    $.ajax({
+                        url: '@Url.Action("CargarFichas", "Aprendiz")',
+                        type:'GET',
+                        data: { programa: programa },
+                        success: function (data) {
+                            $('#cboFicha').empty();
+                            $('#cboFicha').append('<option value="">Selecciona una ficha</option>');
+                            $.each(data, function (index, ficha) {
+                                $(#cboFicha).append('<option value=" ' + ficha.ficha1 + ' ">' + ficha.ficha1 + '</option>')
+                            });
+                        }
+                    })
+                }else{
+                    $('#cboFicha').empty();
+                    $('#cboFicha').append('<option value="">Selecciona una ficha</option>');
+                }
+            })
+
+        })
+
+        $(document).ready(function () {
             $('#cboDepartamentos').change(function () {
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado
 
@@ -294,7 +318,7 @@
     </script>
     <script>
         $(document).ready(function () {
-            $('#cboEstadoAprendiz').change(function () {
+            $('#cboEstadoAprendiz').change(function () { 
                 var estadoAprendiz = $(this).val();
                 fetch('/Aprendiz/programa')
                 if (estadoAprendiz === "4") {

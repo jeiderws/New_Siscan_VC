@@ -7,7 +7,7 @@ public partial class AsignacionFicha
 {
     public string? NumeroDocumentoInstructor { get; set; }
 
-    public int? Ficha { get; set; }
+    public string? Ficha { get; set; }
 
     public virtual Ficha? FichaNavigation { get; set; }
 

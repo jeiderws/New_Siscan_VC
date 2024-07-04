@@ -28,7 +28,7 @@ public partial class Aprendiz
 
     public int? IdTipodocumento { get; set; }
 
-    public int? Ficha { get; set; }
+    public string? Ficha { get; set; }
 
     public int? IdCiudad { get; set; }
 

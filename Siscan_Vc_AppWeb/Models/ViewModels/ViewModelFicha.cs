@@ -6,7 +6,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelFicha(Ficha fi)
         {
-            Ficha1 = fi.Ficha1;
+            Ficha1 = fi.Ficha1.ToString();
             FechaFinalizacion = fi.FechaFinalizacion;
             FechaInicio = fi.FechaInicio;
             CodigoPrograma = fi.CodigoPrograma;
@@ -17,7 +17,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             Sede = fi.IdSedeNavigation.NombreSede;
 
         }
-        public int Ficha1 { get; set; }
+        public string Ficha1 { get; set; }
 
         public DateOnly? FechaInicio { get; set; }
 
