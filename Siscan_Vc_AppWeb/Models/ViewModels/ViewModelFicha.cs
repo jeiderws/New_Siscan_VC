@@ -17,7 +17,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             Sede = fi.IdSedeNavigation.NombreSede;
 
         }
-        public int Ficha1 { get; set; }
+        public string Ficha1 { get; set; }
 
         public DateOnly? FechaInicio { get; set; }
 

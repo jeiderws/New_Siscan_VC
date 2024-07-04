@@ -59,6 +59,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? Programa {  get; set; }
 
         public int? IdCiudad { get; set; }
+
         public string? nomCiudad { get; set; }
 
         public int? IdEstadoAprendiz { get; set; }

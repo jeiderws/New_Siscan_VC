@@ -23,7 +23,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             List<ViewModelAprendiz> listaAprendiz = queryAprendiz
                                                   .Select(a => new ViewModelAprendiz(a)
                                                   {
-                                                     
                                                       NombreAprendiz = a.NombreAprendiz,
                                                       ApellidoAprendiz = a.ApellidoAprendiz,
                                                       NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
