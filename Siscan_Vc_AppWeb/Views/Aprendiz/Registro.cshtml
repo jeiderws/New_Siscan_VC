@@ -118,7 +118,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma" >
+                                    <select asp-items="@Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma">
                                         <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
@@ -229,105 +229,64 @@
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
     <script>
-        $(document).ready(function () {
-            $('#cboPrograma').change(function () {
-                var programa = $(this).val();
-                if (programa) { 
-                    $.ajax({
-                        url: '@Url.Action("CargarFichas", "Aprendiz")',
-                        type:'GET',
-                        data: { programa: programa },
-                        success: function (data) {
-                            $('#cboFicha').empty();
-                            $('#cboFicha').append('<option value="">Selecciona una ficha</option>');
-                            $.each(data, function (index, ficha) {
-                                $(#cboFicha).append('<option value=" ' + ficha.ficha1 + ' ">' + ficha.ficha1 + '</option>')
-                            });
+
+        $('#cboDepartamentos').change(function () {
+            var departamentoId = $(this).val();
+            $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
+                $('#cboCiudad').empty();
+                $.each(data, function (index, ciudad) {
+                    $('#cboCiudad').append($('<option>',
+                        {
+                            value: ciudad.idCiudad,
+                            text: ciudad.nombreCiudad
                         }
-                    })
-                }else{
+                    ));
+                });
+            });
+        });
+
+        $('#cboDepartamentos2').change(function () {
+            var departamentoId = $(this).val();
+            $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
+                $('#cboCiudad2').empty();
+                $.each(data, function (index, ciudad) {
+                    $('#cboCiudad2').append($('<option>',
+                        {
+                            value: ciudad.idCiudad,
+                            text: ciudad.nombreCiudad
+                        }
+                    ));
+                });
+            });
+        });
+    </script>
+
+    <script>
+        $('#cboPrograma').change(function () {
+            var programa = $(this).val();
+            $.ajax({
+                url: '@Url.Action("CargarFichas", "Aprendiz")',
+                type: 'GET',
+                data: { programa: programa },
+                success: function (data) {
                     $('#cboFicha').empty();
                     $('#cboFicha').append('<option value="">Selecciona una ficha</option>');
+                    $.each(data, function (index, ficha) {
+                        $('#cboFicha').append('<option value="' + ficha.ficha1 + '">' + ficha.ficha1 + '</option>');
+                    });
                 }
-            })
-
-        })
-
-        $(document).ready(function () {
-            $('#cboDepartamentos').change(function () {
-                var departamentoId = $(this).val(); // Obtener el valor seleccionado
-
-                $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
-                    $('#cboCiudad').empty();
-                    $.each(data, function (index, ciudad) {
-                        $('#cboCiudad').append($('<option>',
-                            {
-                                value: ciudad.idCiudad,
-                                text: ciudad.nombreCiudad
-                            }
-                        )
-                        );
-
-                    });
-                });
-            });
-        });
-
-        $(document).ready(function () {
-            $('#cboDepartamentos2').change(function () {
-                var departamentoId = $(this).val(); // Obtener el valor seleccionado
-
-                $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
-                    $('#cboCiudad2').empty();
-                    $.each(data, function (index, ciudad) {
-                        $('#cboCiudad2').append($('<option>',
-                            {
-                                value: ciudad.idCiudad,
-                                text: ciudad.nombreCiudad
-                            }
-                        )
-                        );
-
-                    });
-                });
             });
         });
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        function obtenerNivelPrograma() {
-            var programaId = $("#cboPrograma").val();
-
-            $.ajax({
-                url: '/Aprendiz/ObtenerNivelPrograma',
-                type: 'GET',
-                data: { programaId: programaId },
-                success: function (data) {
-                    if (data.nivelPrograma != "2") {
-                        $("#cboEstadoPruebatyt").prop('disabled', true);
-                        $("#cboEstadoPruebatyt").val("5");
-                    } else {
-                        $("#cboEstadoPruebatyt").prop('disabled', false);
-                    }
-                },
-                error: function (error) {
-                    console.error('Error al obtener el nivel del programa:', error);
-                }
-            });
-        }
-    </script>
-    <script>
-        $(document).ready(function () {
-            $('#cboEstadoAprendiz').change(function () { 
-                var estadoAprendiz = $(this).val();
-                fetch('/Aprendiz/programa')
-                if (estadoAprendiz === "4") {
-                    $('#cboEstadoPruebatyt').prop('disabled', true);
-                    $('#cboEstadoPruebatyt').val("6");
-                } else {
-                    $('#cboEstadoPruebatyt').prop('disabled', false);
-                }
-            });
+        $('#cboEstadoAprendiz').change(function () {
+            var estadoAprendiz = $(this).val();
+            if (estadoAprendiz === "4") {
+                $('#cboEstadoPruebatyt').prop('disabled', true);
+                $('#cboEstadoPruebatyt').val("6");
+            } else {
+                $('#cboEstadoPruebatyt').prop('disabled', false);
+            }
         });
     </script>
     <script>
@@ -352,5 +311,33 @@
         });
 
     </script>
+    <script>
+        $(document).ready(function () {
+            $('#cboPrograma').change(function () {
+                obtenerNivelPrograma();
+            });
+            function obtenerNivelPrograma() {
+                var programaId = $("#cboPrograma").val();
 
+                $.ajax({
+                    url: '/Aprendiz/ObtenerNivelPrograma',
+                    type: 'GET',
+                    data: { programaId: programaId },
+                    success: function (data) {
+                        if (data.nivelPrograma == "2") {
+                            $("#cboEstadoPruebatyt").prop('disabled', false);
+                        } else {
+                            $("#cboEstadoPruebatyt").prop('disabled', true);
+                            $("#cboEstadoPruebatyt").val("5");
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error al obtener el nivel del programa:', error);
+                    }
+                });
+            }
+        });
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 }
