@@ -1,0 +1,27 @@
+﻿
+@{
+    ViewData["Title"] = "RegistrarLotes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+@if (ViewBag.MensajeExcelNoSelecFch != null)
+{
+    <div class="alert alert-danger">@ViewBag.MensajeExcelNoSelecFch</div>
+}
+@if (ViewBag.mensajeFichas != null)
+{
+    <div class="alert alert-success">@ViewBag.mensajeFichas</div>
+}
+<br />
+@if (ViewBag.FichasExcistExcel != null)
+{
+    <div class="alert alert-danger">@ViewBag.FichasExcistExcel</div>
+}
+<form asp-controller="Programas" asp-action="RegistrarLotes" enctype="multipart/form-data" method="post">
+    <div class="form-group">
+        <label for="file">Selecciona archivo excel</label>
+        <input id="inputArchivo" type="file" name="fileExcel" class="form-control" />
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary">Guardar</button>
+</form>

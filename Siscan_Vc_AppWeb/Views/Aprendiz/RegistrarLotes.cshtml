@@ -2,10 +2,15 @@
     ViewData["Title"] = "RegistrarLotes";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<br />
+@if (ViewBag.MensajeExcelNoSelec != null)
+{
+    <div class="alert alert-danger">@ViewBag.MensajeExcelNoSelec</div>
+}
 <form asp-controller="Aprendiz" asp-action="RegistrarLotes" enctype="multipart/form-data" method="post">
     <div class="form-group">
         <label for="file">Selecciona archivo excel</label>
-        <input id="inputArchivo" type="file" name="file" class="form-control" />
+        <input id="inputArchivo" type="file" name="fileExcel" class="form-control" />
     </div>
     <br />
     <button type="submit" class="btn btn-primary">Guardar</button>
@@ -17,10 +22,6 @@
 @if (ViewBag.AprendizExistExcel != null)
 {
     <div class="alert alert-danger">@ViewBag.AprendizExistExcel</div>
-}
-@if (ViewBag.MensajeExcelNoSelec != null)
-{
-    <div class="alert alert-danger">@ViewBag.MensajeExcelNoSelec</div>
 }
 <div class="card-body table-responsive" style="height:450px; ">
     <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
