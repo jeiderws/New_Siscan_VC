@@ -187,107 +187,113 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegistrarLotes(IFormFile file)
+        public async Task<IActionResult> RegistrarLotes(IFormFile fileExcel)
         {
-            // Configurar el contexto de la licencia
-            ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+            try
+            {
+                // Configurar el contexto de la licencia
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
-            var aprendices = new List<Aprendiz>();
-            var aprendicesExist = new List<Aprendiz>();
-            if (file == null || file.Length == 0)
-            {
-                ViewBag.MensajeExcelNoSelec = "Por favor seleccione un archivo";
-            }
-            else
-            {
-                using (var stream = new MemoryStream())
+                var aprendices = new List<Aprendiz>();
+                var aprendicesExist = new List<Aprendiz>();
+                if (fileExcel == null || fileExcel.Length == 0)
                 {
-                    await file.CopyToAsync(stream);
-                    using (var package = new ExcelPackage(stream))
+                    ViewBag.MensajeExcelNoSelec = "Por favor seleccione un archivo";
+                }
+                else
+                {
+                    using (var stream = new MemoryStream())
                     {
-                        var hoja = package.Workbook.Worksheets[0];
-                        var cantfilas = hoja.Dimension.Rows;
-                        List<EstadoInscripcionTyt> estadoTytList = _dbSiscanContext.EstadoInscripcionTyts.ToList();
-                        List<TipoDocumento> tipoDocList = _dbSiscanContext.TipoDocumentos.ToList();
-                        List<Ciudad> ciudadList = _dbSiscanContext.Ciudads.ToList();
-                        List<EstadoAprendiz> estadoAprendizList = _dbSiscanContext.EstadoAprendizs.ToList();
-
-                        for (int fila = 2; fila <= cantfilas; fila++)
+                        await fileExcel.CopyToAsync(stream);
+                        using (var package = new ExcelPackage(stream))
                         {
-                            var aprendiz = new Aprendiz
-                            {
-                                NumeroDocumentoAprendiz = hoja.Cells[fila, 1].Value.ToString().Trim(),
-                                NombreAprendiz = hoja.Cells[fila, 2].Value.ToString(),
-                                ApellidoAprendiz = hoja.Cells[fila, 3].Value.ToString(),
-                                CelAprendiz = hoja.Cells[fila, 4].Value.ToString().Trim(),
-                                CorreoAprendiz = hoja.Cells[fila, 5].Value.ToString().Trim(),
-                                DireccionAprendiz = hoja.Cells[fila, 6].Value.ToString(),
-                                NombreCompletoAcudiente = hoja.Cells[fila, 7].Value.ToString(),
-                                CorreoAcuediente = hoja.Cells[fila, 8].Value.ToString(),
-                                CelularAcudiente = hoja.Cells[fila, 9].Value.ToString(),
-                                Ficha = hoja.Cells[fila, 12].Value.ToString().Trim()
-                            };
+                            var hoja = package.Workbook.Worksheets[0];
+                            var cantfilas = hoja.Dimension.Rows;
+                            List<EstadoInscripcionTyt> estadoTytList = _dbSiscanContext.EstadoInscripcionTyts.ToList();
+                            List<TipoDocumento> tipoDocList = _dbSiscanContext.TipoDocumentos.ToList();
+                            List<Ciudad> ciudadList = _dbSiscanContext.Ciudads.ToList();
+                            List<EstadoAprendiz> estadoAprendizList = _dbSiscanContext.EstadoAprendizs.ToList();
 
-                            var estadotyt = hoja.Cells[fila, 10].Value.ToString().ToLower().Trim();
-                            var tipodoc = hoja.Cells[fila, 11].Value.ToString().ToLower().Trim();
-                            var ciudad = hoja.Cells[fila, 13].Value.ToString().ToLower().Trim();
-                            var estado = hoja.Cells[fila, 14].Value.ToString().ToLower().Trim();
-                            foreach (var estyt in estadoTytList)
+                            for (int fila = 2; fila <= cantfilas; fila++)
                             {
-                                if (estyt.DescripcionEstadotyt.Trim().ToLower() == estadotyt)
+                                var aprendiz = new Aprendiz
                                 {
-                                    aprendiz.IdEstadoTyt = Int32.Parse(estyt.IdEstadotyt.ToString());
-                                }
-                            }
-                            foreach (var tpdoc in tipoDocList)
-                            {
-                                if (tpdoc.TipoDocumento1.Trim().ToLower() == tipodoc)
+                                    NumeroDocumentoAprendiz = hoja.Cells[fila, 1].Value.ToString().Trim(),
+                                    NombreAprendiz = hoja.Cells[fila, 2].Value.ToString(),
+                                    ApellidoAprendiz = hoja.Cells[fila, 3].Value.ToString(),
+                                    CelAprendiz = hoja.Cells[fila, 4].Value.ToString().Trim(),
+                                    CorreoAprendiz = hoja.Cells[fila, 5].Value.ToString().Trim(),
+                                    DireccionAprendiz = hoja.Cells[fila, 6].Value.ToString(),
+                                    NombreCompletoAcudiente = hoja.Cells[fila, 7].Value.ToString(),
+                                    CorreoAcuediente = hoja.Cells[fila, 8].Value.ToString(),
+                                    CelularAcudiente = hoja.Cells[fila, 9].Value.ToString(),
+                                    Ficha = hoja.Cells[fila, 12].Value.ToString().Trim()
+                                };
+
+                                var estadotyt = hoja.Cells[fila, 10].Value.ToString().ToLower().Trim();
+                                var tipodoc = hoja.Cells[fila, 11].Value.ToString().ToLower().Trim();
+                                var ciudad = hoja.Cells[fila, 13].Value.ToString().ToLower().Trim();
+                                var estado = hoja.Cells[fila, 14].Value.ToString().ToLower().Trim();
+                                foreach (var estyt in estadoTytList)
                                 {
-                                    aprendiz.IdTipodocumento = tpdoc.IdTipoDocumento;
+                                    if (estyt.DescripcionEstadotyt.Trim().ToLower() == estadotyt)
+                                    {
+                                        aprendiz.IdEstadoTyt = Int32.Parse(estyt.IdEstadotyt.ToString());
+                                    }
                                 }
-                            }
-                            foreach (var ciud in ciudadList)
-                            {
-                                if (ciud.NombreCiudad.Trim().ToLower() == ciudad)
+                                foreach (var tpdoc in tipoDocList)
                                 {
-                                    aprendiz.IdCiudad = ciud.IdCiudad;
+                                    if (tpdoc.TipoDocumento1.Trim().ToLower() == tipodoc)
+                                    {
+                                        aprendiz.IdTipodocumento = tpdoc.IdTipoDocumento;
+                                    }
                                 }
-                            }
-                            foreach (var std in estadoAprendizList)
-                            {
-                                if (std.NombreEstado.Trim().ToLower() == estado)
+                                foreach (var ciud in ciudadList)
                                 {
-                                    aprendiz.IdEstadoAprendiz = std.IdEstado;
+                                    if (ciud.NombreCiudad.Trim().ToLower() == ciudad)
+                                    {
+                                        aprendiz.IdCiudad = ciud.IdCiudad;
+                                    }
                                 }
+                                foreach (var std in estadoAprendizList)
+                                {
+                                    if (std.NombreEstado.Trim().ToLower() == estado)
+                                    {
+                                        aprendiz.IdEstadoAprendiz = std.IdEstado;
+                                    }
+                                }
+                                aprendices.Add(aprendiz);
                             }
-                            aprendices.Add(aprendiz);
                         }
                     }
                 }
-            }
 
-            foreach (var aprendiz in aprendices)
-            {
-                var apren = await _aprendizService.GetForDoc(aprendiz.NumeroDocumentoAprendiz);
-                if (apren != null)
+                foreach (var aprendiz in aprendices)
                 {
-                    aprendicesExist.Add(apren);
+                    var apren = await _aprendizService.GetForDoc(aprendiz.NumeroDocumentoAprendiz);
+                    if (apren != null)
+                    {
+                        aprendicesExist.Add(apren);
+                    }
                 }
-            }
-            var numsDocs = "";
-            foreach (var aprendiz in aprendicesExist)
+                var numsDocs = "";
+                foreach (var aprendiz in aprendicesExist)
+                {
+                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz;
+                }
+                if (aprendicesExist.Count > 0)
+                {
+                    ViewBag.AprendizExistExcel = "Los aprendices identificados con: " + numsDocs + " ya se encuentran registrados";
+                }
+                else if (aprendicesExist.Count == 0 && fileExcel != null)
+                {
+                    _dbSiscanContext.Aprendiz.AddRange(aprendices);
+                    await _dbSiscanContext.SaveChangesAsync();
+                    ViewBag.mensajeAprendices = "Aprendices registrados exitosamente";
+                }
+            }catch(Exception ex)
             {
-                numsDocs += " " + aprendiz.NumeroDocumentoAprendiz;
-            }
-            if (aprendicesExist.Count > 0)
-            {
-                ViewBag.AprendizExistExcel = "Los aprendices identificados con: " + numsDocs + " ya se encuentran registrados";
-            }
-            else if(aprendicesExist.Count==0 && file != null)
-            {
-                _dbSiscanContext.Aprendiz.AddRange(aprendices);
-                await _dbSiscanContext.SaveChangesAsync();
-                ViewBag.mensajeAprendices = "Aprendices registrados exitosamente";
+                ViewBag.CatchRegistrarExcelAprendz = "Error: " + ex.Message;
             }
             return View();
         }

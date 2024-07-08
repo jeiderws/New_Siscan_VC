@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using NPOI.XWPF.UserModel;
+using OfficeOpenXml;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service.ClasesService;
 using Siscan_Vc_BLL.Service.InterfacesService;
@@ -81,7 +82,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(ModelViewProgra pro)
+        public async Task<IActionResult> Index(ModelViewProgra pro,IFormFile fileExcel)
         {
             ModelViewProgra progr = new ModelViewProgra();
             try
@@ -100,7 +101,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         TempData["ValProgramExiste"] = "Ya existe un Programa con ese Codigo";
                         return RedirectToAction(nameof(Index));
                     }
-
                     else
                     {
                         var programa = new Programas
@@ -121,10 +121,87 @@ namespace Siscan_Vc_AppWeb.Controllers
                     }
                 }
 
+                //Registrar por lotes excel
+                var fichas = new List<Ficha>();
+                var fichasExist = new List<Ficha>();
+                if (fileExcel==null || fileExcel.Length == 0)
+                {
+                    ViewBag.MensajeExcelNoSelecFch = "Por favor seleccione un archivo";
+                }
+                else
+                {
+                    using(var stream = new MemoryStream())
+                    {
+                        await fileExcel.CopyToAsync(stream);
+                        using(var package = new ExcelPackage(stream))
+                        {
+                            var hoja = package.Workbook.Worksheets[0];
+                            var cantFilas = hoja.Dimension.Rows;
+
+                            List<Programas> listProgramas = _dbSiscanContext.Programas.ToList();
+                            List<Instructor> listInstructores = _dbSiscanContext.Instructors.ToList();
+                            List<Sede> listSedes = new List<Sede>();
+
+                            for(int fila = 2; fila<= cantFilas; fila++)
+                            {
+                                var ficha = new Ficha
+                                {
+                                    Ficha1 = hoja.Cells[fila, 1].Value.ToString().Trim(),
+                                    FechaInicio = DateOnly.Parse(hoja.Cells[fila, 2].Value.ToString().Trim()),
+                                    FechaFinalizacion = DateOnly.Parse(hoja.Cells[fila, 3].Value.ToString().Trim()),
+                                    NumeroDocumentoInstructor= hoja.Cells[fila, 5].Value.ToString().Trim()
+                            };
+
+                                var programa = hoja.Cells[fila,4].Value.ToString().Trim().ToLower();
+                                var sede = hoja.Cells[fila, 6].Value.ToString().Trim().ToLower();
+
+                                foreach(var program in listProgramas)
+                                {
+                                    if (program.NombrePrograma.Trim().ToLower() == programa)
+                                    {
+                                        ficha.CodigoPrograma = program.CodigoPrograma;
+                                    }
+                                }
+                                foreach(var sed in listSedes)
+                                {
+                                    if (sed.NombreSede.Trim().ToLower() == sede)
+                                    {
+                                        ficha.CodigoPrograma = sed.NombreSede;
+                                    }
+                                }
+                                fichas.Add(ficha);
+                            }
+                        }
+                    }
+                }
+                foreach (var ficha in fichas)
+                {
+                    var fich = await _fichaService.GetForFicha(ficha.Ficha1);
+                    if (fich != null)
+                    {
+                        fichasExist.Add(fich);
+                    }
+                }
+                var fichs = "";
+                foreach(var ficha in fichasExist)
+                {
+                    fichs +=" "+ ficha.Ficha1;
+                }
+                if(fichasExist.Count > 0)
+                {
+                    ViewBag.FichasExcistExcel = "Las fichas: " + fichs + " ya se encuentran registradas";
+                }
+                else if(fichasExist.Count == 0 && fileExcel != null)
+                {
+                    _dbSiscanContext.Fichas.AddRange(fichas);
+                    await _dbSiscanContext.SaveChangesAsync();
+                    ViewBag.mensajeFichas = "Fichas registradas exitosamente";
+                }
+
             }
             catch (Exception ex)
             {
-                TempData["ErrorGuardarInstrct"] = ex.Message;
+                TempData["ErrorGuardarInstrct"] ="Error: "+ ex.Message;
             }
 
             return View(pro);
