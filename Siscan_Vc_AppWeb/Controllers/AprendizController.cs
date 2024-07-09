@@ -279,7 +279,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var numsDocs = "";
                 foreach (var aprendiz in aprendicesExist)
                 {
-                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz;
+                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz+",";
                 }
                 if (aprendicesExist.Count > 0)
                 {

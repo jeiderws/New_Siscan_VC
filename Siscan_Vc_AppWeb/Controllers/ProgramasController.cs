@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using NPOI.XWPF.UserModel;
 using OfficeOpenXml;
 using Siscan_Vc_AppWeb.Models.ViewModels;
@@ -9,6 +11,7 @@ using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +23,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IProgramasService _programasService;
         private readonly IFichaService _fichaService;
         private readonly IInstructorService _instructorService;
-        
+
 
         public ProgramasController(DbSiscanContext dbSiscanContext, IProgramasService programasService, IFichaService ficha, IInstructorService instructorService)
         {
@@ -82,7 +85,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Index(ModelViewProgra pro,IFormFile fileExcel)
+        public async Task<IActionResult> Index(ModelViewProgra pro, IFormFile fileExcel)
         {
             ModelViewProgra progr = new ModelViewProgra();
             try
@@ -121,52 +124,81 @@ namespace Siscan_Vc_AppWeb.Controllers
                     }
                 }
 
-                //Registrar por lotes excel
+            }
+            catch (Exception ex)
+            {
+                TempData["ErrorGuardarInstrct"] = "Error: " + ex.Message;
+            }
+
+            return View(progr);
+        }
+
+        [HttpGet]
+        public IActionResult RegistrarLotes()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> RegistrarLotes(IFormFile fileExcel)
+        {
+            try
+            {
+                // Configurar el contexto de la licencia
+                ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
+
                 var fichas = new List<Ficha>();
                 var fichasExist = new List<Ficha>();
-                if (fileExcel==null || fileExcel.Length == 0)
+                if (fileExcel == null || fileExcel.Length == 0)
                 {
                     ViewBag.MensajeExcelNoSelecFch = "Por favor seleccione un archivo";
                 }
                 else
                 {
-                    using(var stream = new MemoryStream())
+                    var ficha = new Ficha();
+                    using (var stream = new MemoryStream())
                     {
                         await fileExcel.CopyToAsync(stream);
-                        using(var package = new ExcelPackage(stream))
+                        using (var package = new ExcelPackage(stream))
                         {
                             var hoja = package.Workbook.Worksheets[0];
                             var cantFilas = hoja.Dimension.Rows;
 
                             List<Programas> listProgramas = _dbSiscanContext.Programas.ToList();
                             List<Instructor> listInstructores = _dbSiscanContext.Instructors.ToList();
-                            List<Sede> listSedes = new List<Sede>();
+                            List<Sede> listSedes = _dbSiscanContext.Sedes.ToList();
 
-                            for(int fila = 2; fila<= cantFilas; fila++)
+                            for (int fila = 2; fila <= cantFilas; fila++)
                             {
-                                var ficha = new Ficha
+                                var fechaInicioStr = hoja.Cells[fila, 2].Text;
+                                var fechaFinalStr = hoja.Cells[fila, 3].Text;
+                                if (DateTime.TryParseExact(fechaInicioStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fechaInicio) && DateTime.TryParseExact(fechaFinalStr, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var fechaFinal))
                                 {
-                                    Ficha1 = hoja.Cells[fila, 1].Value.ToString().Trim(),
-                                    FechaInicio = DateOnly.Parse(hoja.Cells[fila, 2].Value.ToString().Trim()),
-                                    FechaFinalizacion = DateOnly.Parse(hoja.Cells[fila, 3].Value.ToString().Trim()),
-                                    NumeroDocumentoInstructor= hoja.Cells[fila, 5].Value.ToString().Trim()
-                            };
+                                    ficha = new Ficha
+                                    {
+                                        Ficha1 = hoja.Cells[fila, 1].Value.ToString().Trim(),
+                                        FechaInicio = DateOnly.FromDateTime(fechaInicio),
+                                        FechaFinalizacion = DateOnly.FromDateTime(fechaFinal),
+                                        NumeroDocumentoInstructor = hoja.Cells[fila, 5].Value.ToString().Trim()
+                                    };
+                                }
 
-                                var programa = hoja.Cells[fila,4].Value.ToString().Trim().ToLower();
+                                var programa = hoja.Cells[fila, 4].Value.ToString().Trim().ToLower();
                                 var sede = hoja.Cells[fila, 6].Value.ToString().Trim().ToLower();
 
-                                foreach(var program in listProgramas)
+                                foreach (var program in listProgramas)
                                 {
                                     if (program.NombrePrograma.Trim().ToLower() == programa)
                                     {
                                         ficha.CodigoPrograma = program.CodigoPrograma;
                                     }
                                 }
-                                foreach(var sed in listSedes)
+
+                                foreach (var sed in listSedes)
                                 {
                                     if (sed.NombreSede.Trim().ToLower() == sede)
                                     {
-                                        ficha.CodigoPrograma = sed.NombreSede;
+                                        ficha.IdSede = sed.IdSede;
                                     }
                                 }
                                 fichas.Add(ficha);
@@ -183,28 +215,77 @@ namespace Siscan_Vc_AppWeb.Controllers
                     }
                 }
                 var fichs = "";
-                foreach(var ficha in fichasExist)
+                foreach (var ficha in fichasExist)
                 {
-                    fichs +=" "+ ficha.Ficha1;
+                    fichs += " " + ficha.Ficha1 + ",";
                 }
-                if(fichasExist.Count > 0)
+                if (fichasExist.Count > 0)
                 {
                     ViewBag.FichasExcistExcel = "Las fichas: " + fichs + " ya se encuentran registradas";
                 }
-                else if(fichasExist.Count == 0 && fileExcel != null)
+                else if (fichasExist.Count == 0 && fileExcel != null)
                 {
                     _dbSiscanContext.Fichas.AddRange(fichas);
                     await _dbSiscanContext.SaveChangesAsync();
                     ViewBag.mensajeFichas = "Fichas registradas exitosamente";
                 }
-
             }
             catch (Exception ex)
             {
-                TempData["ErrorGuardarInstrct"] ="Error: "+ ex.Message;
+                ViewBag.CatchRegistrarExcelFicha = "Error: " + ex.Message;
             }
+            return View();
+        }
 
-            return View(pro);
+        [HttpPost]
+        public IActionResult MostrarDatos([FromForm] IFormFile ArchExcel)
+        {
+            if (ArchExcel == null || ArchExcel.Length == 0)
+            {
+                return BadRequest("Archivo no valido");
+            }
+            try
+            {
+                using (var stream = ArchExcel.OpenReadStream())
+                {
+                    IWorkbook MiExcel = null;
+                    if (Path.GetExtension(ArchExcel.FileName) == ".xlsx")
+                    {
+                        MiExcel = new XSSFWorkbook(stream);
+                    }
+                    else
+                    {
+                        return BadRequest("Seleccione un archivo excel valido");
+                    }
+
+                    ISheet HojaExcel = MiExcel.GetSheetAt(0);
+                    int cantFilas = HojaExcel.LastRowNum;
+
+                    List<VMFicha> listExcelFchs = new List<VMFicha>();
+
+                    for (int i = 1; i <= cantFilas; i++)
+                    {
+                        IRow fila = HojaExcel.GetRow(i);
+                        if (fila != null)
+                        {
+                            listExcelFchs.Add(new VMFicha
+                            {
+                                ficha1 = fila.GetCell(0)?.ToString() ?? "",
+                                fechaInicio = fila.GetCell(1).ToString(),
+                                fechaFinalizacion = fila.GetCell(2).ToString(),
+                                programa = fila.GetCell(3)?.ToString() ?? "",
+                                numeroDocumentoInstructor = fila.GetCell(4)?.ToString() ?? "",
+                                sede = fila.GetCell(5)?.ToString() ?? ""
+                            });
+                        }
+                    }
+                    return Ok(listExcelFchs);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error al procesar el archivo: {ex.Message}");
+            }
         }
 
         [HttpGet]
@@ -217,7 +298,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     Value = o.IdSede.ToString(),
                     Text = o.NombreSede
                 }).ToList(),
-                programas = new Programas { CodigoPrograma = codigo } 
+                programas = new Programas { CodigoPrograma = codigo }
             };
 
             if (codigo != null)
@@ -271,7 +352,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     }
                     else
                     {
-                        
+
                         _dbSiscanContext.Fichas.Add(ficha);
                         _dbSiscanContext.AsignacionFichas.Add(asignacion);
                         await _dbSiscanContext.SaveChangesAsync();
