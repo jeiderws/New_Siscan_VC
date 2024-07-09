@@ -5,35 +5,18 @@
 
 
 <div id="wrapper">
-
-
-
-
-
-    <!-- Content Wrapper -->
     <div id="content-wrapper" class="d-flex flex-column">
-
-        <!-- Main Content -->
         <div id="content">
-
-
             <div class="container-fluid">
-
-                <!-- Page Heading -->
-                <!-- Content Row -->
                 <br />
                 <br />
                 <br />
                 <div class="row">
-
-                    <!-- Area Chart - Ventas de los ultimos 7 días -->
                     <div class="col-xl-6 col-lg-5">
                         <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
                             <div class="fondomenu py-3 px-5">
                                 <img src="~/img/edificio-de-oficinas.png" alt="Alternate Text" width="50" />
                                 <h6 class="m-0 text-uppercase font-weight-bold text-white ">Empresa</h6>
-
                             </div>
                             <!-- Card Body -->
                             <div class="card-body">
@@ -106,11 +89,8 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Pie Chart - Productos más vendidos-->
                     <div class="col-xl-6 col-lg-5">
                         <div class="card shadow mb-4">
-                            <!-- Card Header - Dropdown -->
                             <div class="fondomenu py-3 px-5 ">
                                 <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
                                 <h6 class="m-0 text-uppercase font-weight-bold text-white ">Coformador Empresa</h6>
@@ -161,64 +141,18 @@
                                                 </div>
                                             </div>
                                         </div>
-
                                             <div class="mt-4 mb-0">
                                             <div class="d-grid boton2"><button type="button" class="btn text-center btn-block" data-bs-toggle="modal" data-bs-target="#RegistroCoformadorModal">Registrarse</button></div>
                                             </div>
                                     </form>
-
-
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div>
-        <!-- /.container-fluid -->
-
-    </div>
-    <!-- End of Main Content -->
-    <!-- Modal de confirmación de registro -->
-    <div class="modal fade" id="RegistroEmpresaModal" tabindex="-1" aria-labelledby="RegistroEmpresaModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header fondo3">
-                    <h5 class="modal-title " id="RegistroEmpresaModalLabel">Confirmación de Registro de Empresa</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    ¿Está seguro de que desea registrar?
-                </div>
-                <div class="modal-footer boton2">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                    <a href="@Url.Action("Registro", "Empresa")" class="btn btn-primary" id="confirmarRegistroBtn">Confirmar Registro</a>
-                </div>
-            </div>
         </div>
     </div>
-
-</div>
-<!-- Modal de confirmación de registro -->
-<div class="modal fade" id="RegistroCoformadorModal" tabindex="-1" aria-labelledby="RegistroCoformadorModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header fondo3">
-                <h5 class="modal-title " id="RegistroCoformadorModalLabel">Confirmación de Registro de Coformador</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                ¿Está seguro de que desea registrar?
-            </div>
-            <div class="modal-footer boton2">
-                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancelar</button>
-                <a href="@Url.Action("Registro", "Empresa")" class="btn btn-primary" id="confirmarRegistroBtn2">Confirmar Registro</a>
-            </div>
-        </div>
-    </div>
-</div>
-
    
 @section Scripts {
 
@@ -266,6 +200,5 @@
         });
     </script>
     <script src="~/js/scripts.js" asp - append - version="true"></script>
-
 }
 

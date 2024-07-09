@@ -5,8 +5,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 {
     public class EmpresaController : Controller
     {
-
-
         private readonly DbSiscanContext _dbSiscanContext;
         public EmpresaController(DbSiscanContext dbSiscanContext)
         {
