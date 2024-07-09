@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using NPOI.XWPF.UserModel;
 using OfficeOpenXml;
 using Siscan_Vc_AppWeb.Models.ViewModels;
@@ -192,7 +194,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                                     }
                                 }
 
-                                foreach (var sed in listSedes)  
+                                foreach (var sed in listSedes)
                                 {
                                     if (sed.NombreSede.Trim().ToLower() == sede)
                                     {
@@ -215,7 +217,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var fichs = "";
                 foreach (var ficha in fichasExist)
                 {
-                    fichs += " " + ficha.Ficha1+",";
+                    fichs += " " + ficha.Ficha1 + ",";
                 }
                 if (fichasExist.Count > 0)
                 {
@@ -233,6 +235,57 @@ namespace Siscan_Vc_AppWeb.Controllers
                 ViewBag.CatchRegistrarExcelFicha = "Error: " + ex.Message;
             }
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult MostrarDatos([FromForm] IFormFile ArchExcel)
+        {
+            if (ArchExcel == null || ArchExcel.Length == 0)
+            {
+                return BadRequest("Archivo no valido");
+            }
+            try
+            {
+                using (var stream = ArchExcel.OpenReadStream())
+                {
+                    IWorkbook MiExcel = null;
+                    if (Path.GetExtension(ArchExcel.FileName) == ".xlsx")
+                    {
+                        MiExcel = new XSSFWorkbook(stream);
+                    }
+                    else
+                    {
+                        return BadRequest("Seleccione un archivo excel valido");
+                    }
+
+                    ISheet HojaExcel = MiExcel.GetSheetAt(0);
+                    int cantFilas = HojaExcel.LastRowNum;
+
+                    List<VMFicha> listExcelFchs = new List<VMFicha>();
+
+                    for (int i = 1; i <= cantFilas; i++)
+                    {
+                        IRow fila = HojaExcel.GetRow(i);
+                        if (fila != null)
+                        {
+                            listExcelFchs.Add(new VMFicha
+                            {
+                                ficha1 = fila.GetCell(0)?.ToString() ?? "",
+                                fechaInicio = fila.GetCell(1).ToString(),
+                                fechaFinalizacion = fila.GetCell(2).ToString(),
+                                programa = fila.GetCell(3)?.ToString() ?? "",
+                                numeroDocumentoInstructor = fila.GetCell(4)?.ToString() ?? "",
+                                sede = fila.GetCell(5)?.ToString() ?? ""
+                            });
+                        }
+                    }
+                    return Ok(listExcelFchs);
+                }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, $"Error al procesar el archivo: {ex.Message}");
+            }
         }
 
         [HttpGet]

@@ -25,3 +25,56 @@
     <br />
     <button type="submit" class="btn btn-primary">Guardar</button>
 </form>
+<br />
+<button id="btnMostrarFichas" class="btn btn-primary">Mostrar datos</button>
+<br />
+<br />
+<div class="card-body table-responsive" style="height:450px; ">
+    <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+        <thead class="boton2 ms-auto">
+            <tr>
+                <th>Ficha</th>
+                <th>Fecha de Inicio</th>
+                <th>Fecha de Finalizacion</th>
+                <th>Programa</th>
+                <th>Documento Instructor</th>
+                <th>Sede</th>
+            </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+</div>
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#btnMostrarFichas').click(function () {
+                const input = document.querySelector('#inputArchivo');
+                const formData = new FormData();
+                formData.append("ArchExcel", input.files[0]);
+
+                fetch("MostrarDatos", {
+                    method: "POST",
+                    body: formData
+                })
+                    .then(response => response.json())
+                    .then(dataJson => {
+                        const tbody = $('#tbdata2 tbody');
+                        tbody.empty();  // limpiar los datos existentes en la tabla
+                        dataJson.forEach(item => {
+                            const row = $('<tr>').append(
+                                $('<td>').text(item.ficha1),
+                                $('<td>').text(item.fechaInicio),
+                                $('<td>').text(item.fechaFinalizacion),
+                                $('<td>').text(item.programa),
+                                $('<td>').text(item.numeroDocumentoInstructor),
+                                $('<td>').text(item.sede)
+                            );
+                            tbody.append(row);
+                        });
+                    })
+                    .catch(error => console.error('Error:', error));
+            });
+        });
+    </script>
+}
