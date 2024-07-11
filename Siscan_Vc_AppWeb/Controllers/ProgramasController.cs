@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using NPOI.XWPF.UserModel;
@@ -368,7 +369,139 @@ namespace Siscan_Vc_AppWeb.Controllers
                 throw;
             }
         }
+        [HttpGet]
+        public async Task<IActionResult> Consultar(string codigo)
+        {
+            List<ViewModelPrograma> listaprogramas = new List<ViewModelPrograma>();
+            IQueryable<Programas> queryprogramas = await _programasService.GetAll();
+            listaprogramas = queryprogramas.Select(p => new ViewModelPrograma(p)
+            {
+                CodigoPrograma = p.CodigoPrograma,
+                NombrePrograma = p.NombrePrograma,
+                IdEstadoPrograma = p.IdEstadoPrograma,
+                IdNivelPrograma = p.IdNivelPrograma,
 
 
+            }).ToList();
+            if (listaprogramas.Count == 0)
+            {
+                TempData["NoProgramsFound"] = "No se encontraron programas válidos.";
+                return RedirectToAction(nameof(Index));
+            }
+            Programas programa = new Programas();
+            foreach (var item in queryprogramas)
+            {
+                if (item.CodigoPrograma == codigo)
+                {
+                    programa = item;
+                    break;
+                }
+            }
+            ModelViewProgra modelViewProgra = new ModelViewProgra
+            {
+                programas = programa,
+                listaprogramas = listaprogramas,
+            };
+            return View(modelViewProgra);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> Eliminar(string Codigo)
+        {
+            try
+            {
+                var programa = await _dbSiscanContext.Programas.FirstOrDefaultAsync(p => p.CodigoPrograma == Codigo);
+                if (programa == null)
+                {
+                    TempData["AlertProgramaNoEncontrado"] = "El Programa no fue encontrado";
+                    return Json(new { success = false, message = "El Programa no fue encontrado" });
+                }
+                var fichas = await _dbSiscanContext.Fichas.Where(f => f.CodigoPrograma == Codigo).ToListAsync();
+                foreach (var ficha in fichas)
+                {
+                    var asignaciones = await _dbSiscanContext.AsignacionFichas.Where(af => af.Ficha == ficha.Ficha1).ToListAsync();
+                    if (asignaciones.Count > 0)
+                    {
+                        _dbSiscanContext.AsignacionFichas.RemoveRange(asignaciones);
+                    }
+                }
+
+                if (fichas.Count > 0)
+                {
+                    _dbSiscanContext.Fichas.RemoveRange(fichas);
+                }
+
+                _dbSiscanContext.Programas.Remove(programa);
+                await _dbSiscanContext.SaveChangesAsync();
+
+                TempData["AlertEliminadoPrograma"] = "Programa eliminado correctamente!!";
+                return Json(new { success = true, message = "El programa se eliminó correctamente." });
+            }
+            catch (Exception ex)
+            {
+                var innerException = ex.InnerException != null ? ex.InnerException.Message : ex.Message;
+                return Json(new { success = false, message = "Se produjo un error al intentar eliminar el programa: " + innerException });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> Editar(string cdg)
+        {
+            ViewBag.ItemsNivelModel = new SelectList(await _dbSiscanContext.NivelProgramas.ToListAsync(), "IdNivelPrograma", "NivelPrograma1");
+            ViewBag.ItemsEstadoModel = new SelectList(await _dbSiscanContext.EstadoProgramas.ToListAsync(), "IdEstadoPrograma", "DescripcionEstadoPrograma");
+            var viewmodel = new  ModelViewProgra();
+            if (cdg != null)
+            {
+                var program = await _programasService.GetForCog(cdg);
+                viewmodel = new ModelViewProgra
+                {
+                    programas = program
+                };
+                if (viewmodel.programas == null)
+                {
+                    return NotFound();
+
+                }
+            }
+            return View(viewmodel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Editar(ModelViewProgra program)
+        {
+            if (program != null)
+            {
+                try
+                {
+                    var programa = await _programasService.GetForCog(program.programas.CodigoPrograma);
+                    if (programa == null)
+                    {
+                        return NotFound();
+                    }
+                    programa.CodigoPrograma = program.programas.CodigoPrograma;
+                    programa.NombrePrograma = program.programas.NombrePrograma;
+                    programa.IdNivelPrograma = program.programas.IdNivelPrograma;
+                    programa.IdEstadoPrograma = program.programas.IdEstadoPrograma;
+                    _dbSiscanContext.Programas.Update(programa);
+                    await _dbSiscanContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!programExist(program.programas.CodigoPrograma))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Consultar));
+            }
+            return View();
+        }
+        private bool programExist( string Codigo)
+        {
+            return _dbSiscanContext.Programas.Any(p => p.CodigoPrograma == Codigo);
+        }
     }
+
 }
