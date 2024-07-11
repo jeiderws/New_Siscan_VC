@@ -18,7 +18,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
+                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="@(ViewBag.ItemsTipoDoc)" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option value="">Selecciona un tipo de documento...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdTipodocumento">Tipo Documento</label>
@@ -75,7 +75,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
 
-                                    <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="@(new SelectList(ViewBag.ItemsEstAprndz,"IdEstado","NombreEstado"))" class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                    <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="@(ViewBag.ItemsEstAprndz)" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdEstadoAprendiz">Estado Aprendiz</label>
@@ -84,7 +84,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="aprendiz.IdCiudadNavigation.IdDepartamento" asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos">
+                                    <select asp-for="aprendiz.IdCiudadNavigation.IdDepartamento" asp-items="@(ViewBag.ItemsDepartamento)" class="form-control form-control-sm" id="cboDepartamentos">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
@@ -94,7 +94,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdCiudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad">
+                                    <select asp-for="aprendiz.IdCiudad" asp-items="@(ViewBag.ciudades)" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdCiudad">Ciudad</label>
@@ -103,7 +103,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@(new SelectList(ViewBag.ItemsEstaTYT,"IdEstadotyt","DescripcionEstadotyt"))" class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@(ViewBag.ItemsEstaTYT)" class="form-control form-control-sm" id="cboEstadoPruebatyt">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdEstadoTyt">Estado de inscripcion tyt</label>
@@ -112,7 +112,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.FichaNavigation.ProgramaNavigation.CodigoPrograma" asp-items="@(new SelectList(ViewBag.ItemsPrograma,"CodigoPrograma","NombrePrograma"))" class="form-control form-control-sm" id="cboPrograma">
+                                    <select asp-for="aprendiz.FichaNavigation.ProgramaNavigation.CodigoPrograma" asp-items="@(ViewBag.ItemsPrograma)" class="form-control form-control-sm" id="cboPrograma">
                                         <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
@@ -121,7 +121,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.Ficha" asp-items="@(new SelectList(ViewBag.ficha,"Ficha1","Ficha1"))" class="form-control form-control-sm" id="cboFicha">
+                                    <select asp-for="aprendiz.Ficha" asp-items="@(ViewBag.ficha)" class="form-control form-control-sm" id="cboFicha">
                                         <option value="">Selecciona una ficha...</option>
                                     </select>
                                     <label asp-for="aprendiz.Ficha">Fichas</label>
@@ -172,7 +172,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="inscripcionTyt.IdConvocatoria" class="form-control form-control-sm" asp-items="@(new SelectList(ViewBag.ItemsConvocatoria, "IdConvocatoria", "SemestreConvocatoria"))" id="cboConvocatoria">
+                                    <select asp-for="inscripcionTyt.IdConvocatoria" class="form-control form-control-sm" asp-items="@(ViewBag.ItemsConvocatoria)" id="cboConvocatoria">
                                         <option value="">Selecciona una Convocatoria...</option>
                                     </select>
                                     <label for="cboConvocatoria">Convocatoria</label>
@@ -181,7 +181,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="inscripcionTyt.IdciudadNavigation.IdDepartamento" asp-items="@(new SelectList(ViewBag.ItemsDepartamento,"IdDepartamento","NombreDepartamento"))" class="form-control form-control-sm" id="cboDepartamentos2">
+                                    <select asp-for="inscripcionTyt.IdciudadNavigation.IdDepartamento" asp-items="@(ViewBag.ItemsDepartamento)" class="form-control form-control-sm" id="cboDepartamentos2">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos2">Departamentos</label>
@@ -190,7 +190,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="inscripcionTyt.Idciudad" asp-items="@(new SelectList(ViewBag.ciudades,"IdCiudad","NombreCiudad"))" class="form-control form-control-sm" id="cboCiudad2">
+                                    <select asp-for="inscripcionTyt.Idciudad" asp-items="@(ViewBag.ciudades)" class="form-control form-control-sm" id="cboCiudad2">
                                         <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label asp-for="inscripcionTyt.Idciudad">Ciudad</label>
@@ -241,7 +241,7 @@
         });
 
         $(document).ready(function () {
-            $('#cboDepartamentos2').change(function () {
+            $('#cboDepartamentos2').change(function () { 
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado
 
                 $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {
@@ -296,6 +296,33 @@
                     $('#cboEstadoPruebatyt').prop('disabled', false);
                 }
             });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('#cboPrograma').change(function () {
+                obtenerNivelPrograma();
+            });
+            function obtenerNivelPrograma() {
+                var programaId = $("#cboPrograma").val();
+
+                $.ajax({
+                    url: '/Aprendiz/ObtenerNivelPrograma',
+                    type: 'GET',
+                    data: { programaId: programaId },
+                    success: function (data) {
+                        if (data.nivelPrograma == "2") {
+                            $("#cboEstadoPruebatyt").prop('disabled', false);
+                        } else {
+                            $("#cboEstadoPruebatyt").prop('disabled', true);
+                            $("#cboEstadoPruebatyt").val("5");
+                        }
+                    },
+                    error: function (error) {
+                        console.error('Error al obtener el nivel del programa:', error);
+                    }
+                });
+            }
         });
     </script>
 

@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Editar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewProgra
+
+<div class="container pt-6">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header fondomenu ">
+                    <img src="~/img/graduacion.png" alt="Alternate Text" width="70" />
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Actualizar Programa</h6>
+                </div>
+                <div class="card-body">
+                    <div class="" style="height: 320px !important;">
+                        <div class="card-body">
+                            <form asp-action="Editar">
+                                <div class="row mb-3">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <select asp-for="programas.IdNivelPrograma" asp-items="@(ViewBag.ItemsNivelModel)" class="form-control form-control-sm" id="cboNivel" >
+                                                <option>Selecciona el Nivel del Programa...</option>
+                                            </select>
+                                            <label for="cboNivel">Nivel Programa</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input asp-for="programas.CodigoPrograma" class="form-control" id="inputCod" type="text" placeholder="Codigo Del Programa" readonly />
+                                            <label for="inputCod">Codigo Del Programa</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3 mb-md-0">
+                                            <input asp-for="programas.NombrePrograma" class="form-control" id="inputName" type="text" placeholder="Nombre Del Programa" />
+                                            <label for="inputName">Nombre Del Programa</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <select asp-for="programas.IdEstadoPrograma" asp-items="@(ViewBag.ItemsEstadoModel)" class="form-control form-control-sm" id="cboEstado">
+                                                <option>Selecciona el Nivel del Programa...</option>
+                                            </select>
+                                            <label for="cboEstado">Estado Programa</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mt-4 mb-0">
+                                    <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" onclick="return confirmCrear()">Actualizar</button></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

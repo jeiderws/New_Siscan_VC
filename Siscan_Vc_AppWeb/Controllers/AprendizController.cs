@@ -454,9 +454,18 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(string numDoc)
         {
             var viewModel = new Modelviewtytap();
+            ViewBag.ItemsTipoDoc = new SelectList(await _dbSiscanContext.TipoDocumentos.ToListAsync(), "IdTipoDocumento", "TipoDocumento1");
+            ViewBag.ItemsEstAprndz = new SelectList(await _dbSiscanContext.EstadoAprendizs.ToListAsync(), "IdEstado", "NombreEstado");
+            ViewBag.ItemsDepartamento = new SelectList(await _dbSiscanContext.Departamentos.ToListAsync(), "IdDepartamento", "NombreDepartamento");
+            ViewBag.ciudades = new SelectList(await _dbSiscanContext.Ciudads.ToListAsync(), "IdCiudad", "NombreCiudad");
+            ViewBag.ItemsEstaTYT = new SelectList(await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync(), "IdEstadotyt", "DescripcionEstadotyt");
+            ViewBag.ItemsPrograma = new SelectList(await _dbSiscanContext.Programas.ToListAsync(), "CodigoPrograma", "NombrePrograma");
+            ViewBag.ficha = new SelectList(await _dbSiscanContext.Fichas.ToListAsync(), "Ficha1", "Ficha1");
+            ViewBag.ItemsConvocatoria = new SelectList(await _dbSiscanContext.ConvocatoriaTyts.ToListAsync(), "IdConvocatoria", "SemestreConvocatoria");
+
             if (numDoc != null)
             {
-                var aprendi = await _aprendizService.GetForDoc(numDoc);
+                var aprendi = await _aprendizService.GetForDoc(numDoc); 
                 InscripcionTyt insctyt;
 
                 if (aprendi.IdEstadoTyt == 1)
