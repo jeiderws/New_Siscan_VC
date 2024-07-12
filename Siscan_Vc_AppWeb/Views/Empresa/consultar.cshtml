@@ -21,6 +21,11 @@
                                     <button style="height:35px; margin-top:5px" type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
                                 </div>
                             </form>
+                            <br />
+                            @if (TempData["EmpresaNoExiste"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert"> @TempData["EmpresaNoExiste"] </div>
+                            }
                         </div>
                     </div>
                     <br />
@@ -111,7 +116,26 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                       
+                                        @{
+                                            foreach(var coformador in Model.coformadores)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(c=> coformador.NumeroDocumentoCoformador)</td>
+                                                    <td>@Html.DisplayFor(c=> coformador.NombreCoformador)</td>
+                                                    <td>@Html.DisplayFor(c=> coformador.ApellidoCoformador)</td>
+                                                    <td>@Html.DisplayFor(c=> coformador.CelCoformador)</td>
+                                                    <td>@Html.DisplayFor(c=> coformador.CorreoCoformador)</td>
+                                                    <td>
+                                                        <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
+                                                            <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                        </a>
+                                                        <a class="btn btn-sm btn-eliminar" data-id="">
+                                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -139,40 +163,32 @@
                             <th>Apellidos</th>
                             <th>Telefono</th>
                             <th>Correo</th>
+                            <th>Ficha</th>
                             <th>Acciones</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>WDHPQW8</td>
-                            <td>12312312</td>
-                            <td>Marca 1</td>
-                            <td>Descripcion 1</td>
-                            <td>
-                                <a class="btn  btn-sm">
-                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                </a>
-                                <a class="btn btn-sm">
-                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                </a>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>WIEYEO2I</td>
-                            <td>12312312</td>
-                            <td>Marca 2</td>
-                            <td>Descripcion 2</td>
-                            <td>
-                                <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
-                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                </a>
-                                <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
-                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
-                                </a>
-                            </td>
-                        </tr>
+                        @{
+                            foreach(var aprendiz in Model.aprendices)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(a=> aprendiz.NumeroDocumentoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a=> aprendiz.NombreAprendiz)</td>
+                                    <td>@Html.DisplayFor(a=> aprendiz.ApellidoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a=> aprendiz.CelAprendiz)</td>
+                                    <td>@Html.DisplayFor(a=> aprendiz.CorreoAprendiz)</td>
+                                    <td>@Html.DisplayFor(a=> aprendiz.Ficha)</td>
+                                    <td>
+                                        <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
+                                            <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                        </a>
+                                        <a class="btn btn-sm btn-eliminar" data-id="">
+                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        }
                     </tbody>
                 </table>
             </div>

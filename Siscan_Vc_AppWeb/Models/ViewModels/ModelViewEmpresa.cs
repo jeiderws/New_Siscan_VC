@@ -5,8 +5,6 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
     public class ModelViewEmpresa
     {
-        public int opcSeleccionadaCiudad { get; set; }
-
         public List<SelectListItem> listaOpcCiudad { get; set; }
         public List<SelectListItem> listaOpcDepartamento { get; set; }
 

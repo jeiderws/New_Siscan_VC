@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
@@ -11,14 +12,26 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly DbSiscanContext _dbSiscanContext;
         private readonly IEmpresaService _empresaService;
         private readonly ISeguimientoService _seguimientoService;
-        public EmpresaController(DbSiscanContext dbSiscanContext, IEmpresaService empresaService, ISeguimientoService seguimientoService)
+        private readonly ICoformadorService _coformadorService;
+        private readonly IAprendizService _aprendizService;
+        public EmpresaController(DbSiscanContext dbSiscanContext, IEmpresaService empresaService, ISeguimientoService seguimientoService, ICoformadorService coformadorService, IAprendizService aprendizService)
         {
             _empresaService = empresaService;
             _dbSiscanContext = dbSiscanContext;
             _seguimientoService = seguimientoService;
+            _coformadorService = coformadorService;
+            _aprendizService = aprendizService;
         }
 
+        [HttpGet]
+        public async Task<IActionResult> CargarCiudades(int departamentoId)
+        {
+            var ciudades = await _dbSiscanContext.Ciudads.Where(c => c.IdDepartamento == departamentoId).ToListAsync();
+            ViewBag.ciudades=ciudades;
+            return Json(ciudades);
+        }
 
+        [HttpGet]
         public async Task<IActionResult> Registro()
         {
             var modelView = new ModelViewEmpresa
@@ -41,14 +54,14 @@ namespace Siscan_Vc_AppWeb.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Registro(ModelViewEmpresa empresa)
+        public async Task<IActionResult> Registro(ModelViewEmpresa empresaMv)
         {
             ModelViewEmpresa mVEmpresa = new ModelViewEmpresa();
-            try
+            try 
             {
-                if (empresa != null)
+                if (empresaMv.empresa != null)
                 {
-                    var empreExist = await _empresaService.GetForNit(empresa.empresa.Nitmpresa);
+                    var empreExist = await _empresaService.GetForNit(empresaMv.empresa.Nitmpresa);
                     if (empreExist != null)
                     {
                         TempData["ValEmpresaExist"] = "Ya existe una empresa registrada con este NIT";
@@ -59,17 +72,17 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         var empre = new Empresa()
                         {
-                            Nitmpresa = empresa.empresa.Nitmpresa,
-                            NombreEmpresa = empresa.empresa.NombreEmpresa,
-                            RepresentanteLegal = empresa.empresa.RepresentanteLegal,
-                            DireccionEmpresa = empresa.empresa.DireccionEmpresa,
-                            TelefonoEmpresa = empresa.empresa.TelefonoEmpresa,
-                            IdCiudad = empresa.opcSeleccionadaCiudad
+                            Nitmpresa = empresaMv.empresa.Nitmpresa,
+                            NombreEmpresa = empresaMv.empresa.NombreEmpresa,
+                            RepresentanteLegal = empresaMv.empresa.RepresentanteLegal,
+                            DireccionEmpresa = empresaMv.empresa.DireccionEmpresa,
+                            TelefonoEmpresa = empresaMv.empresa.TelefonoEmpresa,
+                            IdCiudad = empresaMv.empresa.IdCiudad
                         };
                         mVEmpresa.empresa = empre;
                         if (mVEmpresa.empresa.Nitmpresa != null)
                         {
-                            _dbSiscanContext.Empresas.Add(empresa.empresa);
+                            _dbSiscanContext.Empresas.Add(empresaMv.empresa);
                             await _dbSiscanContext.SaveChangesAsync();
                             TempData["RegistroEmpresaExitoso"] = "Empresa registrada exitosamente";
                         }
@@ -87,10 +100,12 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> consultar(string nitEmpresa)
         {
+            var queryCoformador = await _coformadorService.GetAll();
+            var listSeguimiento = await _seguimientoService.GetAll();
             List<Aprendiz> listAprendiz=new List<Aprendiz>();
             List<Coformador> listCoformador=new List<Coformador>();
             VMEmpresaAprendizCoformador vmEmpresa = new VMEmpresaAprendizCoformador();
-            var listSeguimiento = await _seguimientoService.GetAll();
+
             try
             {
                 var empresa = await _empresaService.GetForNit(nitEmpresa);
@@ -98,9 +113,26 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     TempData["EmpresaNoExiste"] = "No se encontro una empresa con este Nit";
                 }
+                foreach(var coformador in queryCoformador)
+                {
+                    if(coformador.NitEmpresa == nitEmpresa)
+                    {
+                        listCoformador.Add(coformador);
+                    }
+                }
+                foreach(var seguimiento in listSeguimiento)
+                {
+                    if (seguimiento.NitEmpresa == nitEmpresa)
+                    {
+                        var aprendiz= await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
+                        listAprendiz.Add(aprendiz);
+                    }
+                }
                 vmEmpresa = new VMEmpresaAprendizCoformador
                 {
                     empresa=empresa,
+                    coformadores=listCoformador,
+                    aprendices=listAprendiz
                 };
             }
             catch (Exception ex)

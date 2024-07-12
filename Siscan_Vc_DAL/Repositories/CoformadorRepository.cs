@@ -1,4 +1,5 @@
-﻿using Siscan_Vc_DAL.DataContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Siscan_Vc_DAL.DataContext;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +13,13 @@ namespace Siscan_Vc_DAL.Repositories
         private readonly DbSiscanContext _dbcontext;
         public CoformadorRepository(DbSiscanContext dbcontext)
         {
-
             _dbcontext = dbcontext;
-
         }
         public async Task<bool> Delete(string id)
         {
-            try {
-                Coformador coformador = _dbcontext.Coformadors.First(c=>c.IdCoformador.ToString()==id);
+            try
+            {
+                Coformador coformador = _dbcontext.Coformadors.First(c => c.IdCoformador.ToString() == id);
                 _dbcontext.Remove(coformador);
                 await _dbcontext.SaveChangesAsync();
                 return true;
@@ -27,24 +27,45 @@ namespace Siscan_Vc_DAL.Repositories
             catch { return false; }
         }
 
-        public Task<IQueryable<Coformador>> GetAll()
+        public async Task<IQueryable<Coformador>> GetAll()
         {
-            throw new NotImplementedException();
+            try
+            {
+                IQueryable<Coformador> queryCoformador = _dbcontext.Coformadors.Include(a => a.NitEmpresaNavigation);
+                return queryCoformador;
+            }
+            catch { return null; }
         }
 
-        public Task<Coformador> GetForId(string id)
+        public async Task<Coformador> GetForId(string id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                return await _dbcontext.Coformadors.FindAsync(id);
+            }
+            catch { return null; }
         }
 
-        public Task<bool> Insert(Coformador model)
+        public async Task<bool> Insert(Coformador model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbcontext.Coformadors.Add(model);
+                await _dbcontext.SaveChangesAsync();
+                return true;
+            }
+            catch { return false; }
         }
 
-        public Task<bool> Update(Coformador model)
+        public async Task<bool> Update(Coformador model)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _dbcontext.Coformadors.Update(model);
+                await _dbcontext.SaveChangesAsync();
+                return true;
+            }
+            catch { return false; }
         }
     }
 }
