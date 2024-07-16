@@ -160,7 +160,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     empresa=empresa,
                     coformadores=listCoformador,
                     aprendices=listAprendiz
-                };
+                }; 
             }
             catch (Exception ex)
             {
