@@ -27,7 +27,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> CargarCiudades(int departamentoId)
         {
             var ciudades = await _dbSiscanContext.Ciudads.Where(c => c.IdDepartamento == departamentoId).ToListAsync();
-            ViewBag.ciudades=ciudades;
+            ViewBag.ciudades = ciudades;
             return Json(ciudades);
         }
 
@@ -57,7 +57,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Registro(ModelViewEmpresa empresaMv)
         {
             ModelViewEmpresa mVEmpresa = new ModelViewEmpresa();
-            try 
+            try
             {
                 if (empresaMv.empresa != null)
                 {
@@ -92,12 +92,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (empresaMv.coformador != null)
                 {
                     var coformadorExist = await _coformadorService.GetForDoc(empresaMv.coformador.NumeroDocumentoCoformador);
-                    if(coformadorExist != null)
+                    if (coformadorExist != null)
                     {
                         TempData["ValCoformadorExist"] = "Ya existe un coformador registrado con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
-                    else if (coformadorExist == null){
+                    else if (coformadorExist == null)
+                    {
                         var coform = new Coformador
                         {
                             NombreCoformador = empresaMv.coformador.NombreCoformador,
@@ -107,7 +108,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             CorreoCoformador = empresaMv.coformador.CorreoCoformador,
                             NitEmpresa = empresaMv.coformador.NitEmpresa
                         };
-                        mVEmpresa.coformador= coform;
+                        mVEmpresa.coformador = coform;
                         if (mVEmpresa.coformador.NumeroDocumentoCoformador != null)
                         {
                             await _coformadorService.Insert(empresaMv.coformador);
@@ -129,38 +130,56 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             var queryCoformador = await _coformadorService.GetAll();
             var listSeguimiento = await _seguimientoService.GetAll();
-            List<Aprendiz> listAprendiz=new List<Aprendiz>();
-            List<Coformador> listCoformador=new List<Coformador>();
+            List<Aprendiz> listAprendiz = new List<Aprendiz>();
+            List<Coformador> listCoformador = new List<Coformador>();
             VMEmpresaAprendizCoformador vmEmpresa = new VMEmpresaAprendizCoformador();
 
             try
             {
-                var empresa = await _empresaService.GetForNit(nitEmpresa);
-                if (empresa == null)
+                Empresa empresa = new Empresa();
+                var empresas = await _empresaService.GetAll();
+                if (nitEmpresa != null)
+                {
+                    foreach (var item in empresas)
+                    {
+                        if (item.Nitmpresa.Trim().ToLower() == nitEmpresa.Trim().ToLower())
+                        {
+                            empresa = item;
+                        }
+                    }
+                }
+
+                if (empresa.Nitmpresa == null)
                 {
                     TempData["EmpresaNoExiste"] = "No se encontro una empresa con este Nit";
                 }
-                foreach(var coformador in queryCoformador)
+                foreach (var coformador in queryCoformador)
                 {
-                    if(coformador.NitEmpresa == nitEmpresa)
+                    if (coformador.NitEmpresa == nitEmpresa)
                     {
                         listCoformador.Add(coformador);
                     }
                 }
-                foreach(var seguimiento in listSeguimiento)
+                foreach (var seguimiento in listSeguimiento)
                 {
                     if (seguimiento.NitEmpresa == nitEmpresa)
                     {
-                        var aprendiz= await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
+                        var aprendiz = await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
                         listAprendiz.Add(aprendiz);
                     }
                 }
-                vmEmpresa = new VMEmpresaAprendizCoformador
+                var ciudad = _dbSiscanContext.Ciudads.Where(c => c.IdCiudad == empresa.IdCiudad).FirstOrDefault();
+                if (ciudad != null)
                 {
-                    empresa=empresa,
-                    coformadores=listCoformador,
-                    aprendices=listAprendiz
-                }; 
+                    vmEmpresa = new VMEmpresaAprendizCoformador
+                    {
+                        empresa = empresa,
+                        coformadores = listCoformador,
+                        aprendices = listAprendiz,
+                        nomCiudad=ciudad.NombreCiudad
+                    };
+                }
+               
             }
             catch (Exception ex)
             {

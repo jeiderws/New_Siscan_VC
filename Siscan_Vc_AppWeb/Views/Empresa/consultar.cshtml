@@ -29,6 +29,201 @@
                         </div>
                     </div>
                     <br />
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="fondomenu py-3 px-5">
+                                    <img src="~/img/edificio-de-oficinas.png" alt="Alternate Text" width="50" />
+                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Empresa</h6>
+                                </div>
+                                <div style="padding-top:0px;" class="card-body">
+                                    <div style="height: 320px  !important;">
+                                        <div class="list-group py-3">
+                                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                                @if (Model.empresa != null)
+                                                {
+                                                    <div class="card-body row">
+                                                        <div class="fondomenu py-3 px-5">
+                                                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">@Model.empresa.NombreEmpresa</h6>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Nit empresa: </small>
+                                                            <p style="">@Model.empresa.Nitmpresa</p>
+                                                            <small class="text-muted p-t-30 db">Representante legal: </small>
+                                                            <p id="card-coformador">@Model.empresa.RepresentanteLegal</p>
+                                                            <small class="text-muted p-t-30 db">Direccion:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.empresa.DireccionEmpresa</p>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Telefono:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.empresa.TelefonoEmpresa</p>
+                                                            <small class="text-muted p-t-30 db">Ciudad:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.nomCiudad</p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="card-body row">
+                                                        <div class="fondomenu py-3 px-5">
+                                                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">Nombre Empresa</h6>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Nit empresa: </small>
+                                                            <p style="">Nit mpresa</p>
+                                                            <small class="text-muted p-t-30 db">Representante legal: </small>
+                                                            <p id="card-coformador">Representante Legal</p>
+                                                            <small class="text-muted p-t-30 db">Direccion:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">Direccion Empresa</p>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Telefono:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">Telefono Empresa</p>
+                                                            <small class="text-muted p-t-30 db">Ciudad:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">Ciudad</p>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-5">
+                            <div class="card shadow mb-4">
+                                <div class="fondomenu py-3 px-5 ">
+                                    <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
+                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Coformador Empresa</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="list-group" style="height: 320px !important ;">
+                                        <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                            <thead class="boton2 ms-auto">
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Nombres</th>
+                                                    <th>Apellidos</th>
+                                                    <th>Telefono</th>
+                                                    <th>Correo</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    if (Model.coformadores != null)
+                                                    {
+                                                        foreach (var coformador in Model.coformadores)
+                                                        {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(c => coformador.NumeroDocumentoCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.NombreCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.ApellidoCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.CelCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.CorreoCoformador)</td>
+                                                                <td>
+                                                                    <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
+                                                                        <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                                    </a>
+                                                                    <a class="btn btn-sm btn-eliminar" data-id="">
+                                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card shadow mb-4">
+                        <div class="fondomenu py-3 px-5 ">
+                            <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
+                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">Aprendices Vinculados</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="list-group">
+                                <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                    <thead class="boton2 ms-auto">
+                                        <tr>
+                                            <th>Documento</th>
+                                            <th>Nombres</th>
+                                            <th>Apellidos</th>
+                                            <th>Telefono</th>
+                                            <th>Correo</th>
+                                            <th>Ficha</th>
+                                            <th>Acciones</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @{
+                                            if (Model.aprendices != null)
+                                            {
+                                                foreach (var aprendiz in Model.aprendices)
+                                                {
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                                        <td>
+                                                            <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
+                                                                <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                            </a>
+                                                            <a class="btn btn-sm btn-eliminar" data-id="">
+                                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* <div id="wrapper">
+    <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content">
+            <div class="container-fluid">
+                <div class="col py-3">
+                    <div class="card shadow mb-4">
+                        <div class="fondomenu py-3 px-5 ">
+                            <h1>Consultar</h1>
+                        </div>
+                        <div class="card-body">
+                            <form action="consultar" method="get">
+                                <div class="list-group">
+                                    <label for="exampleDataList" class="form-label">Digite el Nit de la Empresa</label>
+                                    <input class="form-control" name="nitEmpresa" type="text" placeholder="Nit Empresa..." aria-label="Nit Empresa..." aria-describedby="btnNavbarSearch" width="150" />
+                                    <button style="height:35px; margin-top:5px" type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
+                                </div>
+                            </form>
+                            <br />
+                            @if (TempData["EmpresaNoExiste"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert"> @TempData["EmpresaNoExiste"] </div>
+                            }
+                        </div>
+                    </div>
+                    <br />
                     <div style="background-color:black" class="row">
                         <div style="width:40%" class="col-xl-6 col-lg-5">
                             <div class="card shadow mb-4">
@@ -173,7 +368,7 @@
                                                         <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
                                                         <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
                                                         <td>
-                                                            <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc=""> 
+                                                            <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
                                                                 <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                             </a>
                                                             <a class="btn btn-sm btn-eliminar" data-id="">
@@ -193,7 +388,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
 
 @section Scripts {
