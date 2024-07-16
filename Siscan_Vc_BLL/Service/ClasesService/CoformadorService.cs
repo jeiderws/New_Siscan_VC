@@ -29,18 +29,29 @@ namespace Siscan_Vc_BLL.Service.ClasesService
 
         public async Task<Coformador> GetForDoc(string numeroDoc)
         {
-            return await _repository.GetForId(numeroDoc);
+            try
+            {
+                IQueryable<Coformador> queryCoformador= await _repository.GetAll();
+                Coformador coformador = queryCoformador.Where(c=>c.NumeroDocumentoCoformador==numeroDoc).FirstOrDefault();
+                return coformador;
+            }
+            catch { return null; }
         }
 
         public async Task<Coformador> GetForEmpresa(string nitEmpresa)
         {
             try
             {
-                IQueryable<Coformador> queryCoformador=await _repository.GetAll();
+                IQueryable<Coformador> queryCoformador = await _repository.GetAll();
                 Coformador coformador = queryCoformador.Where(c => c.NitEmpresa == nitEmpresa).FirstOrDefault();
                 return coformador;
             }
             catch { return null; }
+        }
+
+        public async Task<Coformador> GetForId(string idCoformador)
+        {
+            return await _repository.GetForId(idCoformador);
         }
 
         public async Task<Coformador> GetForName(string name)
@@ -61,7 +72,7 @@ namespace Siscan_Vc_BLL.Service.ClasesService
 
         public async Task<bool> Update(Coformador model)
         {
-           return await _repository.Update(model); 
+            return await _repository.Update(model);
         }
     }
 }

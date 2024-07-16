@@ -9,6 +9,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public List<SelectListItem> listaOpcDepartamento { get; set; }
 
         public Empresa empresa {  get; set; }
+        public Coformador coformador {  get; set; }
     }
 }
  

@@ -89,6 +89,33 @@ namespace Siscan_Vc_AppWeb.Controllers
                         return RedirectToAction(nameof(Registro));
                     }
                 }
+                if (empresaMv.coformador != null)
+                {
+                    var coformadorExist = await _coformadorService.GetForDoc(empresaMv.coformador.NumeroDocumentoCoformador);
+                    if(coformadorExist != null)
+                    {
+                        TempData["ValCoformadorExist"] = "Ya existe un coformador registrado con este numero de documento";
+                        return RedirectToAction(nameof(Registro));
+                    }
+                    else if (coformadorExist == null){
+                        var coform = new Coformador
+                        {
+                            NombreCoformador = empresaMv.coformador.NombreCoformador,
+                            ApellidoCoformador = empresaMv.coformador.ApellidoCoformador,
+                            NumeroDocumentoCoformador = empresaMv.coformador.NumeroDocumentoCoformador,
+                            CelCoformador = empresaMv.coformador.CelCoformador,
+                            CorreoCoformador = empresaMv.coformador.CorreoCoformador,
+                            NitEmpresa = empresaMv.coformador.NitEmpresa
+                        };
+                        mVEmpresa.coformador= coform;
+                        if (mVEmpresa.coformador.NumeroDocumentoCoformador != null)
+                        {
+                            await _coformadorService.Insert(empresaMv.coformador);
+                            TempData["RegistroCoformadorExitoso"] = "Coformador registrado exitosamente";
+                        }
+                        return RedirectToAction(nameof(Registro));
+                    }
+                }
             }
             catch (Exception ex)
             {

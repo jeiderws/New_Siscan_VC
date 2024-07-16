@@ -13,6 +13,7 @@ namespace Siscan_Vc_BLL.Service.InterfacesService
         Task<bool> Update(Coformador model);
         Task<bool> Delete(string numDoc);
         Task<Coformador> GetForDoc(string numeroDoc);
+        Task<Coformador> GetForId(string idCoformador);
         Task<IQueryable<Coformador>> GetAll();
         Task<Coformador> GetForName(string name);
         Task<Coformador> GetForEmpresa(string nitEmpresa);
