@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using static NPOI.HSSF.Util.HSSFColor;
 
 namespace Siscan_Vc_AppWeb.Controllers
 {
@@ -372,6 +373,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Consultar(string codigo)
         {
+            Programas programa=new Programas();
             List<ViewModelPrograma> listaprogramas = new List<ViewModelPrograma>();
             IQueryable<Programas> queryprogramas = await _programasService.GetAll();
             listaprogramas = queryprogramas.Select(p => new ViewModelPrograma(p)
@@ -385,17 +387,17 @@ namespace Siscan_Vc_AppWeb.Controllers
             }).ToList();
             if (listaprogramas.Count == 0)
             {
-                TempData["NoProgramsFound"] = "No se encontraron programas válidos.";
+                
                 return RedirectToAction(nameof(Index));
             }
-            Programas programa = new Programas();
-            foreach (var item in queryprogramas)
+            if (codigo != null)
             {
-                if (item.CodigoPrograma == codigo)
-                {
-                    programa = item;
-                    break;
-                }
+                programa = await _programasService.GetForCog(codigo);
+
+            }
+            if (codigo == null)
+            {
+                TempData["NoProgramsFound"] = "No Hay Resultados.";
             }
             ModelViewProgra modelViewProgra = new ModelViewProgra
             {
@@ -502,6 +504,141 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return _dbSiscanContext.Programas.Any(p => p.CodigoPrograma == Codigo);
         }
+        [HttpGet]
+        public IActionResult ConsultarFicha(string codigo)
+        {
+            if (string.IsNullOrEmpty(codigo))
+            {
+                return NotFound();
+            }
+
+            var programa = _dbSiscanContext.Programas
+                .Include(p => p.Fichas)
+                .ThenInclude(f => f.NumeroDocumentoInstructorNavigation)
+                .Include(p => p.Fichas)
+                .ThenInclude(f => f.IdSedeNavigation)
+                .FirstOrDefault(p => p.CodigoPrograma == codigo);
+
+            if (programa == null)
+            {
+                TempData["AlertFichanotfound"] = "No se encontraron fichas para este programa.";
+                return NotFound();
+            }
+
+            if (!programa.Fichas.Any())
+            {
+                TempData["AlertFichanotfound"] = "No se encontraron fichas para este programa.";
+            }
+
+            var viewModel = new ModelViewProgra
+            {
+                programas = programa,
+                listaFicha = programa.Fichas.Select(f => new ViewModelFicha(f)).ToList()
+            };
+
+            return View(viewModel);
+        }
+        [HttpDelete]
+        public async Task<IActionResult> EliminarFicha(string codigo)
+        {
+            try
+            {
+                var ficha = await _dbSiscanContext.Fichas.FirstOrDefaultAsync(f => f.Ficha1 == codigo);
+                if (ficha == null)
+                {
+                    TempData["AlertFichaNoEncontrado"] = "La Ficha no fue encontrada";
+                    return Json(new { success = false, message = "La ficha no fue encontrada." });
+                }
+                var fichas = await _dbSiscanContext.Fichas.Where(f => f.Ficha1 == codigo).ToListAsync();
+                foreach (var i in fichas)
+                {
+                    var asignaciones = await _dbSiscanContext.AsignacionFichas.Where(af => af.Ficha == i.Ficha1).ToListAsync();
+                    if (asignaciones.Count > 0)
+                    {
+                        _dbSiscanContext.AsignacionFichas.RemoveRange(asignaciones);
+                    }
+                }
+
+                if (fichas.Count > 0)
+                {
+                    _dbSiscanContext.Fichas.RemoveRange(fichas);
+                }
+
+
+                _dbSiscanContext.Fichas.Remove(ficha);
+                await _dbSiscanContext.SaveChangesAsync();
+
+                TempData["AlertFichaEliminada"] = "Ficha eliminada correctamente!!";
+                return Json(new { success = true, message = "La ficha se eliminó correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Se produjo un error al intentar eliminar la ficha: " + ex.Message });
+            }
+        }
+        [HttpGet]
+        public async Task<IActionResult> EditarFicha(string fi)
+        {
+            ViewBag.ItemsSede = new SelectList(await _dbSiscanContext.Sedes.ToListAsync(), "IdSede", "NombreSede");
+            var viewmodel = new ModelViewProgra();
+            if (fi != null)
+            {
+                var fich = await _fichaService.GetForFicha(fi);
+                viewmodel = new ModelViewProgra
+                {
+                    ficha = fich,
+                };
+                if (viewmodel.ficha == null)
+                {
+                    return NotFound();
+                }
+            }
+            return View(viewmodel);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarFicha(ModelViewProgra fichas)
+        {
+            if (fichas != null)
+            {
+                try
+                {
+                    var fich = await _fichaService.GetForFicha(fichas.ficha.Ficha1);
+                    if (fich == null)
+                    {
+                        return NotFound();
+                    }
+                    fich.Ficha1 = fichas.ficha.Ficha1;
+                    fich.FechaInicio = fichas.ficha.FechaInicio;
+                    fich.FechaFinalizacion = fichas.ficha.FechaFinalizacion;
+                    fich.CodigoPrograma = fichas.ficha.CodigoPrograma;
+                    fich.NumeroDocumentoInstructor = fichas.ficha.NumeroDocumentoInstructor;
+                    fich.IdSede = fichas.ficha.IdSede;
+                    _dbSiscanContext.Fichas.Update(fich);
+                    await _dbSiscanContext.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!fichaExist(fichas.ficha.Ficha1))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                   
+                }
+                return RedirectToAction(nameof(Consultar));
+            }
+            return View (fichas);
+        }
+        private bool fichaExist(string fich)
+        {
+            return _dbSiscanContext.Fichas.Any(f => f.Ficha1 == fich);
+        }
+
+
     }
 
 }

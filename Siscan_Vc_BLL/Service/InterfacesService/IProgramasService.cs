@@ -15,5 +15,6 @@ namespace Siscan_Vc_BLL.Service.InterfacesService
         Task<Programas> GetForCog(string codigoPrograma);
         Task<IQueryable<Programas>> GetAll();
         Task<Programas> GetForName(string name);
+        Task<Programas> GetByCodigo(string codigo);
     }
 }

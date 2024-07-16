@@ -1,0 +1,123 @@
+﻿@{
+    ViewData["Title"] = "ConsultarFicha";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewProgra
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="fondomenu py-3 px-5">
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white">Fichas</h6>
+                </div>
+                <br />
+                <br />
+                <div class="col-md-6 py-3 px-5">
+                </div>
+                <div class="card-body table-responsive">
+                    @if (TempData["AlertFichanotfound"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["AlertFichanotfound"] </div>
+                    }
+                    @if (TempData["AlertFichaNoEncontrado"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["AlertFichaNoEncontrado"] </div>
+                    }
+                    @if (TempData["AlertFichaEliminada"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["AlertFichaEliminada"] </div>
+                    }
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Contenido</h6>
+                        </div>
+                        <br />
+                        <br />
+                        <div class="col-md-6 text-end">
+                            <input type="text" class="form-control" id="searchInput" placeholder="Buscar por código de ficha" />
+                        </div>
+                    </div>
+                    <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                        <thead class="boton2 ms-auto">
+                            <tr>
+                                <th>Código Ficha</th>
+                                <th>Fecha Inicio</th>
+                                <th>Fecha Finalización</th>
+                                <th>Número Documento Instructor</th>
+                                <th>Sede</th>
+                                <th>Código Programa</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model.listaFicha != null)
+                            {
+                                foreach (var i in Model.listaFicha)
+                                {
+                                    <tr>
+                                        <td>@i.Ficha1</td>
+                                        <td>@i.FechaInicio?.ToString("yyyy-MM-dd")</td>
+                                        <td>@i.FechaFinalizacion?.ToString("yyyy-MM-dd")</td>
+                                        <td>@i.NumeroDocumentoInstructor</td>
+                                        <td>@i.Sede</td>
+                                        <td>@i.CodigoPrograma</td>
+                                        <td>
+                                            <a class="btn btn-sm" asp-controller="Programas" asp-action="EditarFicha" asp-route-fi="@i.Ficha1">
+                                                <img src="~/img/editar.png" alt="Editar" width="25" />
+                                            </a>
+                                            <a class="btn btn-sm btn-eliminar" data-id="@i.Ficha1">
+                                                <img src="~/img/borrar (1).png" alt="Eliminar" width="25" />
+                                            </a>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+    <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                var searchValue = $(this).val().toLowerCase();
+                $('#tbdata tbody tr').filter(function () {
+                    $(this).toggle($(this).find('td:first-child').text().toLowerCase().indexOf(searchValue) > -1)
+                });
+            });
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+            $('.btn-eliminar').on('click', function () {
+                var confirmEliminar = confirm("¿Estás seguro de que deseas eliminar?");
+                var Ficha1 = $(this).data('id'); // Captura el valor de data-id
+
+                if (confirmEliminar) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarFicha", "Programas")',
+                        type: 'DELETE',
+                        data: { codigo: Ficha1 },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("¡Eliminado exitoso!");
+                                location.reload();
+                            } else {
+                                alert(response.message);
+                            }
+                        },
+                        error: function () {
+                            alert("Se produjo un error al intentar eliminar el programa.");
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}

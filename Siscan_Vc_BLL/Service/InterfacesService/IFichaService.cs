@@ -14,5 +14,7 @@ namespace Siscan_Vc_BLL.Service.InterfacesService
         Task<bool> Delete(string ficha);
         Task<Ficha> GetForFicha(string ficha);
         Task<IQueryable<Ficha>> GetAll();
+        Task<List<Ficha>> GetByCodigoFicha(string codigoFicha);
+        Task<Ficha> GetByCodigoPrograma(string codigoPrograma);
     }
 }

@@ -25,6 +25,10 @@
                     @if (TempData["AlertEliminadoPrograma"] != null)
                     {
                         <div class="alert alert-success" role="alert"> @TempData["AlertEliminadoPrograma"] </div>
+                    } 
+                    @if (TempData["NoProgramsFound"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["NoProgramsFound"] </div>
                     }
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la busqueda</h6>
                     <div class="card-body table-responsive-busqueda">
@@ -66,7 +70,7 @@
                                                 </a>
                                             </td>
                                             <td>
-                                                <a class="btn btn-success" asp-action="CrearFicha" asp-controller="Programas" asp-route-codigo="@Model.programas.CodigoPrograma">Ver fichas..</a>
+                                                <a class="btn btn-success" asp-action="ConsultarFicha" asp-controller="Programas" asp-route-codigo="@Model.programas.CodigoPrograma">Ver fichas..</a>
                                             </td>
                                         </tr>
                                     }
@@ -90,14 +94,12 @@
                     <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
                         <thead class="boton2 ms-auto">
                             <tr>
-                            <tr>
                                 <th>Codigo</th>
                                 <th>Nombres</th>
                                 <th>Estado</th>
                                 <th>Nivel</th>
                                 <th>Acciones</th>
                                 <th>ver mas...</th>
-                            </tr>
                             </tr>
                         </thead>
                         <tbody>
@@ -111,7 +113,7 @@
                                             <td>@Html.DisplayFor(a => i.NombrePrograma)</td>
                                             <td>@Html.DisplayFor(a => i.EstadoPrograma)</td>
                                             <td>@Html.DisplayFor(a => i.NivePrograma)</td>
-                                            <td >
+                                            <td>
                                                 <a class="btn  btn-sm" asp-controller="Programas" asp-action="Editar" asp-route-cdg="@i.CodigoPrograma">
                                                     <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                 </a>
@@ -121,7 +123,7 @@
 
                                             </td>
                                             <td>
-                                                <a class="btn btn-success" asp-action="Editar" asp-controller="Programas" asp-route-cdg="@i.CodigoPrograma">Ver fichas..</a>
+                                                <a class="btn btn-success" asp-action="ConsultarFicha" asp-controller="Programas" asp-route-codigo="@i.CodigoPrograma">Ver fichas..</a>
                                             </td>
                                         </tr>
                                     }

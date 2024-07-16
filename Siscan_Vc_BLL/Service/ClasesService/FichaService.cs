@@ -41,5 +41,16 @@ namespace Siscan_Vc_BLL.Service.ClasesService
         {
             return _repoFicha.Update(model);
         }
+        public async Task<List<Ficha>> GetByCodigoFicha(string codigoFicha)
+        {
+            var fichas = await _repoFicha.GetAll(); 
+
+            return fichas.Where(f => f.Ficha1.ToString() == codigoFicha).ToList(); 
+        }
+        public async Task<Ficha> GetByCodigoPrograma(string codigoPrograma)
+        {
+            var codpro = await _repoFicha.GetAll();
+            return codpro.FirstOrDefault(f => f.CodigoPrograma == codigoPrograma);
+        }
     }
 }

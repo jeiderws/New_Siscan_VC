@@ -32,6 +32,6 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public int? IdSede { get; set; }
         public string? Sede { get; set; }
 
-        public AsignacionFicha asignacionFicha { get; set; }
+        public ICollection<AsignacionFicha> asignacionFicha { get; set; }
     }
 }

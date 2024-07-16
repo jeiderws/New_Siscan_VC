@@ -1,5 +1,6 @@
-﻿@{
-    ViewData["Title"] = "CrearFicha";
+﻿
+@{
+    ViewData["Title"] = "EditarFicha";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewProgra
@@ -10,38 +11,21 @@
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header fondomenu ">
                     <img class="img-fluid mover2" src="~/img/agregar-usuario.png" alt="Alternate Text" width="40">
-                    <h3 class="text-center font-dark-light my-4">Crear Ficha </h3>
+                    <h3 class="text-center font-dark-light my-4">Actulizar Ficha </h3>
                 </div>
                 <div class="card-body">
-                    @if (TempData["MensajeAlertIns"] != null)
-                    {
-                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertIns"] </div>
-                    }
-                    @if (TempData["MensajeAlertFichaexiste"] != null)
-                    {
-                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertFichaexiste"] </div>
-                    }
-                    @if (TempData["MensajeAlertFi"] != null)
-                    {
-                        <div class="alert alert-success" role="alert"> @TempData["MensajeAlertFi"] </div>
-                        <script>
-                            setTimeout(function () {
-                                window.location.href = '@Url.Action("Index", "Programas")';
-                            }, 3000);
-                        </script>
-                    }
-                    <form asp-action="CrearFicha">
+                    <form asp-action="EditarFicha" >
 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="ficha.Ficha1" class="form-control" id="inputFicha" type="text" placeholder="Ingresa Codigo de ficha" />
-                                    <label for="inputName">Numero de ficha</label>
+                                    <input asp-for="ficha.Ficha1" class="form-control" id="inputFicha" type="text" placeholder="Codigo de ficha" readonly />
+                                    <label for="inputName">Codigo de ficha</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="programas.CodigoPrograma" class="form-control" id="inputprograma" type="text" readonly />
+                                    <input asp-for="ficha.CodigoPrograma" class="form-control" id="inputprograma" type="text" readonly />
                                     <label for="inputprograma">Programa</label>
                                 </div>
                             </div>
@@ -51,12 +35,12 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="ficha.NumeroDocumentoInstructor" class="form-control" id="DocInstructor" type="text" placeholder="Ingresa Numero documento instructor" />
-                                    <label for="DocInstructor">Numero Documento Instructor</label>
+                                    <label for="DocInstructor">Instructor</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="opcseleccionadaSede" asp-items="Model.listaopcSede" class="form-control form-control-sm" id="cboSedes">
+                                    <select asp-for="ficha.IdSede" asp-items="ViewBag.ItemsSede" class="form-control form-control-sm" id="cboSedes">
                                         <option value="">Selecciona una Sede...</option>
                                     </select>
                                     <label for="cboSedes">Sedes</label>
@@ -80,7 +64,7 @@
                         </div>
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
-                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Registrar</button>
+                                <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Actualizar</button>
                             </div>
                         </div>
                     </form>

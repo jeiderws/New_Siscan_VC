@@ -42,6 +42,11 @@ namespace Siscan_Vc_BLL.Service.ClasesService
             }
             catch { return null; }
         }
+        public async Task<Programas> GetByCodigo(string codigo)
+        {
+            var pro = await _programarepo.GetAll();
+             return pro.FirstOrDefault(p => p.CodigoPrograma == codigo);
+        }
 
         public Task<bool> Insert(Programas model)
         {
