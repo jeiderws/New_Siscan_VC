@@ -22,10 +22,7 @@
                     </form>
                 </div>
                 <div class="card-body table-responsive">
-                    @if (TempData["AlertEliminadoPrograma"] != null)
-                    {
-                        <div class="alert alert-success" role="alert"> @TempData["AlertEliminadoPrograma"] </div>
-                    } 
+                   
                     @if (TempData["NoProgramsFound"] != null)
                     {
                         <div class="alert alert-danger" role="alert"> @TempData["NoProgramsFound"] </div>
@@ -86,9 +83,9 @@
                         </table>
                     </div>
                     <hr />
-                    @if (TempData["AlertEliminadoInstruc"] != null)
+                    @if (TempData["AlertEliminadoPrograma"] != null)
                     {
-                        <div class="alert alert-danger" role="alert"> @TempData["AlertEliminadoInstruc"] </div>
+                        <div class="alert alert-success" role="alert"> @TempData["AlertEliminadoPrograma"] </div>
                     }
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
                     <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
