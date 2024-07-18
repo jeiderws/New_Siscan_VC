@@ -105,7 +105,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         TempData["ValEmpresaNoExist"] = "la empresa con este nit no se encuentra registrada";
                     }
-                    else if (coformadorExist == null && empre!=null)
+                    else if (coformadorExist == null && empre != null)
                     {
                         var coform = new Coformador
                         {
@@ -159,7 +159,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 if (empresa.Nitmpresa == null)
                 {
-                    TempData["EmpresaNoExiste"] = "No se encontro una empresa con este Nit";
+                    TempData["EmpresaNoExiste"] = "No se encontro una empresa empresa con este Nit";
                 }
                 foreach (var coformador in queryCoformador)
                 {
@@ -245,24 +245,33 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (coformador != null)
                 {
                     var coform = await _coformadorService.GetForDoc(coformador.NumeroDocumentoCoformador);
+                    var empresa = await _empresaService.GetForNit(coformador.NitEmpresa);
                     if (coform == null)
                     {
                         return NotFound();
                     }
-                    coform.NombreCoformador=coformador.NombreCoformador;
-                    coform.ApellidoCoformador = coformador.ApellidoCoformador;
-                    coform.CelCoformador= coformador.CelCoformador;
-                    coform.CorreoCoformador = coformador.CorreoCoformador;
-                    coform.NitEmpresa= coformador.NitEmpresa;
+                    if (empresa == null)
+                    {
+                        TempData["EmpresaNoExist"] = "No se encontro una empresa empresa con este Nit";
+                    }
+                    else
+                    {
+                        coform.NombreCoformador = coformador.NombreCoformador;
+                        coform.ApellidoCoformador = coformador.ApellidoCoformador;
+                        coform.CelCoformador = coformador.CelCoformador;
+                        coform.CorreoCoformador = coformador.CorreoCoformador;
+                        coform.NitEmpresa = coformador.NitEmpresa;
 
-                    _dbSiscanContext.Update(coform);
-                    _dbSiscanContext.SaveChanges();
-                    return RedirectToAction(nameof(consultar));
+                        _dbSiscanContext.Update(coform);
+                        _dbSiscanContext.SaveChanges();
+                        TempData["ActualizaCoformdrExit"] = "Se actualizo correctamente";
+                        return RedirectToAction(nameof(consultar));
+                    }
                 }
             }
             catch (DbUpdateConcurrencyException)
             {
-                if(!CoformadorExist(coformador.NumeroDocumentoCoformador)) return NotFound(); else throw;
+                if (!CoformadorExist(coformador.NumeroDocumentoCoformador)) return NotFound(); else throw;
             }
             return View(coformador);
         }
