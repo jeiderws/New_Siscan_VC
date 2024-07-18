@@ -40,27 +40,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     con++;
                 }
-               
-            }
-            int  pas = 0;   
-            var pa = _seguimientoService.GetAll();
-            foreach (var item in pa.Result)
-            {
                 if (item.IdModalidad == 2)
                 {
                     pas++;
                 }
-            }
-            int pro = 0;
-            var proy = _seguimientoService.GetAll();
-            foreach (var item in proy.Result)
-            {
                 if (item.IdModalidad == 3)
                 {
                     pro++;
                 }
             }
-
             TempData["consulta"]= con;
             TempData["consulta2"]= pas;
             TempData["consulta3"]= pro;
