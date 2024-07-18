@@ -163,7 +163,7 @@
         $(document).ready(function () {
             $('.btn-eliminar').on('click', function () {
                 function confirEliminar() {
-                    return confirm("¿Estás seguro que deseas eliminar?");
+                    return confirm("¿Estás seguro que deseas eliminar? Se eliminaran registros involucrados con este aprendiz");
                 }
                 var idAprendiz = $(this).data('id');
                 // alert(idAprendiz);
@@ -175,7 +175,7 @@
                         success: function (response) {
                             if (response.success) {
                                 alert("¡Eliminado exitoso!");
-                                // Actualizar la página o hacer cualquier otra acción necesaria
+                                // Actualizar la página
                                 location.reload();
                             }
                             else {

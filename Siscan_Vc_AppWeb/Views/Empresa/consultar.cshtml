@@ -64,7 +64,7 @@
                                                 }
                                                 else
                                                 {
-                                                    <div class="card-body row">
+                                                    <div class="card-body row" style="margin-left:0px; margin-top:10px">
                                                         <div class="fondomenu py-3 px-5">
                                                             <h6 class="m-0 text-uppercase font-weight-bold text-white ">Nombre Empresa</h6>
                                                         </div>
@@ -124,10 +124,10 @@
                                                                 <td>@Html.DisplayFor(c => coformador.CelCoformador)</td>
                                                                 <td>@Html.DisplayFor(c => coformador.CorreoCoformador)</td>
                                                                 <td>
-                                                                    <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
+                                                                    <a class="btn  btn-sm" asp-controller="Empresa" asp-action="EditarCoformador" asp-route-numDocCoformador="@coformador.NumeroDocumentoCoformador">
                                                                         <img src="~/img/editar.png" alt="Alternate Text" width="25" />
                                                                     </a>
-                                                                    <a class="btn btn-sm btn-eliminar" data-id="">
+                                                                    <a class="btn btn-sm btn-eliminar" data-id="@coformador.NumeroDocumentoCoformador">
                                                                         <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
                                                                     </a>
                                                                 </td>
@@ -160,7 +160,6 @@
                                             <th>Telefono</th>
                                             <th>Correo</th>
                                             <th>Ficha</th>
-                                            <th>Acciones</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -176,14 +175,6 @@
                                                         <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
                                                         <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
                                                         <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
-                                                        <td>
-                                                            <a class="btn  btn-sm" asp-controller="" asp-action="" asp-route-numDoc="">
-                                                                <img src="~/img/editar.png" alt="Alternate Text" width="25" />
-                                                            </a>
-                                                            <a class="btn btn-sm btn-eliminar" data-id="">
-                                                                <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
-                                                            </a>
-                                                        </td>
                                                     </tr>
                                                 }
                                             }
@@ -202,6 +193,34 @@
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $('.btn-eliminar').on('click', function () {
+                function confirmEliminar() {
+                    return confirm("¿Estas seguro que deseas eliminar? Se eliminaran registros involucrados con este coformador")
+                }
+                var idCoformador = $(this).data('id');
+                if (confirmEliminar()) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarCoformador", "Empresa")',
+                        type: 'DELETE',
+                        data: { nmDocCoformador: idCoformador },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("¡Eliminado exitoso!");
+                                // Actualizar la página
+                                location.reload();
+                            } else {
+                                alert("No se pudo completar el eliminado. Intentalo de nuevo.")
+                            }
+                        },
+                        error: function () {
+                            alert("Se produjo un error al intentar eliminar el coformador.")
+                        }
+                    });
+                }
+            });
+        });
+
         $(document).ready(function () {
             $('#inputEmpresa').on('input', function () {
                 var term = $(this).val();

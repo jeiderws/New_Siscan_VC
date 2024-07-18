@@ -59,6 +59,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             ModelViewEmpresa mVEmpresa = new ModelViewEmpresa();
             try
             {
+                //registro de empresas
                 if (empresaMv.empresa != null)
                 {
                     var empreExist = await _empresaService.GetForNit(empresaMv.empresa.Nitmpresa);
@@ -89,15 +90,22 @@ namespace Siscan_Vc_AppWeb.Controllers
                         return RedirectToAction(nameof(Registro));
                     }
                 }
+
+                //registro de coformador
                 if (empresaMv.coformador != null)
                 {
                     var coformadorExist = await _coformadorService.GetForDoc(empresaMv.coformador.NumeroDocumentoCoformador);
+                    var empre = await _empresaService.GetForNit(empresaMv.coformador.NitEmpresa);
                     if (coformadorExist != null)
                     {
                         TempData["ValCoformadorExist"] = "Ya existe un coformador registrado con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
-                    else if (coformadorExist == null)
+                    if (empre == null)
+                    {
+                        TempData["ValEmpresaNoExist"] = "la empresa con este nit no se encuentra registrada";
+                    }
+                    else if (coformadorExist == null && empre!=null)
                     {
                         var coform = new Coformador
                         {
@@ -176,10 +184,10 @@ namespace Siscan_Vc_AppWeb.Controllers
                         empresa = empresa,
                         coformadores = listCoformador,
                         aprendices = listAprendiz,
-                        nomCiudad=ciudad.NombreCiudad
+                        nomCiudad = ciudad.NombreCiudad
                     };
                 }
-               
+
             }
             catch (Exception ex)
             {
@@ -189,15 +197,79 @@ namespace Siscan_Vc_AppWeb.Controllers
             return View(vmEmpresa);
         }
 
-        [HttpGet]
-        public IActionResult ObtenerNombresEmpresa(string term)
+        [HttpDelete]
+        public async Task<IActionResult> EliminarCoformador(string nmDocCoformador)
         {
-            var nombreEmpresa = _dbSiscanContext.Empresas
-                .Where(e => e.NombreEmpresa.Contains(term))
-                .Select(e => e.NombreEmpresa)
-                .ToList();
+            try
+            {
+                var coformador = await _dbSiscanContext.Coformadors.FirstOrDefaultAsync(c => c.NumeroDocumentoCoformador == nmDocCoformador);
+                if (coformador == null)
+                {
+                    return Json(new { success = false, message = "El coformador no fue encontrado." });
+                }
+                TempData["MensajeAlertEliminadoCoformdr"] = "Coformador eliminado correctamente!!";
+                var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.Where(s => s.IdCoformador == coformador.IdCoformador).ToListAsync();
+                _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
+                _dbSiscanContext.Coformadors.Remove(coformador);
+                _dbSiscanContext.SaveChanges();
+                return Json(new { success = true, message = "El coformador se elimino correctamente." });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Se produjo un error al intentar eliminar el coformador: " + ex.Message });
+            }
+        }
 
-            return Json(nombreEmpresa);
+        [HttpGet]
+        public async Task<IActionResult> EditarCoformador(string numDocCoformador)
+        {
+            Coformador coformador = new Coformador();
+
+            if (numDocCoformador != null)
+            {
+                coformador = await _coformadorService.GetForDoc(numDocCoformador);
+            }
+            if (coformador == null)
+            {
+                return NotFound();
+            }
+            return View(coformador);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarCoformador(Coformador coformador)
+        {
+            try
+            {
+                if (coformador != null)
+                {
+                    var coform = await _coformadorService.GetForDoc(coformador.NumeroDocumentoCoformador);
+                    if (coform == null)
+                    {
+                        return NotFound();
+                    }
+                    coform.NombreCoformador=coformador.NombreCoformador;
+                    coform.ApellidoCoformador = coformador.ApellidoCoformador;
+                    coform.CelCoformador= coformador.CelCoformador;
+                    coform.CorreoCoformador = coformador.CorreoCoformador;
+                    coform.NitEmpresa= coformador.NitEmpresa;
+
+                    _dbSiscanContext.Update(coform);
+                    _dbSiscanContext.SaveChanges();
+                    return RedirectToAction(nameof(consultar));
+                }
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if(!CoformadorExist(coformador.NumeroDocumentoCoformador)) return NotFound(); else throw;
+            }
+            return View(coformador);
+        }
+
+        public bool CoformadorExist(string numDocCoformador)
+        {
+            return _dbSiscanContext.Coformadors.Any(c => c.NumeroDocumentoCoformador == numDocCoformador);
         }
     }
 }
