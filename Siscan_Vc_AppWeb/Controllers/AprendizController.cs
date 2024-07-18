@@ -297,7 +297,8 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View();
         }
-
+        
+        
         //Registrar aprendiz con un view model
         [HttpPost]
         [ValidateAntiForgeryToken]

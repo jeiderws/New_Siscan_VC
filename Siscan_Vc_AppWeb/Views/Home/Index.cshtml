@@ -175,7 +175,6 @@
                 <!-- Content Row -->
 
                 <div class="row">
-                    <!-- Area Chart - Ventas de los ultimos 7 días -->
                     <div class="col-xl-8 col-lg-7">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
@@ -225,8 +224,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <!-- Pie Chart - Productos más vendidos-->
                     <div class=" col-xl-4 col-lg-5">
                         <div class="card shadow mb-4">
                             <!-- Card Header - Dropdown -->
@@ -246,9 +243,10 @@
                                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                             Contratos
                                                         </div>
-                                                        <div class=" mb-0 font-weight-bold text-black-800" id="contratos">18</div>
+                                                        <div class=" mb-0 font-weight-bold text-black-800" id="contratos">
+                                                            @TempData["consulta"]
+                                                        </div>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>
@@ -262,7 +260,9 @@
                                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                             Proyecto
                                                         </div>
-                                                        <div class=" mb-0 font-weight-bold text-black-800" id="proyecto">18</div>
+                                                        <div class=" mb-0 font-weight-bold text-black-800" id="proyecto">
+                                                            @TempData["consulta2"]
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -278,7 +278,9 @@
                                                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                             Pasantia
                                                         </div>
-                                                        <div class=" mb-0 font-weight-bold text-black-800" id="pasantia">18</div>
+                                                        <div class=" mb-0 font-weight-bold text-black-800" id="pasantia">
+                                                            @TempData["consulta3"]
+                                                        </div>
                                                     </div>
 
                                                 </div>
@@ -300,5 +302,4 @@
 
 </div>
 <!-- End of Content Wrapper -->
-
 <!-- End of Page Wrapper -->

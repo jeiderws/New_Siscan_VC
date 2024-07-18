@@ -11,10 +11,13 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class HomeController : Controller
     {
         private readonly IAprendizService _aprendizService;
+        private readonly ISeguimientoService _seguimientoService;
 
-        public HomeController(IAprendizService aprendizService)
+        public HomeController(IAprendizService aprendizService, ISeguimientoService seguimientoService)
         {
             _aprendizService = aprendizService;
+            _seguimientoService = seguimientoService;
+
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -28,9 +31,39 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
                                                       Ficha = a.Ficha,
                                                       nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
-                                                  }
-                                                  ).ToList();
+                                                  }).ToList();
+            int con = 0;
+            var contrato = _seguimientoService.GetAll();
+            foreach (var item in contrato.Result)
+            {
+                if (item.IdModalidad == 1)
+                {
+                    con++;
+                }
+               
+            }
+            int  pas = 0;   
+            var pa = _seguimientoService.GetAll();
+            foreach (var item in pa.Result)
+            {
+                if (item.IdModalidad == 2)
+                {
+                    pas++;
+                }
+            }
+            int pro = 0;
+            var proy = _seguimientoService.GetAll();
+            foreach (var item in proy.Result)
+            {
+                if (item.IdModalidad == 3)
+                {
+                    pro++;
+                }
+            }
 
+            TempData["consulta"]= con;
+            TempData["consulta2"]= pas;
+            TempData["consulta3"]= pro;
             //var aprendiz = _dbSiscanContext.Aprendiz;
             return View(listaAprendiz);
         }
