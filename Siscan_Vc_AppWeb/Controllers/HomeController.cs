@@ -33,6 +33,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                                                       nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado
                                                   }).ToList();
             int con = 0;
+            int pas = 0;
+            int pro = 0;
             var contrato = _seguimientoService.GetAll();
             foreach (var item in contrato.Result)
             {
