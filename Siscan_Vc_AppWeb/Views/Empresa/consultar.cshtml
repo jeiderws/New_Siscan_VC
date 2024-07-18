@@ -2,7 +2,7 @@
     ViewData["Title"] = "consultar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@model Siscan_Vc_AppWeb.Models.ViewModels.VMEmpresaAprendizCoformador
 
 <div id="wrapper">
     <div id="content-wrapper" class="d-flex flex-column">
@@ -17,10 +17,15 @@
                             <form action="consultar" method="get">
                                 <div class="list-group">
                                     <label for="exampleDataList" class="form-label">Digite el Nit de la Empresa</label>
-                                    <input class="form-control" list="Empresas" name="Empresa" id="inputEmpresa" placeholder="Nit empresa...">
-                                    <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
+                                    <input class="form-control" name="nitEmpresa" type="text" placeholder="Nit Empresa..." aria-label="Nit Empresa..." aria-describedby="btnNavbarSearch" width="150" />
+                                    <button style="height:35px; margin-top:5px" type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
                                 </div>
                             </form>
+                            <br />
+                            @if (TempData["EmpresaNoExiste"] != null)
+                            {
+                                <div class="alert alert-danger" role="alert"> @TempData["EmpresaNoExiste"] </div>
+                            }
                         </div>
                     </div>
                     <br />
@@ -31,11 +36,57 @@
                                     <img src="~/img/edificio-de-oficinas.png" alt="Alternate Text" width="50" />
                                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Empresa</h6>
                                 </div>
-                                <div class="card-body">
-                                    <div class="" style="height: 320px !important ;">
+                                <div style="padding-top:0px;" class="card-body">
+                                    <div style="height: 320px  !important;">
                                         <div class="list-group py-3">
-                                            <div class="card">
+                                            <div class="row row-cols-1 row-cols-md-3 g-4">
+                                                @if (Model.empresa != null)
+                                                {
+                                                    <div class="card-body row" style="margin-left:0px; margin-top:10px">
+                                                        <div class="fondomenu py-3 px-5">
+                                                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">@Model.empresa.NombreEmpresa</h6>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Nit empresa: </small>
+                                                            <p style="">@Model.empresa.Nitmpresa</p>
+                                                            <small class="text-muted p-t-30 db">Representante legal: </small>
+                                                            <p id="card-coformador">@Model.empresa.RepresentanteLegal</p>
+                                                            <small class="text-muted p-t-30 db">Direccion:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.empresa.DireccionEmpresa</p>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Telefono:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.empresa.TelefonoEmpresa</p>
+                                                            <small class="text-muted p-t-30 db">Ciudad:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.nomCiudad</p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="card-body row" style="margin-left:0px; margin-top:10px">
+                                                        <div class="fondomenu py-3 px-5">
+                                                            <h6 class="m-0 text-uppercase font-weight-bold text-white ">Nombre Empresa</h6>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Nit empresa: </small>
+                                                            <p style="">Nit mpresa</p>
+                                                            <small class="text-muted p-t-30 db">Representante legal: </small>
+                                                            <p id="card-coformador">Representante Legal</p>
+                                                            <small class="text-muted p-t-30 db">Direccion:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">Direccion Empresa</p>
+                                                        </div>
+                                                        <div class="col pt-4">
+                                                            <small class="text-muted p-t-30 db">Telefono:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">Telefono Empresa</p>
+                                                            <small class="text-muted p-t-30 db">Ciudad:</small>
+                                                            <p id="card-instructor" class="m-0 text-dark">Ciudad</p>
+                                                        </div>
+                                                    </div>
+                                                }
+
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -48,8 +99,12 @@
                                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Coformador Empresa</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="list-group" style="height: 320px !important ;">
-                                        <table class="table table-bordered table-responsive" id="tbdata" cellspacing="1" style="width:100%">
+                                    @if (TempData["ActualizaCoformdrExit"] != null)
+                                    {
+                                        <div class="alert alert-success" role="alert"> @TempData["ActualizaCoformdrExit"] </div>
+                                    }
+                                    <div class="list-group table-responsive" style="height: 320px;">
+                                        <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
                                             <thead class="boton2 ms-auto">
                                                 <tr>
                                                     <th>Documento</th>
@@ -61,36 +116,29 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>WDHPQW8</td>
-                                                    <td>12312312</td>
-                                                    <td>Marca 1</td>
-                                                    <td>Descripcion 1</td>
-                                                    <td>
-                                                        <a class="btn  btn-sm">
-                                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                                        </a>
-                                                        <a class="btn btn-sm">
-                                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>WIEYEO2I</td>
-                                                    <td>12312312</td>
-                                                    <td>Marca 2</td>
-                                                    <td>Descripcion 2</td>
-                                                    <td>
-                                                        <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
-                                                            <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                                        </a>
-                                                        <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
-                                                            <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
-                                                        </a>
-                                                    </td>
-                                                </tr>
+                                                @{
+                                                    if (Model.coformadores != null)
+                                                    {
+                                                        foreach (var coformador in Model.coformadores)
+                                                        {
+                                                            <tr>
+                                                                <td>@Html.DisplayFor(c => coformador.NumeroDocumentoCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.NombreCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.ApellidoCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.CelCoformador)</td>
+                                                                <td>@Html.DisplayFor(c => coformador.CorreoCoformador)</td>
+                                                                <td>
+                                                                    <a class="btn  btn-sm" asp-controller="Empresa" asp-action="EditarCoformador" asp-route-numDocCoformador="@coformador.NumeroDocumentoCoformador">
+                                                                        <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                                                    </a>
+                                                                    <a class="btn btn-sm btn-eliminar" data-id="@coformador.NumeroDocumentoCoformador">
+                                                                        <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
+                                                                    </a>
+                                                                </td>
+                                                            </tr>
+                                                        }
+                                                    }
+                                                }
                                             </tbody>
                                         </table>
                                     </div>
@@ -115,40 +163,26 @@
                                             <th>Apellidos</th>
                                             <th>Telefono</th>
                                             <th>Correo</th>
-                                            <th>Acciones</th>
+                                            <th>Ficha</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>WDHPQW8</td>
-                                            <td>12312312</td>
-                                            <td>Marca 1</td>
-                                            <td>Descripcion 1</td>
-                                            <td>
-                                                <a class="btn  btn-sm">
-                                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                                </a>
-                                                <a class="btn btn-sm">
-                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" />
-                                                </a>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>WIEYEO2I</td>
-                                            <td>12312312</td>
-                                            <td>Marca 2</td>
-                                            <td>Descripcion 2</td>
-                                            <td>
-                                                <a class="btn  btn-sm" href="@Url.Action("Editar","Instructor")">
-                                                    <img src="~/img/editar.png" alt="Alternate Text" width="30" />
-                                                </a>
-                                                <a class="btn btn-sm" data-bs-toggle="modal" data-bs-target="#confirmacionEliminacionModal">
-                                                    <img src="~/img/borrar (1).png" alt="Alternate Text" width="30" data-bs-dismiss="alert" />
-                                                </a>
-                                            </td>
-                                        </tr>
+                                        @{
+                                            if (Model.aprendices != null)
+                                            {
+                                                foreach (var aprendiz in Model.aprendices)
+                                                {
+                                                    <tr>
+                                                        <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                                        <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                                    </tr>
+                                                }
+                                            }
+                                        }
                                     </tbody>
                                 </table>
                             </div>
@@ -160,48 +194,37 @@
     </div>
 </div>
 
-@*   <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div class="list-group">
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" type="checkbox" value="">
-                            First checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" type="checkbox" value="">
-                            Second checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" type="checkbox" value="">
-                            Third checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" type="checkbox" value="">
-                            Fourth checkbox
-                        </label>
-                        <label class="list-group-item">
-                            <input class="form-check-input me-1" type="checkbox" value="">
-                            Fifth checkbox
-                        </label>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div> *@
-<!--cierre modal-->
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $('.btn-eliminar').on('click', function () {
+                function confirmEliminar() {
+                    return confirm("¿Estas seguro que deseas eliminar? Se eliminaran registros involucrados con este coformador")
+                }
+                var idCoformador = $(this).data('id');
+                if (confirmEliminar()) {
+                    $.ajax({
+                        url: '@Url.Action("EliminarCoformador", "Empresa")',
+                        type: 'DELETE',
+                        data: { nmDocCoformador: idCoformador },
+                        success: function (response) {
+                            if (response.success) {
+                                alert("¡Eliminado exitoso!");
+                                // Actualizar la página
+                                location.reload();
+                            } else {
+                                alert("No se pudo completar el eliminado. Intentalo de nuevo.")
+                            }
+                        },
+                        error: function () {
+                            alert("Se produjo un error al intentar eliminar el coformador.")
+                        }
+                    });
+                }
+            });
+        });
+
         $(document).ready(function () {
             $('#inputEmpresa').on('input', function () {
                 var term = $(this).val();

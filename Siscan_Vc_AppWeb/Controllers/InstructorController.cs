@@ -155,14 +155,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor)) return NotFound(); else throw;                    
                 }
                 return RedirectToAction(nameof(Consultar));
             }

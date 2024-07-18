@@ -9,5 +9,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public List<Aprendiz> aprendices { get; set; }
 
         public List<Coformador> coformadores { get; set;}
+
+        public string nomCiudad {  get; set; }
     }
 }
