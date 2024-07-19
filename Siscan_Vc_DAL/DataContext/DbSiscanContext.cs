@@ -477,7 +477,7 @@ public partial class DbSiscanContext : DbContext
         {
             entity.HasKey(e => e.CodigoPrograma).HasName("PK_Programa_1");
 
-            entity.ToTable("Programas");
+            entity.ToTable("Programa");
 
             entity.Property(e => e.CodigoPrograma)
                 .HasMaxLength(50)
@@ -486,7 +486,7 @@ public partial class DbSiscanContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdEstadoProgramaNavigation).WithMany(p => p.Programas)
+            entity.HasOne(d => d.IdEstadoProgramaNavigation).WithMany(p=> p.Programas)
                 .HasForeignKey(d => d.IdEstadoPrograma)
                 .HasConstraintName("FK_Programa_EstadoPrograma");
 
