@@ -35,8 +35,8 @@ namespace Siscan_Vc_AppWeb.Controllers
             int con = 0;
             int pas = 0;
             int pro = 0;
-            var contrato = _seguimientoService.GetAll();
-            foreach (var item in contrato.Result)
+            var Consulta = _seguimientoService.GetAll();
+            foreach (var item in Consulta.Result)
             {
                 if (item.IdModalidad == 1)
                 {
@@ -54,7 +54,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             TempData["consulta"]= con;
             TempData["consulta2"]= pas;
             TempData["consulta3"]= pro;
-            //var aprendiz = _dbSiscanContext.Aprendiz;
+
             return View(listaAprendiz);
         }
 
