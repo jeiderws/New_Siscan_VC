@@ -33,7 +33,7 @@ namespace Siscan_Vc_DAL.Repositories
         {
             try
             {
-                IQueryable<Ficha> queryFicha=_context.Fichas.Include(p=>p.ProgramaNavigation).Include(n=>n.NumeroDocumentoInstructorNavigation).Include(s=>s.IdSedeNavigation);
+                IQueryable<Ficha> queryFicha=_context.Fichas.Include(p=>p.CodigoProgramaNavigation).Include(n=>n.NumeroDocumentoInstructorNavigation).Include(s=>s.IdSedeNavigation);
                 return queryFicha;
             }
             catch { return null; }

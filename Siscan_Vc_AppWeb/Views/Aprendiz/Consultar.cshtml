@@ -97,17 +97,21 @@
                         <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEliminado"] </div>
                     }
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
+                    <br />
+                    <div class="col-md-6 text-end">
+                        <input style="margin-left:15px;" type="text" class="form-control" id="searchInput" placeholder="Buscar por ficha" />
+                    </div>
                     <div class="card-body table-responsive" style="height:450px; ">
                         <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
                             <thead class="boton2 ms-auto">
                                 <tr>
+                                    <th>Ficha</th>
                                     <th>Tipo Documento</th>
                                     <th>Documento</th>
                                     <th>Nombres</th>
                                     <th>Apellidos</th>
                                     <th>Número Celular</th>
                                     <th>Correo</th>
-                                    <th>ficha</th>
                                     <th>Acudiente</th>
                                     <th>Celular acudiente</th>
                                     <th>Correo Acudiente</th>
@@ -121,13 +125,13 @@
                                     foreach (var aprendiz in Model.ListaAprendices)
                                     {
                                         <tr>
+                                            <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
-                                            <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
                                             <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
@@ -146,9 +150,7 @@
                                 }
                             </tbody>
                         </table>
-
                     </div>
-                    <img class="img-fluid mover1" src="~/img/aprendicesena.png" alt="Alternate Text" width="400" />
                 </div>
             </div>
         </div>
@@ -158,6 +160,17 @@
 
 @section Scripts {
     <script>
+        $(document).ready(function () {
+            $('#searchInput').on('input', function () {
+                var searchValue = $(this).val().toLowerCase();
+                $('#tbdata2 tbody tr').filter(function () {
+                    $(this).toggle($(this).find('td:first-child').text().toLowerCase().indexOf(searchValue) > -1)
+                });
+            });
+        });
+
+
+
         var tabla1 = document.querySelector('#tbdata');
         var tabla2 = document.querySelector('#tbdata2');
         $(document).ready(function () {

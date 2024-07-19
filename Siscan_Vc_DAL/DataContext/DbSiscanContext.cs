@@ -15,6 +15,8 @@ public partial class DbSiscanContext : DbContext
     {
     }
 
+    public virtual DbSet<Actividade> Actividades { get; set; }
+
     public virtual DbSet<Aprendiz> Aprendiz { get; set; }
 
     public virtual DbSet<AreasEmpresa> AreasEmpresas { get; set; }
@@ -59,6 +61,8 @@ public partial class DbSiscanContext : DbContext
 
     public virtual DbSet<Sede> Sedes { get; set; }
 
+    public virtual DbSet<SeguimientoArchivo> SeguimientoArchivos { get; set; }
+
     public virtual DbSet<SeguimientoInstructorAprendiz> SeguimientoInstructorAprendizs { get; set; }
 
     public virtual DbSet<TipoDocumento> TipoDocumentos { get; set; }
@@ -67,6 +71,17 @@ public partial class DbSiscanContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
+        modelBuilder.Entity<Actividade>(entity =>
+        {
+            entity.HasKey(e => e.IdActividad);
+
+            entity.Property(e => e.DescripcionActividad).HasColumnType("text");
+
+            entity.HasOne(d => d.IdSeguimientoNavigation).WithMany(p => p.Actividades)
+                .HasForeignKey(d => d.IdSeguimiento)
+                .HasConstraintName("FK_Actividades_Seguimiento_Instructor_Aprendiz");
+        });
+
         modelBuilder.Entity<Aprendiz>(entity =>
         {
             entity.HasKey(e => e.NumeroDocumentoAprendiz);
@@ -92,6 +107,9 @@ public partial class DbSiscanContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.DireccionAprendiz)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.Ficha)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.NombreAprendiz)
@@ -159,6 +177,9 @@ public partial class DbSiscanContext : DbContext
         {
             entity.ToTable("AsignacionFicha");
 
+            entity.Property(e => e.Ficha)
+                .HasMaxLength(50)
+                .IsUnicode(false);
             entity.Property(e => e.NumeroDocumentoInstructor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
@@ -311,7 +332,8 @@ public partial class DbSiscanContext : DbContext
             entity.ToTable("Ficha");
 
             entity.Property(e => e.Ficha1)
-                .ValueGeneratedNever()
+                .HasMaxLength(50)
+                .IsUnicode(false)
                 .HasColumnName("Ficha");
             entity.Property(e => e.CodigoPrograma)
                 .HasMaxLength(50)
@@ -320,7 +342,7 @@ public partial class DbSiscanContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.ProgramaNavigation).WithMany(p => p.Fichas)
+            entity.HasOne(d => d.CodigoProgramaNavigation).WithMany(p => p.Fichas)
                 .HasForeignKey(d => d.CodigoPrograma)
                 .HasConstraintName("FK_Ficha_Programa");
 
@@ -464,7 +486,7 @@ public partial class DbSiscanContext : DbContext
                 .HasMaxLength(50)
                 .IsUnicode(false);
 
-            entity.HasOne(d => d.IdEstadoProgramaNavigation).WithMany(p => p.Programas)
+            entity.HasOne(d => d.IdEstadoProgramaNavigation).WithMany(p=> p.Programas)
                 .HasForeignKey(d => d.IdEstadoPrograma)
                 .HasConstraintName("FK_Programa_EstadoPrograma");
 
@@ -492,13 +514,32 @@ public partial class DbSiscanContext : DbContext
                 .HasConstraintName("FK_Sedes_Ciudad");
         });
 
+        modelBuilder.Entity<SeguimientoArchivo>(entity =>
+        {
+            entity.HasKey(e => e.IdSeguimientoArchivo);
+
+            entity.ToTable("SeguimientoArchivo");
+
+            entity.Property(e => e.NitEmpresa)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroDocumento)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroDocumentoAprendiz)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+            entity.Property(e => e.NumeroDocumentoCoformador)
+                .HasMaxLength(50)
+                .IsUnicode(false);
+        });
+
         modelBuilder.Entity<SeguimientoInstructorAprendiz>(entity =>
         {
             entity.HasKey(e => e.IdSeguimiento);
 
             entity.ToTable("Seguimiento_Instructor_Aprendiz");
 
-            entity.Property(e => e.Actividades).IsUnicode(false);
             entity.Property(e => e.NitEmpresa)
                 .HasMaxLength(50)
                 .IsUnicode(false);

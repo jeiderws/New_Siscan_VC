@@ -504,6 +504,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return _dbSiscanContext.Programas.Any(p => p.CodigoPrograma == Codigo);
         }
+
         [HttpGet]
         public IActionResult ConsultarFicha(string codigo)
         {

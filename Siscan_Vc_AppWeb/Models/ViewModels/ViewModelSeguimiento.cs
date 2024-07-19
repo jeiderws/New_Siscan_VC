@@ -15,9 +15,9 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 CorreoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CorreoAprendiz;
                 TelefonoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CelAprendiz;
                 if (seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation != null &&
-                    seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.ProgramaNavigation != null)
+                    seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation != null)
                 {
-                    ProgramAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.ProgramaNavigation.NombrePrograma;
+                    ProgramAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation.NombrePrograma;
                 }
                 FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha?.ToString();
             }

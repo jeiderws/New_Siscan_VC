@@ -54,7 +54,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             TempData["consulta"]= con;
             TempData["consulta2"]= pas;
             TempData["consulta3"]= pro;
-
             return View(listaAprendiz);
         }
 

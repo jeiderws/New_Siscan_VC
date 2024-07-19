@@ -31,13 +31,12 @@ namespace Siscan_Vc_DAL.Repositories
         {
             try
             {
-                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz.Include ( a => a.IdTipodocumentoNavigation).Include(x => x.IdEstadoTytNavigation).Include( z =>z.IdEstadoAprendizNavigation);
+                IQueryable<Aprendiz> queryAprendiz = _dbSiscanContext.Aprendiz.Include(td => td.IdTipodocumentoNavigation).Include(ea => ea.IdEstadoAprendizNavigation).Include(et => et.IdEstadoTytNavigation);
                 return queryAprendiz;
             }
             catch { return null; }
         }
 
-       
         public async Task<Aprendiz> GetForId(string id)
         {
             try
