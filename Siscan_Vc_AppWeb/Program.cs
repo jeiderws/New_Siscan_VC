@@ -14,7 +14,7 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<DbSiscanContext>(opc=>{
     opc.UseSqlServer(builder.Configuration.GetConnectionString("cadenaDB"));
 });
-builder.Services.AddScoped<IGenericRepository<Aprendiz>,AprendizRepository>();
+builder.Services.AddScoped<IGenericRepository<Aprendiz>, AprendizRepository>();
 builder.Services.AddScoped<IGenericRepository<Instructor>, InstructorRepository>();
 builder.Services.AddScoped<IGenericRepository<InscripcionTyt>, InscripcionTYTRepository>();
 builder.Services.AddScoped<IGenericRepository<SeguimientoInstructorAprendiz>, SeguimientoInsApreRepository>();
@@ -25,7 +25,7 @@ builder.Services.AddScoped<IGenericRepository<Ficha>, FichaRepository>();
 builder.Services.AddScoped<IGenericRepository<AsignacionFicha>, AsignacionFichaRepository>();
 builder.Services.AddScoped<IGenericRepository<Coformador>, CoformadorRepository>();
 
-builder.Services.AddScoped<IAprendizService,AprendizService>();
+builder.Services.AddScoped<IAprendizService, AprendizService>();
 builder.Services.AddScoped<IInstructorService, InstructorService>();
 builder.Services.AddScoped<IInscripcionTYTService, InscripcionTYTService>();
 builder.Services.AddScoped<ISeguimientoService, SeguimientoService>();

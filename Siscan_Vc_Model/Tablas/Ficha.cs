@@ -5,7 +5,7 @@ namespace Siscan_Vc_DAL.DataContext;
 
 public partial class Ficha
 {
-    public string Ficha1 { get; set; }
+    public string Ficha1 { get; set; } = null!;
 
     public DateOnly? FechaInicio { get; set; }
 
@@ -21,7 +21,7 @@ public partial class Ficha
 
     public virtual ICollection<AsignacionFicha> AsignacionFichas { get; set; } = new List<AsignacionFicha>();
 
-    public virtual Programas? ProgramaNavigation { get; set; }
+    public virtual Programas? CodigoProgramaNavigation { get; set; }
 
     public virtual Sede? IdSedeNavigation { get; set; }
 

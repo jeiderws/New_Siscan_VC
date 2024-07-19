@@ -9,10 +9,10 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             Ficha1 = fi.Ficha1.ToString();
             FechaFinalizacion = fi.FechaFinalizacion;
             FechaInicio = fi.FechaInicio;
-            CodigoPrograma = fi.ProgramaNavigation.CodigoPrograma;
+            CodigoPrograma = fi.CodigoProgramaNavigation.CodigoPrograma;
             NumeroDocumentoInstructor = fi.NumeroDocumentoInstructor;
             instructor = fi.NumeroDocumentoInstructorNavigation.NombreInstructor;
-            Programas = fi.ProgramaNavigation.NombrePrograma;
+            Programas = fi.CodigoProgramaNavigation.NombrePrograma;
             IdSede = fi.IdSedeNavigation.IdSede;
             Sede = fi.IdSedeNavigation.NombreSede;
 
