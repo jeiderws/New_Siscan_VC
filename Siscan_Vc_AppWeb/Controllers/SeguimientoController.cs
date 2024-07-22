@@ -179,85 +179,66 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Consultar(string numDoc)
+        public async Task<IActionResult> Consultar(string idSeguimiento)
         {
+            Viewmodelsegui vmSeguimiento = new Viewmodelsegui();
+
             //obtener todos los aprendices de la bd
             IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
-            List<ViewModelAprendiz> listaAprendices = new List<ViewModelAprendiz>();
-            List<ViewModelAprendiz> listaAprendizSegui = new List<ViewModelAprendiz>();
             List<ViewModelSeguimiento> listSeguimiento = new List<ViewModelSeguimiento>();
             Aprendiz aprendiz = null;
             var querySeguimiento = await _seguimientoService.GetAll();
 
-            //obtener lista de aprendices
-            //listaAprendices = queryAprendiz.Select(a => new ViewModelAprendiz(a)
-            //{
-            //    nombredoc = a.IdTipodocumentoNavigation.TipoDocumento1,
-            //    NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
-            //    NombreAprendiz = a.NombreAprendiz,
-            //    ApellidoAprendiz = a.ApellidoAprendiz,
-            //    CelAprendiz = a.CelAprendiz,
-            //    CorreoAprendiz = a.CorreoAprendiz,
-            //    DireccionAprendiz = a.DireccionAprendiz,
-            //    NombreCompletoAcudiente = a.NombreCompletoAcudiente,
-            //    CorreoAcuediente = a.CorreoAcuediente,
-            //    CelularAcudiente = a.CelularAcudiente,
-            //    IdEstadoTyt = a.IdEstadoTytNavigation.IdEstadotyt,
-            //    nomEstadoTyt = a.IdEstadoTytNavigation.DescripcionEstadotyt,
-            //    IdTipodocumento = a.IdTipodocumentoNavigation.IdTipoDocumento,
-            //    Ficha = a.Ficha,
-            //    IdCiudad = a.IdCiudad,
-            //    IdEstadoAprendiz = a.IdEstadoAprendiz,
-            //    nomEstadoAprendiz = a.IdEstadoAprendizNavigation.NombreEstado,
-            //    SeguimientoInstructorAprendices = a.SeguimientoInstructorAprendizs,
-            //    NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz,
-            //}).ToList();
-
             listSeguimiento = querySeguimiento.Select(s => new ViewModelSeguimiento(s)
             {
+                IdSeguimiento= s.IdSeguimiento,
                 FechaInicio = s.FechaInicio,
                 FechaFinalizacion = s.FechaFinalizacion,
-                NombreModalidad =s.IdModalidadNavigation.NombreModalidad,
+                NombreModalidad = s.IdModalidadNavigation.NombreModalidad,
                 idmodalidad = s.IdModalidad,
-                
+
                 //datos del aprendiz
-                NumeroDocumentoAprendiz =s.NumeroDocumentoAprendiz,
-                NombreAprendiz=s.NumeroDocumentoAprendizNavigation.NombreAprendiz,
-                ApellidoAprendiz=s.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
-                CorreoAprendiz=s.NumeroDocumentoAprendizNavigation.CorreoAprendiz,
-                TelefonoAprendiz=s.NumeroDocumentoAprendizNavigation.CelAprendiz,
-                ProgramAprendiz=s.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation.NombrePrograma,
-                FichaAprendiz=s.NumeroDocumentoAprendizNavigation.Ficha,
+                NumeroDocumentoAprendiz = s.NumeroDocumentoAprendiz,
+                NombreAprendiz = s.NumeroDocumentoAprendizNavigation.NombreAprendiz,
+                ApellidoAprendiz = s.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
+                CorreoAprendiz = s.NumeroDocumentoAprendizNavigation.CorreoAprendiz,
+                TelefonoAprendiz = s.NumeroDocumentoAprendizNavigation.CelAprendiz,
+                ProgramAprendiz = s.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation.NombrePrograma,
+                FichaAprendiz = s.NumeroDocumentoAprendizNavigation.Ficha,
                 //datos del instructor
-                NumeroDocumentoInstructor=s.NumeroDocumentoInstructor,
-                NombreInstructor=s.NumeroDocumentoInstructorNavigation.NombreInstructor,
-                ApellidoInstructor=s.NumeroDocumentoInstructorNavigation.ApellidoInstructor,
-                CorreoInstructor=s.NumeroDocumentoInstructorNavigation.CorreoInstructor,
-                TelefonoInstructor=s.NumeroDocumentoInstructorNavigation.CelInstructor,
+                NumeroDocumentoInstructor = s.NumeroDocumentoInstructor,
+                NombreInstructor = s.NumeroDocumentoInstructorNavigation.NombreInstructor,
+                ApellidoInstructor = s.NumeroDocumentoInstructorNavigation.ApellidoInstructor,
+                CorreoInstructor = s.NumeroDocumentoInstructorNavigation.CorreoInstructor,
+                TelefonoInstructor = s.NumeroDocumentoInstructorNavigation.CelInstructor,
                 //datos del coformador
-                NumDocumentoCoformador=s.NumeroDocumentoInstructor,
-                NombreCoformador=s.IdCoformadorNavigation.NombreCoformador,
-                ApellidoCoformador=s.IdCoformadorNavigation.ApellidoCoformador,
-                CorreoCoformador=s.IdCoformadorNavigation.CorreoCoformador,
-                TelefonoCoformador=s.IdCoformadorNavigation.CelCoformador,
+                NumDocumentoCoformador = s.NumeroDocumentoInstructor,
+                NombreCoformador = s.IdCoformadorNavigation.NombreCoformador,
+                ApellidoCoformador = s.IdCoformadorNavigation.ApellidoCoformador,
+                CorreoCoformador = s.IdCoformadorNavigation.CorreoCoformador,
+                TelefonoCoformador = s.IdCoformadorNavigation.CelCoformador,
                 //datos de la empresa
-                NitEmpresa=s.NitEmpresa,
-                NombreEmpresa=s.NitEmpresaNavigation.NombreEmpresa,
-                AreaEmpresa=s.IdAreaEmpresaNavigation.NombreArea
+                NitEmpresa = s.NitEmpresa,
+                NombreEmpresa = s.NitEmpresaNavigation.NombreEmpresa,
+                AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea
             }).ToList();
-            
-            aprendiz = await _aprendizService.GetForDoc(numDoc);
-            Empresa empresa = new Empresa();
-            //if (seguimiento != null)
-            //{
-                //empresa = await _dbSiscanContext.Empresas.FindAsync(seguimiento.NitEmpresa);
-            
-            var vmSeguimiento = new Viewmodelsegui
+
+            ViewModelSeguimiento seguimient = null;
+
+            foreach (var segui in listSeguimiento)
             {
-                listaSeguimiento=listSeguimiento,
-                aprendiz = aprendiz,
-                //Empresa = empresa
+                if (segui.IdSeguimiento.ToString() == idSeguimiento)
+                {
+                    seguimient = segui;
+                    break;
+                }
+            }
+            vmSeguimiento = new Viewmodelsegui
+            {
+                listaSeguimiento = listSeguimiento,
+                seguimiento = seguimient
             };
+
             return View(vmSeguimiento);
         }
 
@@ -266,15 +247,15 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             try
             {
-                var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.FirstOrDefaultAsync(s=>s.IdSeguimiento==idSeguimiento);
+                var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.FirstOrDefaultAsync(s => s.IdSeguimiento == idSeguimiento);
                 if (seguimiento == null)
                 {
                     return Json(new { success = false, message = "El seguimiento no fue encontrado." });
-                } 
+                }
 
                 await _seguimientoService.Delete(idSeguimiento);
                 TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!";
-                
+
                 return Json(new { success = true, message = "El seguimiento se elimino correctamente." });
             }
 

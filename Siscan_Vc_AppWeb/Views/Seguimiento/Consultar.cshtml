@@ -16,12 +16,6 @@
                             <h1>Consultar</h1>
                         </div>
                         <div class="card-body">
-                            @* <form method="get" class="d-none d-md-inline-block form-inline mb-4" asp-controller="Seguimiento" asp-action="Consultar">
-                                <div class="input-group">
-                                    <input class="form-control" name="numDoc" type="text" placeholder="Número Documento..." aria-label="Número Documento..." aria-describedby="btnNavbarSearch" width="150" />
-                                    <button type="submit" class="boton" id="btnNavbarSearch">Buscar</button>
-                                </div>
-                            </form> *@
                             <div class="col-md-6 text-end">
                                 <input style="margin-left:15px;" type="text" class="form-control" id="searchInput" placeholder="Buscar por numero de documento del aprendiz" />
                             </div>
@@ -58,7 +52,7 @@
                                                                     <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>
                                                                     <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa)</td>
                                                                     <td style="justify-content:center">
-                                                                        <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-numDoc="@seguimiento.NumeroDocumentoAprendiz" class="btn btn-sm">
+                                                                        <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-idSeguimiento="@seguimiento.IdSeguimiento" class="btn btn-sm">
                                                                             <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
                                                                         </a>
                                                                     </td>
@@ -83,53 +77,52 @@
                                     <div class="list-group" style="height: 100% !important ;">
                                         <div class="card">
                                             <div class="row row-cols-1 row-cols-md-3 g-4">
-                                                @if (Model.aprendiz != null && Model.seguimientoinstructorAprendiz != null)
+                                                @if (Model.seguimiento != null)
                                                 {
                                                     <div class="col">
                                                         <div class="card">
                                                             <div class="card-body fondomenu">
                                                                 <br />
                                                                 <center class="m-t-30 pb-3">
-                                                                    <h4 id="card-title" class="m-0 text-uppercase font-weight-bold text-white">@Model.aprendiz.ApellidoAprendiz</h4>
-                                                                    <h6 id="card-subtitle" class="card-subtitle">@Model.aprendiz.NombreAprendiz</h6>
+                                                                    <h4 id="card-title" class="m-0 text-uppercase font-weight-bold text-white">@Model.seguimiento.ApellidoAprendiz</h4>
+                                                                    <h6 id="card-subtitle" class="card-subtitle">@Model.seguimiento.NombreAprendiz</h6>
                                                                 </center>
                                                             </div>
                                                             <div class="card-body">
                                                                 <small class="text-muted">Correo: </small>
-                                                                <p id="card-email">@Model.aprendiz.CorreoAprendiz</p>
+                                                                <p id="card-email">@Model.seguimiento.CorreoAprendiz</p>
                                                                 <small class="text-muted p-t-30 db">Celular:</small>
-                                                                <p id="card-phone">@Model.aprendiz.CelAprendiz</p>
-                                                                <small class="text-muted p-t-30 db">Celular Acudiente:</small>
-                                                                <p>@Model.aprendiz.CelularAcudiente</p>
+                                                                <p id="card-phone">@Model.seguimiento.TelefonoAprendiz</p>
                                                                 <small class="text-muted p-t-30 db">Ficha:</small>
-                                                                <h6 id="card-program" class="m-0font-weight-bold text-dark">@Model.aprendiz.Ficha</h6>
+                                                                <h6 id="card-program" class="m-0font-weight-bold text-dark">@Model.seguimiento.FichaAprendiz</h6>
+                                                                <br />
+                                                                <br />
+                                                                <button id="btn-eliminar" data-id="@Model.seguimiento.IdSeguimiento" class="botonEliminar">Eliminar</button>
+                                                                <button class="botonEditar">Editar</button>
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="card-body row">
                                                         <div class="col pt-4">
                                                             <small class="text-muted">Coformador: </small>
-                                                            <p>@Model.seguimientoinstructorAprendiz.IdCoformadorNavigation.NombreCoformador @Model.seguimientoinstructorAprendiz.IdCoformadorNavigation.ApellidoCoformador</p>
-                                                            <p>@Model.seguimientoinstructorAprendiz.IdCoformadorNavigation.NumeroDocumentoCoformador</p>
+                                                            <p>@Model.seguimiento.NombreCoformador @Model.seguimiento.ApellidoCoformador</p>
+                                                            <p>@Model.seguimiento.NumDocumentoCoformador</p>
                                                             <small class="text-muted">Inicio Seguimiento: </small>
-                                                            <p id="card-coformador">@Model.seguimientoinstructorAprendiz.FechaInicio</p>
+                                                            <p id="card-coformador">@Model.seguimiento.FechaInicio</p>
                                                             <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
-                                                            <p id="card-instructor" class="m-0 text-dark">@Model.seguimientoinstructorAprendiz.FechaFinalizacion</p>
-                                                            <br />
-                                                            <br />
-                                                            <button id="btn-eliminar" data-id="@Model.seguimientoinstructorAprendiz.IdSeguimiento" class="botonEliminar">Eliminar</button>
-                                                            <button class="botonEditar">Editar</button>
+                                                            <p id="card-instructor" class="m-0 text-dark">@Model.seguimiento.FechaFinalizacion</p>
+
                                                         </div>
                                                         <div class="col pt-4">
                                                             <small class="text-muted">Instructor: </small>
-                                                            <p>@Model.seguimientoinstructorAprendiz.NumeroDocumentoInstructorNavigation.NombreInstructor @Model.seguimientoinstructorAprendiz.NumeroDocumentoInstructorNavigation.ApellidoInstructor</p>
-                                                            <p>@Model.seguimientoinstructorAprendiz.NumeroDocumentoInstructor</p>
+                                                            <p>@Model.seguimiento.NombreInstructor @Model.seguimiento.ApellidoInstructor</p>
+                                                            <p>@Model.seguimiento.NumeroDocumentoInstructor</p>
                                                             <small class="text-muted">Area: </small>
-                                                            <p>@Model.seguimientoinstructorAprendiz.IdAreaEmpresaNavigation.NombreArea</p>
+                                                            <p>@Model.seguimiento.AreaEmpresa</p>
                                                             <small class="text-muted">Modalidad: </small>
-                                                            <p>@Model.seguimientoinstructorAprendiz.IdModalidadNavigation.NombreModalidad</p>
+                                                            <p>@Model.seguimiento.NombreModalidad</p>
                                                             <small class="text-muted p-t-30 db">Empresa:</small>
-                                                            <p class="m-0 text-dark ">@Model.seguimientoinstructorAprendiz.NitEmpresa @Model.Empresa.NombreEmpresa</p>
+                                                            <p class="m-0 text-dark ">@Model.seguimiento.NitEmpresa @Model.seguimiento.NombreEmpresa</p>
                                                         </div>
                                                     </div>
                                                 }
@@ -149,8 +142,6 @@
                                                                 <p id="card-email">Correo</p>
                                                                 <small class="text-muted p-t-30 db">Celular:</small>
                                                                 <p id="card-phone">Celular</p>
-                                                                <small class="text-muted p-t-30 db">Celular Acudiente:</small>
-                                                                <p>Celular Acudiente</p>
                                                                 <small class="text-muted p-t-30 db">Ficha:</small>
                                                                 <h6 id="card-program" class="m-0font-weight-bold text-dark">Ficha</h6>
                                                             </div>
