@@ -55,6 +55,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             NombreModalidad = seguimiento.IdModalidadNavigation.NombreModalidad;
             idmodalidad = seguimiento.IdModalidad;
         }
+        public List<Actividade> actividades { get; set; }
         public int IdSeguimiento { get; set; }
         //aprendiz
         public string NumeroDocumentoAprendiz { get; set; } = null!;
@@ -82,9 +83,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 
         //practicas
         public DateOnly? FechaInicio { get; set; }
-
         public DateOnly? FechaFinalizacion { get; set; }
-
         public string? NombreModalidad { get; set; }
         public int? idmodalidad { get; set; }
 
