@@ -23,6 +23,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public Empresa Empresa { get; set; }
         public List<ViewModelAprendiz> listaAprendizSinSegui { get; set; }
         public List<ViewModelAprendiz> listaAprendizSegui { get; set; }
+        public List<SeguimientoInstructorAprendiz> listaSeguimientos { get; set; }
         public AsignacionArea asignacionArea { get; set; }
         public Aprendiz aprendiz { get; set; }
     }

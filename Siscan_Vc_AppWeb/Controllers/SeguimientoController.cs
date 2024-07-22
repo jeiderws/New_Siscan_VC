@@ -8,6 +8,7 @@ using Siscan_Vc_AppWeb.Models.ViewModels;
 using Siscan_Vc_BLL.Service;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
+using System.Net.WebSockets;
 using System.Security.Policy;
 
 namespace Siscan_Vc_AppWeb.Controllers
@@ -184,7 +185,9 @@ namespace Siscan_Vc_AppWeb.Controllers
             IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
             List<ViewModelAprendiz> listaAprendices = new List<ViewModelAprendiz>();
             List<ViewModelAprendiz> listaAprendizSegui = new List<ViewModelAprendiz>();
+            List<SeguimientoInstructorAprendiz> listSeguimiento = new List<SeguimientoInstructorAprendiz>();
             Aprendiz aprendiz = null;
+            var querySeguimiento = await _seguimientoService.GetAll();
 
             //obtener lista de aprendices
             listaAprendices = queryAprendiz.Select(a => new ViewModelAprendiz(a)
@@ -209,14 +212,19 @@ namespace Siscan_Vc_AppWeb.Controllers
                 SeguimientoInstructorAprendices = a.SeguimientoInstructorAprendizs,
                 NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz,
             }).ToList();
+
             var seguimiento = await _seguimientoService.GetForNumDocAprdz(numDoc);
-            foreach (var ap in listaAprendices)
+            foreach(var segui in querySeguimiento)
             {
-                if (ap.SeguimientoInstructorAprendices.Count() != 0)
-                {
-                    listaAprendizSegui.Add(ap);
-                }
+                listSeguimiento.Add(segui);
             }
+            //foreach (var ap in listaAprendices)
+            //{
+            //    if (ap.SeguimientoInstructorAprendices.Count() != 0)
+            //    {
+            //        listaAprendizSegui.Add(ap);
+            //    }
+            //}
             aprendiz = await _aprendizService.GetForDoc(numDoc);
             Empresa empresa = new Empresa();
             if (seguimiento != null)
@@ -225,7 +233,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             var vmSeguimiento = new Viewmodelsegui
             {
-                listaAprendizSegui = listaAprendizSegui,
+                listaSeguimientos=listSeguimiento,
                 aprendiz = aprendiz,
                 seguimientoinstructorAprendiz = seguimiento,
                 Empresa = empresa
