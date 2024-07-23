@@ -23,7 +23,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha?.ToString();
             }
 
-            // Instructor
+            // Instructor 
             if (seguimiento.NumeroDocumentoInstructorNavigation != null)
             {
                 NumeroDocumentoInstructor = seguimiento.NumeroDocumentoInstructor;
