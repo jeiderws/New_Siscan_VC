@@ -88,14 +88,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             var aprendi = await _aprendizService.GetForDoc(numdoc);
 
-            foreach (var ap in listaAprendices)
-            {
-                if (ap.SeguimientoInstructorAprendices.Count() == 0)
-                {
-                    listaAprendizSinSegui.Add(ap);
-                }
-            }
-
             var vmSeguimiento = new Viewmodelsegui
             {
                 listaAprendizSinSegui = listaAprendizSinSegui,
@@ -166,10 +158,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                             asignacionArea = asignacion
                         };
                         TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
-                        return View(viewmodelsegui);
                     }
                 }
-
                 return View(viewmodelsegui);
             }
             catch (Exception)
