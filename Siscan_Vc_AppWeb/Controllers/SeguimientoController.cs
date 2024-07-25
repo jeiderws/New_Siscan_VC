@@ -278,9 +278,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     return Json(new { success = false, message = "El seguimiento no fue encontrado." });
                 } 
-
+                var actividades = await  _dbSiscanContext.Actividades.Where(a => a.IdSeguimiento == idSeguimiento).ToListAsync();   
+                _dbSiscanContext.Actividades.RemoveRange(actividades);
+                var observaciones = await _dbSiscanContext.Observacions.Where(o=> o.IdSeguimiento == idSeguimiento).ToListAsync();
+                _dbSiscanContext.Observacions.RemoveRange(observaciones);
                 await _seguimientoService.Delete(idSeguimiento);
                 TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!";
+
                 
                 return Json(new { success = true, message = "El seguimiento se elimino correctamente." });
             }
