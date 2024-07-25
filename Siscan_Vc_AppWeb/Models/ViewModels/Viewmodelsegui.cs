@@ -26,5 +26,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public List<SeguimientoInstructorAprendiz> listaSeguimientos { get; set; }
         public AsignacionArea asignacionArea { get; set; }
         public Aprendiz aprendiz { get; set; }
+        public Actividade actividades { get; set; }
+        public List<string> actividadesList { get; set; }
+        public List<string> observacionesList { get; set; }
     }
 }

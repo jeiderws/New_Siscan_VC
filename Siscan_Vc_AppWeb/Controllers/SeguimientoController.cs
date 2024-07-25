@@ -10,6 +10,7 @@ using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using System.Net.WebSockets;
 using System.Security.Policy;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Siscan_Vc_AppWeb.Controllers
 {
@@ -20,13 +21,17 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IEmpresaService _empresaService;
         private readonly IAprendizService _aprendizService;
         private readonly IAsignacionService _asignacionService;
-        public SeguimientoController(DbSiscanContext dbSiscanContext, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService)
+        private readonly IActividadService _actividadService;
+        private readonly IObservacionesService _observacionesService;
+        public SeguimientoController(DbSiscanContext dbSiscanContext, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService, IActividadService actividadService, IObservacionesService observacionesService)
         {
             _dbSiscanContext = dbSiscanContext;
             _seguimientoService = seguimientoService;
             _empresaService = empresaService;
             _aprendizService = aprendizService;
             _asignacionService = asignacionService;
+            _actividadService = actividadService;
+            _observacionesService = observacionesService;   
         }
         public async Task LlenarCombos()
         {
@@ -137,36 +142,68 @@ namespace Siscan_Vc_AppWeb.Controllers
                         IdAreaEmpresa = Vmse?.seguimientoinstructorAprendiz?.IdAreaEmpresa,
                         NitEmpresa = Vmse?.seguimientoinstructorAprendiz.NitEmpresa
                     };
-                    var asignacion = new AsignacionArea()
-                    {
-                        IdArea = seguimiento.IdAreaEmpresa,
-                        NitEmpresa = seguimiento.NitEmpresa
-                    };
+
                     var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
                     if (empre == null)
                     {
-                        TempData["MensajeAlertEmpre"] = " Nit de Empresa no encontrado";
+                        TempData["MensajeAlertEmpre"] = "Nit de Empresa no encontrado";
                     }
                     else
                     {
+                        await _seguimientoService.Insert(seguimiento);
+
+                        var asignacion = new AsignacionArea()
+                        {
+                            IdArea = seguimiento.IdAreaEmpresa,
+                            NitEmpresa = seguimiento.NitEmpresa
+                        };
                         await _asignacionService.Insert(asignacion);
                         seguimiento.IdAsignacionArea = asignacion.IdAsignacionArea;
-                        await _seguimientoService.Insert(seguimiento);
+
+                        if (Vmse.actividadesList != null)
+                        {
+                            foreach (var actividadDescripcion in Vmse.actividadesList)
+                            {
+                                var actividad = new Actividade()
+                                {
+                                    DescripcionActividad = actividadDescripcion,
+                                    IdSeguimiento = seguimiento.IdSeguimiento
+                                };
+                                await _actividadService.Insert(actividad);
+                            }
+                        }
+
+                        if (Vmse.observacionesList != null)
+                        {
+                            foreach (var observacion in Vmse.observacionesList)
+                            {
+                                var observa = new Observacion()
+                                {
+                                    Observaciones = observacion,
+                                    IdSeguimiento = seguimiento.IdSeguimiento,
+                                };
+                                await _observacionesService.Insert(observa);
+                            }
+                        }
+
                         viewmodelsegui = new Viewmodelsegui()
                         {
                             seguimientoinstructorAprendiz = seguimiento,
-                            asignacionArea = asignacion
+                            asignacionArea = asignacion,
                         };
+
                         TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
                     }
                 }
                 return View(viewmodelsegui);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                TempData["ErrorMessage"] = "Ocurrió un error: " + ex.Message;
+                return View(viewmodelsegui);
             }
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Consultar(string numDoc)

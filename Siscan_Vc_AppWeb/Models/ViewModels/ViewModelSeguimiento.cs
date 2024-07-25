@@ -6,6 +6,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
+            IdSeguimiento = seguimiento.IdSeguimiento;
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {
@@ -47,6 +48,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 NitEmpresa = seguimiento.NitEmpresa;
                 NombreEmpresa = seguimiento.NitEmpresaNavigation.NombreEmpresa;
                 AreaEmpresa = seguimiento.IdAreaEmpresaNavigation.NombreArea;
+               
+                
             }
 
             // Practicas
@@ -56,6 +59,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             idmodalidad = seguimiento.IdModalidad;
         }
         public int IdSeguimiento { get; set; }
+        public int actividades { get; set; }    
         //aprendiz
         public string NumeroDocumentoAprendiz { get; set; } = null!;
         public string? NombreAprendiz { get; set; }

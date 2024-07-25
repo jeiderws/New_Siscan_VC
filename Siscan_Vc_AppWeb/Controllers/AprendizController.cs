@@ -438,10 +438,10 @@ namespace Siscan_Vc_AppWeb.Controllers
                     return Json(new { success = false, message = "El aprendiz no fue encontrado." });
                 }
                 TempData["MensajeAlertEliminado"] = "Aprendiz eliminado correctamente!!";
-                var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
-                _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
                 _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
+                var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
+                _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 await _aprendizService.Delete(nmdoc);
                 return Json(new { success = true, message = "El aprendiz se eliminó correctamente." });
             }
