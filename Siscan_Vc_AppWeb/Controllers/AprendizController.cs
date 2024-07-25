@@ -524,7 +524,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 aprendiz.IdEstadoAprendiz = aprendiztyt.aprendiz.IdEstadoAprendiz;
                 aprendiz.Ficha = aprendiztyt.aprendiz.Ficha;
                 aprendiz.IdCiudad = aprendiztyt.aprendiz.IdCiudad;
-                aprendiz.IdEstadoAprendiz = aprendiztyt.aprendiz.IdEstadoAprendiz;
+                aprendiz.IdEstadoTyt = aprendiztyt.aprendiz.IdEstadoTyt;
 
                 try
                 {
