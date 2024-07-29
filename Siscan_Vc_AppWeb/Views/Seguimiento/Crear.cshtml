@@ -26,6 +26,10 @@
                         {
                             <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEmpre"] </div>
                         }
+                        @if (TempData["MensajeAlertInstruc"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertInstruc"] </div>
+                        }
                         @*datos del aprendiz*@
                         <div class="row mb-3">
                             <div class="col-md-6">

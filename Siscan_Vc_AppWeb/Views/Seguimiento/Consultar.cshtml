@@ -29,40 +29,36 @@
                                     <h6 class="m-0 text-uppercase font-weight-bold text-white">Seguimientos</h6>
                                 </div>
                                 <div class="card-body">
-                                    <div class="" style="height: 400px !important ;">
-                                        <div class="list-group py-3" id="list-container">
-                                            <div class="card-body table-responsive" style="height:450px; ">
-                                                <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
-                                                    <thead class="boton2 ms-auto">
+                                    <div class="card-body table-responsive" style="height:450px; ">
+                                        <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                                            <thead class="boton2 ms-auto">
+                                                <tr>
+                                                    <th>Documento</th>
+                                                    <th>Nombre</th>
+                                                    <th>Apellido</th>
+                                                    <th>Empresa</th>
+                                                    <th>Acciones</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @{
+                                                    foreach (var seguimiento in Model.listaSeguimiento)
+                                                    {
                                                         <tr>
-                                                            <th>Documento</th>
-                                                            <th>Nombre</th>
-                                                            <th>Apellido</th>
-                                                            <th>Empresa</th>
-                                                            <th>Acciones</th>
+                                                            <td>@Html.DisplayFor(a => seguimiento.NumeroDocumentoAprendiz)</td>
+                                                            <td>@Html.DisplayFor(a => seguimiento.NombreAprendiz)</td>
+                                                            <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>
+                                                            <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa)</td>
+                                                            <td style="justify-content:center">
+                                                                <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-idSeguimiento="@seguimiento.IdSeguimiento" class="btn btn-sm">
+                                                                    <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
+                                                                </a>
+                                                            </td>
                                                         </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @{
-                                                            foreach (var seguimiento in Model.listaSeguimiento)
-                                                            {
-                                                                <tr>
-                                                                    <td>@Html.DisplayFor(a => seguimiento.NumeroDocumentoAprendiz)</td>
-                                                                    <td>@Html.DisplayFor(a => seguimiento.NombreAprendiz)</td>
-                                                                    <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>
-                                                                    <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa)</td>
-                                                                    <td style="justify-content:center">
-                                                                        <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-idSeguimiento="@seguimiento.IdSeguimiento" class="btn btn-sm">
-                                                                            <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
-                                                                        </a>
-                                                                    </td>
-                                                                </tr>
-                                                            }
-                                                        }
-                                                    </tbody>
-                                                </table>
-                                            </div>
-                                        </div>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -72,13 +68,13 @@
                                 <div class="fondomenu py-3 px-5 ">
                                     <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
                                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Seguimiento Aprendiz</h6>
-                                </div>                               
+                                </div>
                                 <div class="card-body">
                                     <div class="list-group" style="height: 100% !important ;">
                                         <div class="card">
                                             <div class="row row-cols-1 row-cols-md-3 g-4">
                                                 @if (Model.seguimiento != null)
-                                                {                                                   
+                                                {
                                                     <div class="col">
                                                         <div class="card">
                                                             <div class="card-body fondomenu">

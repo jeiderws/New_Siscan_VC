@@ -22,6 +22,14 @@
                                 }, 3000);
                             </script>
                         }
+                        @if (TempData["MensajeEmpresaNoExistSegui"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">@TempData["MensajeEmpresaNoExistSegui"] </div>
+                        }
+                        @if (TempData["MensajeInstructorNoExistSegui"] != null)
+                        {
+                            <div class="alert alert-danger" role="alert">@TempData["MensajeInstructorNoExistSegui"] </div>
+                        }
                         @*datos del aprendiz*@
                         <div class="col-md-6">
                             <div class="form-floating mb-3">
@@ -59,11 +67,7 @@
                     <!--datos de empresa-->
                     <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-md-6">
-                                @if (TempData["MensajeEmpresaNoExistSegui"] != null)
-                                {
-                                    <div class="alert alert-danger" role="alert">@TempData["MensajeEmpresaNoExistSegui"] </div>
-                                }
+                            <div class="col-md-6">                                
                                 <div class="form-floating mb-3">
                                     <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nombre de la Empresa">
                                     <label asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-label">Digite el Nit de la Empresa</label>
@@ -117,11 +121,7 @@
                                 </div>
                                 <br />
                                 <div class="form-floating mb-3 mb-md-0 py-3">
-                                    <div class="col-md-6">
-                                        @if (TempData["MensajeInstructorNoExistSegui"] != null)
-                                        {
-                                            <div class="alert alert-danger" role="alert">@TempData["MensajeInstructorNoExistSegui"] </div>
-                                        }
+                                    <div class="col-md-6">                                       
                                         <div class="form-floating">
                                             <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="form-control" id="inputInstructor" type="text" placeholder="Numero Documento Instructor" />
                                             <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor">Instructor</label>

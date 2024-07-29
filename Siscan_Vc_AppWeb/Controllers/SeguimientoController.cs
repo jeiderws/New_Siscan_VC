@@ -145,11 +145,16 @@ namespace Siscan_Vc_AppWeb.Controllers
                         NitEmpresa = seguimiento.NitEmpresa
                     };
                     var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
+                    var instructor = await _instructorService.GetForDoc(seguimiento.NumeroDocumentoInstructor);
                     if (empre == null)
                     {
                         TempData["MensajeAlertEmpre"] = "Nit de Empresa no encontrado";
                     }
-                    else
+                    if (instructor == null)
+                    {
+                        TempData["MensajeAlertInstruc"] = "No se encontro un instructor con este numero de documento";
+                    }
+                    else if(empre != null && instructor!=null)
                     {
                         await _asignacionService.Insert(asignacion);
                         seguimiento.IdAsignacionArea = asignacion.IdAsignacionArea;
@@ -163,13 +168,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                         return View(viewmodelsegui);
                     }
                 }
-
-                return View(viewmodelsegui);
             }
             catch (Exception)
             {
                 throw;
             }
+            return View(viewmodelsegui);
         }
 
         [HttpGet]
