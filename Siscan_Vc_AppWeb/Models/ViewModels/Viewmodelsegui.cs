@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Rendering;
 using Siscan_Vc_DAL.DataContext;
+using System.Security.Policy;
 
 namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
@@ -17,14 +18,16 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public List<SelectListItem> listaopctpdoc { get; set; }
 
         //Listas y objetos
-        public SeguimientoInstructorAprendiz seguimientoinstructorAprendiz { get; set; }
         public List<ViewModelSeguimiento> listaSeguimiento { get; set; }
         public List<Empresa> listaEmpresa { get; set; }
-        public Empresa Empresa { get; set; }
         public List<ViewModelAprendiz> listaAprendizSinSegui { get; set; }
         public List<ViewModelAprendiz> listaAprendizSegui { get; set; }
+        public Empresa Empresa { get; set; }
+        public Instructor Instructor { get; set; }
+        public SeguimientoInstructorAprendiz seguimientoinstructorAprendiz { get; set; }
         public AsignacionArea asignacionArea { get; set; }
         public Aprendiz aprendiz { get; set; }
         public ViewModelSeguimiento seguimiento { get; set; }
+
     }
 }

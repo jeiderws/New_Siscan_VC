@@ -9,7 +9,7 @@ public partial class SeguimientoArchivo
 
     public string? NumeroDocumentoAprendiz { get; set; }
 
-    public string? NumeroDocumento { get; set; }
+    public string? NumeroDocumentoInstructor { get; set; }
 
     public string? NumeroDocumentoCoformador { get; set; }
 

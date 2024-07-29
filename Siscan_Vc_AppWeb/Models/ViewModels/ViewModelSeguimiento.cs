@@ -10,6 +10,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {
+                idTipoDocumentoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.IdTipodocumento;
                 NumeroDocumentoAprendiz = seguimiento.NumeroDocumentoAprendiz;
                 NombreAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.NombreAprendiz;
                 ApellidoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.ApellidoAprendiz;
@@ -48,6 +49,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 NitEmpresa = seguimiento.NitEmpresa;
                 NombreEmpresa = seguimiento.NitEmpresaNavigation.NombreEmpresa;
                 AreaEmpresa = seguimiento.IdAreaEmpresaNavigation.NombreArea;
+                IdAsignacionArea=seguimiento.IdAsignacionArea;
+                IdAreaEmpresa=seguimiento.IdAreaEmpresa;
             }
 
             // Practicas
@@ -59,6 +62,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public List<Actividade> actividades { get; set; }
         public int IdSeguimiento { get; set; }
         //aprendiz
+        public int? idTipoDocumentoAprendiz {  get; set; }
+        public string TipoDocumentoAprendiz {  get; set; }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
         public string? NombreAprendiz { get; set; }
         public string? ApellidoAprendiz { get; set; }

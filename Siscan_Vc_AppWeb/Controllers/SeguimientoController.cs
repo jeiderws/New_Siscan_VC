@@ -20,13 +20,16 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IEmpresaService _empresaService;
         private readonly IAprendizService _aprendizService;
         private readonly IAsignacionService _asignacionService;
-        public SeguimientoController(DbSiscanContext dbSiscanContext, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService)
+        private readonly IInstructorService _instructorService;
+        private long idSeguimientoActualizar;
+        public SeguimientoController(DbSiscanContext dbSiscanContext, IInstructorService instructorService, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService)
         {
             _dbSiscanContext = dbSiscanContext;
             _seguimientoService = seguimientoService;
             _empresaService = empresaService;
             _aprendizService = aprendizService;
             _asignacionService = asignacionService;
+            _instructorService = instructorService;
         }
         public async Task LlenarCombos()
         {
@@ -87,15 +90,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
             }
             var aprendi = await _aprendizService.GetForDoc(numdoc);
-
-            foreach (var ap in listaAprendices)
-            {
-                if (ap.SeguimientoInstructorAprendices.Count() == 0)
-                {
-                    listaAprendizSinSegui.Add(ap);
-                }
-            }
-
             var vmSeguimiento = new Viewmodelsegui
             {
                 listaAprendizSinSegui = listaAprendizSinSegui,
@@ -153,7 +147,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
                     if (empre == null)
                     {
-                        TempData["MensajeAlertEmpre"] = " Nit de Empresa no encontrado";
+                        TempData["MensajeAlertEmpre"] = "Nit de Empresa no encontrado";
                     }
                     else
                     {
@@ -191,13 +185,14 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             listSeguimiento = querySeguimiento.Select(s => new ViewModelSeguimiento(s)
             {
-                IdSeguimiento= s.IdSeguimiento,
+                IdSeguimiento = s.IdSeguimiento,
                 FechaInicio = s.FechaInicio,
                 FechaFinalizacion = s.FechaFinalizacion,
                 NombreModalidad = s.IdModalidadNavigation.NombreModalidad,
                 idmodalidad = s.IdModalidad,
-
                 //datos del aprendiz
+                idTipoDocumentoAprendiz = s.NumeroDocumentoAprendizNavigation.IdTipodocumento,
+                //TipoDocumentoAprendiz = s.NumeroDocumentoAprendizNavigation.IdTipodocumentoNavigation.TipoDocumento1,
                 NumeroDocumentoAprendiz = s.NumeroDocumentoAprendiz,
                 NombreAprendiz = s.NumeroDocumentoAprendizNavigation.NombreAprendiz,
                 ApellidoAprendiz = s.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
@@ -220,7 +215,9 @@ namespace Siscan_Vc_AppWeb.Controllers
                 //datos de la empresa
                 NitEmpresa = s.NitEmpresa,
                 NombreEmpresa = s.NitEmpresaNavigation.NombreEmpresa,
-                AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea
+                AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea,
+                IdAsignacionArea = s.IdAsignacionArea,
+                IdAreaEmpresa = s.IdAreaEmpresa
             }).ToList();
 
             ViewModelSeguimiento seguimient = null;
@@ -241,7 +238,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             return View(vmSeguimiento);
         }
-
         [HttpDelete]
         public async Task<IActionResult> Eliminar(long idSeguimiento)
         {
@@ -263,6 +259,119 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 return Json(new { success = false, message = "Se produjo un error al intentas eliminar el seguimiento: " + ex.Message });
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditarSeguimiento(long idSeguimiento)
+        {
+            await LlenarCombos();
+            var vmSeguimiento = new Viewmodelsegui();
+            try
+            {
+                var seguimientos = await _seguimientoService.GetAll();
+                SeguimientoInstructorAprendiz seguimiento = null;
+                foreach (var seg in seguimientos)
+                {
+                    if (seg.IdSeguimiento == idSeguimiento)
+                    {
+                        seguimiento = seg;
+                        idSeguimientoActualizar = seguimiento.IdSeguimiento;
+                        break;
+                    }
+                }
+
+                if (seguimiento != null)
+                {
+                    var aprendiz = await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
+                    if (aprendiz != null)
+                    {
+                        vmSeguimiento = new Viewmodelsegui
+                        {
+                            seguimientoinstructorAprendiz = seguimiento,
+                            aprendiz = aprendiz,
+                        };
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
+            return View(vmSeguimiento);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarSeguimiento(Viewmodelsegui seguimientoVm)
+        {
+            SeguimientoArchivo seguimientoArchivo = null;
+            await LlenarCombos();
+            if (seguimientoVm.seguimientoinstructorAprendiz != null)
+            {
+                try
+                {
+                    var instructor = await _instructorService.GetForDoc(seguimientoVm.seguimientoinstructorAprendiz.NumeroDocumentoInstructor);
+                    var empresa = await _empresaService.GetForNit(seguimientoVm.seguimientoinstructorAprendiz.NitEmpresa);
+                    var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.FindAsync(seguimientoVm.seguimientoinstructorAprendiz.IdSeguimiento);
+                    if (seguimiento == null)
+                    {
+                        return NotFound();
+                    }
+                    if (empresa == null)
+                    {
+                        TempData["MensajeEmpresaNoExistSegui"] = "Nit de Empresa no encontrado";
+                    }
+                    if (instructor == null)
+                    {
+                        TempData["MensajeInstructorNoExistSegui"] = "No se encontro un instructor con este numero de documento";
+                    }
+                    else if (empresa != null && instructor != null && seguimiento != null)
+                    {
+                        //Obteniendo los datos del seguimiento para asigarlo a seguimiento archivo 
+                        seguimientoArchivo = new SeguimientoArchivo
+                        {
+                            NumeroDocumentoAprendiz = seguimientoVm.aprendiz.NumeroDocumentoAprendiz,
+                            NumeroDocumentoInstructor = seguimiento.NumeroDocumentoInstructor,
+                            NumeroDocumentoCoformador = seguimiento.IdCoformadorNavigation.NumeroDocumentoCoformador,
+                            FechaInicio = seguimiento.FechaInicio,
+                            FechaFinalizacion = seguimiento.FechaFinalizacion,
+                            IdModalidad = seguimiento.IdModalidad,
+                            IdAsignacionArea = seguimiento.IdAsignacionArea,
+                            IdAreaEmpresa = seguimiento.IdAreaEmpresa,
+                              NitEmpresa = seguimiento.NitEmpresa
+                        };
+
+                        //Asignando los datos del segumiento actualizado
+                        seguimiento.NumeroDocumentoAprendiz = seguimientoVm.aprendiz.NumeroDocumentoAprendiz;
+                        seguimiento.NumeroDocumentoInstructor = seguimientoVm.seguimientoinstructorAprendiz.NumeroDocumentoInstructor;
+                        seguimiento.IdCoformador = seguimientoVm.seguimientoinstructorAprendiz.IdCoformador;
+                        seguimiento.FechaInicio = seguimientoVm.seguimientoinstructorAprendiz.FechaInicio;
+                        seguimiento.FechaFinalizacion = seguimientoVm.seguimientoinstructorAprendiz.FechaFinalizacion;
+                        seguimiento.IdModalidad = seguimientoVm.seguimientoinstructorAprendiz.IdModalidad;
+                        seguimiento.IdAsignacionArea = seguimientoVm.seguimientoinstructorAprendiz.IdAsignacionArea;
+                        seguimiento.IdAreaEmpresa = seguimientoVm.seguimientoinstructorAprendiz.IdAreaEmpresa;
+                        seguimiento.NitEmpresa = seguimientoVm.seguimientoinstructorAprendiz.NitEmpresa;
+
+                        _dbSiscanContext.Update(seguimiento);
+                        await _dbSiscanContext.SaveChangesAsync();
+                        TempData["MensajeSeguimientoActualizado"] = "Seguimiento Actualizado correctamente!!";
+                        if (seguimiento.IdModalidad != seguimientoArchivo.IdModalidad)
+                        {
+                            _dbSiscanContext.SeguimientoArchivos.Add(seguimientoArchivo);
+                            await _dbSiscanContext.SaveChangesAsync();
+                        }
+                    }
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SeguimientoExist(seguimientoVm.seguimientoinstructorAprendiz.IdSeguimiento)) return NotFound(); else throw;
+                }
+            }
+            return View(seguimientoVm);
+        }
+        private bool SeguimientoExist(long idSeguimiento)
+        {
+            return _dbSiscanContext.SeguimientoInstructorAprendizs.Any(s => s.IdSeguimiento == idSeguimiento);
         }
     }
 }

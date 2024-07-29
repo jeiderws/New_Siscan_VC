@@ -26,7 +26,7 @@
                             <div class="card shadow mb-4">
                                 <div class="fondomenu py-3 px-5">
                                     <img src="~/img/lista-de-verificacion.png" alt="Alternate Text" width="50" />
-                                    <h6 class="m-0 text-uppercase font-weight-bold text-white ">Seguimientos</h6>
+                                    <h6 class="m-0 text-uppercase font-weight-bold text-white">Seguimientos</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="" style="height: 400px !important ;">
@@ -72,13 +72,13 @@
                                 <div class="fondomenu py-3 px-5 ">
                                     <img src="~/img/entrenador.png" alt="Alternate Text" width="50" />
                                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Seguimiento Aprendiz</h6>
-                                </div>
+                                </div>                               
                                 <div class="card-body">
                                     <div class="list-group" style="height: 100% !important ;">
                                         <div class="card">
                                             <div class="row row-cols-1 row-cols-md-3 g-4">
                                                 @if (Model.seguimiento != null)
-                                                {
+                                                {                                                   
                                                     <div class="col">
                                                         <div class="card">
                                                             <div class="card-body fondomenu">
@@ -89,6 +89,8 @@
                                                                 </center>
                                                             </div>
                                                             <div class="card-body">
+                                                                <small class="text-muted">Documento: </small>
+                                                                <p id="card-email">@Model.seguimiento.NumeroDocumentoAprendiz</p>
                                                                 <small class="text-muted">Correo: </small>
                                                                 <p id="card-email">@Model.seguimiento.CorreoAprendiz</p>
                                                                 <small class="text-muted p-t-30 db">Celular:</small>
@@ -96,7 +98,9 @@
                                                                 <small class="text-muted p-t-30 db">Ficha:</small>
                                                                 <h6 id="card-program" class="m-0font-weight-bold text-dark">@Model.seguimiento.FichaAprendiz</h6>
                                                                 <button id="btn-eliminar" data-id="@Model.seguimiento.IdSeguimiento" class="botonEliminar">Eliminar</button>
-                                                                <button class="botonEditar">Editar</button>
+                                                                <a asp-controller="Seguimiento" asp-action="EditarSeguimiento" asp-route-idSeguimiento="@Model.seguimiento.IdSeguimiento">
+                                                                    <button class="botonEditar">Editar</button>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -135,6 +139,8 @@
                                                                 </center>
                                                             </div>
                                                             <div class="card-body">
+                                                                <small class="text-muted">Documento: </small>
+                                                                <p id="card-email">NDocumentoAprendiz</p>
                                                                 <small class="text-muted">Correo: </small>
                                                                 <p id="card-email">Correo</p>
                                                                 <small class="text-muted p-t-30 db">Celular:</small>

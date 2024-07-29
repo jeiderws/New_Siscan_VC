@@ -3,9 +3,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using Siscan_Vc_AppWeb.Models.ViewModels
-@model ModelViewInstructor
-
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewInstructor
 
 <div class="container pt-6">
     <div class="row justify-content-center">
@@ -14,14 +12,13 @@
                 <div class="card-header fondomenu ">
                     <img class="img-fluid mover2" src="~/img/actualizar blanco.png" alt="Alternate Text" width="50">
                     <h3 class="text-center font-dark-light my-4">Actualizar</h3>
-
                 </div>
                 <div class="card-body">
                     <form asp-action="Editar">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                     <select asp-for="Instructor.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))"  class="form-control form-control-sm" id="cboTipoDocumento">
+                                    <select asp-for="Instructor.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option>Selecciona un tipo de documento...</option>
                                     </select>
                                     <label asp-for="Instructor.IdTipodocumento">Tipo Documento</label>
@@ -46,7 +43,6 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -61,15 +57,13 @@
                                 </div>
                             </div>
                         </div>
-
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"> 
+                            <div class="d-grid boton2">
                                 <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmUpdate()">Actualizar</button>
                             </div>
                         </div>
                     </form>
                 </div>
-
             </div>
         </div>
     </div>
@@ -78,13 +72,11 @@
 @section Scripts {
     <script src="~/js/scripts.js" asp-append-version="true"></script>
 
-
     <script>
-            function confirmUpdate() {
-                return confirm("¿Estás seguro de que deseas Actualizar?");
-            }
+        function confirmUpdate() {
+            return confirm("¿Estás seguro de que deseas Actualizar?");
+        }
     </script>
-
 }
 
 
