@@ -97,6 +97,9 @@
                                                                 <a asp-controller="Seguimiento" asp-action="EditarSeguimiento" asp-route-idSeguimiento="@Model.seguimiento.IdSeguimiento">
                                                                     <button class="botonEditar">Editar</button>
                                                                 </a>
+                                                                <a asp-controller="Seguimiento" asp-action="MostrarHistorial" asp-route-nmDocAprendiz="@Model.seguimiento.NumeroDocumentoAprendiz">
+                                                                    <button class="btnHistorial">Historial</button>
+                                                                </a>
                                                             </div>
                                                         </div>
                                                     </div>

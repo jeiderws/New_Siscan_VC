@@ -1,0 +1,95 @@
+﻿@{
+    ViewData["Title"] = "MostrarHistorial";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="width:100%; padding:0" class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="fondomenu py-3 px-5">
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white">Historial de seguimientos</h6>
+                </div>
+                <div class="card-body table-responsive">
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Aprendiz</h6>
+                    <div class="card-body table-responsive-busqueda">
+                        <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Documento</th>
+                                    <th>Nombres</th>
+                                    <th>Apellidos</th>
+                                    <th>Correo</th>
+                                    <th>Celular</th>
+                                    <th>Ficha</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    // <tr>
+                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.NumeroDocumentoAprendiz)</td>
+                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.NombreAprendiz)</td>
+                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.ApellidoAprendiz)</td>
+                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
+                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
+                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
+                                    // </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
+                    <br />
+                    <div class="card-body table-responsive" style="height:450px; ">
+                        <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Nit Empresa</th>
+                                    <th>Nombre Empresa</th>
+                                    <th>Modalidad</th>
+                                    <th>Area</th>
+                                    <th>Documento Instructor</th>
+                                    <th>Instructor</th>
+                                    <th>Documento Coformador</th>
+                                    <th>Coformador</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Finalizacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    // foreach (var aprendiz in Model.ListaAprendices)
+                                    // {
+                                    //     <tr>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
+                                    //         <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
+                                    //         <td>
+                                    //             <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
+                                    //                 <img src="~/img/editar.png" alt="Alternate Text" width="25" />
+                                    //             </a>
+                                    //             <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
+                                    //                 <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
+                                    //             </a>
+                                    //         </td>
+                                    //     </tr>
+                                    // }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

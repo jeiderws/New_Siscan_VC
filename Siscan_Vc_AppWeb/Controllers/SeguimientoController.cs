@@ -154,7 +154,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         TempData["MensajeAlertInstruc"] = "No se encontro un instructor con este numero de documento";
                     }
-                    else if(empre != null && instructor!=null)
+                    else if (empre != null && instructor != null)
                     {
                         await _asignacionService.Insert(asignacion);
                         seguimiento.IdAsignacionArea = asignacion.IdAsignacionArea;
@@ -242,6 +242,22 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             return View(vmSeguimiento);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> MostrarHistorial(string nmDocAprendiz)
+        {
+            Viewmodelsegui vmSeguimiento = new Viewmodelsegui();
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                return NotFound();
+            }
+            return View();
+        }
+
         [HttpDelete]
         public async Task<IActionResult> Eliminar(long idSeguimiento)
         {
@@ -342,7 +358,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             IdModalidad = seguimiento.IdModalidad,
                             IdAsignacionArea = seguimiento.IdAsignacionArea,
                             IdAreaEmpresa = seguimiento.IdAreaEmpresa,
-                              NitEmpresa = seguimiento.NitEmpresa
+                            NitEmpresa = seguimiento.NitEmpresa
                         };
 
                         //Asignando los datos del segumiento actualizado
