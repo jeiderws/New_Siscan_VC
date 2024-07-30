@@ -21,8 +21,8 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IAprendizService _aprendizService;
         private readonly IAsignacionService _asignacionService;
         private readonly IInstructorService _instructorService;
-        private long idSeguimientoActualizar;
-        public SeguimientoController(DbSiscanContext dbSiscanContext, IInstructorService instructorService, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService)
+        private readonly ISeguimientoArchivoService _seguimientoArchivoService;
+        public SeguimientoController(DbSiscanContext dbSiscanContext, ISeguimientoArchivoService seguimientoArchivoService, IInstructorService instructorService, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService)
         {
             _dbSiscanContext = dbSiscanContext;
             _seguimientoService = seguimientoService;
@@ -30,6 +30,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _aprendizService = aprendizService;
             _asignacionService = asignacionService;
             _instructorService = instructorService;
+            _seguimientoArchivoService = seguimientoArchivoService;
         }
         public async Task LlenarCombos()
         {
@@ -246,10 +247,18 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> MostrarHistorial(string nmDocAprendiz)
         {
-            Viewmodelsegui vmSeguimiento = new Viewmodelsegui();
+            ViewModelSeguiArchivoAprendiz vmSeguimiento = new ViewModelSeguiArchivoAprendiz();
             try
             {
+                if (nmDocAprendiz != null)
+                {
+                    //obtener la lista de los seguimientos que tiene el aprendiz con el numero de documento obtenido por parametro
+                    IQueryable<SeguimientoArchivo> seguimientos = await _seguimientoArchivoService.GetForDocAprendiz(nmDocAprendiz);
+                    //obtener el aprendiz con el numero de documento obtenido por parametro
+                    var aprendiz = await _aprendizService.GetForDoc(nmDocAprendiz);
 
+
+                }                
             }
             catch (Exception ex)
             {
@@ -295,7 +304,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                     if (seg.IdSeguimiento == idSeguimiento)
                     {
                         seguimiento = seg;
-                        idSeguimientoActualizar = seguimiento.IdSeguimiento;
                         break;
                     }
                 }
