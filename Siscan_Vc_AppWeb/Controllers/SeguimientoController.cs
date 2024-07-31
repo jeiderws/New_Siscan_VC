@@ -24,6 +24,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         private readonly IInstructorService _instructorService;
         private readonly IActividadService _actividadService;
         private readonly IObservacionesService _observacionesService;
+        private readonly ISeguimientoArchivoService _seguimientoArchivoService;
         public SeguimientoController(DbSiscanContext dbSiscanContext, IInstructorService instructorService, ISeguimientoArchivoService seguimientoArchivoService, ISeguimientoService seguimientoService, IEmpresaService empresaService, IAprendizService aprendizService, IAsignacionService asignacionService, IActividadService actividadService, IObservacionesService observacionesService)
         {
             _dbSiscanContext = dbSiscanContext;
@@ -34,7 +35,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _instructorService = instructorService;
             _seguimientoArchivoService = seguimientoArchivoService;
             _actividadService = actividadService;
-            _observacionesService = observacionesService;   
+            _observacionesService = observacionesService;
         }
         public async Task LlenarCombos()
         {
@@ -272,14 +273,10 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
             }
             vmSeguimiento = new Viewmodelsegui
-            aprendiz = await _aprendizService.GetForDoc(numDoc);
-            Empresa empresa = new Empresa();
-            if (seguimiento != null)
             {
                 listaSeguimiento = listSeguimiento,
                 seguimiento = seguimient
             };
-
             return View(vmSeguimiento);
         }
 
@@ -293,16 +290,16 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     //obtener la lista de los seguimientos que tiene el aprendiz con el numero de documento obtenido por parametro
                     var seguimientosArchv = await _seguimientoArchivoService.GetForDocAprendiz(nmDocAprendiz);
-                    var seguimiento = await _seguimientoService.GetForNumDocAprdz(nmDocAprendiz);
+                    var seguimientos = await _seguimientoService.GetForNumDocAprdz(nmDocAprendiz);
 
                     List<ViewModelSeguiArchivoAprendiz> listSeguiArchivo = new List<ViewModelSeguiArchivoAprendiz>();
                     List<ViewModelSeguimiento> listSegui = new List<ViewModelSeguimiento>();
                     //obtener el aprendiz con el numero de documento obtenido por parametro
                     var aprendiz = await _aprendizService.GetForDoc(nmDocAprendiz);
 
-                    if (seguimiento != null)
+                    if (seguimientos != null)
                     {
-                        listSegui = seguimiento.Select(s => new ViewModelSeguimiento(s)
+                        listSegui = seguimientos.Select(s => new ViewModelSeguimiento(s)
                         {
                             FechaInicio = s.FechaInicio,
                             FechaFinalizacion = s.FechaFinalizacion,
@@ -385,10 +382,10 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (seguimiento == null)
                 {
                     return Json(new { success = false, message = "El seguimiento no fue encontrado." });
-                } 
-                var actividades = await  _dbSiscanContext.Actividades.Where(a => a.IdSeguimiento == idSeguimiento).ToListAsync();   
+                }
+                var actividades = await _dbSiscanContext.Actividades.Where(a => a.IdSeguimiento == idSeguimiento).ToListAsync();
                 _dbSiscanContext.Actividades.RemoveRange(actividades);
-                var observaciones = await _dbSiscanContext.Observacions.Where(o=> o.IdSeguimiento == idSeguimiento).ToListAsync();
+                var observaciones = await _dbSiscanContext.Observacions.Where(o => o.IdSeguimiento == idSeguimiento).ToListAsync();
                 _dbSiscanContext.Observacions.RemoveRange(observaciones);
                 await _seguimientoService.Delete(idSeguimiento);
                 TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!";

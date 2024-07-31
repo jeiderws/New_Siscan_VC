@@ -25,12 +25,11 @@ namespace Siscan_Vc_BLL.Service.ClasesService
         {
             try
             {
-                IQueryable<SeguimientoArchivo> querySeguimiento= await _repository.GetAll();
-                IQueryable<SeguimientoArchivo> seguimientoArchivos= querySeguimiento.Where(s=>s.NumeroDocumentoAprendiz==nmDocAprendiz);
+                IQueryable<SeguimientoArchivo> querySeguimiento = await _repository.GetAll();
+                IQueryable<SeguimientoArchivo> seguimientoArchivos = querySeguimiento.Where(s => s.NumeroDocumentoAprendiz == nmDocAprendiz);
                 return seguimientoArchivos;
             }
-            catch
-            { return null; }
+            catch { return null; }
         }
 
         public Task<bool> Insert(SeguimientoArchivo model)

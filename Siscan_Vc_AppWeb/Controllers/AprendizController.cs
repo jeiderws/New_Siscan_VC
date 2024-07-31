@@ -533,7 +533,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                     if (aprendiz.IdEstadoTyt == 1)
                     {
                         insctyt = await _dbSiscanContext.InscripcionTyts.FirstOrDefaultAsync(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
-
                         insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
                         insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
                         insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
