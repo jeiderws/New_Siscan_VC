@@ -17,7 +17,10 @@
                         </div>
                         <div class="card-body">
                             <div class="col-md-6 text-end">
-                                <input style="margin-left:15px;" type="text" class="form-control" id="searchInput" placeholder="Buscar por numero de documento del aprendiz" />
+                                <input style="margin-left:15px;" type="text" class="form-control mb-3" id="inputNmDoc" placeholder="Buscar por numero de documento del aprendiz" />
+                            </div>
+                            <div class="col-md-6 text-end">
+                                <input style="margin-left:15px;" type="text" class="form-control" id="inputFicha" placeholder="Buscar por ficha" />
                             </div>
                         </div>
                     </div>
@@ -34,6 +37,7 @@
                                             <thead class="boton2 ms-auto">
                                                 <tr>
                                                     <th>Documento</th>
+                                                    <th>Ficha</th>
                                                     <th>Nombre</th>
                                                     <th>Apellido</th>
                                                     <th>Empresa</th>
@@ -46,6 +50,7 @@
                                                     {
                                                         <tr>
                                                             <td>@Html.DisplayFor(a => seguimiento.NumeroDocumentoAprendiz)</td>
+                                                            <td>@Html.DisplayFor(a => seguimiento.FichaAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.NombreAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa)</td>
@@ -187,11 +192,22 @@
     <script src="~/js/scripts.js" asp-append-version="true"></script>
 
     <script>
+        //filtrar el contenido de la tabla por el contenido de la primera columna(numero de documento del aprendiz)
         $(document).ready(function () {
-            $('#searchInput').on('input', function () {
+            $('#inputNmDoc').on('input', function () {
                 var searchValue = $(this).val().toLowerCase();
                 $('#tbdata2 tbody tr').filter(function () {
                     $(this).toggle($(this).find('td:first-child').text().toLowerCase().indexOf(searchValue) > -1)
+                });
+            });
+        });
+
+        //filtrar el contenido de la tabla por el contenido de la segunda columna(ficha del aprendiz)
+        $(document).ready(function () {
+            $('#inputFicha').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#tbdata2 tbody tr').filter(function () {
+                    $(this).toggle($(this).find('td:eq(1)').text().toLowerCase().indexOf(value) > -1)
                 });
             });
         });
