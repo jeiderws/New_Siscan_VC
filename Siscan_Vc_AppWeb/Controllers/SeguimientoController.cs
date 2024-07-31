@@ -278,15 +278,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                             //datos del instructor
                             NumeroDocumentoInstructor = s.NumeroDocumentoInstructor,
                             NombreInstructor = s.NumeroDocumentoInstructorNavigation.NombreInstructor,
-                            ApellidoInstructor = s.NumeroDocumentoInstructorNavigation.ApellidoInstructor,                           
+                            ApellidoInstructor = s.NumeroDocumentoInstructorNavigation.ApellidoInstructor,
                             //datos del coformador
                             NumDocumentoCoformador = s.NumeroDocumentoInstructor,
                             NombreCoformador = s.IdCoformadorNavigation.NombreCoformador,
-                            ApellidoCoformador = s.IdCoformadorNavigation.ApellidoCoformador,                           
+                            ApellidoCoformador = s.IdCoformadorNavigation.ApellidoCoformador,
                             //datos de la empresa
                             NitEmpresa = s.NitEmpresa,
                             NombreEmpresa = s.NitEmpresaNavigation.NombreEmpresa,
-                            AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea,                            
+                            AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea,
                         }).ToList();
                     }
 
@@ -326,7 +326,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         Aprendiz = aprendiz,
                         listaSeguiArchivos = listSeguiArchivo,
-                        listaSegui=listSegui
+                        listaSegui = listSegui
                     };
                 }
             }
