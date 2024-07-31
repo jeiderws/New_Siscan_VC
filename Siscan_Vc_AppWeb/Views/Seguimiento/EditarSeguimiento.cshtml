@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "EditarSeguimiento";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @model Siscan_Vc_AppWeb.Models.ViewModels.Viewmodelsegui
@@ -9,61 +9,65 @@
         <div class="col-lg-7">
             <div class="card shadow-lg border-0 rounded-lg mt-5">
                 <div class="card-header fondomenu ">
-                    <h3 class="text-center font-dark-light my-4">Seguimiento </h3>
+                    <h3 class="text-center font-dark-light my-4">Seguimiento</h3>
                 </div>
-                <form asp-action="Crear">
+                <form asp-controller="Seguimiento" asp-action="EditarSeguimiento">
                     <div class="card-body">
-                        @if (TempData["MensajeAlertSegui"] != null)
+                        @if (TempData["MensajeSeguimientoActualizado"] != null)
                         {
-                            <div class="alert alert-success" role="alert"> @TempData["MensajeAlertSegui"] </div>
+                            <div class="alert alert-success" role="alert"> @TempData["MensajeSeguimientoActualizado"] </div>
                             <script>
                                 setTimeout(function () {
-                                    window.location.href = '@Url.Action("Index", "Seguimiento")';
+                                    window.location.href = '@Url.Action("Consultar", "Seguimiento")';
                                 }, 3000);
                             </script>
                         }
-                        @if (TempData["MensajeAlertEmpre"] != null)
+                        @if (TempData["MensajeEmpresaNoExistSegui"] != null)
                         {
-                            <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEmpre"] </div>
+                            <div class="alert alert-danger" role="alert">@TempData["MensajeEmpresaNoExistSegui"] </div>
                         }
-                        @if (TempData["MensajeAlertInstruc"] != null)
+                        @if (TempData["MensajeInstructorNoExistSegui"] != null)
                         {
-                            <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertInstruc"] </div>
+                            <div class="alert alert-danger" role="alert">@TempData["MensajeInstructorNoExistSegui"] </div>
                         }
                         @*datos del aprendiz*@
+                        <div class="col-md-6">
+                            <div class="form-floating mb-3">
+                                <input style="display:none" asp-for="seguimientoinstructorAprendiz.IdSeguimiento" class="form-control" id="inputIdSeguimiento" type="text" readonly />
+                                <label asp-for="seguimientoinstructorAprendiz.IdSeguimiento">Id Seguimiento</label>
+                            </div>
+                        </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento" readonly>
-                                        <option value="">Selecciona un tipo de documento...</option>
-                                    </select>
-                                    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.IdTipodocumento">Tipo Documento</label>
+                                    <input asp-for="aprendiz.IdTipodocumentoNavigation.TipoDocumento1" class="form-control" id="inputDocumento" type="text" readonly />
+                                    <label asp-for="aprendiz.IdTipodocumentoNavigation.TipoDocumento1">Tipo Documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" readonly />
-                                    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendiz">Numero de documento</label>
+                                    <label asp-for="aprendiz.NumeroDocumentoAprendiz">Numero de documento</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input readonly asp-for="aprendiz.NombreAprendiz" class="form-control" id="inputNombre" type="text" placeholder="Ingresa tus nombres" />
-                                    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.NombreAprendiz">Nombres</label>
+                                    <label asp-for="aprendiz.NombreAprendiz">Nombres</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
                                     <input readonly asp-for="aprendiz.ApellidoAprendiz" class="form-control" id="inputApellidos" type="text" placeholder="Ingresa tus apellidos" />
-                                    <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.ApellidoAprendiz">Apellidos</label>
+                                    <label asp-for="aprendiz.ApellidoAprendiz">Apellidos</label>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <!--datos de empresa-->
-                    <div class="card-body"> 
+                    <div class="card-body">
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-6">                                
                                 <div class="form-floating mb-3">
                                     <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nombre de la Empresa">
                                     <label asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-label">Digite el Nit de la Empresa</label>
@@ -72,7 +76,7 @@
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
                                     <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@(new SelectList(ViewBag.ItemsModalidad,"IdModalidad","NombreModalidad"))" class="form-control form-control-sm" id="cboModalidad">
-                                        <option value="">Selecciona una Modalidad...</option>
+                                        <option>Selecciona una Modalidad...</option>
                                     </select>
                                     <label asp-for="seguimientoinstructorAprendiz.IdModalidad">Modalidad Practicas</label>
                                 </div>
@@ -113,27 +117,19 @@
                                 </div>
                                 <!-- Instructor-->
                                 <div class="fondomenu py-3 px-5">
-                                    <h6 class="m-0 text-center font-dark-light text-white "> Instructor</h6>
+                                    <h6 class="m-0 text-center font-dark-light text-white">Instructor</h6>
                                 </div>
                                 <br />
                                 <div class="form-floating mb-3 mb-md-0 py-3">
-                                    <div class="col-md-6">
+                                    <div class="col-md-6">                                       
                                         <div class="form-floating">
                                             <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="form-control" id="inputInstructor" type="text" placeholder="Numero Documento Instructor" />
                                             <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor">Instructor</label>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="addActivityButton">Agregar Actividad</button>
-                                </div>
-                                <div id="additionalActivities"></div>
-                                <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="addObservationButton">Agregar Observación</button>
-                                </div>
-                                <div id="additionalObservations"></div>
                                 <div class="mt-4 mb-0">
-                                    <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Registrar</button></div>
+                                    <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Actualizar</button></div>
                                 </div>
                             </div>
                         </div>
@@ -147,38 +143,7 @@
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script>
         function confirmCrear() {
-            return confirm("¿Estás seguro de que deseas Guardar?");
+            return confirm("¿Estás seguro de que deseas Actualizar?");
         }
     </script>
-    <script>
-        document.getElementById('addActivityButton').addEventListener('click', function () {
-            const container = document.getElementById('additionalActivities');
-            const textareaCount = container.getElementsByTagName('textarea').length + 1;
-
-            const newTextarea = document.createElement('div');
-            newTextarea.classList.add('form-floating', 'mb-3');
-
-            newTextarea.innerHTML = `
-                    <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
-                    <label>Actividad ${textareaCount}</label>
-                `;
-
-            container.appendChild(newTextarea);
-        });
-        document.getElementById('addObservationButton').addEventListener('click', function () {
-            const container = document.getElementById('additionalObservations');
-            const textareaCount = container.getElementsByTagName('textarea').length + 1;
-
-            const newTextarea = document.createElement('div');
-            newTextarea.classList.add('form-floating', 'mb-3');
-
-            newTextarea.innerHTML = `
-                        <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
-                        <label>Observación ${textareaCount}</label>
-                    `;
-
-            container.appendChild(newTextarea);
-        });
-    </script>
 }
-

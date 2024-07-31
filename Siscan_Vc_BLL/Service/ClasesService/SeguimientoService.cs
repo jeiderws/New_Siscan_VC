@@ -32,12 +32,12 @@ namespace Siscan_Vc_BLL.Service.ClasesService
             return await _seguimientorepo.GetForId(id.ToString());
         }
 
-        public async Task<SeguimientoInstructorAprendiz> GetForNumDocAprdz(string numDoc)
+        public async Task<IQueryable<SeguimientoInstructorAprendiz>> GetForNumDocAprdz(string numDoc)
         {
             try
             {
                 IQueryable<SeguimientoInstructorAprendiz> querySegui = await _seguimientorepo.GetAll();
-                SeguimientoInstructorAprendiz segui = querySegui.Where(a => a.NumeroDocumentoAprendiz == numDoc).FirstOrDefault();
+                IQueryable<SeguimientoInstructorAprendiz> segui = querySegui.Where(a => a.NumeroDocumentoAprendiz == numDoc);
                 return segui;
             }
             catch { return null; }

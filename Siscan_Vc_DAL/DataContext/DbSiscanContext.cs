@@ -522,7 +522,7 @@ public partial class DbSiscanContext : DbContext
             entity.Property(e => e.NitEmpresa)
                 .HasMaxLength(50)
                 .IsUnicode(false);
-            entity.Property(e => e.NumeroDocumento)
+            entity.Property(e => e.NumeroDocumentoInstructor)
                 .HasMaxLength(50)
                 .IsUnicode(false);
             entity.Property(e => e.NumeroDocumentoAprendiz)

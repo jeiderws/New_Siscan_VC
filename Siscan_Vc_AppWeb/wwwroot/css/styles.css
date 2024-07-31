@@ -3018,6 +3018,16 @@ textarea.form-control-lg {
         border: 2px solid #0d6efdd9;
     }
 
+.btnHistorial {
+    background: #6abce2;
+    border-radius: 5px;
+    color: #f7f7f7;
+    border: 1px solid #f7f7f7;
+}
+
+    .btnHistorial:hover {
+        border: 2px solid #0d6efdd9;
+    }
 .boton {
     background: #39a900;
     border-radius: 5px;

@@ -6,10 +6,11 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
-            IdSeguimiento = seguimiento.IdSeguimiento;
+            IdSeguimiento=seguimiento.IdSeguimiento;
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {
+                idTipoDocumentoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.IdTipodocumento;
                 NumeroDocumentoAprendiz = seguimiento.NumeroDocumentoAprendiz;
                 NombreAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.NombreAprendiz;
                 ApellidoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.ApellidoAprendiz;
@@ -23,7 +24,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha?.ToString();
             }
 
-            // Instructor
+            // Instructor 
             if (seguimiento.NumeroDocumentoInstructorNavigation != null)
             {
                 NumeroDocumentoInstructor = seguimiento.NumeroDocumentoInstructor;
@@ -48,8 +49,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 NitEmpresa = seguimiento.NitEmpresa;
                 NombreEmpresa = seguimiento.NitEmpresaNavigation.NombreEmpresa;
                 AreaEmpresa = seguimiento.IdAreaEmpresaNavigation.NombreArea;
-               
-                
+                IdAsignacionArea=seguimiento.IdAsignacionArea;
+                IdAreaEmpresa=seguimiento.IdAreaEmpresa;
             }
 
             // Practicas
@@ -58,9 +59,12 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             NombreModalidad = seguimiento.IdModalidadNavigation.NombreModalidad;
             idmodalidad = seguimiento.IdModalidad;
         }
+        public List<Actividade> actividades { get; set; }
         public int IdSeguimiento { get; set; }
         public int actividades { get; set; }    
         //aprendiz
+        public int? idTipoDocumentoAprendiz {  get; set; }
+        public string TipoDocumentoAprendiz {  get; set; }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
         public string? NombreAprendiz { get; set; }
         public string? ApellidoAprendiz { get; set; }
@@ -86,9 +90,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 
         //practicas
         public DateOnly? FechaInicio { get; set; }
-
         public DateOnly? FechaFinalizacion { get; set; }
-
         public string? NombreModalidad { get; set; }
         public int? idmodalidad { get; set; }
 
