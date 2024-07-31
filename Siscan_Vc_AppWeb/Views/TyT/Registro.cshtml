@@ -1,0 +1,43 @@
+﻿@{
+    ViewData["Title"] = "Registro";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@model Siscan_Vc_AppWeb.Models.ViewModels.Modelviewtytap
+<div class="container pt-6">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="card-header fondomenu ">
+                    <h3 class="text-center font-dark-light my-4">Actualizar Fechas de Presentación</h3>
+                </div>
+                <div class="card-body">
+                    @if (TempData["MensajeAlertFecha"] != null)
+                    {
+                        <div class="alert alert-success" role="alert"> @TempData["MensajeAlertFecha"] </div>
+                    }
+                    <form asp-action="Registro" method="post">
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" asp-for="FechaPresentacionSem1" type="date" />
+                                    <label>Fecha de Presentación Semestre 1</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input class="form-control" asp-for="FechaPresentacionSem2" type="date" />
+                                    <label>Fecha de Presentación Semestre 2</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4 mb-0">
+                            <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px">Actualizar</button></div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
