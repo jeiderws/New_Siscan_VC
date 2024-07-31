@@ -61,6 +61,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         }
         public List<Actividade> actividades { get; set; }
         public int IdSeguimiento { get; set; }
+        public int actividades { get; set; }    
         //aprendiz
         public int? idTipoDocumentoAprendiz {  get; set; }
         public string TipoDocumentoAprendiz {  get; set; }

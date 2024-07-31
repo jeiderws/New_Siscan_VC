@@ -1,0 +1,85 @@
+﻿@model Siscan_Vc_AppWeb.Models.ViewModels.TyTConsultationViewModel
+
+@{
+    ViewData["Title"] = "Consultar Aprendices";
+}
+
+<div class="card-header fondomenu">
+    <h3 class="text-center font-dark-light my-4">Consultar Aprendices </h3>
+</div>
+
+<form method="post" asp-action="ConsultarResult">
+    <div>
+        <input class="form-control" type="text" placeholder="Codigo Ficha..." aria-label="Codigo Ficha..." id="FichaId" name="FichaId" value="@Model.FichaId" required />
+    </div>
+    <div>
+        <label for="SemestreConvocatoria">Semestre Convocatoria:</label>
+        <select id="SemestreConvocatoria" name="SemestreConvocatoria" class="form-control form-control-sm" required>
+            <option value="Semestre 1">Semestre 1</option>
+            <option value="Semestre 2">Semestre 2</option>
+        </select>
+    </div>
+    <div>
+        <label for="ChangeStatusToRealizadas">Cambiar Estado a Realizadas:</label>
+        <input type="checkbox" id="ChangeStatusToRealizadas" name="ChangeStatusToRealizadas" />
+    </div>
+    <button type="submit" class="boton">Consultar</button>
+</form>
+
+@if (Model.Aprendices != null && Model.Aprendices.Any())
+{
+    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Contenido</h6>
+    <div style="overflow-x:auto;">
+        <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+            <thead class="boton2 ms-auto">
+                <tr>
+                    <th>NumeroDocumentoAprendiz</th>
+                    <th>NombreAprendiz</th>
+                    <th>ApellidoAprendiz</th>
+                    <th>CelAprendiz</th>
+                    <th>CorreoAprendiz</th>
+                    <th>DireccionAprendiz</th>
+                    <th>NombreCompletoAcudiente</th>
+                    <th>CorreoAcudiente</th>
+                    <th>CelularAcudiente</th>
+                    <th>IdEstadoTyt</th>
+                    <th>IdTipodocumento</th>
+                    <th>Ficha</th>
+                    <th>IdCiudad</th>
+                    <th>IdEstadoAprendiz</th>
+                    <th>CodigoInscripcion</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var aprendiz in Model.Aprendices)
+                {
+                    <tr>
+                        <td>@aprendiz.NumeroDocumentoAprendiz</td>
+                        <td>@aprendiz.NombreAprendiz</td>
+                        <td>@aprendiz.ApellidoAprendiz</td>
+                        <td>@aprendiz.CelAprendiz</td>
+                        <td>@aprendiz.CorreoAprendiz</td>
+                        <td>@aprendiz.DireccionAprendiz</td>
+                        <td>@aprendiz.NombreCompletoAcudiente</td>
+                        <td>@aprendiz.CorreoAcudiente</td>
+                        <td>@aprendiz.CelularAcudiente</td>
+                        <td>@aprendiz.IdEstadoTyt</td>
+                        <td>@aprendiz.IdTipodocumento</td>
+                        <td>@aprendiz.Ficha</td>
+                        <td>@aprendiz.IdCiudad</td>
+                        <td>@aprendiz.IdEstadoAprendiz</td>
+                        <td>@aprendiz.CodigoInscripcion</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+else if (Model.Aprendices == null)
+{
+    <p>No Hay Resultado.</p>
+}
+
+@section Scripts {
+    <script src="~/js/scripts.js" asp-append-version="true"></script>
+}

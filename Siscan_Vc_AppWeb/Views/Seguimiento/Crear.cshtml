@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <!--datos de empresa-->
-                    <div class="card-body">
+                    <div class="card-body"> 
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -124,6 +124,14 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-primary" id="addActivityButton">Agregar Actividad</button>
+                                </div>
+                                <div id="additionalActivities"></div>
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-primary" id="addObservationButton">Agregar Observación</button>
+                                </div>
+                                <div id="additionalObservations"></div>
                                 <div class="mt-4 mb-0">
                                     <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Registrar</button></div>
                                 </div>
@@ -142,6 +150,35 @@
             return confirm("¿Estás seguro de que deseas Guardar?");
         }
     </script>
+    <script>
+        document.getElementById('addActivityButton').addEventListener('click', function () {
+            const container = document.getElementById('additionalActivities');
+            const textareaCount = container.getElementsByTagName('textarea').length + 1;
 
+            const newTextarea = document.createElement('div');
+            newTextarea.classList.add('form-floating', 'mb-3');
+
+            newTextarea.innerHTML = `
+                    <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
+                    <label>Actividad ${textareaCount}</label>
+                `;
+
+            container.appendChild(newTextarea);
+        });
+        document.getElementById('addObservationButton').addEventListener('click', function () {
+            const container = document.getElementById('additionalObservations');
+            const textareaCount = container.getElementsByTagName('textarea').length + 1;
+
+            const newTextarea = document.createElement('div');
+            newTextarea.classList.add('form-floating', 'mb-3');
+
+            newTextarea.innerHTML = `
+                        <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
+                        <label>Observación ${textareaCount}</label>
+                    `;
+
+            container.appendChild(newTextarea);
+        });
+    </script>
 }
 

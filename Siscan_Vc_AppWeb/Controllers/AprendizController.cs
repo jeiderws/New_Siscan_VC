@@ -438,10 +438,14 @@ namespace Siscan_Vc_AppWeb.Controllers
                     return Json(new { success = false, message = "El aprendiz no fue encontrado." });
                 }
                 TempData["MensajeAlertEliminado"] = "Aprendiz eliminado correctamente!!";
-                var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
-                _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
                 _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
+                var actividades = await _dbSiscanContext.Actividades.Where(a => a.IdSeguimientoNavigation.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
+                _dbSiscanContext.Actividades.RemoveRange(actividades);
+                var observaciones = await _dbSiscanContext.Observacions.Where(o => o.IdSeguimientoNavigation.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
+                _dbSiscanContext.Observacions.RemoveRange(observaciones);
+                var inscripciones = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == nmdoc).ToListAsync();
+                _dbSiscanContext.InscripcionTyts.RemoveRange(inscripciones);
                 await _aprendizService.Delete(nmdoc);
                 return Json(new { success = true, message = "El aprendiz se eliminó correctamente." });
             }
@@ -520,7 +524,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 aprendiz.IdEstadoAprendiz = aprendiztyt.aprendiz.IdEstadoAprendiz;
                 aprendiz.Ficha = aprendiztyt.aprendiz.Ficha;
                 aprendiz.IdCiudad = aprendiztyt.aprendiz.IdCiudad;
-                aprendiz.IdEstadoAprendiz = aprendiztyt.aprendiz.IdEstadoAprendiz;
+                aprendiz.IdEstadoTyt = aprendiztyt.aprendiz.IdEstadoTyt;
 
                 try
                 {

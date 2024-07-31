@@ -28,6 +28,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public AsignacionArea asignacionArea { get; set; }
         public Aprendiz aprendiz { get; set; }
         public ViewModelSeguimiento seguimiento { get; set; }
-
+        public Actividade actividades { get; set; }
+        public List<string> actividadesList { get; set; }
+        public List<string> observacionesList { get; set; }
     }
 }

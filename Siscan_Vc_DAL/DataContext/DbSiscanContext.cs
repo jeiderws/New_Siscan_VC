@@ -456,7 +456,6 @@ public partial class DbSiscanContext : DbContext
 
             entity.ToTable("Observacion");
 
-            entity.Property(e => e.IdObservacion).ValueGeneratedNever();
             entity.Property(e => e.Observaciones).IsUnicode(false);
 
             entity.HasOne(d => d.IdSeguimientoNavigation).WithMany(p => p.Observacions)
