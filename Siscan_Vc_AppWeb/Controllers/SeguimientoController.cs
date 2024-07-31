@@ -247,24 +247,94 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> MostrarHistorial(string nmDocAprendiz)
         {
-            ViewModelSeguiArchivoAprendiz vmSeguimiento = new ViewModelSeguiArchivoAprendiz();
+            ModelViewSeguimientoArchivo vmSeguimiento = new ModelViewSeguimientoArchivo();
             try
             {
                 if (nmDocAprendiz != null)
                 {
                     //obtener la lista de los seguimientos que tiene el aprendiz con el numero de documento obtenido por parametro
-                    IQueryable<SeguimientoArchivo> seguimientos = await _seguimientoArchivoService.GetForDocAprendiz(nmDocAprendiz);
+                    var seguimientosArchv = await _seguimientoArchivoService.GetForDocAprendiz(nmDocAprendiz);
+                    var seguimiento = await _seguimientoService.GetForNumDocAprdz(nmDocAprendiz);
+
+                    List<ViewModelSeguiArchivoAprendiz> listSeguiArchivo = new List<ViewModelSeguiArchivoAprendiz>();
+                    List<ViewModelSeguimiento> listSegui = new List<ViewModelSeguimiento>();
                     //obtener el aprendiz con el numero de documento obtenido por parametro
                     var aprendiz = await _aprendizService.GetForDoc(nmDocAprendiz);
 
+                    if (seguimiento != null)
+                    {
+                        listSegui = seguimiento.Select(s => new ViewModelSeguimiento(s)
+                        {
+                            FechaInicio = s.FechaInicio,
+                            FechaFinalizacion = s.FechaFinalizacion,
+                            NombreModalidad = s.IdModalidadNavigation.NombreModalidad,
+                            //datos del aprendiz                            
+                            NumeroDocumentoAprendiz = s.NumeroDocumentoAprendiz,
+                            NombreAprendiz = s.NumeroDocumentoAprendizNavigation.NombreAprendiz,
+                            ApellidoAprendiz = s.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
+                            CorreoAprendiz = s.NumeroDocumentoAprendizNavigation.CorreoAprendiz,
+                            TelefonoAprendiz = s.NumeroDocumentoAprendizNavigation.CelAprendiz,
+                            FichaAprendiz = s.NumeroDocumentoAprendizNavigation.Ficha,
+                            //datos del instructor
+                            NumeroDocumentoInstructor = s.NumeroDocumentoInstructor,
+                            NombreInstructor = s.NumeroDocumentoInstructorNavigation.NombreInstructor,
+                            ApellidoInstructor = s.NumeroDocumentoInstructorNavigation.ApellidoInstructor,                           
+                            //datos del coformador
+                            NumDocumentoCoformador = s.NumeroDocumentoInstructor,
+                            NombreCoformador = s.IdCoformadorNavigation.NombreCoformador,
+                            ApellidoCoformador = s.IdCoformadorNavigation.ApellidoCoformador,                           
+                            //datos de la empresa
+                            NitEmpresa = s.NitEmpresa,
+                            NombreEmpresa = s.NitEmpresaNavigation.NombreEmpresa,
+                            AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea,                            
+                        }).ToList();
+                    }
 
-                }                
+                    if (seguimientosArchv != null)
+                    {
+                        Coformador coformador = null;
+                        foreach (var segui in seguimientosArchv)
+                        {
+                            //obtener instructor asignado al seguimiento
+                            var instructor = _dbSiscanContext.Instructors.Find(segui.NumeroDocumentoInstructor);
+                            //obtener coformador asignado al seguimiento
+                            coformador = _dbSiscanContext.Coformadors.Where(c => c.NumeroDocumentoCoformador == segui.NumeroDocumentoCoformador).FirstOrDefault();
+                            //obtener la empresa asignada al seguimiento
+                            var empresa = await _empresaService.GetForNit(segui.NitEmpresa);
+                            //obtener el area asignada al seguimiento
+                            var areasEmpresa = _dbSiscanContext.AreasEmpresas.Find(segui.IdAreaEmpresa);
+                            //obtener la modalidad del seguimiento
+                            var modalidad = _dbSiscanContext.Modalidads.Find(segui.IdModalidad);
+
+                            if (instructor != null && coformador != null && empresa != null && areasEmpresa != null && modalidad != null)
+                            {
+                                var seguimientoArchivo = new ViewModelSeguiArchivoAprendiz
+                                {
+                                    Area = areasEmpresa.NombreArea,
+                                    Coformador = coformador,
+                                    Empresa = empresa,
+                                    Instructor = instructor,
+                                    Modalidad = modalidad.NombreModalidad,
+                                    FechaInicio = segui.FechaInicio,
+                                    FechaFinalizacion = segui.FechaFinalizacion
+                                };
+                                listSeguiArchivo.Add(seguimientoArchivo);
+                            }
+                        }
+                    }
+                    vmSeguimiento = new ModelViewSeguimientoArchivo
+                    {
+                        Aprendiz = aprendiz,
+                        listaSeguiArchivos = listSeguiArchivo,
+                        listaSegui=listSegui
+                    };
+                }
             }
-            catch (Exception ex)
+            catch
             {
                 return NotFound();
             }
-            return View();
+            return View(vmSeguimiento);
         }
 
         [HttpDelete]

@@ -2,6 +2,7 @@
     ViewData["Title"] = "MostrarHistorial";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@model Siscan_Vc_AppWeb.Models.ViewModels.ModelViewSeguimientoArchivo
 
 <div style="width:100%; padding:0" class="container">
     <div class="row justify-content-center">
@@ -26,20 +27,23 @@
                             </thead>
                             <tbody>
                                 @{
-                                    // <tr>
-                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.NumeroDocumentoAprendiz)</td>
-                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.NombreAprendiz)</td>
-                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.ApellidoAprendiz)</td>
-                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
-                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
-                                    //     <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
-                                    // </tr>
+                                    if (Model.Aprendiz != null)
+                                    {
+                                        <tr>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.NumeroDocumentoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.NombreAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.ApellidoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CorreoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.CelAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.Aprendiz.Ficha)</td>
+                                        </tr>
+                                    }
                                 }
                             </tbody>
                         </table>
                     </div>
                     <hr />
-                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Historia de Seguimientos</h6>
                     <br />
                     <div class="card-body table-responsive" style="height:450px; ">
                         <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
@@ -59,31 +63,67 @@
                             </thead>
                             <tbody>
                                 @{
-                                    // foreach (var aprendiz in Model.ListaAprendices)
-                                    // {
-                                    //     <tr>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.Ficha)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.nombredoc)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.NumeroDocumentoAprendiz)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.NombreAprendiz)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.ApellidoAprendiz)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.CelAprendiz)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.CorreoAprendiz)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.NombreCompletoAcudiente)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.CelularAcudiente)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.CorreoAcuediente)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.nomEstadoAprendiz)</td>
-                                    //         <td>@Html.DisplayFor(a => aprendiz.nomEstadoTyt)</td>
-                                    //         <td>
-                                    //             <a class="btn  btn-sm" asp-controller="Aprendiz" asp-action="Editar" asp-route-numDoc="@aprendiz.NumeroDocumentoAprendiz">
-                                    //                 <img src="~/img/editar.png" alt="Alternate Text" width="25" />
-                                    //             </a>
-                                    //             <a class="btn btn-sm btn-eliminar" data-id="@aprendiz.NumeroDocumentoAprendiz">
-                                    //                 <img src="~/img/borrar (1).png" alt="Alternate Text" width="25" data-bs-toggle="modal" />
-                                    //             </a>
-                                    //         </td>
-                                    //     </tr>
-                                    // }
+                                    if (Model.listaSeguiArchivos.Count >= 0)
+                                    {
+                                        foreach (var segui in Model.listaSeguiArchivos)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(s => segui.Empresa.Nitmpresa)</td>
+                                                <td>@Html.DisplayFor(s => segui.Empresa.NombreEmpresa)</td>
+                                                <td>@Html.DisplayFor(s => segui.Modalidad)</td>
+                                                <td>@Html.DisplayFor(s => segui.Area)</td>
+                                                <td>@Html.DisplayFor(s => segui.Instructor.NumeroDocumentoInstructor)</td>
+                                                <td>@Html.DisplayFor(s => segui.Instructor.NombreInstructor) @Html.DisplayFor(s=>segui.Instructor.ApellidoInstructor)</td>
+                                                <td>@Html.DisplayFor(s => segui.Coformador.NumeroDocumentoCoformador)</td>
+                                                <td>@Html.DisplayFor(s => segui.Coformador.NombreCoformador) @Html.DisplayFor(s => segui.Coformador.ApellidoCoformador)</td>
+                                                <td>@Html.DisplayFor(s => segui.FechaInicio)</td>
+                                                <td>@Html.DisplayFor(s => segui.FechaFinalizacion)</td>
+                                            </tr>
+                                        }
+                                    }
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <hr />
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Seguimientos Actuales</h6>
+                    <br />
+                    <div class="card-body table-responsive" style="height:450px; ">
+                        <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+                            <thead class="boton2 ms-auto">
+                                <tr>
+                                    <th>Nit Empresa</th>
+                                    <th>Nombre Empresa</th>
+                                    <th>Modalidad</th>
+                                    <th>Area</th>
+                                    <th>Documento Instructor</th>
+                                    <th>Instructor</th>
+                                    <th>Documento Coformador</th>
+                                    <th>Coformador</th>
+                                    <th>Fecha Inicio</th>
+                                    <th>Fecha Finalizacion</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @{
+                                    if (Model.listaSegui.Count >= 0)
+                                    {
+                                        foreach (var segui in Model.listaSegui)
+                                        {
+                                            <tr>
+                                                <td>@Html.DisplayFor(s => segui.NitEmpresa)</td>
+                                                <td>@Html.DisplayFor(s => segui.NombreEmpresa)</td>
+                                                <td>@Html.DisplayFor(s => segui.NombreModalidad)</td>
+                                                <td>@Html.DisplayFor(s => segui.AreaEmpresa)</td>
+                                                <td>@Html.DisplayFor(s => segui.NumeroDocumentoInstructor)</td>
+                                                <td>@Html.DisplayFor(s => segui.NombreInstructor) @Html.DisplayFor(s => segui.ApellidoInstructor)</td>
+                                                <td>@Html.DisplayFor(s => segui.NumDocumentoCoformador)</td>
+                                                <td>@Html.DisplayFor(s => segui.NombreCoformador) @Html.DisplayFor(s => segui.ApellidoCoformador)</td>
+                                                <td>@Html.DisplayFor(s => segui.FechaInicio)</td>
+                                                <td>@Html.DisplayFor(s => segui.FechaFinalizacion)</td>
+                                            </tr>
+                                        }
+                                    }
                                 }
                             </tbody>
                         </table>

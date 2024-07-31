@@ -14,6 +14,6 @@ namespace Siscan_Vc_BLL.Service.InterfacesService
         Task<bool> Delete(long id);
         Task<SeguimientoInstructorAprendiz> GetForId(long id);
         Task<IQueryable<SeguimientoInstructorAprendiz>> GetAll();
-        Task<SeguimientoInstructorAprendiz> GetForNumDocAprdz(string numDoc);
+        Task<IQueryable<SeguimientoInstructorAprendiz>> GetForNumDocAprdz(string numDoc);
     }
 }
