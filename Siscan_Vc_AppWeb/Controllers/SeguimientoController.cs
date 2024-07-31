@@ -245,13 +245,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 listSeguimiento.Add(segui);
             }
-            //foreach (var ap in listaAprendices)
-            //{
-            //    if (ap.SeguimientoInstructorAprendices.Count() != 0)
-            //    {
-            //        listaAprendizSegui.Add(ap);
-            //    }
-            //}
             aprendiz = await _aprendizService.GetForDoc(numDoc);
             Empresa empresa = new Empresa();
             if (seguimiento != null)
