@@ -4,75 +4,103 @@
     ViewData["Title"] = "Consultar Aprendices";
 }
 
-<div class="card-header fondomenu">
-    <h3 class="text-center font-dark-light my-4">Consultar Aprendices </h3>
-</div>
-
-<form method="post" asp-action="ConsultarResult">
-    <div>
-        <input class="form-control" type="text" placeholder="Codigo Ficha..." aria-label="Codigo Ficha..." id="FichaId" name="FichaId" value="@Model.FichaId" required />
-    </div>
-    <div>
-        <label for="SemestreConvocatoria">Semestre Convocatoria:</label>
-        <select id="SemestreConvocatoria" name="SemestreConvocatoria" class="form-control form-control-sm" required>
-            <option value="Semestre 1">Semestre 1</option>
-            <option value="Semestre 2">Semestre 2</option>
-        </select>
-    </div>
-    <button type="submit" class="boton">Consultar</button>
-</form>
-
-@if (Model.Aprendices != null && Model.Aprendices.Any())
-{
-    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Contenido</h6>
-    <div style="overflow-x:auto;">
-        <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
-            <thead class="boton2 ms-auto">
-                <tr>
-                    <th>NumeroDocumentoAprendiz</th>
-                    <th>NombreAprendiz</th>
-                    <th>ApellidoAprendiz</th>
-                    <th>CelAprendiz</th>
-                    <th>CorreoAprendiz</th>
-                    <th>DireccionAprendiz</th>
-                    <th>NombreCompletoAcudiente</th>
-                    <th>CorreoAcudiente</th>
-                    <th>CelularAcudiente</th>
-                    <th>IdEstadoTyt</th>
-                    <th>IdTipodocumento</th>
-                    <th>Ficha</th>
-                    <th>IdCiudad</th>
-                    <th>IdEstadoAprendiz</th>
-                    <th>CodigoInscripcion</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var aprendiz in Model.Aprendices)
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-lg-12">
+            <div class="card shadow-lg border-0 rounded-lg mt-5">
+                <div class="fondomenu py-3 px-5">
+                    <h6 class="m-0 text-uppercase font-weight-bold text-white "> Actualizar Estado TyT</h6>
+                </div>
+                <br />
+                <div class="col-md-6 py-3 px-5">
+                    <form method="post" asp-action="ConsultarResult">
+                        <div>
+                            <input class="form-control" type="text" placeholder="Codigo Ficha..." aria-label="Codigo Ficha..." id="FichaId" name="FichaId" value="@Model.FichaId" required />
+                        </div>
+                        <br />
+                        <div>
+                            <label for="SemestreConvocatoria">Semestre Convocatoria:</label>
+                            <select id="SemestreConvocatoria" name="SemestreConvocatoria" class="form-control form-control-sm" required>
+                                <option>Selecciona El Semestre de La Convocatoria...</option>
+                                <option value="Semestre 1">Semestre 1</option>
+                                <option value="Semestre 2">Semestre 2</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="boton">Consultar</button>
+                    </form>
+                </div>
+                @if (TempData["MensajeAlertIns"] != null)
                 {
-                    <tr>
-                        <td>@aprendiz.NumeroDocumentoAprendiz</td>
-                        <td>@aprendiz.NombreAprendiz</td>
-                        <td>@aprendiz.ApellidoAprendiz</td>
-                        <td>@aprendiz.CelAprendiz</td>
-                        <td>@aprendiz.CorreoAprendiz</td>
-                        <td>@aprendiz.DireccionAprendiz</td>
-                        <td>@aprendiz.NombreCompletoAcudiente</td>
-                        <td>@aprendiz.CorreoAcudiente</td>
-                        <td>@aprendiz.CelularAcudiente</td>
-                        <td>@aprendiz.IdEstadoTyt</td>
-                        <td>@aprendiz.IdTipodocumento</td>
-                        <td>@aprendiz.Ficha</td>
-                        <td>@aprendiz.IdCiudad</td>
-                        <td>@aprendiz.IdEstadoAprendiz</td>
-                        <td>@aprendiz.CodigoInscripcion</td>
-                    </tr>
+                    <div class="alert alert-success" role="alert"> @TempData["MensajeAlertIns"] </div>
                 }
-            </tbody>
-        </table>
+                @if (Model.Aprendices != null && Model.Aprendices.Any())
+                {
+                    <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Contenido</h6>
+                    <div style="overflow-x:auto;">
+                        <div class="card-body table-responsive">
+                            <form method="post" asp-action="UpdateStatus">
+                                <div class="card-body table-responsive-busqueda">
+                                    <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
+                                        <thead class="boton2 ms-auto">
+                                            <tr>
+                                                <th>Realizo</th>
+                                                <th>NumeroDocumentoAprendiz</th>
+                                                <th>NombreAprendiz</th>
+                                                <th>ApellidoAprendiz</th>
+                                                <th>CodigoInscripcion</th>
+                                                <th>CelAprendiz</th>
+                                                <th>CorreoAprendiz</th>
+                                                <th>DireccionAprendiz</th>
+                                                <th>NombreCompletoAcudiente</th>
+                                                <th>CorreoAcudiente</th>
+                                                <th>CelularAcudiente</th>
+                                                <th>EstadoTyt</th>
+                                                <th>Tipodocumento</th>
+                                                <th>Ficha</th>
+                                                <th>Ciudad</th>
+                                                <th>EstadoAprendiz</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var aprendiz in Model.Aprendices)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" name="selectedAprendices" value="@aprendiz.NumeroDocumentoAprendiz" />
+                                                    </td>
+                                                    <td>@aprendiz.NumeroDocumentoAprendiz</td>
+                                                    <td>@aprendiz.NombreAprendiz</td>
+                                                    <td>@aprendiz.ApellidoAprendiz</td>
+                                                    <td>@aprendiz.CodigoInscripcion</td>
+                                                    <td>@aprendiz.CelAprendiz</td>
+                                                    <td>@aprendiz.CorreoAprendiz</td>
+                                                    <td>@aprendiz.DireccionAprendiz</td>
+                                                    <td>@aprendiz.NombreCompletoAcudiente</td>
+                                                    <td>@aprendiz.CorreoAcudiente</td>
+                                                    <td>@aprendiz.CelularAcudiente</td>
+                                                    <td>@aprendiz.EstadoTytNombre</td>
+                                                    <td>@aprendiz.TipoDocumentoNombre</td>
+                                                    <td>@aprendiz.Ficha</td>
+                                                    <td>@aprendiz.CiudadNombre</td>
+                                                    <td>@aprendiz.EstadoAprendizNombre</td>
+
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <button type="submit" class="boton">Actualizar Estado</button>
+                            </form>
+                        </div>
+                    </div>
+                }
+                else if (Model.Aprendices == null)     
+                {
+                    <p>No Hay Resultado.</p>
+                }
+            </div>
+        </div>
     </div>
-}
-else if (Model.Aprendices == null)
-{
-    <p>No Hay Resultado.</p>
-}
+</div>
 

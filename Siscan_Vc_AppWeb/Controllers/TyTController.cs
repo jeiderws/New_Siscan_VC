@@ -59,7 +59,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                                   from i in ai.DefaultIfEmpty()
                                   join c in _dbcontext.ConvocatoriaTyts on i.IdConvocatoria equals c.IdConvocatoria
                                   join f in _dbcontext.Fichas on a.Ficha equals f.Ficha1
-                                  where f.Ficha1 == viewModel.FichaId && c.SemestreConvocatoria == viewModel.SemestreConvocatoria
+                                  where f.Ficha1 == viewModel.FichaId && c.SemestreConvocatoria == viewModel.SemestreConvocatoria && a.IdEstadoTyt == 1
                                   select new AprendizViewModel
                                   {
                                       NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
@@ -71,35 +71,40 @@ namespace Siscan_Vc_AppWeb.Controllers
                                       NombreCompletoAcudiente = a.NombreCompletoAcudiente,
                                       CorreoAcudiente = a.CorreoAcuediente,
                                       CelularAcudiente = a.CelularAcudiente,
-                                      IdEstadoTyt = a.IdEstadoTyt,
-                                      IdTipodocumento = a.IdTipodocumento,
+                                      EstadoTytNombre = a.IdEstadoTytNavigation.DescripcionEstadotyt,
+                                      TipoDocumentoNombre = a.IdTipodocumentoNavigation.TipoDocumento1,
                                       Ficha = a.Ficha,
-                                      IdCiudad = a.IdCiudad,
-                                      IdEstadoAprendiz = a.IdEstadoAprendiz,
+                                      CiudadNombre = a.IdCiudadNavigation.NombreCiudad,
+                                      EstadoAprendizNombre = a.IdEstadoAprendizNavigation.NombreEstado,
                                       CodigoInscripcion = i.CodigoInscripcion,
                                       HasCompletedTyt = i.CodigoInscripcion != null,
                                       ChangeStatusToRealizadas = viewModel.ChangeStatusToRealizadas
                                   }).ToList();
-                if (viewModel.ChangeStatusToRealizadas)
-                {
-                    foreach (var aprendiz in aprendices)
-                    {
-                        if (aprendiz.IdEstadoTyt == 1) 
-                        {
-                            var apprenticeEntity = _dbcontext.Aprendiz.FirstOrDefault(a => a.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
-                            if (apprenticeEntity != null)
-                            {
-                                apprenticeEntity.IdEstadoTyt = 6; 
-                            }
-                        }
-                    }
-                    _dbcontext.SaveChanges();
-                }
 
                 viewModel.Aprendices = aprendices;
             }
 
             return View("Consultar", viewModel);
         }
+        [HttpPost]
+        public IActionResult UpdateStatus(string[] selectedAprendices)
+        {
+            if (selectedAprendices != null && selectedAprendices.Length > 0)
+            {
+                foreach (var numeroDocumento in selectedAprendices)
+                {
+                    var apprenticeEntity = _dbcontext.Aprendiz.FirstOrDefault(a => a.NumeroDocumentoAprendiz == numeroDocumento);
+                    if (apprenticeEntity != null)
+                    {
+                        apprenticeEntity.IdEstadoTyt = 6; // Cambiar estado a realizadas
+                    }
+                }
+                _dbcontext.SaveChanges();
+                TempData["MensajeAlertIns"] = "Se Actualizo el estado TYT de los Aprendices";
+            }
+            return RedirectToAction("Consultar");
+        }
+
+
     }
 }

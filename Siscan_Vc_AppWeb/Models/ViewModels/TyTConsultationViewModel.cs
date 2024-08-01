@@ -7,6 +7,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public string FichaId { get; set; }
         public string SemestreConvocatoria { get; set; }
+        public int estadotyt {  get; set; }
         public bool ChangeStatusToRealizadas { get; set; }
         public List<AprendizViewModel> Aprendices { get; set; }
     }
@@ -22,13 +23,14 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string NombreCompletoAcudiente { get; set; }
         public string CorreoAcudiente { get; set; }
         public string CelularAcudiente { get; set; }
-        public int? IdEstadoTyt { get; set; }
-        public int? IdTipodocumento { get; set; }
-        public string Ficha { get; set; }
-        public int? IdCiudad { get; set; }
-        public int? IdEstadoAprendiz { get; set; }
+        public string EstadoTytNombre { get; set; }  // Valor legible
+        public string TipoDocumentoNombre { get; set; } // Valor legible
+        public string Ficha { get; set; } // Valor legible
+        public string CiudadNombre { get; set; } // Valor legible
+        public string EstadoAprendizNombre { get; set; } // Valor legible
         public string CodigoInscripcion { get; set; }
         public bool HasCompletedTyt { get; set; }
         public bool ChangeStatusToRealizadas { get; set; }
     }
+
 }
