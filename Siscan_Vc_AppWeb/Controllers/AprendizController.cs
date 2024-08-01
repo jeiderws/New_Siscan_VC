@@ -493,7 +493,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                     return NotFound();
                 }
             }
-
             return View(viewModel);
         }
 
@@ -532,7 +531,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     _dbSiscanContext.Aprendiz.Update(aprendiz);
                     if (aprendiz.IdEstadoTyt == 1)
                     {
-                        insctyt = await _dbSiscanContext.InscripcionTyts.FirstOrDefaultAsync(i => i.NumeroDocumentoAprendiz == aprendiz.NumeroDocumentoAprendiz);
+                        insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
                         insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
                         insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
                         insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
