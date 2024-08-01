@@ -208,7 +208,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Ocurrió un error: " + ex.Message;
-                return View(viewmodelsegui);
             }
             return View(viewmodelsegui);
         }
