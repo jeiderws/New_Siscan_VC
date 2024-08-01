@@ -208,7 +208,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             catch (Exception ex)
             {
                 TempData["ErrorMessage"] = "Ocurrió un error: " + ex.Message;
-                return View(viewmodelsegui);
             }
             return View(viewmodelsegui);
         }
@@ -326,7 +325,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }).ToList();
                     }
 
-                    if (seguimientosArchv != null)
+                    if (seguimientosArchv != null && seguimientosArchv.Count()>0)
                     {
                         Coformador coformador = null;
                         foreach (var segui in seguimientosArchv)
