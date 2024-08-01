@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     ViewData["Title"] = "Editar";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -26,7 +25,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" readonly/>
+                                    <input asp-for="aprendiz.NumeroDocumentoAprendiz" class="form-control" id="inputDocumento" type="text" placeholder="Ingresa tu numero de documento" readonly />
                                     <label asp-for="aprendiz.NumeroDocumentoAprendiz">Numero de documento</label>
                                     <span id="numeroDocumentoError" class="text-danger"></span>
                                 </div>
@@ -164,7 +163,16 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
+                                    @{
+                                        if (TempData["CodigoInscripcionExist"] != null)
+                                        {
+                                            <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" readonly />
+                                        }
+                                        else
+                                        {
+                                            <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
+                                        }
+                                    }
                                     <label for="inputcodigotyt">Codigo Inscripcion</label>
                                     <span id="inputcodigotytError" class="text-danger"></span>
                                 </div>
@@ -201,7 +209,7 @@
                         <div class="mt-4 mb-0">
                             <div class="d-grid boton2">
                                 <button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmUpdate()">Actualizar</button>
-                                </div>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -240,7 +248,7 @@
         });
 
         $(document).ready(function () {
-            $('#cboDepartamentos2').change(function () { 
+            $('#cboDepartamentos2').change(function () {
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado
 
                 $.get('@Url.Action("CargarCiudades", "Aprendiz")', { departamentoId: departamentoId }, function (data) {

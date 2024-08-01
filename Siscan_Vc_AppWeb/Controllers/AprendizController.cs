@@ -477,6 +477,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (aprendi.IdEstadoTyt == 1)
                 {
                     insctyt = _dbSiscanContext.InscripcionTyts.First(i => i.NumeroDocumentoAprendiz == aprendi.NumeroDocumentoAprendiz);
+                    TempData["CodigoInscripcionExist"] = "Ya existe inscripcion";
                 }
                 else
                 {
@@ -539,18 +540,20 @@ namespace Siscan_Vc_AppWeb.Controllers
                             insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
                             insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
                             insctyt.IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt;
+
                             _dbSiscanContext.InscripcionTyts.Update(insctyt);
                             await _dbSiscanContext.SaveChangesAsync();
+
                         }
                         else if (insctyt == null)
                         {
                             insctyt = new InscripcionTyt
                             {
-                                CodigoInscripcion=aprendiztyt.inscripcionTyt.CodigoInscripcion,
-                                Idciudad=aprendiztyt.inscripcionTyt.Idciudad,
-                                NumeroDocumentoAprendiz=aprendiztyt.aprendiz.NumeroDocumentoAprendiz,
-                                IdConvocatoria=aprendiztyt.inscripcionTyt.IdConvocatoria,
-                                IdEstadotyt=aprendiztyt.aprendiz.IdEstadoTyt
+                                CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion,
+                                Idciudad = aprendiztyt.inscripcionTyt.Idciudad,
+                                NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz,
+                                IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria,
+                                IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt
                             };
                             _dbSiscanContext.InscripcionTyts.Add(insctyt);
                             await _dbSiscanContext.SaveChangesAsync();
@@ -560,14 +563,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 catch (DbUpdateConcurrencyException)
                 {
                     //validacion de existencia del aprendiz
-                    if (!AprendizExists(aprendiztyt.aprendiz.NumeroDocumentoAprendiz))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                    if (!AprendizExists(aprendiztyt.aprendiz.NumeroDocumentoAprendiz)) return NotFound(); else throw;
                 }
                 return RedirectToAction(nameof(Consultar));
             }
