@@ -12,6 +12,10 @@
                     <h3 class="text-center font-dark-light my-4">Actualizar </h3>
                 </div>
                 <div class="card-body">
+                    @if (TempData["CodigoInscripcionSiExist"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["CodigoInscripcionSiExist"] </div>
+                    }
                     <form asp-action="Editar" id="EditarForm">
                         <div class="row mb-3">
                             <div class="col-md-6">

@@ -503,8 +503,13 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
         {
             InscripcionTyt insctyt;
+            InscripcionTyt codigInsExist = null;
             if (aprendiztyt != null)
             {
+                if (aprendiztyt.inscripcionTyt.CodigoInscripcion != null)
+                {
+                    codigInsExist = await _inscripcionTYTService.GetForCogInscripcion(aprendiztyt.inscripcionTyt.CodigoInscripcion);
+                }
                 var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
                 if (aprendiz == null)
                 {
@@ -529,7 +534,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 try
                 {
-                    await _aprendizService.Update(aprendiz);
                     if (aprendiz.IdEstadoTyt == 1)
                     {
                         insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
@@ -555,10 +559,19 @@ namespace Siscan_Vc_AppWeb.Controllers
                                 IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria,
                                 IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt
                             };
-                            _dbSiscanContext.InscripcionTyts.Add(insctyt);
-                            await _dbSiscanContext.SaveChangesAsync();
+                           
+                            if (codigInsExist!=null && codigInsExist.CodigoInscripcion == insctyt.CodigoInscripcion)
+                            {
+                                TempData["CodigoInscripcionSiExist"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
+                            }
+                            else
+                            {
+                                _dbSiscanContext.InscripcionTyts.Add(insctyt);
+                                await _dbSiscanContext.SaveChangesAsync();
+                            }                            
                         }
                     }
+                    await _aprendizService.Update(aprendiz);
                 }
                 catch (DbUpdateConcurrencyException)
                 {
