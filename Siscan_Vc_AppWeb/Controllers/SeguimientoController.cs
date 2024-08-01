@@ -326,7 +326,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }).ToList();
                     }
 
-                    if (seguimientosArchv != null)
+                    if (seguimientosArchv != null && seguimientosArchv.Count()>0)
                     {
                         Coformador coformador = null;
                         foreach (var segui in seguimientosArchv)
