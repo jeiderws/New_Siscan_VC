@@ -49,7 +49,6 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View(new TyTConsultationViewModel());
         }
-
         [HttpPost]
         public IActionResult ConsultarResult(TyTConsultationViewModel viewModel)
         {
