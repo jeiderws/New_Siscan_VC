@@ -279,7 +279,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var numsDocs = "";
                 foreach (var aprendiz in aprendicesExist)
                 {
-                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz+",";
+                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz + ",";
                 }
                 if (aprendicesExist.Count > 0)
                 {
@@ -291,14 +291,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                     await _dbSiscanContext.SaveChangesAsync();
                     ViewBag.mensajeAprendices = "Aprendices registrados exitosamente";
                 }
-            }catch(Exception ex)
+            }
+            catch (Exception ex)
             {
                 ViewBag.CatchRegistrarExcelAprendz = "Error: " + ex.Message;
             }
             return View();
         }
-        
-        
+
+
         //Registrar aprendiz con un view model
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -470,7 +471,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             if (numDoc != null)
             {
-                var aprendi = await _aprendizService.GetForDoc(numDoc); 
+                var aprendi = await _aprendizService.GetForDoc(numDoc);
                 InscripcionTyt insctyt;
 
                 if (aprendi.IdEstadoTyt == 1)
@@ -527,20 +528,34 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 try
                 {
-
-                    _dbSiscanContext.Aprendiz.Update(aprendiz);
+                    await _aprendizService.Update(aprendiz);
                     if (aprendiz.IdEstadoTyt == 1)
                     {
                         insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
-                        insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
-                        insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
-                        insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
-                        insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
-                        insctyt.IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt;
-
-                        _dbSiscanContext.InscripcionTyts.Update(insctyt);
+                        if (insctyt != null)
+                        {
+                            insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
+                            insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
+                            insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
+                            insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
+                            insctyt.IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt;
+                            _dbSiscanContext.InscripcionTyts.Update(insctyt);
+                            await _dbSiscanContext.SaveChangesAsync();
+                        }
+                        else if (insctyt == null)
+                        {
+                            insctyt = new InscripcionTyt
+                            {
+                                CodigoInscripcion=aprendiztyt.inscripcionTyt.CodigoInscripcion,
+                                Idciudad=aprendiztyt.inscripcionTyt.Idciudad,
+                                NumeroDocumentoAprendiz=aprendiztyt.aprendiz.NumeroDocumentoAprendiz,
+                                IdConvocatoria=aprendiztyt.inscripcionTyt.IdConvocatoria,
+                                IdEstadotyt=aprendiztyt.aprendiz.IdEstadoTyt
+                            };
+                            _dbSiscanContext.InscripcionTyts.Add(insctyt);
+                            await _dbSiscanContext.SaveChangesAsync();
+                        }
                     }
-                    await _dbSiscanContext.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
