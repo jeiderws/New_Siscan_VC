@@ -572,13 +572,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }
                     }
                     await _aprendizService.Update(aprendiz);
+                    TempData["AprendizEditBien"] = "El aprendiz se ha actualizado correctamente";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
                     //validacion de existencia del aprendiz
                     if (!AprendizExists(aprendiztyt.aprendiz.NumeroDocumentoAprendiz)) return NotFound(); else throw;
                 }
-                return RedirectToAction(nameof(Consultar));
             }
             return View(aprendiztyt);
         }
