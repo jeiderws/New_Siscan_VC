@@ -111,12 +111,22 @@
                                                     <div class="card-body row">
                                                         <div class="col pt-4">
                                                             <small class="text-muted">Coformador: </small>
-                                                            <p>@Model.seguimiento.NombreCoformador @Model.seguimiento.ApellidoCoformador</p>
-                                                            <p>@Model.seguimiento.NumDocumentoCoformador</p>
+                                                            <p class="m-0 text-dark">@Model.seguimiento.NombreCoformador @Model.seguimiento.ApellidoCoformador</p>
+                                                            <p class="m-0 text-dark">@Model.seguimiento.NumDocumentoCoformador</p>
                                                             <small class="text-muted">Inicio Seguimiento: </small>
-                                                            <p id="card-coformador">@Model.seguimiento.FechaInicio</p>
+                                                            <p class ="m-0 text-dark">@Model.seguimiento.FechaInicio</p>
                                                             <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
-                                                            <p id="card-instructor" class="m-0 text-dark">@Model.seguimiento.FechaFinalizacion</p>
+                                                            <p class="m-0 text-dark">@Model.seguimiento.FechaFinalizacion</p>
+                                                            <small class="text-muted p-t-30 db">Observaciones:</small>
+                                                            @{
+                                                                if (Model.observacionesList != null)
+                                                                {
+                                                                    foreach (var observacion in Model.observacionesList)
+                                                                    {
+                                                                        <textarea style="width:180px" class="m-0 text-dark" readonly>@observacion</textarea>
+                                                                    }
+                                                                }
+                                                            }
                                                         </div>
                                                         <div class="col pt-4">
                                                             <small class="text-muted">Instructor: </small>
@@ -125,7 +135,7 @@
                                                             <small class="text-muted">Area: </small>
                                                             <p>@Model.seguimiento.AreaEmpresa</p>
                                                             <small class="text-muted">Modalidad: </small>
-                                                            <p>@Model.seguimiento.NombreModalidad</p>
+                                                            <p class="m-0 text-dark">@Model.seguimiento.NombreModalidad</p>
                                                             <small class="text-muted p-t-30 db">Empresa:</small>
                                                             <p class="m-0 text-dark">@Model.seguimiento.NitEmpresa @Model.seguimiento.NombreEmpresa</p>
                                                             <small class="text-muted p-t-30 db">Actividades:</small>
