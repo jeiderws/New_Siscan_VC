@@ -299,24 +299,28 @@ namespace Siscan_Vc_AppWeb.Controllers
             return View();
         }
 
-
         //Registrar aprendiz con un view model
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registro(Modelviewtytap aptyt)
         {
             Modelviewtytap vmtytap = new Modelviewtytap();
+            InscripcionTyt codigoInscrpExist = null;
             try
             {
                 if (aptyt != null)
                 {
                     Aprendiz apren = await _aprendizService.GetForDoc(aptyt.aprendiz.NumeroDocumentoAprendiz);
+                    if (aptyt.inscripcionTyt.CodigoInscripcion != null)
+                    {
+                        codigoInscrpExist = await _inscripcionTYTService.GetForCogInscripcion(aptyt.inscripcionTyt.CodigoInscripcion);
+                    }
                     if (apren != null)
                     {
                         TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
-                    else if (apren == null)
+                    else if (apren == null && codigoInscrpExist==null)
                     {
                         var aprendiz = new Aprendiz()
                         {
@@ -334,6 +338,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                             CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                         };
+                        await _aprendizService.Insert(aprendiz);
                         if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
                         {
                             aprendiz.IdEstadoTyt = 6;
@@ -342,8 +347,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         {
                             aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
                         }
-                        await _aprendizService.Insert(aprendiz);
-
                         if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
                         {
                             var tyt = new InscripcionTyt()
@@ -357,7 +360,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                             _dbSiscanContext.InscripcionTyts.Add(tyt);
                             _dbSiscanContext.SaveChanges();
                         }
-
                         vmtytap = new Modelviewtytap
                         {
                             aprendiz = aptyt.aprendiz,
@@ -368,6 +370,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                             TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
                         }
                         return RedirectToAction(nameof(Registro));
+                    }
+                    else if(codigoInscrpExist.CodigoInscripcion!=null)
+                    {
+                        TempData["ValInscripExiste"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
+                        return Json(new { success = true, message = "Ya existe un aprendiz registrado con este codigo de inscripcion" });
                     }
                 }
             }
@@ -534,7 +541,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 try
                 {
-                    if (aprendiz.IdEstadoTyt == 1)
+                    if (aprendiz.IdEstadoTyt == 1 && codigInsExist == null)
                     {
                         insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
                         if (insctyt != null)
@@ -559,17 +566,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                                 IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria,
                                 IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt
                             };
-                           
-                            if (codigInsExist!=null && codigInsExist.CodigoInscripcion == insctyt.CodigoInscripcion)
-                            {
-                                TempData["CodigoInscripcionSiExist"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
-                            }
-                            else
-                            {
-                                _dbSiscanContext.InscripcionTyts.Add(insctyt);
-                                await _dbSiscanContext.SaveChangesAsync();
-                            }                            
+                            _dbSiscanContext.InscripcionTyts.Add(insctyt);
+                            await _dbSiscanContext.SaveChangesAsync();
                         }
+                    }
+                    else
+                    {
+                        TempData["CodigoInscripcionSiExist"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
                     }
                     await _aprendizService.Update(aprendiz);
                     TempData["AprendizEditBien"] = "El aprendiz se ha actualizado correctamente";

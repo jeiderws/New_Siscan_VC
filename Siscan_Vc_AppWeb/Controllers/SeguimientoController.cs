@@ -262,20 +262,17 @@ namespace Siscan_Vc_AppWeb.Controllers
                 IdAreaEmpresa = s.IdAreaEmpresa
             }).ToList();
 
-            ViewModelSeguimiento seguimient = null;
-
-            foreach (var segui in listSeguimiento)
-            {
-                if (segui.IdSeguimiento.ToString() == idSeguimiento)
-                {
-                    seguimient = segui;
-                    break;
-                }
-            }
+            ViewModelSeguimiento seguimient = listSeguimiento.Where(s => s.IdSeguimiento.ToString() == idSeguimiento).FirstOrDefault();
+            //lista de observaciones de el seguimiento consultado
+            var observaciones= _dbSiscanContext.Observacions.Where(o => o.IdSeguimiento.ToString()==idSeguimiento).Select(o=>o.Observaciones).ToList();
+            //lista de actividades de el seguimiento consultado
+            var actividades = _dbSiscanContext.Actividades.Where(a=>a.IdSeguimiento.ToString()== idSeguimiento).Select(a=>a.DescripcionActividad).ToList();
             vmSeguimiento = new Viewmodelsegui
             {
                 listaSeguimiento = listSeguimiento,
-                seguimiento = seguimient
+                seguimiento = seguimient,
+                actividadesList=actividades,
+                observacionesList=observaciones,
             };
             return View(vmSeguimiento);
         }

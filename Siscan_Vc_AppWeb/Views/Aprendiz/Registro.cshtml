@@ -17,6 +17,10 @@
                     {
                         <div class="alert alert-danger" role="alert"> @TempData["ValAprendzExiste"] </div>
                     }
+                    @if (TempData["ValInscripExiste"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["ValInscripExiste"] </div>
+                    }
                     @if (TempData["MensajeAlert"] != null)
                     {
                         <div class="alert alert-success" role="alert"> @TempData["MensajeAlert"] </div>
