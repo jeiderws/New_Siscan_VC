@@ -7,6 +7,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelAprendiz(Aprendiz aprendiz)
         {
+            Tipodocumento = aprendiz.IdTipodocumentoNavigation.TipoDocumento1;
             NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz;
             NombreAprendiz = aprendiz.NombreAprendiz;
             ApellidoAprendiz = aprendiz.ApellidoAprendiz;
@@ -54,6 +55,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? nomEstadoTyt { get; set; }
 
         public int? IdTipodocumento { get; set; }
+        public string? Tipodocumento { get; set; }
 
         public string? Ficha { get; set; }
 

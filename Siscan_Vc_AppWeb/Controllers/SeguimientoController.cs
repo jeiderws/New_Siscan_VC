@@ -67,6 +67,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             listaAprendices = queryAprendiz.Select(a => new ViewModelAprendiz(a)
             {
+                Tipodocumento = a.IdTipodocumentoNavigation.TipoDocumento1,
                 NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
                 NombreAprendiz = a.NombreAprendiz,
                 ApellidoAprendiz = a.ApellidoAprendiz,
@@ -87,19 +88,25 @@ namespace Siscan_Vc_AppWeb.Controllers
                 SeguimientoInstructorAprendices = a.SeguimientoInstructorAprendizs,
                 NombreApellidoDoc = a.NombreAprendiz + " " + a.ApellidoAprendiz + " " + a.NumeroDocumentoAprendiz
             }).ToList();
-
+            ViewModelAprendiz aprendi = null;
             foreach (var ap in listaAprendices)
             {
-                if (ap.SeguimientoInstructorAprendices.Count() == 0)
+                if (ap.SeguimientoInstructorAprendices.Count() <3)
                 {
                     listaAprendizSinSegui.Add(ap);
-                }
+                }               
             }
-            var aprendi = await _aprendizService.GetForDoc(numdoc);
+            aprendi = listaAprendizSinSegui.Where(s => s.NumeroDocumentoAprendiz == numdoc.Trim()).FirstOrDefault();
+            var apren= await _aprendizService.GetForDoc(numdoc.Trim());
+
+            if( apren != null && apren.SeguimientoInstructorAprendizs.Count() >= 3)
+            {
+                TempData["MensajeAlertMAxSegui"] = "Este Aprendiz Tiene Limites de Seguimiento";
+            }
             var vmSeguimiento = new Viewmodelsegui
             {
                 listaAprendizSinSegui = listaAprendizSinSegui,
-                aprendiz = aprendi
+                aprendizSegui = aprendi
             };
             return View(vmSeguimiento);
         }
@@ -364,7 +371,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         listaSegui = listSegui
                     };
                 }
-            }
+
+            } 
             catch
             {
                 return NotFound();
@@ -387,7 +395,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var observaciones = await _dbSiscanContext.Observacions.Where(o => o.IdSeguimiento == idSeguimiento).ToListAsync();
                 _dbSiscanContext.Observacions.RemoveRange(observaciones);
                 await _seguimientoService.Delete(idSeguimiento);
-                TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!";
+                TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!"; 
                 return Json(new { success = true, message = "El seguimiento se elimino correctamente." });
             }
 
@@ -487,7 +495,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         seguimiento.IdAreaEmpresa = seguimientoVm.seguimientoinstructorAprendiz.IdAreaEmpresa;
                         seguimiento.NitEmpresa = seguimientoVm.seguimientoinstructorAprendiz.NitEmpresa;
 
-                        _dbSiscanContext.Update(seguimiento);
+                        _dbSiscanContext.Update(seguimiento);   
                         await _dbSiscanContext.SaveChangesAsync();
                         TempData["MensajeSeguimientoActualizado"] = "Seguimiento Actualizado correctamente!!";
                         if (seguimiento.IdModalidad != seguimientoArchivo.IdModalidad)

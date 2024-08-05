@@ -19,7 +19,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             var viewModel = new Modelviewtytap();
             return View(viewModel);
         }
-
+        //regitra las fechas de la convocatoria
         [HttpPost]
         public IActionResult Registro(Modelviewtytap viewModel)
         {
@@ -86,6 +86,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             return View("Consultar", viewModel);
         }
+        //metodo para lo del checkbox
         [HttpPost]
         public IActionResult UpdateStatus(string[] selectedAprendices)
         {

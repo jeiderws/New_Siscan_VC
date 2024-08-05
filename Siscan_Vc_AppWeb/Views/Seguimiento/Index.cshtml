@@ -19,6 +19,10 @@
                     </form>
                 </div>
                 <div class="card-body table-responsive">
+                    @if (TempData["MensajeAlertMAxSegui"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertMAxSegui"] </div>
+                    }
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la búsqueda </h6>
                     <div class="card-body table-responsive-busqueda">
                         <table class="table table-bordered mb-4" id="tbdata" cellspacing="1" style="width:100%">
@@ -41,23 +45,23 @@
                             </thead>
                             <tbody>
                                 @{
-                                    if (Model.aprendiz != null && Model.aprendiz.NumeroDocumentoAprendiz != null)
+                                    if (Model.aprendizSegui != null && Model.aprendizSegui.NumeroDocumentoAprendiz != null)
                                     {
                                         <tr>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.Ficha)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.IdTipodocumentoNavigation.TipoDocumento1)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.NumeroDocumentoAprendiz)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.NombreAprendiz)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.ApellidoAprendiz)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.CelAprendiz)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.CorreoAprendiz)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.NombreCompletoAcudiente)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.CelularAcudiente)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.CorreoAcuediente)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.IdEstadoAprendizNavigation.NombreEstado)</td>
-                                            <td>@Html.DisplayFor(a => Model.aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.Ficha)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.Tipodocumento)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.NumeroDocumentoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.NombreAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.ApellidoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.CelAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.CorreoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.NombreCompletoAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.CelularAcudiente)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.CorreoAcuediente)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.nomEstadoAprendiz)</td>
+                                            <td>@Html.DisplayFor(a => Model.aprendizSegui.nomEstadoTyt)</td>
                                             <td>
-                                                <a class="btn btn-success" asp-action="Crear" asp-controller="Seguimiento" asp-route-nmDoc="@Model.aprendiz.NumeroDocumentoAprendiz">Seguimiento</a>
+                                                <a class="btn btn-success" asp-action="Crear" asp-controller="Seguimiento" asp-route-nmDoc="@Model.aprendizSegui.NumeroDocumentoAprendiz">Seguimiento</a>
                                             </td>
                                         </tr>
                                     }
