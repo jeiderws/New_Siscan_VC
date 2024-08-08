@@ -6,7 +6,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
-            IdSeguimiento=seguimiento.IdSeguimiento;
+            IdSeguimiento = seguimiento.IdSeguimiento;
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {
@@ -16,12 +16,11 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 ApellidoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.ApellidoAprendiz;
                 CorreoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CorreoAprendiz;
                 TelefonoAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.CelAprendiz;
-                if (seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation != null &&
-                    seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation != null)
+                if (seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation != null && seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation != null)
                 {
                     ProgramAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.FichaNavigation.CodigoProgramaNavigation.NombrePrograma;
                 }
-                FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha?.ToString();
+                FichaAprendiz = seguimiento.NumeroDocumentoAprendizNavigation.Ficha?.ToString();                 
             }
 
             // Instructor 
@@ -49,8 +48,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
                 NitEmpresa = seguimiento.NitEmpresa;
                 NombreEmpresa = seguimiento.NitEmpresaNavigation.NombreEmpresa;
                 AreaEmpresa = seguimiento.IdAreaEmpresaNavigation.NombreArea;
-                IdAsignacionArea=seguimiento.IdAsignacionArea;
-                IdAreaEmpresa=seguimiento.IdAreaEmpresa;
+                IdAsignacionArea = seguimiento.IdAsignacionArea;
+                IdAreaEmpresa = seguimiento.IdAreaEmpresa;
             }
 
             // Practicas
@@ -60,11 +59,11 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             idmodalidad = seguimiento.IdModalidad;
         }
         public List<Actividade> actividades { get; set; }
+        public List<Observacion> observaciones { get; set; }
         public int IdSeguimiento { get; set; }
-        public int actividade { get; set; }    
         //aprendiz
-        public int? idTipoDocumentoAprendiz {  get; set; }
-        public string TipoDocumentoAprendiz {  get; set; }
+        public int? idTipoDocumentoAprendiz { get; set; }
+        public string TipoDocumentoAprendiz { get; set; }
         public string NumeroDocumentoAprendiz { get; set; } = null!;
         public string? NombreAprendiz { get; set; }
         public string? ApellidoAprendiz { get; set; }
@@ -72,14 +71,14 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? TelefonoAprendiz { get; set; }
         public string? ProgramAprendiz { get; set; }
         public string? FichaAprendiz { get; set; }
-        
+
         //Instructor
         public string? NumeroDocumentoInstructor { get; set; } = null!;
         public string? NombreInstructor { get; set; } = null!;
         public string? ApellidoInstructor { get; set; } = null!;
         public string? CorreoInstructor { get; set; } = null!;
         public string? TelefonoInstructor { get; set; } = null!;
-        
+
         //coformador
         public int? IdCoformador { get; set; }
         public string? NombreCoformador { get; set; }

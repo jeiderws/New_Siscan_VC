@@ -61,7 +61,7 @@
                         </div>
                     </div>
                     <!--datos de empresa-->
-                    <div class="card-body"> 
+                    <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
@@ -124,9 +124,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                <!--Actividades-->
                                 <div class="mb-3">
                                     <button type="button" class="btn btn-primary" id="addActivityButton">Agregar Actividad</button>
                                 </div>
+                                <!--Observaciones-->
                                 <div id="additionalActivities"></div>
                                 <div class="mb-3">
                                     <button type="button" class="btn btn-primary" id="addObservationButton">Agregar Observación</button>
@@ -159,9 +161,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                    <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
-                    <label>Actividad ${textareaCount}</label>
-                `;
+                            <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
+                            <label>Actividad ${textareaCount}</label>
+                        `;
 
             container.appendChild(newTextarea);
         });
@@ -173,9 +175,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                        <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
-                        <label>Observación ${textareaCount}</label>
-                    `;
+                                <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
+                                <label>Observación ${textareaCount}</label>
+                            `;
 
             container.appendChild(newTextarea);
         });
