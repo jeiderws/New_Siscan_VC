@@ -32,5 +32,12 @@
 
         public string? nomEstadoAprendiz { get; set; }
 
+        public string? codigoInscripcionTyt {  get; set; }
+
+        public string? ciudadPresentacion { get; set; }
+
+        public string? convocatoria { get; set; }
+
+
     }
 }
