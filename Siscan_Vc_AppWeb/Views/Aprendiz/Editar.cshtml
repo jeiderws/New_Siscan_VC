@@ -21,10 +21,6 @@
                             }, 3000);
                         </script>
                     }
-                    @if (TempData["CodigoInscripcionSiExist"] != null)
-                    {
-                        <div class="alert alert-danger" role="alert"> @TempData["CodigoInscripcionSiExist"] </div>
-                    }
                     <form asp-action="Editar" id="EditarForm">
                         <div class="row mb-3">
                             <div class="col-md-6">

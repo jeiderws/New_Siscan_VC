@@ -172,7 +172,10 @@ namespace Siscan_Vc_AppWeb.Controllers
                                 nombredoc = fila.GetCell(10)?.ToString() ?? "",
                                 ficha = fila.GetCell(11)?.ToString() ?? "",
                                 nomCiudad = fila.GetCell(12)?.ToString() ?? "",
-                                nomEstadoAprendiz = fila.GetCell(13)?.ToString() ?? ""
+                                nomEstadoAprendiz = fila.GetCell(13)?.ToString() ?? "",
+                                codigoInscripcionTyt = fila.GetCell(14)?.ToString() ?? "",
+                                ciudadPresentacion = fila.GetCell(15)?.ToString() ?? "",
+                                convocatoria = fila.GetCell(16)?.ToString() ?? ""
                             });
                         }
                     }
@@ -195,7 +198,9 @@ namespace Siscan_Vc_AppWeb.Controllers
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                 var aprendices = new List<Aprendiz>();
+                var inscripciones = new List<InscripcionTyt>();
                 var aprendicesExist = new List<Aprendiz>();
+                var inscripcionesExist = new List<InscripcionTyt>();
                 if (fileExcel == null || fileExcel.Length == 0)
                 {
                     ViewBag.MensajeExcelNoSelec = "Por favor seleccione un archivo";
@@ -213,9 +218,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                             List<TipoDocumento> tipoDocList = _dbSiscanContext.TipoDocumentos.ToList();
                             List<Ciudad> ciudadList = _dbSiscanContext.Ciudads.ToList();
                             List<EstadoAprendiz> estadoAprendizList = _dbSiscanContext.EstadoAprendizs.ToList();
+                            List<ConvocatoriaTyt> convocatoriaList = _dbSiscanContext.ConvocatoriaTyts.ToList();
 
                             for (int fila = 2; fila <= cantfilas; fila++)
                             {
+                                //obtener datos de los aprendices
                                 var aprendiz = new Aprendiz
                                 {
                                     NumeroDocumentoAprendiz = hoja.Cells[fila, 1].Value.ToString().Trim(),
@@ -229,38 +236,33 @@ namespace Siscan_Vc_AppWeb.Controllers
                                     CelularAcudiente = hoja.Cells[fila, 9].Value.ToString(),
                                     Ficha = hoja.Cells[fila, 12].Value.ToString().Trim()
                                 };
-
+                                //obtener los datos de las foraneas del aprendiz en el excel
                                 var estadotyt = hoja.Cells[fila, 10].Value.ToString().ToLower().Trim();
                                 var tipodoc = hoja.Cells[fila, 11].Value.ToString().ToLower().Trim();
                                 var ciudad = hoja.Cells[fila, 13].Value.ToString().ToLower().Trim();
                                 var estado = hoja.Cells[fila, 14].Value.ToString().ToLower().Trim();
-                                foreach (var estyt in estadoTytList)
+
+                                //obtener los id de las foraneas del aprendiz
+                                aprendiz.IdEstadoTyt = Int32.Parse(estadoTytList.Where(e => e.DescripcionEstadotyt.Trim().ToLower() == estadotyt).Select(e => e.IdEstadotyt).FirstOrDefault().ToString());
+                                aprendiz.IdTipodocumento = Int32.Parse(tipoDocList.Where(e => e.TipoDocumento1.Trim().ToLower() == tipodoc).Select(t => t.IdTipoDocumento).FirstOrDefault().ToString());
+                                aprendiz.IdCiudad = Int32.Parse(ciudadList.Where(e => e.NombreCiudad.Trim().ToLower() == ciudad).Select(c => c.IdCiudad).FirstOrDefault().ToString());
+                                aprendiz.IdEstadoAprendiz = Int32.Parse(estadoAprendizList.Where(e => e.NombreEstado.Trim().ToLower() == estado).Select(e => e.IdEstado).FirstOrDefault().ToString());
+
+                                //obtener datos de la inscripcion de las tyt del aprendiz
+                                if (aprendiz.IdEstadoTyt == 1)
                                 {
-                                    if (estyt.DescripcionEstadotyt.Trim().ToLower() == estadotyt)
+                                    var ciudadPresentacion = hoja.Cells[fila, 16].Value.ToString().Trim().ToLower();
+                                    var convocatoria = hoja.Cells[fila, 17].Value.ToString().Trim().ToLower();
+
+                                    var inscripcion = new InscripcionTyt
                                     {
-                                        aprendiz.IdEstadoTyt = Int32.Parse(estyt.IdEstadotyt.ToString());
-                                    }
-                                }
-                                foreach (var tpdoc in tipoDocList)
-                                {
-                                    if (tpdoc.TipoDocumento1.Trim().ToLower() == tipodoc)
-                                    {
-                                        aprendiz.IdTipodocumento = tpdoc.IdTipoDocumento;
-                                    }
-                                }
-                                foreach (var ciud in ciudadList)
-                                {
-                                    if (ciud.NombreCiudad.Trim().ToLower() == ciudad)
-                                    {
-                                        aprendiz.IdCiudad = ciud.IdCiudad;
-                                    }
-                                }
-                                foreach (var std in estadoAprendizList)
-                                {
-                                    if (std.NombreEstado.Trim().ToLower() == estado)
-                                    {
-                                        aprendiz.IdEstadoAprendiz = std.IdEstado;
-                                    }
+                                        CodigoInscripcion = hoja.Cells[fila, 15].Value.ToString().Trim(),
+                                        NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz,
+                                        IdEstadotyt = aprendiz.IdEstadoTyt
+                                    };
+                                    inscripcion.Idciudad = Int32.Parse(ciudadList.Where(c => c.NombreCiudad.Trim().ToLower() == ciudadPresentacion).Select(c => c.IdCiudad).FirstOrDefault().ToString());
+                                    inscripcion.IdConvocatoria = Int32.Parse(convocatoriaList.Where(c => c.SemestreConvocatoria.Trim().ToLower() == convocatoria).Select(c => c.IdConvocatoria).FirstOrDefault().ToString());
+                                    inscripciones.Add(inscripcion);
                                 }
                                 aprendices.Add(aprendiz);
                             }
@@ -268,6 +270,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     }
                 }
 
+                //obtener aprendices existentes en la base de datos con el numero de documento
                 foreach (var aprendiz in aprendices)
                 {
                     var apren = await _aprendizService.GetForDoc(aprendiz.NumeroDocumentoAprendiz);
@@ -276,18 +279,49 @@ namespace Siscan_Vc_AppWeb.Controllers
                         aprendicesExist.Add(apren);
                     }
                 }
+                //obtener los numeros de documentos de los aprendices existentes
                 var numsDocs = "";
                 foreach (var aprendiz in aprendicesExist)
                 {
-                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz + ",";
+                    numsDocs += " " + aprendiz.NumeroDocumentoAprendiz + " ";
                 }
+                //mensaje de aprendices existentes
                 if (aprendicesExist.Count > 0)
                 {
                     ViewBag.AprendizExistExcel = "Los aprendices identificados con: " + numsDocs + " ya se encuentran registrados";
                 }
-                else if (aprendicesExist.Count == 0 && fileExcel != null)
+
+                if (inscripciones.Count > 0)
+                {
+                    //obtener las inscripciones TYT existentes en la base de datos con el codigo de inscripcion
+                    foreach (var inscrp in inscripciones)
+                    {
+                        var ins = await _inscripcionTYTService.GetForCogInscripcion(inscrp.CodigoInscripcion);
+                        if (ins != null)
+                        {
+                            inscripcionesExist.Add(ins);
+                        }
+                    }
+
+                    //obtener los codigos de inscripcion de las inscripciones TYT existentes
+                    var cogInscripcion = "";
+                    foreach (var inscrp in inscripcionesExist)
+                    {
+                        cogInscripcion += " " + inscrp.CodigoInscripcion + " ";
+                    }
+                    if (inscripcionesExist.Count > 0)
+                    {
+                        ViewBag.InscripcionesExist = "Ya existen registros de aprendices registrados con los siguientes codigos de inscripcion a las pruebas tyt: " + cogInscripcion;
+                    }
+                }
+                //guardado de aprendices y inscripciones tyt
+                if (aprendicesExist.Count == 0 && inscripcionesExist.Count == 0 && fileExcel != null)
                 {
                     _dbSiscanContext.Aprendiz.AddRange(aprendices);
+                    if (inscripciones.Count > 0)
+                    {
+                        _dbSiscanContext.InscripcionTyts.AddRange(inscripciones);
+                    }
                     await _dbSiscanContext.SaveChangesAsync();
                     ViewBag.mensajeAprendices = "Aprendices registrados exitosamente";
                 }
@@ -320,7 +354,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
-                    else if (apren == null && codigoInscrpExist==null)
+                    else if (apren == null && codigoInscrpExist == null)
                     {
                         var aprendiz = new Aprendiz()
                         {
@@ -338,8 +372,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                             CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                             CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                         };
-                        await _aprendizService.Insert(aprendiz);
-                        if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
+                        if (aptyt.aprendiz.IdEstadoTyt == null)
+                        {
+                            aprendiz.IdEstadoTyt = 5;
+                        }
+                        else if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
                         {
                             aprendiz.IdEstadoTyt = 6;
                         }
@@ -347,6 +384,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         {
                             aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
                         }
+                        await _aprendizService.Insert(aprendiz);
+                        TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
                         if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
                         {
                             var tyt = new InscripcionTyt()
@@ -365,13 +404,9 @@ namespace Siscan_Vc_AppWeb.Controllers
                             aprendiz = aptyt.aprendiz,
                             inscripcionTyt = aptyt.inscripcionTyt
                         };
-                        if (vmtytap.aprendiz.NumeroDocumentoAprendiz != null)
-                        {
-                            TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
-                        }
                         return RedirectToAction(nameof(Registro));
                     }
-                    else if(codigoInscrpExist.CodigoInscripcion!=null)
+                    else if (codigoInscrpExist.CodigoInscripcion != null)
                     {
                         TempData["ValInscripExiste"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
                         return Json(new { success = true, message = "Ya existe un aprendiz registrado con este codigo de inscripcion" });
@@ -479,17 +514,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             if (numDoc != null)
             {
                 var aprendi = await _aprendizService.GetForDoc(numDoc);
-                InscripcionTyt insctyt;
-
-                if (aprendi.IdEstadoTyt == 1)
-                {
-                    insctyt = _dbSiscanContext.InscripcionTyts.First(i => i.NumeroDocumentoAprendiz == aprendi.NumeroDocumentoAprendiz);
-                    TempData["CodigoInscripcionExist"] = "Ya existe inscripcion";
-                }
-                else
-                {
-                    insctyt = null;
-                }
+                InscripcionTyt insctyt = null;
 
                 viewModel = new Modelviewtytap
                 {

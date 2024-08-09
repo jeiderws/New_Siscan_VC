@@ -19,7 +19,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             CelularAcudiente = aprendiz.CelularAcudiente;
             IdTipodocumento = aprendiz.IdTipodocumentoNavigation.IdTipoDocumento;
             nombredoc = aprendiz.IdTipodocumentoNavigation.TipoDocumento1;
-            IdEstadoTyt = aprendiz.IdEstadoTytNavigation.IdEstadotyt;
+            IdEstadoTyt = aprendiz.IdEstadoTyt;
             nomEstadoTyt = aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt;
             IdEstadoAprendiz = aprendiz.IdEstadoAprendiz;
             nomEstadoAprendiz = aprendiz.IdEstadoAprendizNavigation.NombreEstado;
@@ -55,6 +55,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? nomEstadoTyt { get; set; }
 
         public int? IdTipodocumento { get; set; }
+
         public string? Tipodocumento { get; set; }
 
         public string? Ficha { get; set; }

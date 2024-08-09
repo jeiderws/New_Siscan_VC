@@ -23,6 +23,10 @@
 {
     <div class="alert alert-danger">@ViewBag.AprendizExistExcel</div>
 }
+@if (ViewBag.InscripcionesExist != null)
+{
+    <div class="alert alert-danger">@ViewBag.InscripcionesExist</div>
+}
 <div class="card-body table-responsive" style="height:450px; ">
     <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
         <thead class="boton2 ms-auto">
@@ -41,6 +45,9 @@
                 <th>Correo Acudiente</th>
                 <th>Estado Aprendiz</th>
                 <th>Estado Pruebas TYT</th>
+                <th>Codigo de inscripcion TYT</th>
+                <th>Ciudad de presentacion TYT</th>
+                <th>Convocatoria TYT</th>
             </tr>
         </thead>
         <tbody>
@@ -84,7 +91,10 @@
                                 $('<td>').text(item.celularAcudiente),
                                 $('<td>').text(item.correoAcudiente),
                                 $('<td>').text(item.nomEstadoAprendiz),
-                                $('<td>').text(item.nomEstadoTyt)
+                                $('<td>').text(item.nomEstadoTyt),
+                                $('<td>').text(item.codigoInscripcionTyt),
+                                $('<td>').text(item.ciudadPresentacion),
+                                $('<td>').text(item.convocatoria)
                             );
                             tbody.append(row);
                         });
