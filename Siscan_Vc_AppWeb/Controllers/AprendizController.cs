@@ -372,8 +372,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                             CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
                             CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
                         };
-                        await _aprendizService.Insert(aprendiz);
-                        if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
+                        if (aptyt.aprendiz.IdEstadoTyt == null)
+                        {
+                            aprendiz.IdEstadoTyt = 5;
+                        }
+                        else if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
                         {
                             aprendiz.IdEstadoTyt = 6;
                         }
@@ -381,6 +384,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         {
                             aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
                         }
+                        await _aprendizService.Insert(aprendiz);
+                        TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
                         if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
                         {
                             var tyt = new InscripcionTyt()
@@ -399,10 +404,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                             aprendiz = aptyt.aprendiz,
                             inscripcionTyt = aptyt.inscripcionTyt
                         };
-                        if (vmtytap.aprendiz.NumeroDocumentoAprendiz != null)
-                        {
-                            TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
-                        }
                         return RedirectToAction(nameof(Registro));
                     }
                     else if (codigoInscrpExist.CodigoInscripcion != null)
@@ -513,17 +514,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             if (numDoc != null)
             {
                 var aprendi = await _aprendizService.GetForDoc(numDoc);
-                InscripcionTyt insctyt;
-
-                if (aprendi.IdEstadoTyt == 1)
-                {
-                    insctyt = _dbSiscanContext.InscripcionTyts.First(i => i.NumeroDocumentoAprendiz == aprendi.NumeroDocumentoAprendiz);
-                    TempData["CodigoInscripcionExist"] = "Ya existe inscripcion";
-                }
-                else
-                {
-                    insctyt = null;
-                }
+                InscripcionTyt insctyt = null;
 
                 viewModel = new Modelviewtytap
                 {
