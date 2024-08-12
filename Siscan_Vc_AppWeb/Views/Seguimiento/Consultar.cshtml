@@ -215,13 +215,12 @@
         //filtrar el contenido de la tabla por el contenido de la primera columna(numero de documento del aprendiz)
         $(document).ready(function () {
             $('#inputNmDoc').on('input', function () {
-                var searchValue = $(this).val().toLowerCase();
+                var valorBuscado = $(this).value.toLowerCase();
                 $('#tbdata2 tbody tr').filter(function () {
-                    $(this).toggle($(this).find('td:first-child').text().toLowerCase().indexOf(searchValue) > -1)
+                    $(this).toggle($(this).find('td:first-child').text().toLowerCase().indexOf(valorBuscado) > -1)
                 });
             });
         });
-              
 
         //filtrar el contenido de la tabla por el contenido de la segunda columna(ficha del aprendiz)
         $(document).ready(function () {
