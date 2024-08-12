@@ -23,7 +23,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpPost]
         public IActionResult Registro(Modelviewtytap viewModel)
         {
-            if (viewModel != null)
+            if (viewModel.FechaPresentacionSem1 != null || viewModel.FechaPresentacionSem2 != null)
             {
                 var semestre1 = _dbcontext.ConvocatoriaTyts.FirstOrDefault(c => c.SemestreConvocatoria == "Semestre 1");
                 var semestre2 = _dbcontext.ConvocatoriaTyts.FirstOrDefault(c => c.SemestreConvocatoria == "Semestre 2");
