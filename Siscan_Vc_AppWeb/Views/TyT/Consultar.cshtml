@@ -28,16 +28,16 @@
                         </div>
                         <br />
                         <button type="submit" class="boton">Consultar</button>
-                    </form>
-                </div>
+                    </form>                    
+                </div>     
                 @if (TempData["MensajeAlertIns"] != null)
                 {
-                    <div class="alert alert-success" role="alert"> @TempData["MensajeAlertIns"] </div>
+                    <div class="alert alert-success m-4" role="alert"> @TempData["MensajeAlertIns"] </div>
                 }
                 @if (Model.Aprendices != null && Model.Aprendices.Any())
                 {
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center">Contenido</h6>
-                    <div style="overflow-x:auto;">
+                    <div style="overflow-x:auto;">                        
                         <div class="card-body table-responsive">
                             <form method="post" asp-action="UpdateStatus">
                                 <div class="card-body table-responsive-busqueda">
@@ -96,9 +96,11 @@
                         </div>
                     </div>
                 }
-                else if (Model.Aprendices == null)     
+                else     
                 {
-                    <p>No Hay Resultado.</p>
+                    <div class="m-4 alert alert-dark" role="alert">
+                        No Hay Resultado
+                    </div>
                 }
             </div>
         </div>
