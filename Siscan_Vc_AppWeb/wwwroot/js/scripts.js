@@ -31,13 +31,21 @@ window.addEventListener('DOMContentLoaded', event => {
 let mostrar = document.querySelector('#pruebatyt');
 let estadotyt = document.querySelector('#cboEstadoPruebatyt');
 
+window.addEventListener('load', () => {
+    var opciones = estadotyt.options[estadotyt.selectedIndex];
 
+    if (opciones.text.toLowerCase() == "inscrito") {
+        mostrar.style.display = "flex";
+    } else {
+        mostrar.style.display = "none";
+    }
+});
 estadotyt.addEventListener('change', () => {
     
 
     var opciones = estadotyt.options[estadotyt.selectedIndex];
 
-    if (opciones.text == "Inscrito") {
+    if (opciones.text.toLowerCase() == "inscrito") {
         mostrar.style.display = "flex";
     } else {
         mostrar.style.display = "none";
