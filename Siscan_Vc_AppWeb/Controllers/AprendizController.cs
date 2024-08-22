@@ -515,7 +515,10 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 var aprendi = await _aprendizService.GetForDoc(numDoc);
                 InscripcionTyt insctyt = null;
-
+                if (aprendi != null && aprendi.IdEstadoTyt == 1)
+                {
+                    insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendi.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
+                }
                 viewModel = new Modelviewtytap
                 {
                     aprendiz = aprendi,
@@ -538,10 +541,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             InscripcionTyt codigInsExist = null;
             if (aprendiztyt != null)
             {
-                if (aprendiztyt.inscripcionTyt.CodigoInscripcion != null)
-                {
-                    codigInsExist = await _inscripcionTYTService.GetForCogInscripcion(aprendiztyt.inscripcionTyt.CodigoInscripcion);
-                }
                 var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
                 if (aprendiz == null)
                 {
