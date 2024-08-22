@@ -571,7 +571,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
                         if (insctyt != null)
                         {
-                            insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
                             insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
                             insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
                             insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
@@ -585,7 +584,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         {
                             insctyt = new InscripcionTyt
                             {
-                                CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion,
                                 Idciudad = aprendiztyt.inscripcionTyt.Idciudad,
                                 NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz,
                                 IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria,
@@ -594,10 +592,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                             _dbSiscanContext.InscripcionTyts.Add(insctyt);
                             await _dbSiscanContext.SaveChangesAsync();
                         }
-                    }
-                    else
-                    {
-                        TempData["CodigoInscripcionSiExist"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
                     }
                     await _aprendizService.Update(aprendiz);
                     TempData["AprendizEditBien"] = "El aprendiz se ha actualizado correctamente";
