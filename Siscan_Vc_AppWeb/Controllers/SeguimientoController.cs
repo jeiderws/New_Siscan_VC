@@ -96,8 +96,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                     listaAprendizSinSegui.Add(ap);
                 }               
             }
-            aprendi = listaAprendizSinSegui.Where(s => s.NumeroDocumentoAprendiz == numdoc.Trim()).FirstOrDefault();
-            var apren= await _aprendizService.GetForDoc(numdoc.Trim());
+            Aprendiz apren = null;
+            if (numdoc != null)
+            {
+                aprendi = listaAprendizSinSegui.Where(s => s.NumeroDocumentoAprendiz == numdoc.Trim()).FirstOrDefault();
+                apren = await _aprendizService.GetForDoc(numdoc.Trim());
+            }
+          
 
             if( apren != null && apren.SeguimientoInstructorAprendizs.Count() >= 3)
             {

@@ -62,6 +62,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                 //registro de empresas
                 if (empresaMv.empresa != null)
                 {
+                    if(empresaMv.empresa.Nitmpresa == null || empresaMv.empresa.TelefonoEmpresa == null || empresaMv.empresa.NombreEmpresa==null || empresaMv.empresa.RepresentanteLegal==null || empresaMv.empresa.DireccionEmpresa == null)
+                    {
+                        TempData["ValCamposVaciosEmpresa"] = "Por favor llene todos los campos";
+                        return RedirectToAction(nameof(Registro));
+                    }
                     var empreExist = await _empresaService.GetForNit(empresaMv.empresa.Nitmpresa);
                     if (empreExist != null)
                     {

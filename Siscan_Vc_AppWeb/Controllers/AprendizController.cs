@@ -538,9 +538,22 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
         {
             InscripcionTyt insctyt;
-            InscripcionTyt codigInsExist = null;
+            InscripcionTyt insExist = null;
             if (aprendiztyt != null)
             {
+                if (aprendiztyt.inscripcionTyt.CodigoInscripcion != null)
+                {
+                    insExist = await _inscripcionTYTService.GetForCogInscripcion(aprendiztyt.inscripcionTyt.CodigoInscripcion);
+                }
+                if (insExist != null && insExist.NumeroDocumentoAprendiz != aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
+                {
+                    TempData["CodigoInscripcionExist"] = "Ya exite otro aprendiz inscrito con este codigo de inscripcion";
+                    return RedirectToAction(nameof(Editar));
+                }
+                else if(insExist!=null && insExist.NumeroDocumentoAprendiz==aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
+                {
+                    insExist = null;
+                }
                 var aprendiz = await _aprendizService.GetForDoc(aprendiztyt.aprendiz.NumeroDocumentoAprendiz);
                 if (aprendiz == null)
                 {
@@ -565,11 +578,13 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                 try
                 {
-                    if (aprendiz.IdEstadoTyt == 1 && codigInsExist == null)
+                    //if(codigInsExist.NumeroDocumentoAprendiz != aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
+                    if (aprendiz.IdEstadoTyt == 1 && insExist == null)
                     {
                         insctyt = await _dbSiscanContext.InscripcionTyts.Where(i => i.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz).FirstOrDefaultAsync();
                         if (insctyt != null)
                         {
+                            insctyt.CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion;
                             insctyt.Idciudad = aprendiztyt.inscripcionTyt.Idciudad;
                             insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
                             insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
@@ -583,6 +598,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         {
                             insctyt = new InscripcionTyt
                             {
+                                CodigoInscripcion = aprendiztyt.inscripcionTyt.CodigoInscripcion,
                                 Idciudad = aprendiztyt.inscripcionTyt.Idciudad,
                                 NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz,
                                 IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria,

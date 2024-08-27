@@ -23,6 +23,10 @@
                                 {
                                     <div class="alert alert-danger" role="alert"> @TempData["ValEmpresaExist"] </div>
                                 }
+                                @if (TempData["ValCamposVaciosEmpresa"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert"> @TempData["ValCamposVaciosEmpresa"] </div>
+                                }
                                 @if (TempData["RegistroEmpresaExitoso"] != null)
                                 {
                                     <div class="alert alert-success" role="alert"> @TempData["RegistroEmpresaExitoso"] </div>

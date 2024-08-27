@@ -503,7 +503,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         private bool programExist( string Codigo)
         {
             return _dbSiscanContext.Programas.Any(p => p.CodigoPrograma == Codigo);
-        }
+        }     
 
         [HttpGet]
         public IActionResult ConsultarFicha(string codigo)

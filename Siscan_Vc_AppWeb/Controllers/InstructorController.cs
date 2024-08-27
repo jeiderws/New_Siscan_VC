@@ -44,6 +44,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                         TempData["ValIntrcExiste"] = "Ya existe un intructor con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
+                    if  (mvinstructor.Instructor.NumeroDocumentoInstructor == null || mvinstructor.Instructor.NombreInstructor == null||
+                        mvinstructor.Instructor.ApellidoInstructor == null || mvinstructor.Instructor.CorreoInstructor == null||
+                        mvinstructor.Instructor.CelInstructor == null || mvinstructor.OpcSeleccionada == null)
+                    {
+                        TempData["ValIntrcLleno"] = "Por Favor Llene Todos Los Campos";
+                        return RedirectToAction(nameof(Registro));
+                    }
                     else
                     {
                         var instruc = new Instructor()

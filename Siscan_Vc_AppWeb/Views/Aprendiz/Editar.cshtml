@@ -21,6 +21,15 @@
                             }, 3000);
                         </script>
                     }
+                    @if (TempData["CodigoInscripcionExist"] != null)
+                    {
+                        <div class="alert alert-danger" role="alert"> @TempData["CodigoInscripcionExist"] </div>
+                        <script>
+                            setTimeout(function () {
+                                window.location.href = '@Url.Action("Consultar", "Aprendiz")';
+                            }, 3000);
+                        </script>
+                    }
                     <form asp-action="Editar" id="EditarForm">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -81,7 +90,6 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-
                                     <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="@(ViewBag.ItemsEstAprndz)" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
@@ -172,16 +180,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    @{
-                                        if (TempData["CodigoInscripcionExist"] != null)
-                                        {
-                                            <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" readonly />
-                                        }
-                                        else
-                                        {
-                                            <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
-                                        }
-                                    }
+                                    <input asp-for="inscripcionTyt.CodigoInscripcion" class="form-control" id="inputcodigotyt" type="tel" placeholder="Ingresa Codigo de inscripcion" />
                                     <label for="inputcodigotyt">Codigo Inscripcion</label>
                                     <span id="inputcodigotytError" class="text-danger"></span>
                                 </div>
@@ -193,7 +192,7 @@
                                     </select>
                                     <label for="cboConvocatoria">Convocatoria</label>
                                     <span id="cboConvocatoriaError" class="text-danger"></span>
-                                </div> 
+                                </div>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3">
