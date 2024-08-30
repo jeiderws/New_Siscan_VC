@@ -36,7 +36,7 @@
                             </div>
                         </div>
                         <div class="mt-4 mb-0">
-                            <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px">Actualizar</button></div>
+                            <div class="d-grid boton2"><button type="submit" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmSave()">Actualizar</button></div>
                         </div>
                     </form>
                 </div>
@@ -44,3 +44,10 @@
         </div>
     </div>
 </div>
+@section Scripts {
+    <script>
+        function confirmSave() {
+            return confirm("¿Estás seguro de que deseas guardar?")
+        }
+    </script>
+}

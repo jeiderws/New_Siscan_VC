@@ -28,15 +28,16 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var semestre1 = _dbcontext.ConvocatoriaTyts.FirstOrDefault(c => c.SemestreConvocatoria == "Semestre 1");
                 var semestre2 = _dbcontext.ConvocatoriaTyts.FirstOrDefault(c => c.SemestreConvocatoria == "Semestre 2");
 
-                if (semestre1 != null)
+                if (semestre1 != null && viewModel.FechaPresentacionSem1!=null)
                 {
                     semestre1.FechaPresentacion = viewModel.FechaPresentacionSem1;
                 }
 
-                if (semestre2 != null)
+                if (semestre2 != null && viewModel.FechaPresentacionSem2!=null)
                 {
                     semestre2.FechaPresentacion = viewModel.FechaPresentacionSem2;
                 }
+                
 
                 _dbcontext.SaveChanges();
                 TempData["MensajeAlertFecha"] = "Fecha de Presentacion De Prueba Registrada";
