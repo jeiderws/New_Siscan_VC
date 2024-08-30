@@ -11,7 +11,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             FechaInicio = fi.FechaInicio;
             CodigoPrograma = fi.CodigoProgramaNavigation.CodigoPrograma;
             NumeroDocumentoInstructor = fi.NumeroDocumentoInstructor;
-            instructor = fi.NumeroDocumentoInstructorNavigation.NombreInstructor;
+            //instructor = fi.NumeroDocumentoInstructorNavigation.NombreInstructor;
             Programas = fi.CodigoProgramaNavigation.NombrePrograma;
             IdSede = fi.IdSedeNavigation.IdSede;
             Sede = fi.IdSedeNavigation.NombreSede;

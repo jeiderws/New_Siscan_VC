@@ -17,7 +17,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using static NPOI.HSSF.Util.HSSFColor;
 
-namespace Siscan_Vc_AppWeb.Controllers  
+namespace Siscan_Vc_AppWeb.Controllers
 {
     public class ProgramasController : Controller
     {
@@ -373,7 +373,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Consultar(string codigo)
         {
-            Programas programa=new Programas();
+            Programas programa = new Programas();
             List<ViewModelPrograma> listaprogramas = new List<ViewModelPrograma>();
             IQueryable<Programas> queryprogramas = await _programasService.GetAll();
             listaprogramas = queryprogramas.Select(p => new ViewModelPrograma(p)
@@ -387,7 +387,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }).ToList();
             if (listaprogramas.Count == 0)
             {
-                
+
                 return RedirectToAction(nameof(Index));
             }
             if (codigo != null)
@@ -449,7 +449,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             ViewBag.ItemsNivelModel = new SelectList(await _dbSiscanContext.NivelProgramas.ToListAsync(), "IdNivelPrograma", "NivelPrograma1");
             ViewBag.ItemsEstadoModel = new SelectList(await _dbSiscanContext.EstadoProgramas.ToListAsync(), "IdEstadoPrograma", "DescripcionEstadoPrograma");
-            var viewmodel = new  ModelViewProgra();
+            var viewmodel = new ModelViewProgra();
             if (cdg != null)
             {
                 var program = await _programasService.GetForCog(cdg);
@@ -500,10 +500,10 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View();
         }
-        private bool programExist( string Codigo)
+        private bool programExist(string Codigo)
         {
             return _dbSiscanContext.Programas.Any(p => p.CodigoPrograma == Codigo);
-        }     
+        }
 
         [HttpGet]
         public IActionResult ConsultarFicha(string codigo)
@@ -550,19 +550,20 @@ namespace Siscan_Vc_AppWeb.Controllers
                     TempData["AlertFichaNoEncontrado"] = "La Ficha no fue encontrada";
                     return Json(new { success = false, message = "La ficha no fue encontrada." });
                 }
-                var fichas = await _dbSiscanContext.Fichas.Where(f => f.Ficha1 == codigo).ToListAsync();
-                foreach (var i in fichas)
+                var aprendices = await _dbSiscanContext.Aprendiz.Where(a => a.Ficha == ficha.Ficha1).ToListAsync();
+                if (aprendices.Count > 0)
                 {
-                    var asignaciones = await _dbSiscanContext.AsignacionFichas.Where(af => af.Ficha == i.Ficha1).ToListAsync();
-                    if (asignaciones.Count > 0)
+                    foreach (var aprend in aprendices)
                     {
-                        _dbSiscanContext.AsignacionFichas.RemoveRange(asignaciones);
+                        aprend.Ficha = null;
+                        _dbSiscanContext.Aprendiz.UpdateRange(aprend);
                     }
                 }
 
-                if (fichas.Count > 0)
+                var asignaciones = await _dbSiscanContext.AsignacionFichas.Where(af => af.Ficha == ficha.Ficha1).ToListAsync();
+                if (asignaciones.Count > 0)
                 {
-                    _dbSiscanContext.Fichas.RemoveRange(fichas);
+                    _dbSiscanContext.AsignacionFichas.RemoveRange(asignaciones);
                 }
 
 
@@ -628,11 +629,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         throw;
                     }
-                   
+
                 }
                 return RedirectToAction(nameof(Consultar));
             }
-            return View (fichas);
+            return View(fichas);
         }
         private bool fichaExist(string fich)
         {

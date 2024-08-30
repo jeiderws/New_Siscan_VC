@@ -9,7 +9,7 @@ public partial class SeguimientoInstructorAprendiz
 
     public string NumeroDocumentoAprendiz { get; set; } = null!;
 
-    public string NumeroDocumentoInstructor { get; set; } = null!;
+    public string? NumeroDocumentoInstructor { get; set; } = null!;
 
     public int? IdCoformador { get; set; }
 

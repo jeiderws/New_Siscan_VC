@@ -12,10 +12,14 @@ namespace Siscan_Vc_AppWeb.Controllers
     {
         private readonly DbSiscanContext _dbSiscanContext;
         private readonly IInstructorService _instructorService;
-        public InstructorController(DbSiscanContext dbSiscanContext, IInstructorService instructorService)
+        private readonly ISeguimientoService _seguimientoService;
+        private readonly IAsigancionFichas _asigancionFichas;
+        public InstructorController(DbSiscanContext dbSiscanContext, IInstructorService instructorService, ISeguimientoService seguimientoService, IAsigancionFichas asigancionFichas)
         {
             _dbSiscanContext = dbSiscanContext;
             _instructorService = instructorService;
+            _seguimientoService = seguimientoService;
+            _asigancionFichas = asigancionFichas;
         }
         public async Task<IActionResult> Registro()
         {
@@ -39,13 +43,13 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (mvinstructor != null)
                 {
                     Instructor instructor = await _instructorService.GetForDoc(mvinstructor.Instructor.NumeroDocumentoInstructor);
-                    if (instructor !=null)
+                    if (instructor != null)
                     {
                         TempData["ValIntrcExiste"] = "Ya existe un intructor con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
-                    if  (mvinstructor.Instructor.NumeroDocumentoInstructor == null || mvinstructor.Instructor.NombreInstructor == null||
-                        mvinstructor.Instructor.ApellidoInstructor == null || mvinstructor.Instructor.CorreoInstructor == null||
+                    if (mvinstructor.Instructor.NumeroDocumentoInstructor == null || mvinstructor.Instructor.NombreInstructor == null ||
+                        mvinstructor.Instructor.ApellidoInstructor == null || mvinstructor.Instructor.CorreoInstructor == null ||
                         mvinstructor.Instructor.CelInstructor == null || mvinstructor.OpcSeleccionada == null)
                     {
                         TempData["ValIntrcLleno"] = "Por Favor Llene Todos Los Campos";
@@ -162,7 +166,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor)) return NotFound(); else throw;                    
+                    if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor)) return NotFound(); else throw;
                 }
                 return RedirectToAction(nameof(Consultar));
             }
@@ -187,7 +191,15 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.Where(s => s.NumeroDocumentoInstructor == nmDoc).ToListAsync();
                 if (seguimiento.Count > 0)
                 {
-                    _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
+                    seguimiento.ForEach(async s =>
+                    {
+                        SeguimientoInstructorAprendiz segui = await _dbSiscanContext.SeguimientoInstructorAprendizs.FindAsync(s.IdSeguimiento);
+                        if (segui != null)
+                        {
+                            segui.NumeroDocumentoInstructor = null;
+                            _dbSiscanContext.SeguimientoInstructorAprendizs.Update(segui);
+                        }
+                    });
                 }
                 var ficha = await _dbSiscanContext.Fichas.Where(f => f.NumeroDocumentoInstructor == nmDoc).ToListAsync();
                 if (ficha.Count > 0)
@@ -197,6 +209,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                         f.NumeroDocumentoInstructor = null;
                         _dbSiscanContext.Fichas.UpdateRange(f);
                     }
+                }
+                var asigFicha=await _dbSiscanContext.AsignacionFichas.Where(af=>af.NumeroDocumentoInstructor==nmDoc).ToListAsync();
+                if(asigFicha.Count > 0)
+                {
+                    _dbSiscanContext.AsignacionFichas.RemoveRange(asigFicha);
                 }
                 await _instructorService.Delete(nmDoc);
                 await _dbSiscanContext.SaveChangesAsync();
