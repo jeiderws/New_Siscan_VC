@@ -17,6 +17,8 @@ public partial class SeguimientoInstructorAprendiz
 
     public DateOnly? FechaFinalizacion { get; set; }
 
+    public string? NitProyecto { get; set; }
+
     public string? NombreProyecto { get; set; }
 
     public string? ObjetivoProyecto { get; set; }

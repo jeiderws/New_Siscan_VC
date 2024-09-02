@@ -60,6 +60,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             idmodalidad = seguimiento.IdModalidad;
 
             //Proyecto
+            NitProyecto = seguimiento.NitProyecto;
             NombreProyecto=seguimiento.NombreProyecto;
             ObjetivoProyecto = seguimiento.ObjetivoProyecto;
         }
@@ -107,6 +108,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public long? IdAsignacionArea { get; set; }
 
         //proyecto productivo
+        public string? NitProyecto { get; set; }
         public string? NombreProyecto { get; set; }
         public string? ObjetivoProyecto { get; set; }
 
