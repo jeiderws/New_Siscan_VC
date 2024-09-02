@@ -42,6 +42,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
 
+
             var itemsmodalidad = await _dbSiscanContext.Modalidads.ToListAsync();
             ViewBag.ItemsModalidad = itemsmodalidad;
 
@@ -109,7 +110,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 TempData["MensajeAlertMAxSegui"] = "Este Aprendiz Tiene Limites de Seguimiento";
             }
             var vmSeguimiento = new Viewmodelsegui
-            {
+            {               
                 listaAprendizSegui = listaAprendizSegui,
                 aprendizSegui = aprendi
             };
@@ -126,6 +127,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var segui = await _aprendizService.GetForDoc(nmDoc);
                 viewmodel = new Viewmodelsegui
                 {
+                    listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                    {
+                        Value = m.IdModalidad.ToString(),
+                        Text = m.NombreModalidad
+                    }).ToList(),
                     aprendiz = segui
                 };
                 if (viewmodel.aprendiz == null)

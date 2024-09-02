@@ -11,7 +11,7 @@
                 <div class="card-header fondomenu ">
                     <h3 class="text-center font-dark-light my-4">Seguimiento </h3>
                 </div>
-                <form asp-action="Crear">
+                <form method="post" asp-action="Crear">
                     <div class="card-body">
                         @if (TempData["MensajeAlertSegui"] != null)
                         {
@@ -64,14 +64,18 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nombre de la Empresa">
+                                <div id="dvinputEmpresa" class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nit de la Empresa">
                                     <label asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-label">Digite el Nit de la Empresa</label>
+                                </div>
+                                <div id="dvinputNitPoryecto" class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.NitProyecto" class="form-control" id="inputNitPoryecto" type="text" placeholder="Digite el nit del proyecto">
+                                    <label asp-for="seguimientoinstructorAprendiz.NitProyecto" class="form-label">Digite el Nit del proyecto</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@(new SelectList(ViewBag.ItemsModalidad,"IdModalidad","NombreModalidad"))" class="form-control form-control-sm" id="cboModalidad">
+                                    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@Model.listaopcModalidad" class="form-control form-control-sm" id="cboModalidad">
                                         <option value="">Selecciona una Modalidad...</option>
                                     </select>
                                     <label asp-for="seguimientoinstructorAprendiz.IdModalidad">Modalidad Practicas</label>
@@ -126,12 +130,12 @@
                                 </div>
                                 <!--Actividades-->
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="addActivityButton">Agregar Actividad</button>
+                                    <button type="button" class="w-100 btn btn-primary" id="addActivityButton">Agregar Actividad</button>
                                 </div>
                                 <!--Observaciones-->
                                 <div id="additionalActivities"></div>
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="addObservationButton">Agregar Observación</button>
+                                    <button type="button" class="w-100 btn btn-primary" id="addObservationButton">Agregar Observación</button>
                                 </div>
                                 <div id="additionalObservations"></div>
                                 <div class="mt-4 mb-0">
@@ -151,6 +155,33 @@
         function confirmCrear() {
             return confirm("¿Estás seguro de que deseas Guardar?");
         }
+
+        //cambios en el formulario dependiendo de la modalidad
+
+        let cboModalidad = document.querySelector('#cboModalidad');
+        let inputNitEmpresa = document.querySelector('#dvinputEmpresa');
+        let inputNitPoryecto = document.querySelector('#dvinputNitPoryecto');
+
+        window.addEventListener('load', () => {
+            var opciones = cboModalidad.options[cboModalidad.selectedIndex];
+
+            if (opciones.text.toLowerCase() == 'proyecto productivo') {
+                inputNitEmpresa.style.display = "none";
+                inputNitPoryecto.style.display = "flex";
+            } else {
+                inputNitPoryecto.style.display = "none";
+            }
+        });
+        cboModalidad.addEventListener('change', () => {
+            var opciones = cboModalidad.options[cboModalidad.selectedIndex];
+
+            if (opciones.text.toLowerCase() == 'proyecto productivo') {
+                inputNitEmpresa.style.display = "none";
+                inputNitPoryecto.style.display = "flex";
+            } else {
+                inputNitPoryecto.style.display = "none";
+            }
+        });
     </script>
     <script>
         document.getElementById('addActivityButton').addEventListener('click', function () {
@@ -161,9 +192,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                            <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
-                            <label>Actividad ${textareaCount}</label>
-                        `;
+                                            <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
+                                            <label>Actividad ${textareaCount}</label>
+                                        `;
 
             container.appendChild(newTextarea);
         });
@@ -175,9 +206,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                                <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
-                                <label>Observación ${textareaCount}</label>
-                            `;
+                                                <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
+                                                <label>Observación ${textareaCount}</label>
+                                            `;
 
             container.appendChild(newTextarea);
         });

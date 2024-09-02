@@ -27,32 +27,54 @@ window.addEventListener('DOMContentLoaded', event => {
 
 
 //cargar formulario pruebas tyt 
-
-let mostrar = document.querySelector('#pruebatyt');
+let formTyt = document.querySelector('#pruebatyt');
 let estadotyt = document.querySelector('#cboEstadoPruebatyt');
 
 window.addEventListener('load', () => {
     var opciones = estadotyt.options[estadotyt.selectedIndex];
 
-    if (opciones.text.toLowerCase() == "inscrito") {
-        mostrar.style.display = "flex";
+    if (opciones.text.toLowerCase().trim() == "inscrito") {
+        formTyt.style.display = "flex";
     } else {
-        mostrar.style.display = "none";
+        formTyt.style.display = "none";
     }
 });
 estadotyt.addEventListener('change', () => {
-    
-
     var opciones = estadotyt.options[estadotyt.selectedIndex];
 
-    if (opciones.text.toLowerCase() == "inscrito") {
-        mostrar.style.display = "flex";
+    if (opciones.text.toLowerCase().trim() == "inscrito") {
+        formTyt.style.display = "flex";
     } else {
-        mostrar.style.display = "none";
+        formTyt.style.display = "none";
     }
-   
+});
 
-})
+//cambios en el formulario dependiendo de la modalidad
+
+let cboModalidad = document.querySelector('#cboModalidad');
+let inputNitEmpresa = document.querySelector('#inputEmpresa');
+let inputNitPoryecto = document.querySelector('#inputNitPoryecto');
+
+window.addEventListener('load', () => {
+    var opciones = cboModalidad.options[cboModalidad.selectedIndex];
+
+    if (opciones.text.toLowerCase().trim() == 'proyectoproductivo') {
+        inputNitEmpresa.style.display = "none";
+        inputNitPoryecto.style.display = "flex";
+    } else {
+        inputNitPoryecto.style.display = "none";
+    }
+});
+cboModalidad.addEventListener('change', () => {
+    var opciones = cboModalidad.options[cboModalidad.selectedIndex];
+
+    if (opciones.text.toLowerCase().trim() == 'proyectoproductivo') {
+        inputNitEmpresa.style.display = "none";
+        inputNitPoryecto.style.display = "flex";
+    } else {
+        inputNitPoryecto.style.display = "none";
+    }
+});
 
 
 
