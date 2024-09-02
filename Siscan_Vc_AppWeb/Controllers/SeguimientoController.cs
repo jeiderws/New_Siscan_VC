@@ -63,7 +63,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             List<ViewModelAprendiz> listaAprendices = new List<ViewModelAprendiz>();
 
-            List<ViewModelAprendiz> listaAprendizSinSegui = new List<ViewModelAprendiz>();
+            List<ViewModelAprendiz> listaAprendizSegui = new List<ViewModelAprendiz>();
 
             listaAprendices = queryAprendiz.Select(a => new ViewModelAprendiz(a)
             {
@@ -91,15 +91,15 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewModelAprendiz aprendi = null;
             foreach (var ap in listaAprendices)
             {
-                if (ap.SeguimientoInstructorAprendices.Count() <3)
+                if (ap.SeguimientoInstructorAprendices.Count() <3 && ap.IdEstadoAprendiz!=4 && ap.IdEstadoAprendiz!=3)
                 {
-                    listaAprendizSinSegui.Add(ap);
+                    listaAprendizSegui.Add(ap);
                 }               
             }
             Aprendiz apren = null;
             if (numdoc != null)
             {
-                aprendi = listaAprendizSinSegui.Where(s => s.NumeroDocumentoAprendiz == numdoc.Trim()).FirstOrDefault();
+                aprendi = listaAprendizSegui.Where(s => s.NumeroDocumentoAprendiz == numdoc.Trim()).FirstOrDefault();
                 apren = await _aprendizService.GetForDoc(numdoc.Trim());
             }
           
@@ -110,7 +110,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             var vmSeguimiento = new Viewmodelsegui
             {
-                listaAprendizSinSegui = listaAprendizSinSegui,
+                listaAprendizSegui = listaAprendizSegui,
                 aprendizSegui = aprendi
             };
             return View(vmSeguimiento);
@@ -272,6 +272,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 IdAsignacionArea = s.IdAsignacionArea,
                 IdAreaEmpresa = s.IdAreaEmpresa,
                 //proyecto
+                NitProyecto = s.NitProyecto,
                 NombreProyecto=s.NombreProyecto,
                 ObjetivoProyecto=s.ObjetivoProyecto
             }).ToList();

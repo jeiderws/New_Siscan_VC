@@ -48,12 +48,17 @@
                                                 @{
                                                     foreach (var seguimiento in Model.listaSeguimiento)
                                                     {
+                                                        if (seguimiento.NombreEmpresa == null)
+                                                        {
+                                                            seguimiento.NombreEmpresa = seguimiento.NombreProyecto;
+                                                            seguimiento.NitEmpresa = seguimiento.NitProyecto;
+                                                        }
                                                         <tr>
                                                             <td>@Html.DisplayFor(a => seguimiento.NumeroDocumentoAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.FichaAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.NombreAprendiz)</td>
-                                                            <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>
-                                                            <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa!=null? seguimiento.NombreEmpresa : seguimiento.NombreProyecto)</td>
+                                                            <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>                                                            
+                                                            <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa)</td>
                                                             <td style="justify-content:center">
                                                                 <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-idSeguimiento="@seguimiento.IdSeguimiento" class="btn btn-sm">
                                                                     <img src="~/img/ver seguimientoNegro.png" width="25" alt="seguimiento" />
