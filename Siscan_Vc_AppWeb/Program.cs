@@ -5,7 +5,7 @@ using Siscan_Vc_BLL.Service.ClasesService;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using Siscan_Vc_DAL.Repositories;
-
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -43,6 +43,7 @@ builder.Services.AddScoped<IActividadService, ActividadService>();
 builder.Services.AddScoped<IObservacionesService, ObservacionesService>();
 
 var app = builder.Build();
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

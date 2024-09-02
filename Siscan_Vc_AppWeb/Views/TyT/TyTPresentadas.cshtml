@@ -51,6 +51,26 @@
         </tbody>
     </table>
 </div>
+<p>Cantidad de aprendices: @Model.Aprendices.Count()</p>
+
+<form action="@Url.Action("ExportarExcel", "ExcelController1")" method="post">
+    @for (int i = 0; i < Model.Aprendices.Count; i++)
+    {
+        <input type="hidden" name="Aprendices[@i].NumeroDocumentoAprendiz" value="@Model.Aprendices[i].NumeroDocumentoAprendiz" />
+        <input type="hidden" name="Aprendices[@i].Ficha" value="@Model.Aprendices[i].Ficha" />
+        <input type="hidden" name="Aprendices[@i].NombreAprendiz" value="@Model.Aprendices[i].NombreAprendiz" />
+        <input type="hidden" name="Aprendices[@i].ApellidoAprendiz" value="@Model.Aprendices[i].ApellidoAprendiz" />
+        <input type="hidden" name="Aprendices[@i].CodigoInscripcion" value="@Model.Aprendices[i].CodigoInscripcion" />
+        <input type="hidden" name="Aprendices[@i].CelAprendiz" value="@Model.Aprendices[i].CelAprendiz" />
+        <input type="hidden" name="Aprendices[@i].CorreoAprendiz" value="@Model.Aprendices[i].CorreoAprendiz" />
+        <input type="hidden" name="Aprendices[@i].DireccionAprendiz" value="@Model.Aprendices[i].DireccionAprendiz" />
+        <input type="hidden" name="Aprendices[@i].EstadoTytNombre" value="@Model.Aprendices[i].EstadoTytNombre" />
+        <input type="hidden" name="Aprendices[@i].TipoDocumentoNombre" value="@Model.Aprendices[i].TipoDocumentoNombre" />
+        <input type="hidden" name="Aprendices[@i].CiudadNombre" value="@Model.Aprendices[i].CiudadNombre" />
+    }
+    <button type="submit" class="btn btn-primary">Exportar a Excel</button>
+</form>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
