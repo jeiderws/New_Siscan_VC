@@ -7,6 +7,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
             IdSeguimiento = seguimiento.IdSeguimiento;
+            FechaRealizacionSeguimiento = seguimiento.FechaRealizacionSeguimiento;
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {
@@ -57,10 +58,15 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             FechaFinalizacion = seguimiento.FechaFinalizacion;
             NombreModalidad = seguimiento.IdModalidadNavigation.NombreModalidad;
             idmodalidad = seguimiento.IdModalidad;
+
+            //Proyecto
+            NombreProyecto=seguimiento.NombreProyecto;
+            ObjetivoProyecto = seguimiento.ObjetivoProyecto;
         }
         public List<Actividade> actividades { get; set; }
         public List<Observacion> observaciones { get; set; }
         public int IdSeguimiento { get; set; }
+        public DateOnly? FechaRealizacionSeguimiento { get; set; }
         //aprendiz
         public int? idTipoDocumentoAprendiz { get; set; }
         public string TipoDocumentoAprendiz { get; set; }
@@ -100,6 +106,9 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? AreaEmpresa { get; set; }
         public long? IdAsignacionArea { get; set; }
 
+        //proyecto productivo
+        public string? NombreProyecto { get; set; }
+        public string? ObjetivoProyecto { get; set; }
 
 
     }

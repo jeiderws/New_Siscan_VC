@@ -11,5 +11,8 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public Empresa Empresa { get; set; }
         public Coformador Coformador { get; set; }
         public Instructor Instructor { get; set; }
+        public string? NombreProyecto { get; set; }
+        public string? ObjetivoProyecto { get; set; }
+        public DateOnly? FechaRealizacionSeguimiento { get; set; }
     }
 }
