@@ -239,13 +239,13 @@ namespace Siscan_Vc_AppWeb.Controllers
             listSeguimiento = querySeguimiento.Select(s => new ViewModelSeguimiento(s)
             {
                 IdSeguimiento = s.IdSeguimiento,
+                FechaRealizacionSeguimiento=s.FechaRealizacionSeguimiento,
                 FechaInicio = s.FechaInicio,
                 FechaFinalizacion = s.FechaFinalizacion,
                 NombreModalidad = s.IdModalidadNavigation.NombreModalidad,
                 idmodalidad = s.IdModalidad,
                 //datos del aprendiz
                 idTipoDocumentoAprendiz = s.NumeroDocumentoAprendizNavigation.IdTipodocumento,
-                //TipoDocumentoAprendiz = s.NumeroDocumentoAprendizNavigation.IdTipodocumentoNavigation.TipoDocumento1,
                 NumeroDocumentoAprendiz = s.NumeroDocumentoAprendiz,
                 NombreAprendiz = s.NumeroDocumentoAprendizNavigation.NombreAprendiz,
                 ApellidoAprendiz = s.NumeroDocumentoAprendizNavigation.ApellidoAprendiz,
@@ -270,7 +270,10 @@ namespace Siscan_Vc_AppWeb.Controllers
                 NombreEmpresa = s.NitEmpresaNavigation.NombreEmpresa,
                 AreaEmpresa = s.IdAreaEmpresaNavigation.NombreArea,
                 IdAsignacionArea = s.IdAsignacionArea,
-                IdAreaEmpresa = s.IdAreaEmpresa
+                IdAreaEmpresa = s.IdAreaEmpresa,
+                //proyecto
+                NombreProyecto=s.NombreProyecto,
+                ObjetivoProyecto=s.ObjetivoProyecto
             }).ToList();
 
             ViewModelSeguimiento seguimient = listSeguimiento.Where(s => s.IdSeguimiento.ToString() == idSeguimiento).FirstOrDefault();
