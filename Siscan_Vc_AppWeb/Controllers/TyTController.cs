@@ -117,7 +117,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                                   from i in ai.DefaultIfEmpty()
                                   join c in _dbcontext.ConvocatoriaTyts on i.IdConvocatoria equals c.IdConvocatoria
                                   join f in _dbcontext.Fichas on a.Ficha equals f.Ficha1
-                                  where a.IdEstadoTyt == 1
+                                  where a.IdEstadoTyt == 6
                                   select new AprendizViewModel
                                   {
                                       NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
