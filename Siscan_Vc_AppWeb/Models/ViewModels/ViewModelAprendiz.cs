@@ -7,7 +7,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     {
         public ViewModelAprendiz(Aprendiz aprendiz)
         {
-            Tipodocumento = aprendiz.IdTipodocumentoNavigation.TipoDocumento1;
+            Tipodocumento = aprendiz.IdTipodocumentoNavigation?.TipoDocumento1;
             NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz;
             NombreAprendiz = aprendiz.NombreAprendiz;
             ApellidoAprendiz = aprendiz.ApellidoAprendiz;
@@ -17,12 +17,12 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             NombreCompletoAcudiente = aprendiz.NombreCompletoAcudiente;
             CorreoAcuediente = aprendiz.CorreoAcuediente;
             CelularAcudiente = aprendiz.CelularAcudiente;
-            IdTipodocumento = aprendiz.IdTipodocumentoNavigation.IdTipoDocumento;
-            nombredoc = aprendiz.IdTipodocumentoNavigation.TipoDocumento1;
+            IdTipodocumento = aprendiz.IdTipodocumentoNavigation?.IdTipoDocumento;
+            nombredoc = aprendiz.IdTipodocumentoNavigation?.TipoDocumento1;
             IdEstadoTyt = aprendiz.IdEstadoTyt;
-            nomEstadoTyt = aprendiz.IdEstadoTytNavigation.DescripcionEstadotyt;
+            nomEstadoTyt = aprendiz.IdEstadoTytNavigation?.DescripcionEstadotyt;
             IdEstadoAprendiz = aprendiz.IdEstadoAprendiz;
-            nomEstadoAprendiz = aprendiz.IdEstadoAprendizNavigation.NombreEstado;
+            nomEstadoAprendiz = aprendiz.IdEstadoAprendizNavigation?.NombreEstado;
             SeguimientoInstructorAprendices = aprendiz.SeguimientoInstructorAprendizs;
             NombreApellidoDoc = aprendiz.NombreAprendiz + " " + aprendiz.ApellidoAprendiz + " " + aprendiz.NumeroDocumentoAprendiz;
             Ficha = aprendiz.Ficha;
