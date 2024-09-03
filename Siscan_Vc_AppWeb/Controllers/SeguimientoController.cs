@@ -148,23 +148,25 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             await LlenarCombos();
             Viewmodelsegui viewmodelsegui = new Viewmodelsegui();
+            SeguimientoInstructorAprendiz seguimiento = null;
             try
             {
                 if (Vmse != null)
-                {
-                    var seguimiento = new SeguimientoInstructorAprendiz()
+                {                    
+                    if (Vmse.seguimientoinstructorAprendiz.IdModalidad != 3)
                     {
-                        NumeroDocumentoAprendiz = Vmse?.aprendiz?.NumeroDocumentoAprendiz,
-                        NumeroDocumentoInstructor = Vmse?.seguimientoinstructorAprendiz?.NumeroDocumentoInstructor,
-                        IdCoformador = Vmse?.seguimientoinstructorAprendiz?.IdCoformador,
-                        FechaInicio = Vmse?.seguimientoinstructorAprendiz?.FechaInicio,
-                        FechaFinalizacion = Vmse?.seguimientoinstructorAprendiz?.FechaFinalizacion,
-                        IdModalidad = Vmse?.seguimientoinstructorAprendiz?.IdModalidad,
-                        IdAreaEmpresa = Vmse?.seguimientoinstructorAprendiz?.IdAreaEmpresa,
-                        NitEmpresa = Vmse?.seguimientoinstructorAprendiz.NitEmpresa
-                    };
-                    if (seguimiento.IdModalidad != 3)
-                    {
+                        seguimiento = new SeguimientoInstructorAprendiz()
+                        {
+                            NumeroDocumentoAprendiz = Vmse?.aprendiz?.NumeroDocumentoAprendiz,
+                            NumeroDocumentoInstructor = Vmse?.seguimientoinstructorAprendiz?.NumeroDocumentoInstructor,
+                            IdCoformador = Vmse?.seguimientoinstructorAprendiz?.IdCoformador,
+                            FechaInicio = Vmse?.seguimientoinstructorAprendiz?.FechaInicio,
+                            FechaFinalizacion = Vmse?.seguimientoinstructorAprendiz?.FechaFinalizacion,
+                            IdModalidad = Vmse?.seguimientoinstructorAprendiz?.IdModalidad,
+                            IdAreaEmpresa = Vmse?.seguimientoinstructorAprendiz?.IdAreaEmpresa,
+                            NitEmpresa = Vmse?.seguimientoinstructorAprendiz.NitEmpresa
+                        };
+
                         var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
                         var instructor = await _instructorService.GetForDoc(seguimiento.NumeroDocumentoInstructor);
                         if (empre == null)
@@ -221,6 +223,10 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                             TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
                         }
+                    }
+                    else if (Vmse.seguimientoinstructorAprendiz.IdModalidad == 3)
+                    {
+                        
                     }
                 }
                 return View(viewmodelsegui);
