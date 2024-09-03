@@ -623,6 +623,19 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return _dbSiscanContext.Aprendiz.Any(a => a.NumeroDocumentoAprendiz == numeroDocumento);
         }
+        public IActionResult Egresados()
+        {
+            var aprendices = _dbSiscanContext.Aprendiz
+             .Include(a => a.IdTipodocumentoNavigation)
+             .Include(a => a.IdEstadoAprendizNavigation)
+             .Where(a => a.IdEstadoAprendiz == 4);
+
+            var viewModel = aprendices
+                .Select(a => new ViewModelAprendiz(a))
+                .ToList();
+
+            return View(viewModel);
+        }
 
     }
 }
