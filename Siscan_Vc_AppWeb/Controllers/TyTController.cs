@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using NuGet.Packaging.Signing;
 using Siscan_Vc_AppWeb.Models.ViewModels;
+using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 
 namespace Siscan_Vc_AppWeb.Controllers
@@ -9,7 +10,8 @@ namespace Siscan_Vc_AppWeb.Controllers
     public class TyTController : Controller
     {
         private readonly DbSiscanContext _dbcontext;
-        public TyTController(DbSiscanContext dbSiscanContext)
+        private readonly IAprendizService _aprendizService;
+        public TyTController(DbSiscanContext dbSiscanContext, IAprendizService aprendizService)
         {
             _dbcontext = dbSiscanContext;
         }
@@ -105,6 +107,42 @@ namespace Siscan_Vc_AppWeb.Controllers
                 TempData["MensajeAlertIns"] = "Se Actualizo el estado TYT de los Aprendices";
             }
             return RedirectToAction("Consultar");
+        }
+        public async Task<IActionResult> TyTPresentadas(TyTConsultationViewModel viewModel)
+        {
+            if (viewModel != null)
+            {
+                var aprendices = (from a in _dbcontext.Aprendiz
+                                  join i in _dbcontext.InscripcionTyts on a.NumeroDocumentoAprendiz equals i.NumeroDocumentoAprendiz into ai
+                                  from i in ai.DefaultIfEmpty()
+                                  join c in _dbcontext.ConvocatoriaTyts on i.IdConvocatoria equals c.IdConvocatoria
+                                  join f in _dbcontext.Fichas on a.Ficha equals f.Ficha1
+                                  where a.IdEstadoTyt == 1
+                                  select new AprendizViewModel
+                                  {
+                                      NumeroDocumentoAprendiz = a.NumeroDocumentoAprendiz,
+                                      NombreAprendiz = a.NombreAprendiz,
+                                      ApellidoAprendiz = a.ApellidoAprendiz,
+                                      CelAprendiz = a.CelAprendiz,
+                                      CorreoAprendiz = a.CorreoAprendiz,
+                                      DireccionAprendiz = a.DireccionAprendiz,
+                                      NombreCompletoAcudiente = a.NombreCompletoAcudiente,
+                                      CorreoAcudiente = a.CorreoAcuediente,
+                                      CelularAcudiente = a.CelularAcudiente,
+                                      EstadoTytNombre = a.IdEstadoTytNavigation.DescripcionEstadotyt,
+                                      TipoDocumentoNombre = a.IdTipodocumentoNavigation.TipoDocumento1,
+                                      Ficha = a.Ficha,
+                                      CiudadNombre = a.IdCiudadNavigation.NombreCiudad,
+                                      EstadoAprendizNombre = a.IdEstadoAprendizNavigation.NombreEstado,
+                                      CodigoInscripcion = i.CodigoInscripcion,
+                                      HasCompletedTyt = i.CodigoInscripcion != null,
+                                      ChangeStatusToRealizadas = viewModel.ChangeStatusToRealizadas
+                                  }).ToList();
+
+                viewModel.Aprendices = aprendices;
+            }
+
+            return View( viewModel);
         }
 
 
