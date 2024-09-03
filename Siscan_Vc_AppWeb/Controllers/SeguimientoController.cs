@@ -92,10 +92,10 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewModelAprendiz aprendi = null;
             foreach (var ap in listaAprendices)
             {
-                if (ap.SeguimientoInstructorAprendices.Count() <3 && ap.IdEstadoAprendiz!=4 && ap.IdEstadoAprendiz!=3)
+                if (ap.SeguimientoInstructorAprendices.Count() < 3 && ap.IdEstadoAprendiz != 4 && ap.IdEstadoAprendiz != 3)
                 {
                     listaAprendizSegui.Add(ap);
-                }               
+                }
             }
             Aprendiz apren = null;
             if (numdoc != null)
@@ -103,14 +103,14 @@ namespace Siscan_Vc_AppWeb.Controllers
                 aprendi = listaAprendizSegui.Where(s => s.NumeroDocumentoAprendiz == numdoc.Trim()).FirstOrDefault();
                 apren = await _aprendizService.GetForDoc(numdoc.Trim());
             }
-          
 
-            if( apren != null && apren.SeguimientoInstructorAprendizs.Count() >= 3)
+
+            if (apren != null && apren.SeguimientoInstructorAprendizs.Count() >= 3)
             {
                 TempData["MensajeAlertMAxSegui"] = "Este Aprendiz Tiene Limites de Seguimiento";
             }
             var vmSeguimiento = new Viewmodelsegui
-            {               
+            {
                 listaAprendizSegui = listaAprendizSegui,
                 aprendizSegui = aprendi
             };
@@ -163,62 +163,64 @@ namespace Siscan_Vc_AppWeb.Controllers
                         IdAreaEmpresa = Vmse?.seguimientoinstructorAprendiz?.IdAreaEmpresa,
                         NitEmpresa = Vmse?.seguimientoinstructorAprendiz.NitEmpresa
                     };
-
-                    var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
-                    var instructor = await _instructorService.GetForDoc(seguimiento.NumeroDocumentoInstructor);
-                    if (empre == null)
+                    if (seguimiento.IdModalidad != 3)
                     {
-                        TempData["MensajeAlertEmpre"] = "Nit de Empresa no encontrado";
-                    }
-                    if (instructor == null)
-                    {
-                        TempData["MensajeAlertInstruc"] = "No se encontro un instructor con este numero de documento";
-                    }
-                    else if (empre != null && instructor != null)
-                    {
-                        await _seguimientoService.Insert(seguimiento);
-
-                        var asignacion = new AsignacionArea()
+                        var empre = await _empresaService.GetForNit(seguimiento.NitEmpresa);
+                        var instructor = await _instructorService.GetForDoc(seguimiento.NumeroDocumentoInstructor);
+                        if (empre == null)
                         {
-                            IdArea = seguimiento.IdAreaEmpresa,
-                            NitEmpresa = seguimiento.NitEmpresa
-                        };
-                        await _asignacionService.Insert(asignacion);
-                        seguimiento.IdAsignacionArea = asignacion.IdAsignacionArea;
-
-                        if (Vmse.actividadesList != null)
-                        {
-                            foreach (var actividadDescripcion in Vmse.actividadesList)
-                            {
-                                var actividad = new Actividade()
-                                {
-                                    DescripcionActividad = actividadDescripcion,
-                                    IdSeguimiento = seguimiento.IdSeguimiento
-                                };
-                                await _actividadService.Insert(actividad);
-                            }
+                            TempData["MensajeAlertEmpre"] = "Nit de Empresa no encontrado";
                         }
-
-                        if (Vmse.observacionesList != null)
+                        if (instructor == null)
                         {
-                            foreach (var observacion in Vmse.observacionesList)
-                            {
-                                var observa = new Observacion()
-                                {
-                                    Observaciones = observacion,
-                                    IdSeguimiento = seguimiento.IdSeguimiento,
-                                };
-                                await _observacionesService.Insert(observa);
-                            }
+                            TempData["MensajeAlertInstruc"] = "No se encontro un instructor con este numero de documento";
                         }
-
-                        viewmodelsegui = new Viewmodelsegui()
+                        else if (empre != null && instructor != null)
                         {
-                            seguimientoinstructorAprendiz = seguimiento,
-                            asignacionArea = asignacion,
-                        };
+                            await _seguimientoService.Insert(seguimiento);
 
-                        TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
+                            var asignacion = new AsignacionArea()
+                            {
+                                IdArea = seguimiento.IdAreaEmpresa,
+                                NitEmpresa = seguimiento.NitEmpresa
+                            };
+                            await _asignacionService.Insert(asignacion);
+                            seguimiento.IdAsignacionArea = asignacion.IdAsignacionArea;
+
+                            if (Vmse.actividadesList != null)
+                            {
+                                foreach (var actividadDescripcion in Vmse.actividadesList)
+                                {
+                                    var actividad = new Actividade()
+                                    {
+                                        DescripcionActividad = actividadDescripcion,
+                                        IdSeguimiento = seguimiento.IdSeguimiento
+                                    };
+                                    await _actividadService.Insert(actividad);
+                                }
+                            }
+
+                            if (Vmse.observacionesList != null)
+                            {
+                                foreach (var observacion in Vmse.observacionesList)
+                                {
+                                    var observa = new Observacion()
+                                    {
+                                        Observaciones = observacion,
+                                        IdSeguimiento = seguimiento.IdSeguimiento,
+                                    };
+                                    await _observacionesService.Insert(observa);
+                                }
+                            }
+
+                            viewmodelsegui = new Viewmodelsegui()
+                            {
+                                seguimientoinstructorAprendiz = seguimiento,
+                                asignacionArea = asignacion,
+                            };
+
+                            TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
+                        }
                     }
                 }
                 return View(viewmodelsegui);
@@ -245,7 +247,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             listSeguimiento = querySeguimiento.Select(s => new ViewModelSeguimiento(s)
             {
                 IdSeguimiento = s.IdSeguimiento,
-                FechaRealizacionSeguimiento=s.FechaRealizacionSeguimiento,
+                FechaRealizacionSeguimiento = s.FechaRealizacionSeguimiento,
                 FechaInicio = s.FechaInicio,
                 FechaFinalizacion = s.FechaFinalizacion,
                 NombreModalidad = s.IdModalidadNavigation.NombreModalidad,
@@ -279,21 +281,21 @@ namespace Siscan_Vc_AppWeb.Controllers
                 IdAreaEmpresa = s.IdAreaEmpresa,
                 //proyecto
                 NitProyecto = s.NitProyecto,
-                NombreProyecto=s.NombreProyecto,
-                ObjetivoProyecto=s.ObjetivoProyecto
+                NombreProyecto = s.NombreProyecto,
+                ObjetivoProyecto = s.ObjetivoProyecto
             }).ToList();
 
             ViewModelSeguimiento seguimient = listSeguimiento.Where(s => s.IdSeguimiento.ToString() == idSeguimiento).FirstOrDefault();
             //lista de observaciones de el seguimiento consultado
-            var observaciones= _dbSiscanContext.Observacions.Where(o => o.IdSeguimiento.ToString()==idSeguimiento).Select(o=>o.Observaciones).ToList();
+            var observaciones = _dbSiscanContext.Observacions.Where(o => o.IdSeguimiento.ToString() == idSeguimiento).Select(o => o.Observaciones).ToList();
             //lista de actividades de el seguimiento consultado
-            var actividades = _dbSiscanContext.Actividades.Where(a=>a.IdSeguimiento.ToString()== idSeguimiento).Select(a=>a.DescripcionActividad).ToList();
+            var actividades = _dbSiscanContext.Actividades.Where(a => a.IdSeguimiento.ToString() == idSeguimiento).Select(a => a.DescripcionActividad).ToList();
             vmSeguimiento = new Viewmodelsegui
             {
                 listaSeguimiento = listSeguimiento,
                 seguimiento = seguimient,
-                actividadesList=actividades,
-                observacionesList=observaciones,
+                actividadesList = actividades,
+                observacionesList = observaciones,
             };
             return View(vmSeguimiento);
         }
@@ -344,7 +346,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }).ToList();
                     }
 
-                    if (seguimientosArchv != null && seguimientosArchv.Count()>0)
+                    if (seguimientosArchv != null && seguimientosArchv.Count() > 0)
                     {
                         Coformador coformador = null;
                         foreach (var segui in seguimientosArchv)
@@ -384,7 +386,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     };
                 }
 
-            } 
+            }
             catch
             {
                 return NotFound();
@@ -407,7 +409,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var observaciones = await _dbSiscanContext.Observacions.Where(o => o.IdSeguimiento == idSeguimiento).ToListAsync();
                 _dbSiscanContext.Observacions.RemoveRange(observaciones);
                 await _seguimientoService.Delete(idSeguimiento);
-                TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!"; 
+                TempData["MensajeSeguimientoEliminado"] = "Seguimiento eliminado correctamente!!";
                 return Json(new { success = true, message = "El seguimiento se elimino correctamente." });
             }
 
@@ -507,7 +509,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         seguimiento.IdAreaEmpresa = seguimientoVm.seguimientoinstructorAprendiz.IdAreaEmpresa;
                         seguimiento.NitEmpresa = seguimientoVm.seguimientoinstructorAprendiz.NitEmpresa;
 
-                        _dbSiscanContext.Update(seguimiento);   
+                        _dbSiscanContext.Update(seguimiento);
                         await _dbSiscanContext.SaveChangesAsync();
                         TempData["MensajeSeguimientoActualizado"] = "Seguimiento Actualizado correctamente!!";
                         if (seguimiento.IdModalidad != seguimientoArchivo.IdModalidad)
