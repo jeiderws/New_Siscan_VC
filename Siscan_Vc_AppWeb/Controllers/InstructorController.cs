@@ -48,13 +48,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         TempData["ValIntrcExiste"] = "Ya existe un intructor con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
-                    if (mvinstructor.Instructor.NumeroDocumentoInstructor == null || mvinstructor.Instructor.NombreInstructor == null ||
-                        mvinstructor.Instructor.ApellidoInstructor == null || mvinstructor.Instructor.CorreoInstructor == null ||
-                        mvinstructor.Instructor.CelInstructor == null || mvinstructor.OpcSeleccionada == null)
-                    {
-                        TempData["ValIntrcLleno"] = "Por Favor Llene Todos Los Campos";
-                        return RedirectToAction(nameof(Registro));
-                    }
                     else
                     {
                         var instruc = new Instructor()
@@ -72,11 +65,25 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                         instrucvm = new ModelViewInstructor
                         {
-                            Instructor = instruc
+                            Instructor = instruc,
+                            OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                            {
+                                Value = o.IdTipoDocumento.ToString(),
+                                Text = o.TipoDocumento1
+                            }).ToList()
                         };
                         return RedirectToAction(nameof(Registro));
                     }
                 }
+
+                instrucvm = new ModelViewInstructor
+                {
+                    OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                    {
+                        Value = o.IdTipoDocumento.ToString(),
+                        Text = o.TipoDocumento1
+                    }).ToList()
+                }; 
             }
             catch (Exception ex)
             {
@@ -210,8 +217,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         _dbSiscanContext.Fichas.UpdateRange(f);
                     }
                 }
-                var asigFicha=await _dbSiscanContext.AsignacionFichas.Where(af=>af.NumeroDocumentoInstructor==nmDoc).ToListAsync();
-                if(asigFicha.Count > 0)
+                var asigFicha = await _dbSiscanContext.AsignacionFichas.Where(af => af.NumeroDocumentoInstructor == nmDoc).ToListAsync();
+                if (asigFicha.Count > 0)
                 {
                     _dbSiscanContext.AsignacionFichas.RemoveRange(asigFicha);
                 }
