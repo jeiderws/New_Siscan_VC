@@ -26,7 +26,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _aprendizService = aprendizService;
             _inscripcionTYTService = inscripcionTYTService;
         }
-
+        //metodos para hacer los select anidados (oh dependientes)
         [HttpGet]
         public IActionResult ObtenerNivelPrograma(string programaId)
         {
@@ -118,13 +118,13 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             };
             return View(modelview);
-        }
+        } 
         [HttpGet]
         public async Task<IActionResult> RegistrarLotes()
         {
             return View();
         }
-
+        //metodo para mostrar los datos de el excel en la tabla
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchExcel)
         {
@@ -151,7 +151,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     int cantFilas = HojaExcel.LastRowNum;
 
                     List<VMAprendiz> listaExcel = new List<VMAprendiz>();
-
+                    //asignacion de datos para mostra en la tabla 
                     for (int i = 1; i <= cantFilas; i++)
                     {
                         IRow fila = HojaExcel.GetRow(i);
@@ -188,7 +188,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error al procesar el archivo: {ex.Message}");
             }
         }
-
+        //metodos para hacer el guardado de datos masivos guardando los datos que obtiene desde la hoja de excel
         [HttpPost]
         public async Task<IActionResult> RegistrarLotes(IFormFile fileExcel)
         {
@@ -497,10 +497,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar el aprendiz: " + e.Message });
             }
         }
-
+        //metodo para obtener los datos del aprendiz que va a editar    
         [HttpGet]
         public async Task<IActionResult> Editar(string numDoc)
         {
+            //otra forma de llenar los select
             var viewModel = new Modelviewtytap();
             ViewBag.ItemsTipoDoc = new SelectList(await _dbSiscanContext.TipoDocumentos.ToListAsync(), "IdTipoDocumento", "TipoDocumento1");
             ViewBag.ItemsEstAprndz = new SelectList(await _dbSiscanContext.EstadoAprendizs.ToListAsync(), "IdEstado", "NombreEstado");
@@ -532,7 +533,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewModel);
         }
-
+        //metodo  para editar el aprendiz que se obtuvo
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
@@ -619,10 +620,12 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(aprendiztyt);
         }
+        //metodo para comprobar si el aprendiz existe
         private bool AprendizExists(string numeroDocumento)
         {
             return _dbSiscanContext.Aprendiz.Any(a => a.NumeroDocumentoAprendiz == numeroDocumento);
         }
+        //esto es para la vista de egresados para que obtenga todos los aprendices de ese estado
         public IActionResult Egresados()
         {
             var aprendices = _dbSiscanContext.Aprendiz

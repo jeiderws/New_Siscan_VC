@@ -21,7 +21,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             var viewModel = new Modelviewtytap();
             return View(viewModel);
         }
-        //regitra las fechas de la convocatoria
+        //metodo para regitrar las fechas de la convocatoria
         [HttpPost]
         public IActionResult Registro(Modelviewtytap viewModel)
         {
@@ -52,6 +52,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View(new TyTConsultationViewModel());
         }
+        //metodo para obtener los aprendices que estas inscritos y aplican a los filtros de la consulta
         [HttpPost]
         public IActionResult ConsultarResult(TyTConsultationViewModel viewModel)
         {
@@ -89,7 +90,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             return View("Consultar", viewModel);
         }
-        //metodo para lo del checkbox
+        //metodo para lo del checkbox de cambiar el estado del aprendiz del inscrito a realizadas
         [HttpPost]
         public IActionResult UpdateStatus(string[] selectedAprendices)
         {
@@ -108,6 +109,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return RedirectToAction("Consultar");
         }
+        //metodo para mostrar los aprendices que presentaron las tyt
         public async Task<IActionResult> TyTPresentadas(TyTConsultationViewModel viewModel)
         {
             if (viewModel != null)

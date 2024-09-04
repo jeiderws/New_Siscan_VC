@@ -38,7 +38,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            // Cargar listas de selección
+            // Cargar listas de selección de los select
             var modelview = new ModelViewProgra
             {
                 listaopcNivel = _dbSiscanContext.NivelProgramas.Select(o => new SelectListItem
@@ -84,7 +84,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             return View(modelview);
         }
-
+        //metodo para guardar  programas
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ModelViewProgra pro, IFormFile fileExcel)
@@ -140,13 +140,13 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
-
+        //metodo para hacer el registro masivo de fichas 
         [HttpPost]
         public async Task<IActionResult> RegistrarLotes(IFormFile fileExcel)
         {
             try
             {
-                // Configurar el contexto de la licencia
+                // Configura el contexto de la licencia
                 ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
                 var fichas = new List<Ficha>();
@@ -221,6 +221,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     fichs += " " + ficha.Ficha1 + ",";
                 }
+                //validacion si la ficha ya se encuentra
                 if (fichasExist.Count > 0)
                 {
                     ViewBag.FichasExcistExcel = "Las fichas: " + fichs + " ya se encuentran registradas";
@@ -238,7 +239,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View();
         }
-
+        //metodo para mostrar los datos de el excel en la tabla
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchExcel)
         {
@@ -289,7 +290,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error al procesar el archivo: {ex.Message}");
             }
         }
-
+        //metodo solo para obtener el programa de la ficha que se va a crear y tambien carga los datos del  select que se utilizan
         [HttpGet]
         public async Task<IActionResult> CrearFicha(string codigo)
         {
@@ -315,6 +316,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(modelview);
         }
+        //metodo para crear la ficha
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CrearFicha(ModelViewProgra vmpf)
@@ -370,6 +372,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 throw;
             }
         }
+        //metodo para consultar las fichas
         [HttpGet]
         public async Task<IActionResult> Consultar(string codigo)
         {
@@ -444,6 +447,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar el programa: " + innerException });
             }
         }
+        //metodos para obtener el programa que se va a editar
         [HttpGet]
         public async Task<IActionResult> Editar(string cdg)
         {
@@ -465,6 +469,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewmodel);
         }
+        //metodo para editar el programa que se obtuvo
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(ModelViewProgra program)
@@ -500,11 +505,12 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View();
         }
+        //metodo para verificar que el programa exista
         private bool programExist(string Codigo)
         {
             return _dbSiscanContext.Programas.Any(p => p.CodigoPrograma == Codigo);
         }
-
+        //metodo consultar las fichas
         [HttpGet]
         public IActionResult ConsultarFicha(string codigo)
         {
@@ -578,6 +584,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar la ficha: " + ex.Message });
             }
         }
+        //metodo para obtener los datos de la ficha que se va a editar
         [HttpGet]
         public async Task<IActionResult> EditarFicha(string fi)
         {
@@ -597,6 +604,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewmodel);
         }
+        //metodo para editar la ficha
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarFicha(ModelViewProgra fichas)
@@ -635,6 +643,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(fichas);
         }
+        //metodo para verificar que la ficha exista 
         private bool fichaExist(string fich)
         {
             return _dbSiscanContext.Fichas.Any(f => f.Ficha1 == fich);

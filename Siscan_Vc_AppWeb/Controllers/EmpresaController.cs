@@ -22,7 +22,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _coformadorService = coformadorService;
             _aprendizService = aprendizService;
         }
-
+        //metodos para hacer los select anidados (oh dependientes)
         [HttpGet]
         public async Task<IActionResult> CargarCiudades(int departamentoId)
         {
@@ -30,7 +30,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewBag.ciudades = ciudades;
             return Json(ciudades);
         }
-
+        //metodo utilizado para obtener los datos que va cargar los select y que los retorne en la vista del registro
         [HttpGet]
         public async Task<IActionResult> Registro()
         {
@@ -51,7 +51,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             };
             return View(modelView);
         }
-
+        //metodo para registrar las empresas
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registro(ModelViewEmpresa empresaMv)
@@ -62,6 +62,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 //registro de empresas
                 if (empresaMv.empresa != null)
                 {
+                    //validaciones del formulario
                     if(empresaMv.empresa.Nitmpresa == null || empresaMv.empresa.TelefonoEmpresa == null || empresaMv.empresa.NombreEmpresa==null || empresaMv.empresa.RepresentanteLegal==null || empresaMv.empresa.DireccionEmpresa == null)
                     {
                         TempData["ValCamposVaciosEmpresa"] = "Por favor llene todos los campos";
@@ -74,6 +75,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         return RedirectToAction(nameof(Registro));
 
                     }
+                    //proceso para guardar 
                     else if (empreExist == null)
                     {
                         var empre = new Empresa()
@@ -110,6 +112,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     {
                         TempData["ValEmpresaNoExist"] = "la empresa con este nit no se encuentra registrada";
                     }
+                    //proceso para guardar los coformadores
                     else if (coformadorExist == null && empre != null)
                     {
                         var coform = new Coformador
@@ -137,7 +140,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(mVEmpresa);
         }
-
+        //metodo para consultar las empresas
         [HttpGet]
         public async Task<IActionResult> consultar(string nitEmpresa)
         {
@@ -155,6 +158,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 {
                     foreach (var item in empresas)
                     {
+                        //filtro por el nit de la empresa
                         if (item.Nitmpresa.Trim().ToLower() == nitEmpresa.Trim().ToLower())
                         {
                             empresa = item;
@@ -224,7 +228,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar el coformador: " + ex.Message });
             }
         }
-
+        //metodo para obtener la informacion del coformador a editar
         [HttpGet]
         public async Task<IActionResult> EditarCoformador(string numDocCoformador)
         {
@@ -240,7 +244,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(coformador);
         }
-
+        //metodo para editar el coformador obtenido
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarCoformador(Coformador coformador)
@@ -280,7 +284,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(coformador);
         }
-
+        //metodo que se utiliza para comprobar si el coformador existe
         public bool CoformadorExist(string numDocCoformador)
         {
             return _dbSiscanContext.Coformadors.Any(c => c.NumeroDocumentoCoformador == numDocCoformador);
