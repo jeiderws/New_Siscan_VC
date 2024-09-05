@@ -5,7 +5,7 @@ using Siscan_Vc_BLL.Service.ClasesService;
 using Siscan_Vc_BLL.Service.InterfacesService;
 using Siscan_Vc_DAL.DataContext;
 using Siscan_Vc_DAL.Repositories;
-
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,8 +41,9 @@ builder.Services.AddScoped<ICoformadorService, CoformadorService>();
 builder.Services.AddScoped<ISeguimientoArchivoService, SeguimientoArchivoService>();
 builder.Services.AddScoped<IActividadService, ActividadService>();
 builder.Services.AddScoped<IObservacionesService, ObservacionesService>();
-
+// Establecer el contexto de licencia de EPPlus
 var app = builder.Build();
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

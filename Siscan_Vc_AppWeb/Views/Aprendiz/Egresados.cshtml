@@ -1,0 +1,57 @@
+﻿@model IEnumerable<Siscan_Vc_AppWeb.Models.ViewModels.ViewModelAprendiz>
+
+@{
+    ViewData["Title"] = "Egresados";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<br />
+<div>
+    <input style="margin-left:15px;" class="form-control mb-3" type="text" id="realTimeSearch" placeholder="Buscar por numero de documento del aprendiz">
+</div>
+<br />
+<div class="card-body table-responsive-busqueda">
+    <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
+        <thead class="boton2 ms-auto">
+            <tr>
+                <th>Tipo Documento</th>
+                <th>Número Documento</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Celular</th>
+                <th>Correo</th>
+                <th>Dirección</th>
+                <th>Estado Aprendiz</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var aprendiz in Model)
+            {
+                <tr>
+                    <td>@aprendiz.Tipodocumento</td>
+                    <td class="numeroDocumento">@aprendiz.NumeroDocumentoAprendiz</td>
+                    <td>@aprendiz.NombreAprendiz</td>
+                    <td>@aprendiz.ApellidoAprendiz</td>
+                    <td>@aprendiz.CelAprendiz</td>
+                    <td>@aprendiz.CorreoAprendiz</td>
+                    <td>@aprendiz.DireccionAprendiz</td>
+                    <td>@aprendiz.nomEstadoAprendiz</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<p>Cantidad de aprendices: @Model.Count()</p>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#realTimeSearch').on('keyup', function () {
+                var value = $(this).val().toLowerCase();
+                $('#tbdata2 tbody tr').filter(function () {
+                    $(this).toggle($(this).find('.numeroDocumento').text().toLowerCase().indexOf(value) > -1)
+                });
+            });
+        });
+    </script>
+}

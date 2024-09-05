@@ -27,6 +27,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 
         public Aprendiz aprendiz { get; set; }
         public InscripcionTyt? inscripcionTyt { get; set; }
+        public List<AprendizViewModel> Aprendices { get; set; }
 
         public ConvocatoriaTyt? convocatoriaTyt { get; set; }
         public List<string>? convocatoriaList { get; set; }

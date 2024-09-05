@@ -18,7 +18,7 @@
                             <input class="form-control" type="text" placeholder="Codigo Ficha..." aria-label="Codigo Ficha..." id="FichaId" name="FichaId" value="@Model.FichaId" required />
                         </div>
                         <br />
-                        <div> 
+                        <div>
                             <label for="SemestreConvocatoria">Semestre Convocatoria:</label>
                             <select id="SemestreConvocatoria" name="SemestreConvocatoria" class="form-control form-control-sm" required>
                                 <option>Selecciona El Semestre de La Convocatoria...</option>
@@ -27,8 +27,11 @@
                             </select>
                         </div>
                         <br />
-                        <button type="submit" class="boton">Consultar</button>
+                        <button type="submit" style="width:150px; height:35px" class="boton">Consultar</button>                        
                     </form>
+                    <div>
+                        <a asp-action="TyTPresentadas" asp-controller="TyT"><button style="width:150px; margin-top:5px; height:35px" class="boton">TyT Presentadas</button></a>
+                    </div>
                 </div>
                 @if (TempData["MensajeAlertIns"] != null)
                 {
@@ -99,6 +102,7 @@
                 {
                     <div class="m-4 alert alert-dark" role="alert"> No Hay Resultado</div>
                 }
+
             </div>
         </div>
     </div>
