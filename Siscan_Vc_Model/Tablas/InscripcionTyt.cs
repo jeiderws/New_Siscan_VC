@@ -7,7 +7,7 @@ public partial class InscripcionTyt
 {
     public string CodigoInscripcion { get; set; } = null!;
 
-    public int Idciudad { get; set; }
+    public int? Idciudad { get; set; }
 
     public string? NumeroDocumentoAprendiz { get; set; }
 

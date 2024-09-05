@@ -24,17 +24,12 @@
                     @if (TempData["CodigoInscripcionExist"] != null)
                     {
                         <div class="alert alert-danger" role="alert"> @TempData["CodigoInscripcionExist"] </div>
-                        <script>
-                            setTimeout(function () {
-                                window.location.href = '@Url.Action("Consultar", "Aprendiz")';
-                            }, 3000);
-                        </script>
                     }
                     <form asp-action="Editar" id="EditarForm">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="@(ViewBag.ItemsTipoDoc)" class="form-control form-control-sm" id="cboTipoDocumento">
+                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="Model.listaOpcTpDoc" class="form-control form-control-sm" id="cboTipoDocumento">
                                         <option value="">Selecciona un tipo de documento...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdTipodocumento">Tipo Documento</label>
@@ -90,7 +85,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="@(ViewBag.ItemsEstAprndz)" class="form-control form-control-sm" id="cboEstadoAprendiz">
+                                    <select asp-for="aprendiz.IdEstadoAprendiz" asp-items="Model.listaOpcEstado" class="form-control form-control-sm" id="cboEstadoAprendiz">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdEstadoAprendiz">Estado Aprendiz</label>
@@ -99,7 +94,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="aprendiz.IdCiudadNavigation.IdDepartamento" asp-items="@(ViewBag.ItemsDepartamento)" class="form-control form-control-sm" id="cboDepartamentos">
+                                    <select asp-for="aprendiz.IdCiudadNavigation.IdDepartamento" asp-items="Model.listaOpcDepartamento" class="form-control form-control-sm" id="cboDepartamentos">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos">Departamentos</label>
@@ -109,7 +104,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdCiudad" asp-items="@(ViewBag.ciudades)" class="form-control form-control-sm" id="cboCiudad">
+                                    <select asp-for="aprendiz.IdCiudad" asp-items="Model.listaOpcCiudad" class="form-control form-control-sm" id="cboCiudad">
                                         <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdCiudad">Ciudad</label>
@@ -118,7 +113,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="@(ViewBag.ItemsEstaTYT)" class="form-control form-control-sm" id="cboEstadoPruebatyt">
+                                    <select asp-for="aprendiz.IdEstadoTyt" asp-items="Model.listaOpcEstadoTyt" class="form-control form-control-sm" id="cboEstadoPruebatyt">
                                         <option value="">Selecciona un estado...</option>
                                     </select>
                                     <label asp-for="aprendiz.IdEstadoTyt">Estado de inscripcion tyt</label>
@@ -127,7 +122,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.FichaNavigation.CodigoProgramaNavigation.CodigoPrograma" asp-items="@(ViewBag.ItemsPrograma)" class="form-control form-control-sm" id="cboPrograma">
+                                    <select asp-for="aprendiz.FichaNavigation.CodigoProgramaNavigation.CodigoPrograma" asp-items="Model.listaOpcPrograma" class="form-control form-control-sm" id="cboPrograma">
                                         <option value="">Selecciona un programa...</option>
                                     </select>
                                     <label for="cboPrograma">Programa</label>
@@ -136,7 +131,7 @@
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.Ficha" asp-items="@(ViewBag.ficha)" class="form-control form-control-sm" id="cboFicha">
+                                    <select asp-for="aprendiz.Ficha" asp-items="Model.listaOpcFicha" class="form-control form-control-sm" id="cboFicha">
                                         <option value="">Selecciona una ficha...</option>
                                     </select>
                                     <label asp-for="aprendiz.Ficha">Fichas</label>
@@ -146,7 +141,7 @@
 
                             <!-- Acudiente -->
                             <div class="fondomenu py-3 px-5">
-                                <h6 class="m-0 text-center font-dark-light text-white "> Acudiente</h6>
+                                <h6 class="m-0 text-center font-dark-light text-white ">Acudiente</h6>
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
@@ -187,7 +182,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="inscripcionTyt.IdConvocatoria" class="form-control form-control-sm" asp-items="@(ViewBag.ItemsConvocatoria)" id="cboConvocatoria">
+                                    <select asp-for="inscripcionTyt.IdConvocatoria" class="form-control form-control-sm" asp-items="Model.listaOpcConvocatoria" id="cboConvocatoria">
                                         <option value="">Selecciona una Convocatoria...</option>
                                     </select>
                                     <label for="cboConvocatoria">Convocatoria</label>
@@ -196,7 +191,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="inscripcionTyt.IdciudadNavigation.IdDepartamento" asp-items="@(ViewBag.ItemsDepartamento)" class="form-control form-control-sm" id="cboDepartamentos2">
+                                    <select asp-for="inscripcionTyt.IdciudadNavigation.IdDepartamento" asp-items="Model.listaOpcDepartamento" class="form-control form-control-sm" id="cboDepartamentos2">
                                         <option value="">Selecciona un departamento...</option>
                                     </select>
                                     <label for="cboDepartamentos2">Departamentos</label>
@@ -205,7 +200,7 @@
                             </div>
                             <div class="col-md-6 py-3">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <select asp-for="inscripcionTyt.Idciudad" asp-items="@(ViewBag.ciudades)" class="form-control form-control-sm" id="cboCiudad2">
+                                    <select asp-for="inscripcionTyt.Idciudad" asp-items="Model.listaOpcCiudad" class="form-control form-control-sm" id="cboCiudad2">
                                         <option value="">Selecciona una ciudad...</option>
                                     </select>
                                     <label asp-for="inscripcionTyt.Idciudad">Ciudad</label>

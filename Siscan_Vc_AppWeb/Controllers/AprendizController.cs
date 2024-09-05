@@ -419,7 +419,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 ViewBag.CatchRegistrarExcelAprendz = "Error: " + ex.Message;
             }
             return View();
-        }       
+        }
 
         //consultar aprendiz por numero de documento y obtener la lista de aprendices
         [HttpGet]
@@ -503,14 +503,14 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> Editar(string numDoc)
         {
             var viewModel = new Modelviewtytap();
-            ViewBag.ItemsTipoDoc = new SelectList(await _dbSiscanContext.TipoDocumentos.ToListAsync(), "IdTipoDocumento", "TipoDocumento1");
-            ViewBag.ItemsEstAprndz = new SelectList(await _dbSiscanContext.EstadoAprendizs.ToListAsync(), "IdEstado", "NombreEstado");
-            ViewBag.ItemsDepartamento = new SelectList(await _dbSiscanContext.Departamentos.ToListAsync(), "IdDepartamento", "NombreDepartamento");
-            ViewBag.ciudades = new SelectList(await _dbSiscanContext.Ciudads.ToListAsync(), "IdCiudad", "NombreCiudad");
-            ViewBag.ItemsEstaTYT = new SelectList(await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync(), "IdEstadotyt", "DescripcionEstadotyt");
-            ViewBag.ItemsPrograma = new SelectList(await _dbSiscanContext.Programas.ToListAsync(), "CodigoPrograma", "NombrePrograma");
-            ViewBag.ficha = new SelectList(await _dbSiscanContext.Fichas.ToListAsync(), "Ficha1", "Ficha1");
-            ViewBag.ItemsConvocatoria = new SelectList(await _dbSiscanContext.ConvocatoriaTyts.ToListAsync(), "IdConvocatoria", "SemestreConvocatoria");
+            //ViewBag.ItemsTipoDoc = new SelectList(await _dbSiscanContext.TipoDocumentos.ToListAsync(), "IdTipoDocumento", "TipoDocumento1");
+            //ViewBag.ItemsEstAprndz = new SelectList(await _dbSiscanContext.EstadoAprendizs.ToListAsync(), "IdEstado", "NombreEstado");
+            //ViewBag.ItemsDepartamento = new SelectList(await _dbSiscanContext.Departamentos.ToListAsync(), "IdDepartamento", "NombreDepartamento");
+            //ViewBag.ciudades = new SelectList(await _dbSiscanContext.Ciudads.ToListAsync(), "IdCiudad", "NombreCiudad");
+            //ViewBag.ItemsEstaTYT = new SelectList(await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync(), "IdEstadotyt", "DescripcionEstadotyt");
+            //ViewBag.ItemsPrograma = new SelectList(await _dbSiscanContext.Programas.ToListAsync(), "CodigoPrograma", "NombrePrograma");
+            //ViewBag.ficha = new SelectList(await _dbSiscanContext.Fichas.ToListAsync(), "Ficha1", "Ficha1");
+            //ViewBag.ItemsConvocatoria = new SelectList(await _dbSiscanContext.ConvocatoriaTyts.ToListAsync(), "IdConvocatoria", "SemestreConvocatoria");
 
             if (numDoc != null)
             {
@@ -522,6 +522,54 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
                 viewModel = new Modelviewtytap
                 {
+                    //lista para el combo tipo de documento
+                    listaOpcTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                    {
+                        Value = o.IdTipoDocumento.ToString(),
+                        Text = o.TipoDocumento1
+                    }).ToList(),
+                    //lista para el combo estado aprendiz
+                    listaOpcEstado = _dbSiscanContext.EstadoAprendizs.Select(e => new SelectListItem
+                    {
+                        Value = e.IdEstado.ToString(),
+                        Text = e.NombreEstado
+                    }).ToList(),
+                    //lista para el combo departamentos
+                    listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                    {
+                        Value = d.IdDepartamento.ToString(),
+                        Text = d.NombreDepartamento
+                    }).ToList(),
+                    //lista para el combo ciudad
+                    listaOpcCiudad = _dbSiscanContext.Ciudads.Select(c => new SelectListItem
+                    {
+                        Value = c.IdCiudad.ToString(),
+                        Text = c.NombreCiudad
+                    }).ToList(),
+                    //lista para el combo estado tyt
+                    listaOpcEstadoTyt = _dbSiscanContext.EstadoInscripcionTyts.Select(e => new SelectListItem
+                    {
+                        Value = e.IdEstadotyt.ToString(),
+                        Text = e.DescripcionEstadotyt
+                    }).ToList(),
+                    //lista para el combo programas
+                    listaOpcPrograma = _dbSiscanContext.Programas.Select(p => new SelectListItem
+                    {
+                        Value = p.CodigoPrograma.ToString(),
+                        Text = p.NombrePrograma
+                    }).ToList(),
+                    //lista para el combo ficha
+                    listaOpcFicha = _dbSiscanContext.Fichas.Select(f => new SelectListItem
+                    {
+                        Value = f.Ficha1.ToString(),
+                        Text = f.Ficha1.ToString()
+                    }).ToList(),
+                    //lista para el combo convocatoria tyt
+                    listaOpcConvocatoria = _dbSiscanContext.ConvocatoriaTyts.Select(c => new SelectListItem
+                    {
+                        Value = c.IdConvocatoria.ToString(),
+                        Text = c.SemestreConvocatoria
+                    }).ToList(),
                     aprendiz = aprendi,
                     inscripcionTyt = insctyt
                 };
@@ -538,20 +586,135 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
         {
-            InscripcionTyt insctyt;
+            InscripcionTyt insctyt = null;
             InscripcionTyt insExist = null;
+            if (aprendiztyt.aprendiz.IdTipodocumento == null || aprendiztyt.aprendiz.NumeroDocumentoAprendiz == null || aprendiztyt.aprendiz.NombreAprendiz == null || aprendiztyt.aprendiz.ApellidoAprendiz == null ||
+                aprendiztyt.aprendiz.CorreoAprendiz == null || aprendiztyt.aprendiz.CelAprendiz == null || aprendiztyt.aprendiz.IdEstadoAprendiz == null || aprendiztyt.aprendiz.IdEstadoTyt == null || aprendiztyt.aprendiz.DireccionAprendiz == null ||
+                aprendiztyt.aprendiz.Ficha == null || aprendiztyt.aprendiz.IdCiudad == null || aprendiztyt.aprendiz.NombreCompletoAcudiente == null || aprendiztyt.aprendiz.CelularAcudiente == null || aprendiztyt.aprendiz.CorreoAcuediente == null)
+            {
+                var modelview = new Modelviewtytap
+                {
+                    //lista para el combo tipo de documento
+                    listaOpcTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                    {
+                        Value = o.IdTipoDocumento.ToString(),
+                        Text = o.TipoDocumento1
+                    }).ToList(),
+                    //lista para el combo estado aprendiz
+                    listaOpcEstado = _dbSiscanContext.EstadoAprendizs.Select(e => new SelectListItem
+                    {
+                        Value = e.IdEstado.ToString(),
+                        Text = e.NombreEstado
+                    }).ToList(),
+                    //lista para el combo departamentos
+                    listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                    {
+                        Value = d.IdDepartamento.ToString(),
+                        Text = d.NombreDepartamento
+                    }).ToList(),
+                    //lista para el combo ciudad
+                    listaOpcCiudad = _dbSiscanContext.Ciudads.Select(c => new SelectListItem
+                    {
+                        Value = c.IdCiudad.ToString(),
+                        Text = c.NombreCiudad
+                    }).ToList(),
+                    //lista para el combo estado tyt
+                    listaOpcEstadoTyt = _dbSiscanContext.EstadoInscripcionTyts.Select(e => new SelectListItem
+                    {
+                        Value = e.IdEstadotyt.ToString(),
+                        Text = e.DescripcionEstadotyt
+                    }).ToList(),
+                    //lista para el combo programas
+                    listaOpcPrograma = _dbSiscanContext.Programas.Select(p => new SelectListItem
+                    {
+                        Value = p.CodigoPrograma.ToString(),
+                        Text = p.NombrePrograma
+                    }).ToList(),
+                    //lista para el combo ficha
+                    listaOpcFicha = _dbSiscanContext.Fichas.Select(f => new SelectListItem
+                    {
+                        Value = f.Ficha1.ToString(),
+                        Text = f.Ficha1.ToString()
+                    }).ToList(),
+                    //lista para el combo convocatoria tyt
+                    listaOpcConvocatoria = _dbSiscanContext.ConvocatoriaTyts.Select(c => new SelectListItem
+                    {
+                        Value = c.IdConvocatoria.ToString(),
+                        Text = c.SemestreConvocatoria
+                    }).ToList(),
+                    aprendiz = aprendiztyt.aprendiz,
+                    inscripcionTyt = aprendiztyt.inscripcionTyt
+
+                };
+                return View(nameof(Editar), modelview);
+            }
+
             if (aprendiztyt != null)
             {
                 if (aprendiztyt.inscripcionTyt.CodigoInscripcion != null)
                 {
                     insExist = await _inscripcionTYTService.GetForCogInscripcion(aprendiztyt.inscripcionTyt.CodigoInscripcion);
                 }
-                if (insExist != null && insExist.NumeroDocumentoAprendiz != aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
+                if (aprendiztyt.aprendiz.IdEstadoTyt == 1 && insExist != null && insExist.NumeroDocumentoAprendiz != aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
                 {
                     TempData["CodigoInscripcionExist"] = "Ya exite otro aprendiz inscrito con este codigo de inscripcion";
-                    return RedirectToAction(nameof(Editar));
+                    var modelview = new Modelviewtytap
+                    {
+                        //lista para el combo tipo de documento
+                        listaOpcTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                        {
+                            Value = o.IdTipoDocumento.ToString(),
+                            Text = o.TipoDocumento1
+                        }).ToList(),
+                        //lista para el combo estado aprendiz
+                        listaOpcEstado = _dbSiscanContext.EstadoAprendizs.Select(e => new SelectListItem
+                        {
+                            Value = e.IdEstado.ToString(),
+                            Text = e.NombreEstado
+                        }).ToList(),
+                        //lista para el combo departamentos
+                        listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                        {
+                            Value = d.IdDepartamento.ToString(),
+                            Text = d.NombreDepartamento
+                        }).ToList(),
+                        //lista para el combo ciudad
+                        listaOpcCiudad = _dbSiscanContext.Ciudads.Select(c => new SelectListItem
+                        {
+                            Value = c.IdCiudad.ToString(),
+                            Text = c.NombreCiudad
+                        }).ToList(),
+                        //lista para el combo estado tyt
+                        listaOpcEstadoTyt = _dbSiscanContext.EstadoInscripcionTyts.Select(e => new SelectListItem
+                        {
+                            Value = e.IdEstadotyt.ToString(),
+                            Text = e.DescripcionEstadotyt
+                        }).ToList(),
+                        //lista para el combo programas
+                        listaOpcPrograma = _dbSiscanContext.Programas.Select(p => new SelectListItem
+                        {
+                            Value = p.CodigoPrograma.ToString(),
+                            Text = p.NombrePrograma
+                        }).ToList(),
+                        //lista para el combo ficha
+                        listaOpcFicha = _dbSiscanContext.Fichas.Select(f => new SelectListItem
+                        {
+                            Value = f.Ficha1.ToString(),
+                            Text = f.Ficha1.ToString()
+                        }).ToList(),
+                        //lista para el combo convocatoria tyt
+                        listaOpcConvocatoria = _dbSiscanContext.ConvocatoriaTyts.Select(c => new SelectListItem
+                        {
+                            Value = c.IdConvocatoria.ToString(),
+                            Text = c.SemestreConvocatoria
+                        }).ToList(),
+                        aprendiz = aprendiztyt.aprendiz,
+                        inscripcionTyt = aprendiztyt.inscripcionTyt
+
+                    };
+                    return View(nameof(Editar), modelview);
                 }
-                else if(insExist!=null && insExist.NumeroDocumentoAprendiz==aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
+                else if (insExist != null && insExist.NumeroDocumentoAprendiz == aprendiztyt.aprendiz.NumeroDocumentoAprendiz)
                 {
                     insExist = null;
                 }
@@ -590,10 +753,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                             insctyt.NumeroDocumentoAprendiz = aprendiztyt.aprendiz.NumeroDocumentoAprendiz;
                             insctyt.IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria;
                             insctyt.IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt;
-
-                            _dbSiscanContext.InscripcionTyts.Update(insctyt);
-                            await _dbSiscanContext.SaveChangesAsync();
-
                         }
                         else if (insctyt == null)
                         {
@@ -605,12 +764,20 @@ namespace Siscan_Vc_AppWeb.Controllers
                                 IdConvocatoria = aprendiztyt.inscripcionTyt.IdConvocatoria,
                                 IdEstadotyt = aprendiztyt.aprendiz.IdEstadoTyt
                             };
-                            _dbSiscanContext.InscripcionTyts.Add(insctyt);
-                            await _dbSiscanContext.SaveChangesAsync();
                         }
                     }
-                    await _aprendizService.Update(aprendiz);
-                    TempData["AprendizEditBien"] = "El aprendiz se ha actualizado correctamente";
+                    if (aprendiztyt.aprendiz.IdTipodocumento != null && aprendiztyt.aprendiz.NumeroDocumentoAprendiz != null && aprendiztyt.aprendiz.NombreAprendiz != null && aprendiztyt.aprendiz.ApellidoAprendiz != null &&
+               aprendiztyt.aprendiz.CorreoAprendiz != null && aprendiztyt.aprendiz.CelAprendiz != null && aprendiztyt.aprendiz.IdEstadoAprendiz != null && aprendiztyt.aprendiz.IdEstadoTyt != null && aprendiztyt.aprendiz.DireccionAprendiz != null &&
+               aprendiztyt.aprendiz.Ficha != null && aprendiztyt.aprendiz.IdCiudad != null && aprendiztyt.aprendiz.NombreCompletoAcudiente != null && aprendiztyt.aprendiz.CelularAcudiente != null && aprendiztyt.aprendiz.CorreoAcuediente != null)
+                    {
+                        if (insctyt != null)
+                        {
+                            _dbSiscanContext.InscripcionTyts.Update(insctyt);
+                            await _dbSiscanContext.SaveChangesAsync();
+                        }
+                        await _aprendizService.Update(aprendiz);
+                        TempData["AprendizEditBien"] = "El aprendiz se ha actualizado correctamente";
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
