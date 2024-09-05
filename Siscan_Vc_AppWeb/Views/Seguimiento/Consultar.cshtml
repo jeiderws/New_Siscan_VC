@@ -57,7 +57,7 @@
                                                             <td>@Html.DisplayFor(a => seguimiento.NumeroDocumentoAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.FichaAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.NombreAprendiz)</td>
-                                                            <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>                                                            
+                                                            <td>@Html.DisplayFor(a => seguimiento.ApellidoAprendiz)</td>
                                                             <td>@Html.DisplayFor(a => seguimiento.NombreEmpresa)</td>
                                                             <td style="justify-content:center">
                                                                 <a asp-controller="Seguimiento" asp-action="Consultar" asp-route-idSeguimiento="@seguimiento.IdSeguimiento" class="btn btn-sm">
@@ -115,13 +115,18 @@
                                                     </div>
                                                     <div class="card-body row">
                                                         <div class="col pt-4">
-                                                            <small class="text-muted">Coformador: </small>
-                                                            <p class="m-0 text-dark">@Model.seguimiento.NombreCoformador @Model.seguimiento.ApellidoCoformador</p>
-                                                            <p class="m-0 text-dark">@Model.seguimiento.NumDocumentoCoformador</p>
+                                                            @if (Model.seguimiento.idmodalidad != 3)
+                                                            {
+                                                                <small class="text-muted">Coformador: </small>
+                                                                <p class="m-0 text-dark">@Model.seguimiento.NombreCoformador @Model.seguimiento.ApellidoCoformador</p>
+                                                                <p class="m-0 text-dark">@Model.seguimiento.NumDocumentoCoformador</p>
+                                                            }
                                                             <small class="text-muted">Inicio Seguimiento: </small>
                                                             <p class="m-0 text-dark">@Model.seguimiento.FechaInicio</p>
                                                             <small class="text-muted p-t-30 db">Finaliza Seguimiento:</small>
                                                             <p class="m-0 text-dark">@Model.seguimiento.FechaFinalizacion</p>
+                                                            <small class="text-muted p-t-30 db">Finaliza de realizacion del Seguimiento:</small>
+                                                            <p class="m-0 text-dark">@Model.seguimiento.FechaRealizacionSeguimiento</p>
                                                             <small class="text-muted p-t-30 db">Observaciones:</small>
                                                             @{
                                                                 if (Model.observacionesList != null)
@@ -151,7 +156,7 @@
                                                                     {
                                                                         <textarea style="max-height:300px; width:250px overflow:auto;" class="m-0 text-dark" readonly>@actividad</textarea>
                                                                     }
-                                                                } 
+                                                                }
                                                             }
                                                         </div>
                                                     </div>

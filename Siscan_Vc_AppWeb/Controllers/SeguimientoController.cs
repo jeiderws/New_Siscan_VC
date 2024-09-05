@@ -146,6 +146,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
         {
+            await Crear(Vmse.aprendiz.NumeroDocumentoAprendiz);
             await LlenarCombos();
             Viewmodelsegui viewmodelsegui = new Viewmodelsegui();
             SeguimientoInstructorAprendiz seguimiento = null;
@@ -265,12 +266,27 @@ namespace Siscan_Vc_AppWeb.Controllers
                                 await _observacionesService.Insert(observa);
                             }
                         }
-                        viewmodelsegui = new Viewmodelsegui()
+                        viewmodelsegui = new Viewmodelsegui
                         {
                             seguimientoinstructorAprendiz = seguimiento,
                         };
                         TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
                     }
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    var segui = await _aprendizService.GetForDoc(Vmse.aprendiz.NumeroDocumentoAprendiz);
+                    viewmodelsegui = new Viewmodelsegui
+                    {
+                        listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                        {
+                            Value = m.IdModalidad.ToString(),
+                            Text = m.NombreModalidad
+                        }).ToList(),
+                        aprendiz = segui
+                    };
+                    return View(nameof(Crear),viewmodelsegui);
                 }
             }
             catch (Exception ex)
@@ -316,7 +332,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 CorreoInstructor = s.NumeroDocumentoInstructorNavigation.CorreoInstructor,
                 TelefonoInstructor = s.NumeroDocumentoInstructorNavigation.CelInstructor,
                 //datos del coformador
-                NumDocumentoCoformador = s.NumeroDocumentoInstructor,
+                NumDocumentoCoformador = s.IdCoformadorNavigation.NumeroDocumentoCoformador,
                 NombreCoformador = s.IdCoformadorNavigation.NombreCoformador,
                 ApellidoCoformador = s.IdCoformadorNavigation.ApellidoCoformador,
                 CorreoCoformador = s.IdCoformadorNavigation.CorreoCoformador,
@@ -585,8 +601,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                             IdModalidad = seguimiento.IdModalidad,
                             IdAreaEmpresa = seguimiento.IdAreaEmpresa,
                             NitProyecto = seguimiento.NitProyecto,
-                            NombreProyecto=seguimiento.NombreProyecto,
-                            ObjetivoProyecto=seguimiento.ObjetivoProyecto
+                            NombreProyecto = seguimiento.NombreProyecto,
+                            ObjetivoProyecto = seguimiento.ObjetivoProyecto
                         };
 
                         //Asignando los datos del segumiento actualizado
@@ -597,7 +613,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         seguimiento.FechaFinalizacion = seguimientoVm.seguimientoinstructorAprendiz.FechaFinalizacion;
                         seguimiento.FechaRealizacionSeguimiento = seguimientoVm.seguimientoinstructorAprendiz.FechaRealizacionSeguimiento;
                         seguimiento.IdModalidad = seguimientoVm.seguimientoinstructorAprendiz.IdModalidad;
-                        seguimiento.IdAsignacionArea =null;
+                        seguimiento.IdAsignacionArea = null;
                         seguimiento.IdAreaEmpresa = seguimientoVm.seguimientoinstructorAprendiz.IdAreaEmpresa;
                         seguimiento.NitEmpresa = null;
                         seguimiento.NitProyecto = seguimientoVm.seguimientoinstructorAprendiz.NitProyecto;

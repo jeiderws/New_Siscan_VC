@@ -7,8 +7,9 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
     public class ModelViewInstructor
     {
         public Instructor Instructor { get; set; }
-        public List<SelectListItem> OpcionesTpDoc { get; set; }
-        [Required]
+        public List<SelectListItem>? OpcionesTpDoc { get; set; }
+
+        [Required(ErrorMessage ="Por favor, selecciona un tipo de documento.")]
         public int OpcSeleccionada { get; set; }
     }
 }
