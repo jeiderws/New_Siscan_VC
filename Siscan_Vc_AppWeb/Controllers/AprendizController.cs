@@ -344,11 +344,14 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 if (aptyt != null)
                 {
+                    //consulta para comprobar la posible exitensia de un aprendiz con el mismo numero de documento
                     Aprendiz apren = await _aprendizService.GetForDoc(aptyt.aprendiz.NumeroDocumentoAprendiz);
+                    //consulta para comprobar si ya existe un codigo de inscripcion
                     if (aptyt.inscripcionTyt.CodigoInscripcion != null)
                     {
                         codigoInscrpExist = await _inscripcionTYTService.GetForCogInscripcion(aptyt.inscripcionTyt.CodigoInscripcion);
                     }
+                    //manejo de validacion del aprendiz si ya existe tal numero de documento
                     if (apren != null)
                     {
                         TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
@@ -497,7 +500,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar el aprendiz: " + e.Message });
             }
         }
-        //metodo para obtener los datos del aprendiz que va a editar    
+        //metodo para obtener los datos del aprendiz que se va a editar    
         [HttpGet]
         public async Task<IActionResult> Editar(string numDoc)
         {

@@ -14,6 +14,7 @@
                 <form asp-action="Crear">
                     <div class="card-body">
                         @if (TempData["MensajeAlertSegui"] != null)
+                        //validacion manejada con el tempdata desde el controlador y tiene una funcion para que redireccione a una vista despues de 3 segundos
                         {
                             <div class="alert alert-success" role="alert"> @TempData["MensajeAlertSegui"] </div>
                             <script>
@@ -154,6 +155,7 @@
     </script>
     <script>
         document.getElementById('addActivityButton').addEventListener('click', function () {
+            //funcion creada para que cuando le de al boton se crea un textarea 
             const container = document.getElementById('additionalActivities');
             const textareaCount = container.getElementsByTagName('textarea').length + 1;
 
@@ -167,6 +169,7 @@
 
             container.appendChild(newTextarea);
         });
+        //funcion creada para que cuando le de al boton se crea un textarea
         document.getElementById('addObservationButton').addEventListener('click', function () {
             const container = document.getElementById('additionalObservations');
             const textareaCount = container.getElementsByTagName('textarea').length + 1;

@@ -19,6 +19,7 @@
                                 <h6 class="m-0 text-uppercase font-weight-bold text-white">Empresa</h6>
                             </div>
                             <div class="card-body">
+                                @* estas son los alertas de las validaciones que se manejan con el tempdata desde el controlador  *@
                                 @if (TempData["ValEmpresaExist"] != null)
                                 {
                                     <div class="alert alert-danger" role="alert"> @TempData["ValEmpresaExist"] </div>
@@ -105,6 +106,7 @@
                             </div>
                             <div class="card-body">
                                 <div class="">
+                                    @* estas son los alertas de las validaciones que se manejan con el tempdata desde el controlador  *@
                                     @if (TempData["ValCoformadorExist"] != null)
                                     {
                                         <div class="alert alert-danger" role="alert"> @TempData["ValCoformadorExist"] </div>
@@ -176,11 +178,13 @@
     <script src="~/js/scripts.js" asp-append-version="true"></script>
     <script src="~/js/validations.js" asp-append-version="true"></script>
     <script>
+        //funcion de alerta de confirmacion  para guardar
         function confirmSave() {
             confirm("¿Seguro que quieres guardar?")
         }
 
         $("#cboDepartamentos").change(function () {
+            //funcion para anidar los select de departamento y ciudad
             var departamentoId = $(this).val();
             $.get('@Url.Action("CargarCiudades", "Empresa")', { departamentoId, departamentoId }, function (data) {
                 $('#cboCiudad').empty();

@@ -12,6 +12,7 @@
 <div class="card-body table-responsive-busqueda">
     <table class="table table-bordered mb-4" id="tbdata2" cellspacing="1" style="width:100%">
         <thead class="boton2 ms-auto">
+           @*  encabezados de la tabla *@
             <tr>
                 <th>Tipo Documento</th>
                 <th>Número Documento</th>
@@ -25,6 +26,7 @@
         </thead>
         <tbody>
             @foreach (var aprendiz in Model)
+            //datos seleccionados del modelo para mostrar en la tabla 
             {
                 <tr>
                     <td>@aprendiz.Tipodocumento</td>
@@ -44,7 +46,9 @@
 
 @section Scripts {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
     <script>
+        //funcion para que se haga el filtrado de el numero de documento con los datos que contiene la tabla
         $(document).ready(function () {
             $('#realTimeSearch').on('keyup', function () {
                 var value = $(this).val().toLowerCase();

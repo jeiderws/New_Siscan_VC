@@ -13,6 +13,7 @@
                     <h3 class="text-center font-dark-light my-4">Registro </h3>
                 </div>
                 <div class="card-body">
+                    @* estas son los alertas de las validaciones que se manejan con el tempdata desde el controlador  *@
                     @if (TempData["ValAprendzExiste"] != null)
                     {
                         <div class="alert alert-danger" role="alert"> @TempData["ValAprendzExiste"] </div>
@@ -265,6 +266,7 @@
     </script>
 
     <script>
+        // Obtener el valor seleccionado y la funcion se encarga de anidar los select de programa y ficha
         $('#cboPrograma').change(function () {
             var programa = $(this).val();
             $.ajax({
@@ -282,6 +284,7 @@
         });
     </script>
     <script>
+        //funcion creada para manejar el caso de que cuando el aprendiz este certificado por defecto el select de el estado de las tyt debe tomar el valor de realizadas y se debe deshabilitar
         $('#cboEstadoAprendiz').change(function () {
             var estadoAprendiz = $(this).val();
             if (estadoAprendiz === "4") {
@@ -295,7 +298,7 @@
     <script>
         $(document).ready(function () {
             $('#cboPrograma').change(function () {
-                var programa = $(this).val(); // Obtener el valor seleccionado
+                var programa = $(this).val(); // Obtener el valor seleccionado y la funcion se encarga de anidar los select de programa y ficha
 
                 $.get('@Url.Action("Cargarprograma", "Aprendiz")', { programa: programa }, function (data) {
                     $('#cboFicha').empty();
@@ -315,6 +318,7 @@
 
     </script>
     <script>
+        //funcion creada para manejar el caso de que cauando el nivel del programa no sea tecnologo el select de estado tyt por defecto debe tomar el valor de no aplica
         $(document).ready(function () {
             $('#cboPrograma').change(function () {
                 obtenerNivelPrograma();
