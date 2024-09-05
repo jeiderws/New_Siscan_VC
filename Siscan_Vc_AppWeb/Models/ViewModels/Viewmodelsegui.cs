@@ -6,11 +6,14 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
     public class Viewmodelsegui
     {
+        //opciones seleccionadas en los combos
         public string opcSeleccionadaAprendizSeguimiento { get; set; }
         public string opcseleccionadaEmpre { get; set; }
         public string opcseleccionadaAreaEmpre { get; set; }
         public int opcseleccionadaCoform { get; set; }
         public int opcseleccionadaModalidad { get; set; }
+
+        //listas selecionables de los combos
         public List<SelectListItem> listaopcempresa { get; set; }
         public List<SelectListItem> listaopcAreaEmpre { get; set; }
         public List<SelectListItem> listaopcCoform { get; set; }

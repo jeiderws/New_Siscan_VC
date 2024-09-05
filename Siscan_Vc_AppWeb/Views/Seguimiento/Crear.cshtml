@@ -11,7 +11,7 @@
                 <div class="card-header fondomenu ">
                     <h3 class="text-center font-dark-light my-4">Seguimiento </h3>
                 </div>
-                <form asp-action="Crear">
+                <form method="post" asp-action="Crear">
                     <div class="card-body">
                         @if (TempData["MensajeAlertSegui"] != null)
                         {
@@ -64,43 +64,74 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nombre de la Empresa">
+                                <div id="dvinputEmpresa" class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nit de la Empresa">
                                     <label asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-label">Digite el Nit de la Empresa</label>
                                 </div>
+
+                                <div id="dvinputNitPoryecto" class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.NitProyecto" class="form-control" id="inputNitPoryecto" type="text" placeholder="Digite el nit del proyecto">
+                                    <label asp-for="seguimientoinstructorAprendiz.NitProyecto" class="form-label">Digite el Nit del proyecto</label>
+                                </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@(new SelectList(ViewBag.ItemsModalidad,"IdModalidad","NombreModalidad"))" class="form-control form-control-sm" id="cboModalidad">
+                                    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@Model.listaopcModalidad" class="form-control form-control-sm" id="cboModalidad">
                                         <option value="">Selecciona una Modalidad...</option>
                                     </select>
                                     <label asp-for="seguimientoinstructorAprendiz.IdModalidad">Modalidad Practicas</label>
                                 </div>
                             </div>
+
+                            <div id="dvIptNombreProyecto" class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.NombreProyecto" class="form-control" id="inputNomProyecto" style="width:340px;" type="text" placeholder="Digite el nombre del proyecto" />
+                                    <label asp-for="seguimientoinstructorAprendiz.NombreProyecto" class="form-label">Nombre del Proyecto</label>
+                                </div>
+                            </div>
+
+                            <div id="dvIptObjetivoProyecto" class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.ObjetivoProyecto" class="form-control" id="inputObjProyecto" style="width:340px;" type="text" placeholder="Digite objetivo del proyecto" />
+                                    <label asp-for="seguimientoinstructorAprendiz.ObjetivoProyecto" class="form-label">Objetivo del Proyecto</label>
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="seguimientoinstructorAprendiz.FechaInicio" class="form-control" id="FechaInicio" type="date" placeholder="name@example.com" />
+                                    <input asp-for="seguimientoinstructorAprendiz.FechaInicio" class="form-control" id="FechaInicio" type="date" />
                                     <label asp-for="seguimientoinstructorAprendiz.FechaInicio">Inicio</label>
                                 </div>
                             </div>
+
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <input asp-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" placeholder="name@example.com" />
+                                    <input asp-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" />
                                     <label asp-for="seguimientoinstructorAprendiz.FechaFinalizacion">Finaliza</label>
                                 </div>
                             </div>
-                            <div class="row mb-3">
-                                <div class="form-floating mb-3 mb-md-0 py-3">
-                                    <div class="form-floating mb-3">
-                                        <select asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa" asp-items="@(new SelectList(ViewBag.Itemsareaempresa,"IdArea","NombreArea"))" class="form-control form-control-sm" id="cboAsignacionArea">
-                                            <option value="">Selecciona un Area...</option>
-                                        </select>
-                                        <label asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa">Area de Practicas</label>
-                                    </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa" asp-items="@(new SelectList(ViewBag.Itemsareaempresa,"IdArea","NombreArea"))" class="form-control form-control-sm" id="cboAsignacionArea">
+                                        <option value="">Selecciona un Area...</option>
+                                    </select>
+                                    <label asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa">Area de Practicas</label>
                                 </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <input asp-for="seguimientoinstructorAprendiz.FechaRealizacionSeguimiento" type="date" class="form-control" id="fechaRealizacion" />
+                                    <label asp-for="seguimientoinstructorAprendiz.FechaRealizacionSeguimiento">Fecha de realizacion</label>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
                                 <!-- Coformador -->
                                 <div class="fondomenu py-3 px-5">
-                                    <h6 class="m-0 text-center font-dark-light text-white "> coformador</h6>
+                                    <h6 class="m-0 text-center font-dark-light text-white">Coformador</h6>
                                 </div>
                                 <br />
                                 <div class="form-floating mb-3 mb-md-0 py-3">
@@ -111,6 +142,7 @@
                                         <label asp-for="seguimientoinstructorAprendiz.IdCoformador">Coformador</label>
                                     </div>
                                 </div>
+
                                 <!-- Instructor-->
                                 <div class="fondomenu py-3 px-5">
                                     <h6 class="m-0 text-center font-dark-light text-white "> Instructor</h6>
@@ -124,15 +156,18 @@
                                         </div>
                                     </div>
                                 </div>
-                                <!--Actividades-->
+
+                                <!--Agregar Actividades-->
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="addActivityButton">Agregar Actividad</button>
+                                    <button type="button" class="w-100 btn btn-primary" id="addActivityButton">Agregar Actividad</button>
                                 </div>
-                                <!--Observaciones-->
+
+                                <!--Agregar Observaciones-->
                                 <div id="additionalActivities"></div>
                                 <div class="mb-3">
-                                    <button type="button" class="btn btn-primary" id="addObservationButton">Agregar Observación</button>
+                                    <button type="button" class="w-100 btn btn-primary" id="addObservationButton">Agregar Observación</button>
                                 </div>
+
                                 <div id="additionalObservations"></div>
                                 <div class="mt-4 mb-0">
                                     <div class="d-grid boton2"><button type="submit" id="confirmarRegistro" class="btn text-center btn-block" style="font-size:20px" onclick="return confirmCrear()">Registrar</button></div>
@@ -151,6 +186,47 @@
         function confirmCrear() {
             return confirm("¿Estás seguro de que deseas Guardar?");
         }
+
+        //cambios en el formulario dependiendo de la modalidad
+        let Modalidad = document.querySelector('#cboModalidad');
+        let inputEmpresa = document.querySelector('#dvinputEmpresa');
+        let inputPoryecto = document.querySelector('#dvinputNitPoryecto');
+        let nombreProyecto = document.querySelector('#dvIptNombreProyecto');
+        let objetivoProyecto = document.querySelector('#dvIptObjetivoProyecto');
+        let coformador = document.querySelector('#cbocoformador');
+
+        window.addEventListener('load', () => {
+            var opciones = Modalidad.options[Modalidad.selectedIndex];
+
+            if (opciones.text.toLowerCase() == 'proyecto productivo') {
+                inputEmpresa.style.display = "none";
+                coformador.disabled = true;
+                inputPoryecto.style.display = "flex";
+                nombreProyecto.style.display = "flex";
+                objetivoProyecto.style.display = "flex";
+            } else {
+                inputPoryecto.style.display = "none";
+                objetivoProyecto.style.display = "none";
+                nombreProyecto.style.display = "none";
+            }
+        });
+        Modalidad.addEventListener('change', () => {
+            var opciones = Modalidad.options[Modalidad.selectedIndex];
+
+            if (opciones.text.toLowerCase() == 'proyecto productivo') {
+                inputEmpresa.style.display = "none";
+                coformador.disabled = true;
+                inputPoryecto.style.display = "flex";
+                nombreProyecto.style.display = "flex";
+                objetivoProyecto.style.display = "flex";
+            } else {
+                inputPoryecto.style.display = "none";
+                objetivoProyecto.style.display = "none";
+                nombreProyecto.style.display = "none";
+                inputEmpresa.style.display = "flex";
+                coformador.disabled = false;
+            }
+        });
     </script>
     <script>
         document.getElementById('addActivityButton').addEventListener('click', function () {
@@ -161,9 +237,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                            <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
-                            <label>Actividad ${textareaCount}</label>
-                        `;
+                      <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
+                      <label>Actividad ${textareaCount}</label>
+            `;
 
             container.appendChild(newTextarea);
         });
@@ -175,9 +251,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                                <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
-                                <label>Observación ${textareaCount}</label>
-                            `;
+                  <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
+                  <label>Observación ${textareaCount}</label>
+            `;
 
             container.appendChild(newTextarea);
         });

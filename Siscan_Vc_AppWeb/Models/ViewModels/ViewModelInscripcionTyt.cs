@@ -18,7 +18,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         }
         public string CodigoInscripcion { get; set; } = null!;
 
-        public int Idciudad { get; set; }
+        public int? Idciudad { get; set; }
         public string nomciudad { get; set; }
 
         public string? NumeroDocumentoAprendiz { get; set; }
