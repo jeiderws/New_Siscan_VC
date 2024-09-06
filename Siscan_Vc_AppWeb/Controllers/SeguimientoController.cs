@@ -37,6 +37,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _actividadService = actividadService;
             _observacionesService = observacionesService;
         }
+        //metodo para llenar los select
         public async Task LlenarCombos()
         {
             var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
@@ -56,7 +57,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewBag.Itemscooformador = itemsCooformador;
 
         }
-
+        //metodo para obtener que los aprendices que se le va asignar el seguimiento
         [HttpGet]
         public async Task<IActionResult> Index(string numdoc)
         {
@@ -116,7 +117,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             };
             return View(vmSeguimiento);
         }
-
+        //metodo para obtener los datos del aprendiz que se le va asignar el seguimiento
         [HttpGet]
         public async Task<IActionResult> Crear(string nmDoc)
         {
@@ -141,7 +142,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewmodel);
         }
-
+        //metodo para crear el seguimiento al aprendiz obtenido
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
@@ -296,7 +297,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             return View(viewmodelsegui);
         }
 
-
+        //metodo para obtener los datos del seguimiento del aprendiz
         [HttpGet]
         public async Task<IActionResult> Consultar(string idSeguimiento)
         {
@@ -363,7 +364,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             };
             return View(vmSeguimiento);
         }
-
+        //metodos para mostra los seguimientos guardados en el historial de el aprendiz obtenido
         [HttpGet]
         public async Task<IActionResult> MostrarHistorial(string nmDocAprendiz)
         {
@@ -482,7 +483,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentas eliminar el seguimiento: " + ex.Message });
             }
         }
-
+        //metodo para obtener los datos del seguimiento que se va editar
         [HttpGet]
         public async Task<IActionResult> EditarSeguimiento(long idSeguimiento)
         {
@@ -520,7 +521,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(vmSeguimiento);
         }
-
+        //metodo para editar el seguimiento obtenido
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditarSeguimiento(Viewmodelsegui seguimientoVm)
@@ -637,6 +638,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(seguimientoVm);
         }
+        //metodo para verificar si el seguimiento existe 
         private bool SeguimientoExist(long idSeguimiento)
         {
             return _dbSiscanContext.SeguimientoInstructorAprendizs.Any(s => s.IdSeguimiento == idSeguimiento);

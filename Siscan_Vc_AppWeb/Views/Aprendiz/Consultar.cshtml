@@ -23,6 +23,7 @@
                         </div>
                     </form>
                 </div>
+                @* tabla creada para mostrar los valores obtemidos del filtro de numero de documento *@
                 <div class="card-body table-responsive">
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Resultado de la búsqueda </h6>
                     <div class="card-body table-responsive-busqueda">
@@ -96,6 +97,7 @@
                     {
                         <div class="alert alert-danger" role="alert"> @TempData["MensajeAlertEliminado"] </div>
                     }
+                    @* tabla utilizada para mostrar todos los aprendices *@
                     <h6 style="color:#666264" class="m-0 text-uppercase font-weight-bold text-center ">Contenido</h6>
                     <br />
                     <div class="col-md-6 text-end">
@@ -161,6 +163,7 @@
 @section Scripts {
     <script>
         $(document).ready(function () {
+            //funcion realizada para filtrar por el primer  valor de la tabla de contenidos
             $('#searchInput').on('input', function () {
                 var searchValue = $(this).val().toLowerCase();
                 $('#tbdata2 tbody tr').filter(function () {

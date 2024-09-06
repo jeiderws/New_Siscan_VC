@@ -12,6 +12,7 @@
                 </div>
                 <div class="card-body">
                     @if (TempData["MensajeAlertFecha"] != null)
+                    //validacion manejada con el tempdata desde el controlador y tiene una funcion para que redireccione a una vista despues de 3 segundos
                     {
                         <div class="alert alert-success" role="alert"> @TempData["MensajeAlertFecha"]</div>
                         <script>

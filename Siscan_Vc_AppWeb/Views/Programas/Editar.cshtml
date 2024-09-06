@@ -14,36 +14,44 @@
                     <h6 class="m-0 text-uppercase font-weight-bold text-white ">Actualizar Programa</h6>
                 </div>
                 <div class="card-body">
+                    @if (TempData["AlertProAdd"] != null)
+                    {
+                        <div class="alert alert-success" role="alert"> @TempData["AlertProAdd"] </div>
+                    }
                     <div class="" style="height: 320px !important;">
                         <div class="card-body">
                             <form asp-action="Editar">
                                 <div class="row mb-3">
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
-                                            <select asp-for="programas.IdNivelPrograma" asp-items="@(ViewBag.ItemsNivelModel)" class="form-control form-control-sm" id="cboNivel" >
+                                            <select asp-for="programas.IdNivelPrograma" asp-items="Model.listaopcNivel" class="form-control form-control-sm" id="cboNivel">
                                                 <option>Selecciona el Nivel del Programa...</option>
                                             </select>
-                                            <label for="cboNivel">Nivel Programa</label>
+                                            <label asp-for="opcseleccionadaNivel">Nivel Programa</label>
+                                            <span asp-validation-for="programas.IdNivelPrograma" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
                                             <input asp-for="programas.CodigoPrograma" class="form-control" id="inputCod" type="text" placeholder="Codigo Del Programa" readonly />
-                                            <label for="inputCod">Codigo Del Programa</label>
+                                            <label asp-for="programas.CodigoPrograma">Codigo Del Programa</label>
+                                            <span asp-validation-for="programas.CodigoPrograma" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3 mb-md-0">
                                             <input asp-for="programas.NombrePrograma" class="form-control" id="inputName" type="text" placeholder="Nombre Del Programa" />
-                                            <label for="inputName">Nombre Del Programa</label>
+                                            <label asp-for="programas.NombrePrograma">Nombre Del Programa</label>
+                                            <span asp-validation-for="programas.NombrePrograma" class="text-danger"></span>
                                         </div>
                                     </div>
                                     <div class="col-md-6">
                                         <div class="form-floating mb-3">
-                                            <select asp-for="programas.IdEstadoPrograma" asp-items="@(ViewBag.ItemsEstadoModel)" class="form-control form-control-sm" id="cboEstado">
+                                            <select asp-for="programas.IdEstadoPrograma" asp-items="Model.listaopcEstado" class="form-control form-control-sm" id="cboEstado">
                                                 <option>Selecciona el Nivel del Programa...</option>
                                             </select>
-                                            <label for="cboEstado">Estado Programa</label>
+                                            <label asp-for="opcseleccionadaEstado">Estado Programa</label>
+                                            <span asp-validation-for="programas.IdEstadoPrograma" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>

@@ -15,11 +15,11 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             _context = context;
         }
-
+        //metodo para crear el excel con los datos de la tabla
         [HttpPost]
         public IActionResult ExportarExcel(TyTConsultationViewModel model)
         {
-            // Asegúrate de que el modelo tenga datos
+            // Asegúra de que el modelo tenga datos
             if (model?.Aprendices == null || !model.Aprendices.Any())
             {
                 return BadRequest("No hay datos para exportar.");
@@ -42,7 +42,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 worksheet.Cells[1, 10].Value = "Tipo de Documento";
                 worksheet.Cells[1, 11].Value = "Ciudad";
 
-                // Agregar datos
+                // Agrega los datos
                 for (int i = 0; i < model.Aprendices.Count; i++)
                 {
                     var aprendiz = model.Aprendices[i];
@@ -59,11 +59,11 @@ namespace Siscan_Vc_AppWeb.Controllers
                     worksheet.Cells[i + 2, 11].Value = aprendiz.CiudadNombre;
                 }
 
-                // Configurar el tipo de contenido y el nombre del archivo
+                // Configuracion el tipo de contenido y el nombre del archivo
                 var stream = new MemoryStream();
                 package.SaveAs(stream);
                 var fileName = "Aprendices.xlsx";
-                stream.Position = 0; // Asegúrate de que la posición del stream esté al principio
+                stream.Position = 0; // Asegúra de que la posición del stream esté al principio
                 return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", fileName);
             }
         }

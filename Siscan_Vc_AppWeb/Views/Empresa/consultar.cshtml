@@ -225,28 +225,7 @@
             });
         });
 
-        $(document).ready(function () {
-            $('#inputEmpresa').on('input', function () {
-                var term = $(this).val();
-                $.ajax({
-                    url: '@Url.Action("nombreEmpresa", "Empresa")',
-                    type: 'GET',
-                    data: { term: term },
-                    success: function (data) {
-                        $('#Empresas').empty();
-                        $.each(data, function (index, value) {
-                            $('#Empresas').append('<option value="' + value + '"></option>');
-                        });
-                    }
-                });
-            });
-
-            $('#inputEmpresa').on('change', function () {
-                var selectedValue = $(this).val();
-                $('#labelEmpresa').text(selectedValue);
-
-            });
-        });
+    
     </script>
 }
 

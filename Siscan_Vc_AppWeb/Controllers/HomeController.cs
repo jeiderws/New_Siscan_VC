@@ -19,9 +19,11 @@ namespace Siscan_Vc_AppWeb.Controllers
             _seguimientoService = seguimientoService;
 
         }
+        //metodo para obtener los datos que aparecen en la pagina principal
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            //lista de los aprendices que muestra en la tabla principal
             IQueryable<Aprendiz> queryAprendiz = await _aprendizService.GetAll();
             List<ViewModelAprendiz> listaAprendiz = queryAprendiz
                                                   .Select(a => new ViewModelAprendiz(a)

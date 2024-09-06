@@ -26,7 +26,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             _aprendizService = aprendizService;
             _inscripcionTYTService = inscripcionTYTService;
         }
-
+        //metodos para hacer los select anidados (oh dependientes)
         [HttpGet]
         public IActionResult ObtenerNivelPrograma(string programaId)
         {
@@ -118,6 +118,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             };
             return View(modelview);
+
         }
 
         //Registrar aprendiz con un view model
@@ -212,7 +213,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return View();
         }
-
+        //metodo para mostrar los datos de el excel en la tabla
         [HttpPost]
         public IActionResult MostrarDatos([FromForm] IFormFile ArchExcel)
         {
@@ -239,7 +240,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     int cantFilas = HojaExcel.LastRowNum;
 
                     List<VMAprendiz> listaExcel = new List<VMAprendiz>();
-
+                    //asignacion de datos para mostra en la tabla 
                     for (int i = 1; i <= cantFilas; i++)
                     {
                         IRow fila = HojaExcel.GetRow(i);
@@ -276,7 +277,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, $"Error al procesar el archivo: {ex.Message}");
             }
         }
-
+        //metodos para hacer el guardado de datos masivos guardando los datos que obtiene desde la hoja de excel
         [HttpPost]
         public async Task<IActionResult> RegistrarLotes(IFormFile fileExcel)
         {
@@ -421,6 +422,98 @@ namespace Siscan_Vc_AppWeb.Controllers
             return View();
         }
 
+
+        //Registrar aprendiz con un view model
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Registro(Modelviewtytap aptyt)
+        {
+            Modelviewtytap vmtytap = new Modelviewtytap();
+            InscripcionTyt codigoInscrpExist = null;
+            try
+            {
+                if (aptyt != null)
+                {
+                    //consulta para comprobar la posible exitensia de un aprendiz con el mismo numero de documento
+                    Aprendiz apren = await _aprendizService.GetForDoc(aptyt.aprendiz.NumeroDocumentoAprendiz);
+                    //consulta para comprobar si ya existe un codigo de inscripcion
+                    if (aptyt.inscripcionTyt.CodigoInscripcion != null)
+                    {
+                        codigoInscrpExist = await _inscripcionTYTService.GetForCogInscripcion(aptyt.inscripcionTyt.CodigoInscripcion);
+                    }
+                    //manejo de validacion del aprendiz si ya existe tal numero de documento
+                    if (apren != null)
+                    {
+                        TempData["ValAprendzExiste"] = "Ya existe un aprendiz con este numero de documento";
+                        return RedirectToAction(nameof(Registro));
+                    }
+                    else if (apren == null && codigoInscrpExist == null)
+                    {
+                        var aprendiz = new Aprendiz()
+                        {
+                            IdTipodocumento = aptyt.OpcSeleccionadoTpDoc,
+                            NumeroDocumentoAprendiz = aptyt.aprendiz.NumeroDocumentoAprendiz,
+                            NombreAprendiz = aptyt.aprendiz.NombreAprendiz,
+                            ApellidoAprendiz = aptyt.aprendiz.ApellidoAprendiz,
+                            CelAprendiz = aptyt.aprendiz.CelAprendiz,
+                            DireccionAprendiz = aptyt.aprendiz.DireccionAprendiz,
+                            CorreoAprendiz = aptyt.aprendiz.CorreoAprendiz,
+                            IdEstadoAprendiz = aptyt.OpcSeleccionadoEstado,
+                            IdCiudad = aptyt.OpcSeleccionadoCiudad,
+                            Ficha = aptyt.OpcSeleccionadoFicha.ToString(),
+                            NombreCompletoAcudiente = aptyt.aprendiz.NombreCompletoAcudiente,
+                            CelularAcudiente = aptyt.aprendiz.CelularAcudiente,
+                            CorreoAcuediente = aptyt.aprendiz.CorreoAcuediente
+                        };
+                        if (aptyt.aprendiz.IdEstadoTyt == null)
+                        {
+                            aprendiz.IdEstadoTyt = 5;
+                        }
+                        else if (aprendiz.IdEstadoAprendiz == 4 && aprendiz.IdEstadoTyt == null)
+                        {
+                            aprendiz.IdEstadoTyt = 6;
+                        }
+                        else
+                        {
+                            aprendiz.IdEstadoTyt = aptyt.aprendiz.IdEstadoTyt;
+                        }
+                        await _aprendizService.Insert(aprendiz);
+                        TempData["MensajeAlert"] = "Aprendiz Guardado Correctamente";
+                        if (aprendiz.NumeroDocumentoAprendiz == aptyt.aprendiz.NumeroDocumentoAprendiz && aprendiz.IdEstadoTyt == 1)
+                        {
+                            var tyt = new InscripcionTyt()
+                            {
+                                CodigoInscripcion = aptyt.inscripcionTyt.CodigoInscripcion,
+                                NumeroDocumentoAprendiz = aprendiz.NumeroDocumentoAprendiz,
+                                Idciudad = aptyt.OpcSeleccionadoCiudadTyt,
+                                IdConvocatoria = aptyt.OpcSeleccionadoConvocatoria,
+                                IdEstadotyt = aprendiz.IdEstadoTyt
+                            };
+                            _dbSiscanContext.InscripcionTyts.Add(tyt);
+                            _dbSiscanContext.SaveChanges();
+                        }
+                        vmtytap = new Modelviewtytap
+                        {
+                            aprendiz = aptyt.aprendiz,
+                            inscripcionTyt = aptyt.inscripcionTyt
+                        };
+                        return RedirectToAction(nameof(Registro));
+                    }
+                    else if (codigoInscrpExist.CodigoInscripcion != null)
+                    {
+                        TempData["ValInscripExiste"] = "Ya existe un aprendiz registrado con este codigo de inscripcion";
+                        return Json(new { success = true, message = "Ya existe un aprendiz registrado con este codigo de inscripcion" });
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["registroAprendizExcepcion"] = ex.Message;
+            }
+            return View(aptyt);
+        }
+
+
         //consultar aprendiz por numero de documento y obtener la lista de aprendices
         [HttpGet]
         public async Task<IActionResult> Consultar(string nmdoc)
@@ -498,19 +591,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                 return Json(new { success = false, message = "Se produjo un error al intentar eliminar el aprendiz: " + e.Message });
             }
         }
-
+        //metodo para obtener los datos del aprendiz que se va a editar    
         [HttpGet]
         public async Task<IActionResult> Editar(string numDoc)
         {
+       
             var viewModel = new Modelviewtytap();
-            //ViewBag.ItemsTipoDoc = new SelectList(await _dbSiscanContext.TipoDocumentos.ToListAsync(), "IdTipoDocumento", "TipoDocumento1");
-            //ViewBag.ItemsEstAprndz = new SelectList(await _dbSiscanContext.EstadoAprendizs.ToListAsync(), "IdEstado", "NombreEstado");
-            //ViewBag.ItemsDepartamento = new SelectList(await _dbSiscanContext.Departamentos.ToListAsync(), "IdDepartamento", "NombreDepartamento");
-            //ViewBag.ciudades = new SelectList(await _dbSiscanContext.Ciudads.ToListAsync(), "IdCiudad", "NombreCiudad");
-            //ViewBag.ItemsEstaTYT = new SelectList(await _dbSiscanContext.EstadoInscripcionTyts.ToListAsync(), "IdEstadotyt", "DescripcionEstadotyt");
-            //ViewBag.ItemsPrograma = new SelectList(await _dbSiscanContext.Programas.ToListAsync(), "CodigoPrograma", "NombrePrograma");
-            //ViewBag.ficha = new SelectList(await _dbSiscanContext.Fichas.ToListAsync(), "Ficha1", "Ficha1");
-            //ViewBag.ItemsConvocatoria = new SelectList(await _dbSiscanContext.ConvocatoriaTyts.ToListAsync(), "IdConvocatoria", "SemestreConvocatoria");
 
             if (numDoc != null)
             {
@@ -581,7 +667,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(viewModel);
         }
-
+        //metodo  para editar el aprendiz que se obtuvo
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(Modelviewtytap aprendiztyt)
@@ -787,10 +873,12 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
             return View(aprendiztyt);
         }
+        //metodo para comprobar si el aprendiz existe
         private bool AprendizExists(string numeroDocumento)
         {
             return _dbSiscanContext.Aprendiz.Any(a => a.NumeroDocumentoAprendiz == numeroDocumento);
         }
+        //esto es para la vista de egresados para que obtenga todos los aprendices de ese estado
         public IActionResult Egresados()
         {
             var aprendices = _dbSiscanContext.Aprendiz

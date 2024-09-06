@@ -23,5 +23,11 @@
 		<ProjectReference Include="..\Siscan_Vc_DAL\Siscan_Vc_DAL.csproj" />
 		<ProjectReference Include="..\Siscan_Vc_Model\Siscan_Vc_Model.csproj" />
 	</ItemGroup>
+	
+	<ItemGroup>
+	  <Content Update="wwwroot\img\casa.png">
+	    <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+	  </Content>
+	</ItemGroup>
 
 </Project>

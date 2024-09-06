@@ -13,6 +13,7 @@
                 </div>
                 <div class="card-body">
                     @if (TempData["AprendizEditBien"] != null)
+                    //validacion manejada con el tempdata desde el controlador y tiene una funcion para que redireccione a una vista despues de 3 segundos
                     {
                         <div class="alert alert-success" role="alert"> @TempData["AprendizEditBien"] </div>
                         <script>
@@ -228,9 +229,10 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
+    
     <script>
         $(document).ready(function () {
+            //son las mismas funciones manejadas en la vista de registro en este caso esta tambien es para anidar los departamentos y las ciudades
             $('#cboDepartamentos').change(function () {
                 var departamentoId = $(this).val(); // Obtener el valor seleccionado
 
@@ -272,6 +274,7 @@
 
 
         $(document).ready(function () {
+            // Obtener el valor seleccionado y la funcion se encarga de anidar los select de programa y ficha
             $('#cboPrograma').change(function () {
                 var programa = $(this).val();
 
@@ -290,6 +293,7 @@
                 });
             });
         });
+        //funcion realizada para la alerta de confirmacion del actualizado
         function confirmUpdate() {
             return confirm("¿Estás seguro de que deseas Actualizar?");
         }
@@ -297,6 +301,7 @@
     </script>
     <script>
         $(document).ready(function () {
+            //funcion creada para manejar el caso de que cuando el aprendiz este certificado por defecto el select de el estado de las tyt debe tomar el valor de realizadas y se debe deshabilitar
             $('#cboEstadoAprendiz').change(function () {
                 var estadoAprendiz = $(this).val();
                 if (estadoAprendiz === "4") {
@@ -310,6 +315,7 @@
     </script>
     <script>
         $(document).ready(function () {
+            //funcion creada para manejar el caso de que cauando el nivel del programa no sea tecnologo el select de estado tyt por defecto debe tomar el valor de no aplica
             $('#cboPrograma').change(function () {
                 obtenerNivelPrograma();
             });
