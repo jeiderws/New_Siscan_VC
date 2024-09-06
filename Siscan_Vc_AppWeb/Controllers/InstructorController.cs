@@ -232,46 +232,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> Consultar(string nmdoc)
-        {
-            List<ViewModelInstructor> listaInstructores = new List<ViewModelInstructor>();
-            IQueryable<Instructor> queryInstructor = await _instructorService.GetAll();
-            listaInstructores = queryInstructor.Select(i => new ViewModelInstructor(i)
-            {
-                NumeroDocumentoInstructor = i.NumeroDocumentoInstructor,
-                NombreInstructor = i.NombreInstructor,
-                ApellidoInstructor = i.ApellidoInstructor,
-                CorreoInstructor = i.CorreoInstructor,
-                CelInstructor = i.CelInstructor,
-                IdTipodocumento = i.IdTipodocumento,
-                Tipodocumento = i.IdTipodocumentoNavigation
-            }).ToList();
-
-            Instructor instructor = new Instructor();
-            foreach (var instr in queryInstructor)
-            {
-                if (instr.NumeroDocumentoInstructor == nmdoc)
-                {
-                    instructor = instr;
-                    break;
-                }
-            }
-            ModelViewInstrc viewModel = new ModelViewInstrc
-            {
-                Instructor = instructor,
-                ListaInstructores = listaInstructores
-            };
-            TempData["instructorConsultAlert"] = "No hay resultados";
-            return View(viewModel);
-        }
-        public async Task llenarcombo()
-        {
-            var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
-            ViewBag.ItemsTipoDoc = itemsTipoDoc;
-        }
-
-
+      
         [HttpDelete]
         public async Task<IActionResult> Eliminar(string nmDoc)
         {
