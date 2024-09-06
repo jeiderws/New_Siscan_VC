@@ -504,7 +504,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(string numDoc)
         {
-       
+
             var viewModel = new Modelviewtytap();
 
             if (numDoc != null)
