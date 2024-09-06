@@ -1,4 +1,5 @@
 ﻿using Siscan_Vc_DAL.DataContext;
+using System.ComponentModel.DataAnnotations;
 
 namespace Siscan_Vc_AppWeb.Models.ViewModels
 {
@@ -7,6 +8,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public ViewModelSeguimiento(SeguimientoInstructorAprendiz seguimiento)
         {
             IdSeguimiento = seguimiento.IdSeguimiento;
+            FechaRealizacionSeguimiento = seguimiento.FechaRealizacionSeguimiento;
             // Aprendiz
             if (seguimiento.NumeroDocumentoAprendizNavigation != null)
             {
@@ -57,13 +59,21 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
             FechaFinalizacion = seguimiento.FechaFinalizacion;
             NombreModalidad = seguimiento.IdModalidadNavigation.NombreModalidad;
             idmodalidad = seguimiento.IdModalidad;
+
+            //Proyecto
+            NitProyecto = seguimiento.NitProyecto;
+            NombreProyecto=seguimiento.NombreProyecto;
+            ObjetivoProyecto = seguimiento.ObjetivoProyecto;
         }
         public List<Actividade> actividades { get; set; }
         public List<Observacion> observaciones { get; set; }
         public int IdSeguimiento { get; set; }
+        [Required]
+        public DateOnly? FechaRealizacionSeguimiento { get; set; }
         //aprendiz
         public int? idTipoDocumentoAprendiz { get; set; }
         public string TipoDocumentoAprendiz { get; set; }
+        [Required]
         public string NumeroDocumentoAprendiz { get; set; } = null!;
         public string? NombreAprendiz { get; set; }
         public string? ApellidoAprendiz { get; set; }
@@ -73,6 +83,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? FichaAprendiz { get; set; }
 
         //Instructor
+        [Required]
         public string? NumeroDocumentoInstructor { get; set; } = null!;
         public string? NombreInstructor { get; set; } = null!;
         public string? ApellidoInstructor { get; set; } = null!;
@@ -100,6 +111,13 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public string? AreaEmpresa { get; set; }
         public long? IdAsignacionArea { get; set; }
 
+        //proyecto productivo
+        [Required]
+        public string? NitProyecto { get; set; }
+        [Required]
+        public string? NombreProyecto { get; set; }
+        [Required]
+        public string? ObjetivoProyecto { get; set; }
 
 
     }

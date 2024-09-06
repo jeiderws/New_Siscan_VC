@@ -24,4 +24,12 @@ public partial class SeguimientoArchivo
     public int? IdAreaEmpresa { get; set; }
 
     public string? NitEmpresa { get; set; }
+
+    public string? NitProyecto { get; set; }
+
+    public string? NombreProyecto { get; set; }
+
+    public string? ObjetivoProyecto { get; set; }
+
+    public DateOnly? FechaRealizacionSeguimiento { get; set; }
 }

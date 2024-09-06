@@ -17,6 +17,12 @@ public partial class SeguimientoInstructorAprendiz
 
     public DateOnly? FechaFinalizacion { get; set; }
 
+    public string? NitProyecto { get; set; }
+
+    public string? NombreProyecto { get; set; }
+
+    public string? ObjetivoProyecto { get; set; }
+
     public int? IdModalidad { get; set; }
 
     public long? IdAsignacionArea { get; set; }
@@ -24,6 +30,8 @@ public partial class SeguimientoInstructorAprendiz
     public int? IdAreaEmpresa { get; set; }
 
     public string? NitEmpresa { get; set; }
+
+    public DateOnly? FechaRealizacionSeguimiento { get; set; }
 
     public virtual ICollection<Actividade> Actividades { get; set; } = new List<Actividade>();
 

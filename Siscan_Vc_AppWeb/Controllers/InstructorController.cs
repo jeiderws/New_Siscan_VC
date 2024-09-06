@@ -39,9 +39,22 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Registro(ModelViewInstructor mvinstructor)
         {
+            ModelViewInstructor instrucvm = null;
             try
             {
-                ModelViewInstructor instrucvm = new ModelViewInstructor();
+                if (!ModelState.IsValid)
+                {
+                    instrucvm = new ModelViewInstructor
+                    {
+                        OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                        {
+                            Value = o.IdTipoDocumento.ToString(),
+                            Text = o.TipoDocumento1
+                        }).ToList(),
+                        Instructor = mvinstructor.Instructor
+                    };
+                    return View(nameof(Registro), instrucvm);
+                }
                 if (mvinstructor != null)
                 {
                     //verifica si el instructor ya existe y si existe procede a mostra un tipo de alerta
@@ -51,6 +64,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         TempData["ValIntrcExiste"] = "Ya existe un intructor con este numero de documento";
                         return RedirectToAction(nameof(Registro));
                     }
+
                     //validacion en caso de campos vacios
                     if (mvinstructor.Instructor.NumeroDocumentoInstructor == null || mvinstructor.Instructor.NombreInstructor == null ||
                         mvinstructor.Instructor.ApellidoInstructor == null || mvinstructor.Instructor.CorreoInstructor == null ||
@@ -60,6 +74,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         return RedirectToAction(nameof(Registro));
                     }
                     else
+
                     {
                         //procede a guardar el instructores
                         var instruc = new Instructor()
@@ -77,18 +92,25 @@ namespace Siscan_Vc_AppWeb.Controllers
 
                         instrucvm = new ModelViewInstructor
                         {
-                            Instructor = instruc
+                            Instructor = instruc,
+                            OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                            {
+                                Value = o.IdTipoDocumento.ToString(),
+                                Text = o.TipoDocumento1
+                            }).ToList()
                         };
                         return RedirectToAction(nameof(Registro));
                     }
                 }
+
             }
             catch (Exception ex)
             {
                 TempData["ErrorGuardarInstrct"] = ex.Message;
             }
-            return View(mvinstructor);
+            return View(instrucvm);
         }
+
         //metodo para consultar el aprendis
         [HttpGet]
         public async Task<IActionResult> Consultar(string nmdoc)
@@ -130,6 +152,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             ViewBag.ItemsTipoDoc = itemsTipoDoc;
         }
         //metodo para obtener el instrucor que se va a editar
+
         [HttpGet]
         public async Task<IActionResult> Editar(string nmdoc)
         {
@@ -140,7 +163,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                 var instruc = await _instructorService.GetForDoc(nmdoc);
                 viewModel = new ModelViewInstructor
                 {
-                    Instructor = instruc
+                    Instructor = instruc,
+                    OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                    {
+                        Value = o.IdTipoDocumento.ToString(),
+                        Text = o.TipoDocumento1
+                    }).ToList()
                 };
                 if (viewModel.Instructor == null)
                 {
@@ -154,9 +182,24 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Editar(ModelViewInstructor instru)
         {
-            if (instru != null)
+            ModelViewInstructor instrucvm = null;
+            try
             {
-                try
+                if (!ModelState.IsValid)
+                {
+                    instrucvm = new ModelViewInstructor
+                    {
+                        OpcionesTpDoc = _dbSiscanContext.TipoDocumentos.Select(o => new SelectListItem
+                        {
+                            Value = o.IdTipoDocumento.ToString(),
+                            Text = o.TipoDocumento1
+                        }).ToList(),
+                        Instructor = instru.Instructor,
+                        OpcSeleccionada = instru.OpcSeleccionada
+                    };
+                    return View(nameof(Editar), instrucvm);
+                }
+                if (instru.Instructor != null)
                 {
                     var instructor = await _instructorService.GetForDoc(instru.Instructor.NumeroDocumentoInstructor);
                     if (instructor == null)
@@ -169,16 +212,17 @@ namespace Siscan_Vc_AppWeb.Controllers
                     instructor.CelInstructor = instru.Instructor.CelInstructor;
                     instructor.CorreoInstructor = instru.Instructor.CorreoInstructor;
                     instructor.IdTipodocumento = instru.Instructor.IdTipodocumento;
-
+                    TempData["InstructorActualizado"] = "Instructor actualizado correctamente!";
                     _dbSiscanContext.Instructors.Update(instructor);
                     await _dbSiscanContext.SaveChangesAsync();
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor)) return NotFound(); else throw;
-                }
-                return RedirectToAction(nameof(Consultar));
+
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!InstrucExists(instru.Instructor.NumeroDocumentoInstructor)) return NotFound(); else throw;
+            }
+
             return View(instru);
         }
         //metodo para comprobar si el instructor existe
@@ -186,7 +230,48 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             return _dbSiscanContext.Instructors.Any(a => a.NumeroDocumentoInstructor == numeroDocumento);
         }
-        //metodo para eliminar 
+
+
+        [HttpGet]
+        public async Task<IActionResult> Consultar(string nmdoc)
+        {
+            List<ViewModelInstructor> listaInstructores = new List<ViewModelInstructor>();
+            IQueryable<Instructor> queryInstructor = await _instructorService.GetAll();
+            listaInstructores = queryInstructor.Select(i => new ViewModelInstructor(i)
+            {
+                NumeroDocumentoInstructor = i.NumeroDocumentoInstructor,
+                NombreInstructor = i.NombreInstructor,
+                ApellidoInstructor = i.ApellidoInstructor,
+                CorreoInstructor = i.CorreoInstructor,
+                CelInstructor = i.CelInstructor,
+                IdTipodocumento = i.IdTipodocumento,
+                Tipodocumento = i.IdTipodocumentoNavigation
+            }).ToList();
+
+            Instructor instructor = new Instructor();
+            foreach (var instr in queryInstructor)
+            {
+                if (instr.NumeroDocumentoInstructor == nmdoc)
+                {
+                    instructor = instr;
+                    break;
+                }
+            }
+            ModelViewInstrc viewModel = new ModelViewInstrc
+            {
+                Instructor = instructor,
+                ListaInstructores = listaInstructores
+            };
+            TempData["instructorConsultAlert"] = "No hay resultados";
+            return View(viewModel);
+        }
+        public async Task llenarcombo()
+        {
+            var itemsTipoDoc = await _dbSiscanContext.TipoDocumentos.ToListAsync();
+            ViewBag.ItemsTipoDoc = itemsTipoDoc;
+        }
+
+
         [HttpDelete]
         public async Task<IActionResult> Eliminar(string nmDoc)
         {
@@ -220,8 +305,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         _dbSiscanContext.Fichas.UpdateRange(f);
                     }
                 }
-                var asigFicha=await _dbSiscanContext.AsignacionFichas.Where(af=>af.NumeroDocumentoInstructor==nmDoc).ToListAsync();
-                if(asigFicha.Count > 0)
+                var asigFicha = await _dbSiscanContext.AsignacionFichas.Where(af => af.NumeroDocumentoInstructor == nmDoc).ToListAsync();
+                if (asigFicha.Count > 0)
                 {
                     _dbSiscanContext.AsignacionFichas.RemoveRange(asigFicha);
                 }
