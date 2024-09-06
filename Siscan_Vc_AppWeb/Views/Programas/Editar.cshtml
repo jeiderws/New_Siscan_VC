@@ -17,6 +17,11 @@
                     @if (TempData["AlertProAdd"] != null)
                     {
                         <div class="alert alert-success" role="alert"> @TempData["AlertProAdd"] </div>
+                        <script>
+                            setTimeout(function () {
+                                window.location.href = '@Url.Action("Consultar", "Programas")';
+                            }, 3000);
+                        </script>
                     }
                     <div class="" style="height: 320px !important;">
                         <div class="card-body">

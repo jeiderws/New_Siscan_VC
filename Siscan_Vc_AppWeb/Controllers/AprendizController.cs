@@ -192,7 +192,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                             aprendiz = aptyt.aprendiz,
                             inscripcionTyt = aptyt.inscripcionTyt
                         };
-                        return RedirectToAction(nameof(Registro));
                     }
                     else if (codigoInscrpExist.CodigoInscripcion != null)
                     {
@@ -205,7 +204,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 TempData["registroAprendizExcepcion"] = ex.Message;
             }
-            return View(aptyt);
+            return View(vmtytap);
         }
 
         [HttpGet]
