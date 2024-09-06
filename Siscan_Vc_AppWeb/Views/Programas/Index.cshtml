@@ -26,6 +26,10 @@
                                 {
                                     <div class="alert alert-danger" role="alert"> @TempData["ValProgramExiste"] </div>
                                 }
+                                @if (TempData["ErrorGuardarnompro"] != null)
+                                {
+                                    <div class="alert alert-danger" role="alert"> @TempData["ErrorGuardarnompro"] </div>
+                                }
 
                                 @if (TempData["ErrorGuardarInstrct"] != null)
                                 {
@@ -108,7 +112,7 @@
                                                 if (Model.listaprogramas != null)
                                                 {
                                                     foreach (var i in Model.listaprogramas)
-                                                    {
+                                                    {   
                                                         <tr>
                                                             <td>@Html.DisplayFor(a => i.CodigoPrograma)</td>
                                                             <td>@Html.DisplayFor(a => i.NombrePrograma)</td>

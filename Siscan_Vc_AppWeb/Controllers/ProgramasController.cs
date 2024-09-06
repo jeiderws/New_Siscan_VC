@@ -89,7 +89,7 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(ModelViewProgra pro, IFormFile fileExcel)
         {
-            ModelViewProgra progr = new ModelViewProgra();
+            ModelViewProgra progr =null;
             try
             {
                 if (pro != null)
@@ -99,6 +99,25 @@ namespace Siscan_Vc_AppWeb.Controllers
                         TempData["ErrorGuardarInstrct"] = "El código de programa no puede ser nulo.";
                         return RedirectToAction(nameof(Index));
                     }
+                    if (string.IsNullOrEmpty(pro.programas.NombrePrograma))
+                    {
+                        TempData["ErrorGuardarnompro"] = "El nombre de programa no puede ser nulo.";
+                        return RedirectToAction(nameof(Index));
+                    }
+                    if (pro.opcseleccionadaNivel == null)
+                    {
+                        TempData["ErrorGuardarInstrct"] = "Debe seleccionar un nivel válido.";
+
+                        return RedirectToAction(nameof(Index));
+                    }
+
+                    if (pro.opcseleccionadaEstado == null)
+                    {
+                        TempData["ErrorGuardarInstrct"] = "Debe seleccionar un estado válido.";
+
+                        return RedirectToAction(nameof(Index));
+                    }
+
 
                     Programas pr = await _programasService.GetForCog(pro.programas.CodigoPrograma);
                     if (pr != null)
@@ -122,7 +141,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             programas = programa
                         };
                         TempData["AlertProAdd"] = "Programa guardado correctamente";
-                        return RedirectToAction(nameof(Index));
+                        return RedirectToAction(nameof(Index),progr);
                     }
                 }
 
@@ -385,8 +404,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                 NombrePrograma = p.NombrePrograma,
                 IdEstadoPrograma = p.IdEstadoPrograma,
                 IdNivelPrograma = p.IdNivelPrograma,
-
-
             }).ToList();
             if (listaprogramas.Count == 0)
             {
@@ -451,15 +468,27 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Editar(string cdg)
         {
-            ViewBag.ItemsNivelModel = new SelectList(await _dbSiscanContext.NivelProgramas.ToListAsync(), "IdNivelPrograma", "NivelPrograma1");
-            ViewBag.ItemsEstadoModel = new SelectList(await _dbSiscanContext.EstadoProgramas.ToListAsync(), "IdEstadoPrograma", "DescripcionEstadoPrograma");
+
             var viewmodel = new ModelViewProgra();
             if (cdg != null)
             {
                 var program = await _programasService.GetForCog(cdg);
                 viewmodel = new ModelViewProgra
                 {
-                    programas = program
+                    programas = program,
+                    listaopcNivel = _dbSiscanContext.NivelProgramas.Select(o => new SelectListItem
+                    {
+                        Value = o.IdNivelPrograma.ToString(),
+                        Text = o.NivelPrograma1
+                    }).ToList(),
+                    listaopcEstado = _dbSiscanContext.EstadoProgramas.Select(o => new SelectListItem
+                    {
+                        Value = o.IdEstadoPrograma.ToString(),
+                        Text = o.DescripcionEstadoPrograma
+                    }).ToList(),                   
+                    //opcseleccionadaNivel = program.IdNivelPrograma,
+                    //opcseleccionadaEstado = program.IdEstadoPrograma
+
                 };
                 if (viewmodel.programas == null)
                 {
@@ -478,6 +507,27 @@ namespace Siscan_Vc_AppWeb.Controllers
             {
                 try
                 {
+                    if (program.programas.CodigoPrograma == null || program.programas.NombrePrograma == null || program.programas.IdEstadoPrograma == null || program.programas.IdNivelPrograma == null)
+                    {
+                        var modelview = new ModelViewProgra
+                        {
+                            listaopcNivel = _dbSiscanContext.NivelProgramas.Select(o => new SelectListItem
+                            {
+                                Value = o.IdNivelPrograma.ToString(),
+                                Text = o.NivelPrograma1
+                            }).ToList(),
+                            listaopcEstado = _dbSiscanContext.EstadoProgramas.Select(o => new SelectListItem
+                            {
+                                Value = o.IdEstadoPrograma.ToString(),
+                                Text = o.DescripcionEstadoPrograma
+                            }).ToList(),
+                            programas = program.programas,
+                            //opcseleccionadaEstado = program.opcseleccionadaEstado,
+                            //opcseleccionadaNivel = program.opcseleccionadaNivel
+
+                        };
+                        return View(nameof(Editar), modelview);
+                    }
                     var programa = await _programasService.GetForCog(program.programas.CodigoPrograma);
                     if (programa == null)
                     {
@@ -489,6 +539,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     programa.IdEstadoPrograma = program.programas.IdEstadoPrograma;
                     _dbSiscanContext.Programas.Update(programa);
                     await _dbSiscanContext.SaveChangesAsync();
+                    TempData["AlertProAdd"] = "Programa actualizado correctamente";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -501,9 +552,8 @@ namespace Siscan_Vc_AppWeb.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Consultar));
             }
-            return View();
+            return View(program);
         }
         //metodo para verificar que el programa exista
         private bool programExist(string Codigo)
@@ -626,6 +676,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                     fich.IdSede = fichas.ficha.IdSede;
                     _dbSiscanContext.Fichas.Update(fich);
                     await _dbSiscanContext.SaveChangesAsync();
+
                 }
                 catch (DbUpdateConcurrencyException)
                 {
