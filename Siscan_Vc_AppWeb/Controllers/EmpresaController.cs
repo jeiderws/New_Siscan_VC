@@ -218,7 +218,20 @@ namespace Siscan_Vc_AppWeb.Controllers
                 }
                 TempData["MensajeAlertEliminadoCoformdr"] = "Coformador eliminado correctamente!!";
                 var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.Where(s => s.IdCoformador == coformador.IdCoformador).ToListAsync();
-                _dbSiscanContext.SeguimientoInstructorAprendizs.RemoveRange(seguimiento);
+                if (seguimiento.Count >0)
+                {
+                    seguimiento.ForEach(async s =>
+                    {
+                        //para eliminar remplaza el id del coformador   en la tabla del seguimiento por un valor nulo ya que no exitiria ese coformador
+                        SeguimientoInstructorAprendiz segui = await _dbSiscanContext.SeguimientoInstructorAprendizs.FindAsync(s.IdSeguimiento);
+                        if (segui == null)
+                        {
+                            segui.IdCoformador = null;
+                            _dbSiscanContext.SeguimientoInstructorAprendizs.Update(segui);
+                        }
+                    });
+                }
+
                 _dbSiscanContext.Coformadors.Remove(coformador);
                 _dbSiscanContext.SaveChanges();
                 return Json(new { success = true, message = "El coformador se elimino correctamente." });
