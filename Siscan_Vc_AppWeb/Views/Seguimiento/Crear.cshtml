@@ -82,6 +82,7 @@
                                         <option value="">Selecciona una Modalidad...</option>
                                     </select>
                                     <label asp-for="seguimientoinstructorAprendiz.IdModalidad">Modalidad Practicas</label>
+                                    <span asp-validation-for="seguimientoinstructorAprendiz.IdModalidad" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -103,6 +104,7 @@
                                 <div class="form-floating mb-3">
                                     <input asp-for="seguimientoinstructorAprendiz.FechaInicio" class="form-control" id="FechaInicio" type="date" />
                                     <label asp-for="seguimientoinstructorAprendiz.FechaInicio">Inicio</label>
+                                    <span asp-validation-for="seguimientoinstructorAprendiz.FechaInicio" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -110,6 +112,7 @@
                                 <div class="form-floating mb-3">
                                     <input asp-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="form-control" id="FechaFinal" type="date" />
                                     <label asp-for="seguimientoinstructorAprendiz.FechaFinalizacion">Finaliza</label>
+                                    <span asp-validation-for="seguimientoinstructorAprendiz.FechaFinalizacion" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -119,6 +122,7 @@
                                         <option value="">Selecciona un Area...</option>
                                     </select>
                                     <label asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa">Area de Practicas</label>
+                                    <span asp-validation-for="seguimientoinstructorAprendiz.IdAreaEmpresa" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -126,6 +130,7 @@
                                 <div class="form-floating mb-3">
                                     <input asp-for="seguimientoinstructorAprendiz.FechaRealizacionSeguimiento" type="date" class="form-control" id="fechaRealizacion" />
                                     <label asp-for="seguimientoinstructorAprendiz.FechaRealizacionSeguimiento">Fecha de realizacion</label>
+                                    <span asp-validation-for="seguimientoinstructorAprendiz.FechaRealizacionSeguimiento" class="text-danger"></span>
                                 </div>
                             </div>
 
@@ -154,6 +159,7 @@
                                         <div class="form-floating">
                                             <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="form-control" id="inputInstructor" type="text" placeholder="Numero Documento Instructor" />
                                             <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor">Instructor</label>
+                                            <span asp-validation-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="text-danger"></span>
                                         </div>
                                     </div>
                                 </div>

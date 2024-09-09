@@ -147,12 +147,25 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
         {
-            await Crear(Vmse.aprendiz.NumeroDocumentoAprendiz);
             await LlenarCombos();
             Viewmodelsegui viewmodelsegui = new Viewmodelsegui();
             SeguimientoInstructorAprendiz seguimiento = null;
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    var segui = await _aprendizService.GetForDoc(Vmse.aprendiz.NumeroDocumentoAprendiz);
+                    viewmodelsegui = new Viewmodelsegui
+                    {
+                        listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                        {
+                            Value = m.IdModalidad.ToString(),
+                            Text = m.NombreModalidad
+                        }).ToList(),
+                        aprendiz = segui
+                    };
+                    return View(nameof(Crear), viewmodelsegui);
+                }
                 if (Vmse != null)
                 {
                     if (Vmse.seguimientoinstructorAprendiz.IdModalidad != 3)
@@ -191,6 +204,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                             };
                             await _asignacionService.Insert(asignacion);
                             seguimiento.IdAsignacionArea = asignacion.IdAsignacionArea;
+                            await _seguimientoService.Update(seguimiento);
 
                             if (Vmse.actividadesList != null)
                             {
@@ -273,22 +287,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         };
                         TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
                     }
-                }
-
-                if (!ModelState.IsValid)
-                {
-                    var segui = await _aprendizService.GetForDoc(Vmse.aprendiz.NumeroDocumentoAprendiz);
-                    viewmodelsegui = new Viewmodelsegui
-                    {
-                        listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
-                        {
-                            Value = m.IdModalidad.ToString(),
-                            Text = m.NombreModalidad
-                        }).ToList(),
-                        aprendiz = segui
-                    };
-                    return View(nameof(Crear),viewmodelsegui);
-                }
+                }                
             }
             catch (Exception ex)
             {
