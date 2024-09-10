@@ -59,21 +59,52 @@ namespace Siscan_Vc_AppWeb.Controllers
             ModelViewEmpresa mVEmpresa = new ModelViewEmpresa();
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    mVEmpresa = new ModelViewEmpresa
+                    {
+                        listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                        {
+                            Value = d.IdDepartamento.ToString(),
+                            Text = d.NombreDepartamento
+                        }).ToList(),
+                        //lista ciudades
+                        listaOpcCiudad = _dbSiscanContext.Ciudads.Select(d => new SelectListItem
+                        {
+                            Value = d.IdCiudad.ToString(),
+                            Text = d.NombreCiudad
+                        }).ToList(),
+                        empresa=empresaMv.empresa
+                    };
+                    return View(nameof(Registro),mVEmpresa);
+                }
+
                 //registro de empresas
                 if (empresaMv.empresa != null)
                 {
                     //validaciones del formulario
-                    if(empresaMv.empresa.Nitmpresa == null || empresaMv.empresa.TelefonoEmpresa == null || empresaMv.empresa.NombreEmpresa==null || empresaMv.empresa.RepresentanteLegal==null || empresaMv.empresa.DireccionEmpresa == null)
-                    {
-                        TempData["ValCamposVaciosEmpresa"] = "Por favor llene todos los campos";
-                        return RedirectToAction(nameof(Registro));
-                    }
+                    //if(empresaMv.empresa.Nitmpresa == null || empresaMv.empresa.TelefonoEmpresa == null || empresaMv.empresa.NombreEmpresa==null || empresaMv.empresa.RepresentanteLegal==null || empresaMv.empresa.DireccionEmpresa == null)
+                    //{
+                    //    TempData["ValCamposVaciosEmpresa"] = "Por favor llene todos los campos";
+                    //}
                     var empreExist = await _empresaService.GetForNit(empresaMv.empresa.Nitmpresa);
                     if (empreExist != null)
                     {
                         TempData["ValEmpresaExist"] = "Ya existe una empresa registrada con este NIT";
-                        return RedirectToAction(nameof(Registro));
-
+                        mVEmpresa = new ModelViewEmpresa
+                        {
+                            listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                            {
+                                Value = d.IdDepartamento.ToString(),
+                                Text = d.NombreDepartamento
+                            }).ToList(),
+                            //lista ciudades
+                            listaOpcCiudad = _dbSiscanContext.Ciudads.Select(d => new SelectListItem
+                            {
+                                Value = d.IdCiudad.ToString(),
+                                Text = d.NombreCiudad
+                            }).ToList()
+                        };
                     }
                     //proceso para guardar 
                     else if (empreExist == null)
