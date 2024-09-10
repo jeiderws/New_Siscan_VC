@@ -8,7 +8,7 @@ public partial class SeguimientoInstructorAprendiz
 {
     public int IdSeguimiento { get; set; }
 
-    public string NumeroDocumentoAprendiz { get; set; } = null!;
+    public string? NumeroDocumentoAprendiz { get; set; } = null!;
 
     [Required(ErrorMessage ="Por favor, ingresa un numero de documento de el instructor de seguimiento.")]
     public string? NumeroDocumentoInstructor { get; set; } = null!;
@@ -52,9 +52,9 @@ public partial class SeguimientoInstructorAprendiz
 
     public virtual Empresa? NitEmpresaNavigation { get; set; }
 
-    public virtual Aprendiz NumeroDocumentoAprendizNavigation { get; set; } = null!;
+    public virtual Aprendiz? NumeroDocumentoAprendizNavigation { get; set; } = null!;
 
-    public virtual Instructor NumeroDocumentoInstructorNavigation { get; set; } = null!;
+    public virtual Instructor? NumeroDocumentoInstructorNavigation { get; set; } = null!;
 
     public virtual ICollection<Observacion> Observacions { get; set; } = new List<Observacion>();
 }

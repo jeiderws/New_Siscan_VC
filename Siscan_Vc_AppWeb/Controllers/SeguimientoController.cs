@@ -121,11 +121,11 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Crear(string nmDoc)
         {
-            await LlenarCombos();
             var viewmodel = new Viewmodelsegui();
             if (nmDoc != null)
             {
-                var segui = await _aprendizService.GetForDoc(nmDoc);
+                var aprendiz = await _aprendizService.GetForDoc(nmDoc);
+                string tpDocAprendiz = _dbSiscanContext.TipoDocumentos.Where(tp => tp.IdTipoDocumento == aprendiz.IdTipodocumento).Select(tp => tp.TipoDocumento1).FirstOrDefault();
                 viewmodel = new Viewmodelsegui
                 {
                     listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
@@ -133,7 +133,18 @@ namespace Siscan_Vc_AppWeb.Controllers
                         Value = m.IdModalidad.ToString(),
                         Text = m.NombreModalidad
                     }).ToList(),
-                    aprendiz = segui
+                    listaopcAreaEmpre = _dbSiscanContext.AreasEmpresas.Select(a => new SelectListItem
+                    {
+                        Value = a.IdArea.ToString(),
+                        Text = a.NombreArea
+                    }).ToList(),
+                    listaopcCoform = _dbSiscanContext.Coformadors.Select(c => new SelectListItem
+                    {
+                        Value = c.IdCoformador.ToString(),
+                        Text = c.NombreCoformador + " " + c.ApellidoCoformador
+                    }).ToList(),
+                    aprendiz = aprendiz,
+                    tipoDocAprendiz = tpDocAprendiz
                 };
                 if (viewmodel.aprendiz == null)
                 {
@@ -147,24 +158,38 @@ namespace Siscan_Vc_AppWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Crear(Viewmodelsegui Vmse)
         {
-            await LlenarCombos();
             Viewmodelsegui viewmodelsegui = new Viewmodelsegui();
             SeguimientoInstructorAprendiz seguimiento = null;
             try
             {
-                if (!ModelState.IsValid)
+                if (Vmse.aprendiz.NumeroDocumentoAprendiz != null)
                 {
-                    var segui = await _aprendizService.GetForDoc(Vmse.aprendiz.NumeroDocumentoAprendiz);
-                    viewmodelsegui = new Viewmodelsegui
+                    if (!ModelState.IsValid)
                     {
-                        listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                        var aprendiz = await _aprendizService.GetForDoc(Vmse.aprendiz.NumeroDocumentoAprendiz);
+                        string tpDocAprendiz = _dbSiscanContext.TipoDocumentos.Where(tp => tp.IdTipoDocumento == aprendiz.IdTipodocumento).Select(tp => tp.TipoDocumento1).FirstOrDefault();
+                        viewmodelsegui = new Viewmodelsegui
                         {
-                            Value = m.IdModalidad.ToString(),
-                            Text = m.NombreModalidad
-                        }).ToList(),
-                        aprendiz = segui
-                    };
-                    return View(nameof(Crear), viewmodelsegui);
+                            listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                            {
+                                Value = m.IdModalidad.ToString(),
+                                Text = m.NombreModalidad
+                            }).ToList(),
+                            listaopcAreaEmpre = _dbSiscanContext.AreasEmpresas.Select(a => new SelectListItem
+                            {
+                                Value = a.IdArea.ToString(),
+                                Text = a.NombreArea
+                            }).ToList(),
+                            listaopcCoform = _dbSiscanContext.Coformadors.Select(c => new SelectListItem
+                            {
+                                Value = c.IdCoformador.ToString(),
+                                Text = c.NombreCoformador + " " + c.ApellidoCoformador
+                            }).ToList(),
+                            aprendiz = aprendiz,
+                            tipoDocAprendiz = tpDocAprendiz
+                        };
+                        return View(nameof(Crear), viewmodelsegui);
+                    }
                 }
                 if (Vmse != null)
                 {
@@ -287,7 +312,7 @@ namespace Siscan_Vc_AppWeb.Controllers
                         };
                         TempData["MensajeAlertSegui"] = "Seguimiento Registrado";
                     }
-                }                
+                }
             }
             catch (Exception ex)
             {
@@ -486,7 +511,6 @@ namespace Siscan_Vc_AppWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> EditarSeguimiento(long idSeguimiento)
         {
-            await LlenarCombos();
             var vmSeguimiento = new Viewmodelsegui();
             try
             {
@@ -504,12 +528,29 @@ namespace Siscan_Vc_AppWeb.Controllers
                 if (seguimiento != null)
                 {
                     var aprendiz = await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
+                    var tpcdoc = _dbSiscanContext.TipoDocumentos.Where(t => t.IdTipoDocumento == aprendiz.IdTipodocumento).Select(t => t.TipoDocumento1).FirstOrDefault();
                     if (aprendiz != null)
                     {
                         vmSeguimiento = new Viewmodelsegui
                         {
+                            listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                            {
+                                Value = m.IdModalidad.ToString(),
+                                Text = m.NombreModalidad
+                            }).ToList(),
+                            listaopcAreaEmpre = _dbSiscanContext.AreasEmpresas.Select(a => new SelectListItem
+                            {
+                                Value = a.IdArea.ToString(),
+                                Text = a.NombreArea
+                            }).ToList(),
+                            listaopcCoform = _dbSiscanContext.Coformadors.Select(c => new SelectListItem
+                            {
+                                Value = c.IdCoformador.ToString(),
+                                Text = c.NombreCoformador + " " + c.ApellidoCoformador
+                            }).ToList(),
                             seguimientoinstructorAprendiz = seguimiento,
                             aprendiz = aprendiz,
+                            tipoDocAprendiz=tpcdoc
                         };
                     }
                 }
@@ -526,11 +567,44 @@ namespace Siscan_Vc_AppWeb.Controllers
         public async Task<IActionResult> EditarSeguimiento(Viewmodelsegui seguimientoVm)
         {
             SeguimientoArchivo seguimientoArchivo = null;
-            await LlenarCombos();
-            if (seguimientoVm.seguimientoinstructorAprendiz != null)
+            Viewmodelsegui viewmodelsegui = new Viewmodelsegui();
+
+            try
             {
-                try
+                if (seguimientoVm.aprendiz.NumeroDocumentoAprendiz != null)
                 {
+                    if (!ModelState.IsValid)
+                    {
+                        var aprendiz = await _aprendizService.GetForDoc(seguimientoVm.aprendiz.NumeroDocumentoAprendiz);
+                        string tpDocAprendiz = _dbSiscanContext.TipoDocumentos.Where(tp => tp.IdTipoDocumento == aprendiz.IdTipodocumento).Select(tp => tp.TipoDocumento1).FirstOrDefault();
+                        viewmodelsegui = new Viewmodelsegui
+                        {
+                            listaopcModalidad = _dbSiscanContext.Modalidads.Select(m => new SelectListItem
+                            {
+                                Value = m.IdModalidad.ToString(),
+                                Text = m.NombreModalidad
+                            }).ToList(),
+                            listaopcAreaEmpre = _dbSiscanContext.AreasEmpresas.Select(a => new SelectListItem
+                            {
+                                Value = a.IdArea.ToString(),
+                                Text = a.NombreArea
+                            }).ToList(),
+                            listaopcCoform = _dbSiscanContext.Coformadors.Select(c => new SelectListItem
+                            {
+                                Value = c.IdCoformador.ToString(),
+                                Text = c.NombreCoformador + " " + c.ApellidoCoformador
+                            }).ToList(),
+                            aprendiz = aprendiz,
+                            tipoDocAprendiz = tpDocAprendiz
+                        };
+                        return View(nameof(EditarSeguimiento), viewmodelsegui);
+                    }
+                }
+
+                if (seguimientoVm.seguimientoinstructorAprendiz != null)
+                {
+
+
                     var instructor = await _instructorService.GetForDoc(seguimientoVm.seguimientoinstructorAprendiz.NumeroDocumentoInstructor);
                     var empresa = await _empresaService.GetForNit(seguimientoVm.seguimientoinstructorAprendiz.NitEmpresa);
                     var seguimiento = await _dbSiscanContext.SeguimientoInstructorAprendizs.FindAsync(seguimientoVm.seguimientoinstructorAprendiz.IdSeguimiento);
@@ -551,11 +625,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                         else if (empresa != null && instructor != null && seguimiento != null)
                         {
                             //Obteniendo los datos del seguimiento para asigarlo a seguimiento archivo 
+                            var coformador = _dbSiscanContext.Coformadors.Where(c => c.IdCoformador == seguimiento.IdCoformador).FirstOrDefault();
                             seguimientoArchivo = new SeguimientoArchivo
                             {
                                 NumeroDocumentoAprendiz = seguimientoVm.aprendiz.NumeroDocumentoAprendiz,
                                 NumeroDocumentoInstructor = seguimiento.NumeroDocumentoInstructor,
-                                NumeroDocumentoCoformador = seguimiento.IdCoformadorNavigation.NumeroDocumentoCoformador,
+                                NumeroDocumentoCoformador = coformador.NumeroDocumentoCoformador,
                                 FechaInicio = seguimiento.FechaInicio,
                                 FechaFinalizacion = seguimiento.FechaFinalizacion,
                                 IdModalidad = seguimiento.IdModalidad,
@@ -630,11 +705,12 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }
                     }
                 }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!SeguimientoExist(seguimientoVm.seguimientoinstructorAprendiz.IdSeguimiento)) return NotFound(); else throw;
-                }
             }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!SeguimientoExist(seguimientoVm.seguimientoinstructorAprendiz.IdSeguimiento)) return NotFound(); else throw;
+            }
+
             return View(seguimientoVm);
         }
         //metodo para verificar si el seguimiento existe 

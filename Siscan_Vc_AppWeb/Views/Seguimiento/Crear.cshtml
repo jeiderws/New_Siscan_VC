@@ -35,9 +35,7 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="aprendiz.IdTipodocumento" asp-items="@(new SelectList(ViewBag.ItemsTipoDoc,"IdTipoDocumento","TipoDocumento1"))" class="form-control form-control-sm" id="cboTipoDocumento" readonly>
-                                        <option value="">Selecciona un tipo de documento...</option>
-                                    </select>
+                                    <input asp-for="tipoDocAprendiz" class="form-control form-control-sm" id="cboTipoDocumento" readonly />
                                     <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoAprendizNavigation.IdTipodocumento">Tipo Documento</label>
                                 </div>
                             </div>
@@ -118,7 +116,7 @@
 
                             <div class="col-md-6">
                                 <div class="form-floating mb-3">
-                                    <select asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa" asp-items="@(new SelectList(ViewBag.Itemsareaempresa,"IdArea","NombreArea"))" class="form-control form-control-sm" id="cboAsignacionArea">
+                                    <select asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa" asp-items="Model.listaopcAreaEmpre" class="form-control form-control-sm" id="cboAsignacionArea">
                                         <option value="">Selecciona un Area...</option>
                                     </select>
                                     <label asp-for="seguimientoinstructorAprendiz.IdAreaEmpresa">Area de Practicas</label>
@@ -142,7 +140,7 @@
                                 <br />
                                 <div class="form-floating mb-3 mb-md-0 py-3">
                                     <div class="form-floating mb-3">
-                                        <select asp-for="seguimientoinstructorAprendiz.IdCoformador" asp-items="@(new SelectList(ViewBag.Itemscooformador,"IdCoformador","NombreCoformador"))" class="form-control form-control-sm" id="cbocoformador">
+                                        <select asp-for="seguimientoinstructorAprendiz.IdCoformador" asp-items="Model.listaopcCoform" class="form-control form-control-sm" id="cbocoformador">
                                             <option value="">Selecciona un Coformador...</option>
                                         </select>
                                         <label asp-for="seguimientoinstructorAprendiz.IdCoformador">Coformador</label>
@@ -158,7 +156,7 @@
                                     <div class="col-md-6">
                                         <div class="form-floating">
                                             <input asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="form-control" id="inputInstructor" type="text" placeholder="Numero Documento Instructor" />
-                                            <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor">Instructor</label>
+                                            <label asp-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor">Numero documento Instructor</label>
                                             <span asp-validation-for="seguimientoinstructorAprendiz.NumeroDocumentoInstructor" class="text-danger"></span>
                                         </div>
                                     </div>
@@ -237,7 +235,7 @@
     </script>
     <script>
         document.getElementById('addActivityButton').addEventListener('click', function () {
-            //funcion creada para que cuando le de al boton se crea un textarea 
+            //funcion creada para que cuando le de al boton se crea un textarea
             const container = document.getElementById('additionalActivities');
             const textareaCount = container.getElementsByTagName('textarea').length + 1;
 
@@ -245,9 +243,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                      <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
-                      <label>Actividad ${textareaCount}</label>
-            `;
+                              <textarea name="actividadesList" class="form-control" rows="3" placeholder="Actividad ${textareaCount}"></textarea>
+                              <label>Actividad ${textareaCount}</label>
+                    `;
 
             container.appendChild(newTextarea);
         });
@@ -260,9 +258,9 @@
             newTextarea.classList.add('form-floating', 'mb-3');
 
             newTextarea.innerHTML = `
-                  <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
-                  <label>Observación ${textareaCount}</label>
-            `;
+                          <textarea name="observacionesList" class="form-control" rows="3" placeholder="Observación ${textareaCount}"></textarea>
+                          <label>Observación ${textareaCount}</label>
+                    `;
 
             container.appendChild(newTextarea);
         });

@@ -30,6 +30,7 @@ namespace Siscan_Vc_AppWeb.Models.ViewModels
         public SeguimientoInstructorAprendiz seguimientoinstructorAprendiz { get; set; }
         public AsignacionArea? asignacionArea { get; set; }
         public Aprendiz? aprendiz { get; set; }
+        public string? tipoDocAprendiz { get; set; }
         public ViewModelAprendiz? aprendizSegui { get; set; }
         public ViewModelSeguimiento? seguimiento { get; set; }
         public Actividade? actividades { get; set; }
