@@ -19,7 +19,7 @@ public partial class Empresa
     public string? DireccionEmpresa { get; set; }
 
     [Required(ErrorMessage ="Por favor, Ingrese el telefono de contacto de la empresa.")]
-    [Phone]
+    [Phone(ErrorMessage ="Por favor, Ingrese un telefono valido.")]
     public string? TelefonoEmpresa { get; set; }
 
     [Required(ErrorMessage ="Por favor, Seleccione la ciudad donde se encuentra la empresa.")]
