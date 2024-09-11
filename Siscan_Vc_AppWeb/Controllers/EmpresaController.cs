@@ -277,6 +277,10 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(nameof(EditarCoformador), coformador);
+                }
                 if (coformador != null)
                 {
                     var coform = await _coformadorService.GetForDoc(coformador.NumeroDocumentoCoformador);
@@ -300,7 +304,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         _dbSiscanContext.Update(coform);
                         _dbSiscanContext.SaveChanges();
                         TempData["ActualizaCoformdrExit"] = "Se actualizo correctamente";
-                        return RedirectToAction(nameof(consultar));
                     }
                 }
             }
