@@ -178,7 +178,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             try
             {
-                Empresa empresa = new Empresa();
+                Empresa empresa = null;
                 var empresas = await _empresaService.GetAll();
                 if (nitEmpresa != null)
                 {
@@ -191,26 +191,34 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }
                     }
                 }
-
-                if (empresa.Nitmpresa == null)
+                if (empresa == null)
                 {
                     TempData["EmpresaNoExiste"] = "No se encontro una empresa empresa con este Nit";
                 }
-                foreach (var coformador in queryCoformador)
-                {
-                    if (coformador.NitEmpresa == nitEmpresa)
-                    {
-                        listCoformador.Add(coformador);
-                    }
-                }
+                listCoformador = _dbSiscanContext.Coformadors.Where(c => c.NitEmpresa == nitEmpresa).ToList();
                 foreach (var seguimiento in listSeguimiento)
                 {
                     if (seguimiento.NitEmpresa == nitEmpresa)
                     {
                         var aprendiz = await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
-                        listAprendiz.Add(aprendiz);
+                        listAprendiz.Add(aprendiz);                        
                     }
                 }
+                //foreach (var apre in listAprendiz)
+                //{
+                //    var aprendiz = await _aprendizService.GetForDoc(toAprendiz);
+
+                //    if (apre.NumeroDocumentoAprendiz != aprendiz.NumeroDocumentoAprendiz)
+                //    {
+                //        listAprendiz.Add(aprendiz);
+                //    }
+                //}
+                //listAprendiz=(from a in _dbSiscanContext.Aprendiz
+                //             join s in _dbSiscanContext.SeguimientoInstructorAprendizs on a.NumeroDocumentoAprendiz equals s.NumeroDocumentoAprendiz
+                //             where s.NitEmpresa==nitEmpresa
+                //             select a).ToList();
+
+
                 var ciudad = _dbSiscanContext.Ciudads.Where(c => c.IdCiudad == empresa.IdCiudad).FirstOrDefault();
                 if (ciudad != null)
                 {
