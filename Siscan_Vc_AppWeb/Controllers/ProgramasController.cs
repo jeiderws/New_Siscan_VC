@@ -66,7 +66,6 @@ namespace Siscan_Vc_AppWeb.Controllers
             if (listaprograma.Count == 0)
             {
                 TempData["NoProgramsFound"] = "No se encontraron programas válidos.";
-                return RedirectToAction(nameof(Index));
             }
             Programas programa = new Programas();
             foreach (var item in queryprograma)
@@ -80,7 +79,6 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             modelview.listaprogramas = listaprograma;
             modelview.programas = programa;
-
 
             return View(modelview);
         }
