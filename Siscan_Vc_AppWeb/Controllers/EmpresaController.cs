@@ -59,21 +59,48 @@ namespace Siscan_Vc_AppWeb.Controllers
             ModelViewEmpresa mVEmpresa = new ModelViewEmpresa();
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    mVEmpresa = new ModelViewEmpresa
+                    {
+                        listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                        {
+                            Value = d.IdDepartamento.ToString(),
+                            Text = d.NombreDepartamento
+                        }).ToList(),
+                        //lista ciudades
+                        listaOpcCiudad = _dbSiscanContext.Ciudads.Select(d => new SelectListItem
+                        {
+                            Value = d.IdCiudad.ToString(),
+                            Text = d.NombreCiudad
+                        }).ToList(),
+                        empresa = empresaMv.empresa,
+                        coformador = empresaMv.coformador
+                    };
+                    return View(nameof(Registro), mVEmpresa);
+                }
+
                 //registro de empresas
                 if (empresaMv.empresa != null)
                 {
-                    //validaciones del formulario
-                    if(empresaMv.empresa.Nitmpresa == null || empresaMv.empresa.TelefonoEmpresa == null || empresaMv.empresa.NombreEmpresa==null || empresaMv.empresa.RepresentanteLegal==null || empresaMv.empresa.DireccionEmpresa == null)
-                    {
-                        TempData["ValCamposVaciosEmpresa"] = "Por favor llene todos los campos";
-                        return RedirectToAction(nameof(Registro));
-                    }
                     var empreExist = await _empresaService.GetForNit(empresaMv.empresa.Nitmpresa);
                     if (empreExist != null)
                     {
                         TempData["ValEmpresaExist"] = "Ya existe una empresa registrada con este NIT";
-                        return RedirectToAction(nameof(Registro));
-
+                        mVEmpresa = new ModelViewEmpresa
+                        {
+                            listaOpcDepartamento = _dbSiscanContext.Departamentos.Select(d => new SelectListItem
+                            {
+                                Value = d.IdDepartamento.ToString(),
+                                Text = d.NombreDepartamento
+                            }).ToList(),
+                            //lista ciudades
+                            listaOpcCiudad = _dbSiscanContext.Ciudads.Select(d => new SelectListItem
+                            {
+                                Value = d.IdCiudad.ToString(),
+                                Text = d.NombreCiudad
+                            }).ToList()
+                        };
                     }
                     //proceso para guardar 
                     else if (empreExist == null)
@@ -106,7 +133,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                     if (coformadorExist != null)
                     {
                         TempData["ValCoformadorExist"] = "Ya existe un coformador registrado con este numero de documento";
-                        return RedirectToAction(nameof(Registro));
                     }
                     if (empre == null)
                     {
@@ -152,7 +178,7 @@ namespace Siscan_Vc_AppWeb.Controllers
 
             try
             {
-                Empresa empresa = new Empresa();
+                Empresa empresa = null;
                 var empresas = await _empresaService.GetAll();
                 if (nitEmpresa != null)
                 {
@@ -165,26 +191,34 @@ namespace Siscan_Vc_AppWeb.Controllers
                         }
                     }
                 }
-
-                if (empresa.Nitmpresa == null)
+                if (empresa == null)
                 {
                     TempData["EmpresaNoExiste"] = "No se encontro una empresa empresa con este Nit";
                 }
-                foreach (var coformador in queryCoformador)
-                {
-                    if (coformador.NitEmpresa == nitEmpresa)
-                    {
-                        listCoformador.Add(coformador);
-                    }
-                }
+                listCoformador = _dbSiscanContext.Coformadors.Where(c => c.NitEmpresa == nitEmpresa).ToList();
                 foreach (var seguimiento in listSeguimiento)
                 {
                     if (seguimiento.NitEmpresa == nitEmpresa)
                     {
                         var aprendiz = await _aprendizService.GetForDoc(seguimiento.NumeroDocumentoAprendiz);
-                        listAprendiz.Add(aprendiz);
+                        listAprendiz.Add(aprendiz);                        
                     }
                 }
+                //foreach (var apre in listAprendiz)
+                //{
+                //    var aprendiz = await _aprendizService.GetForDoc(toAprendiz);
+
+                //    if (apre.NumeroDocumentoAprendiz != aprendiz.NumeroDocumentoAprendiz)
+                //    {
+                //        listAprendiz.Add(aprendiz);
+                //    }
+                //}
+                //listAprendiz=(from a in _dbSiscanContext.Aprendiz
+                //             join s in _dbSiscanContext.SeguimientoInstructorAprendizs on a.NumeroDocumentoAprendiz equals s.NumeroDocumentoAprendiz
+                //             where s.NitEmpresa==nitEmpresa
+                //             select a).ToList();
+
+
                 var ciudad = _dbSiscanContext.Ciudads.Where(c => c.IdCiudad == empresa.IdCiudad).FirstOrDefault();
                 if (ciudad != null)
                 {
@@ -251,6 +285,10 @@ namespace Siscan_Vc_AppWeb.Controllers
         {
             try
             {
+                if (!ModelState.IsValid)
+                {
+                    return View(nameof(EditarCoformador), coformador);
+                }
                 if (coformador != null)
                 {
                     var coform = await _coformadorService.GetForDoc(coformador.NumeroDocumentoCoformador);
@@ -274,7 +312,6 @@ namespace Siscan_Vc_AppWeb.Controllers
                         _dbSiscanContext.Update(coform);
                         _dbSiscanContext.SaveChanges();
                         TempData["ActualizaCoformdrExit"] = "Se actualizo correctamente";
-                        return RedirectToAction(nameof(consultar));
                     }
                 }
             }
