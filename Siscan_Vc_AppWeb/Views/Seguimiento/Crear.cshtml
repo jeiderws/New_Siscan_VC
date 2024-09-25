@@ -63,6 +63,16 @@
                     <div class="card-body">
                         <div class="row mb-3">
                             <div class="col-md-6">
+                                <div class="form-floating mb-3">
+                                    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@Model.listaopcModalidad" class="form-control form-control-sm" id="cboModalidad">
+                                        <option value="">Selecciona una Modalidad...</option>
+                                    </select>
+                                    <label asp-for="seguimientoinstructorAprendiz.IdModalidad">Modalidad Practicas</label>
+                                    <span asp-validation-for="seguimientoinstructorAprendiz.IdModalidad" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
                                 <div id="dvinputEmpresa" class="form-floating mb-3">
                                     <input asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-control" id="inputEmpresa" type="text" placeholder="Digite el nit de la Empresa">
                                     <label asp-for="seguimientoinstructorAprendiz.NitEmpresa" class="form-label">Digite el Nit de la Empresa</label>
@@ -74,15 +84,6 @@
                                 </div>
                             </div>
 
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3">
-                                    <select asp-for="seguimientoinstructorAprendiz.IdModalidad" asp-items="@Model.listaopcModalidad" class="form-control form-control-sm" id="cboModalidad">
-                                        <option value="">Selecciona una Modalidad...</option>
-                                    </select>
-                                    <label asp-for="seguimientoinstructorAprendiz.IdModalidad">Modalidad Practicas</label>
-                                    <span asp-validation-for="seguimientoinstructorAprendiz.IdModalidad" class="text-danger"></span>
-                                </div>
-                            </div>
 
                             <div id="dvIptNombreProyecto" class="col-md-6">
                                 <div class="form-floating mb-3">

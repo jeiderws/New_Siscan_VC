@@ -106,7 +106,7 @@ namespace Siscan_Vc_AppWeb.Controllers
             }
 
 
-            if (apren != null && apren.SeguimientoInstructorAprendizs.Count() >= 3)
+            if (apren != null && apren.SeguimientoInstructorAprendizs.Count() >= 5)
             {
                 TempData["MensajeAlertMAxSegui"] = "Este Aprendiz Tiene Limites de Seguimiento";
             }
